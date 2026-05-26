@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Premium Services | Магазин услуг</title>
+    <title>TG Bot Studio | Создание и продвижение ботов</title>
     <style>
         * {
             margin: 0;
@@ -13,14 +13,13 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
             padding: 20px;
             padding-bottom: 100px;
-            color: #1a1a2e;
+            color: #fff;
         }
 
-        /* Стильный контейнер */
         .container {
             max-width: 550px;
             margin: 0 auto;
@@ -30,123 +29,138 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 32px;
+            padding: 30px 20px;
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .header h1 {
             font-size: 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .header p {
-            color: #666;
+            color: rgba(255,255,255,0.7);
             font-size: 14px;
         }
 
         .badge {
             display: inline-block;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 5px 12px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 30px;
             color: white;
             font-size: 12px;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        /* Карточка услуги — стильный glassmorphism */
+        /* Карточка услуги */
         .service-card {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 20px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             gap: 15px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s;
         }
 
         .service-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(0,210,255,0.5);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .service-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
-        }
-
-        .service-info {
-            flex: 1;
+            font-size: 28px;
         }
 
         .service-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: #1a1a2e;
-            margin-bottom: 5px;
         }
 
         .service-desc {
             font-size: 13px;
-            color: #666;
-            margin-bottom: 8px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.4;
         }
 
-        .price-container {
+        .service-features {
             display: flex;
-            align-items: baseline;
+            flex-wrap: wrap;
             gap: 8px;
+            margin-top: 5px;
+        }
+
+        .feature-tag {
+            background: rgba(0,210,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #00d2ff;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .price {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
-            color: #667eea;
+            color: #00d2ff;
         }
 
         .price-old {
             font-size: 14px;
-            color: #999;
+            color: rgba(255,255,255,0.5);
             text-decoration: line-through;
+            margin-left: 10px;
         }
 
-        /* Кнопка покупки */
         .buy-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
             border: none;
             color: white;
-            padding: 12px 24px;
+            padding: 12px 28px;
             border-radius: 40px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+            box-shadow: 0 4px 15px rgba(0,210,255,0.3);
         }
 
         .buy-btn:active {
-            transform: scale(0.94);
-            box-shadow: 0 2px 5px rgba(102,126,234,0.3);
+            transform: scale(0.95);
         }
 
         /* Корзина */
@@ -158,16 +172,17 @@
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 15px;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .cart-card {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
             border-radius: 28px;
             padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .cart-item {
@@ -175,27 +190,21 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .cart-item:last-child {
             border-bottom: none;
         }
 
-        .cart-item-info {
-            flex: 1;
-        }
-
         .cart-item-name {
             font-weight: 600;
-            font-size: 16px;
-            color: #1a1a2e;
+            font-size: 15px;
         }
 
         .cart-item-price {
             font-size: 13px;
-            color: #667eea;
-            font-weight: 600;
+            color: #00d2ff;
         }
 
         .cart-item-quantity {
@@ -205,16 +214,16 @@
         }
 
         .quantity-btn {
-            background: #f0f0f0;
+            background: rgba(255,255,255,0.2);
             border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 15px;
+            width: 32px;
+            height: 32px;
+            border-radius: 20px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            color: white;
             transition: 0.2s;
-            color: #667eea;
         }
 
         .quantity-btn:active {
@@ -222,21 +231,20 @@
         }
 
         .remove-item {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            background: rgba(255,107,107,0.8);
             border: none;
             color: white;
             padding: 6px 16px;
             border-radius: 30px;
             font-size: 12px;
-            font-weight: 600;
             cursor: pointer;
             margin-left: 12px;
         }
 
         .empty-cart {
             text-align: center;
-            color: #999;
-            padding: 40px;
+            color: rgba(255,255,255,0.6);
+            padding: 30px;
         }
 
         /* Нижняя панель */
@@ -245,7 +253,7 @@
             bottom: 20px;
             left: 20px;
             right: 20px;
-            background: rgba(255,255,255,0.98);
+            background: rgba(20,20,40,0.98);
             backdrop-filter: blur(20px);
             border-radius: 60px;
             padding: 16px 24px;
@@ -253,20 +261,20 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             z-index: 100;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .cart-total-label {
-            font-size: 14px;
-            color: #666;
+            border: 1px solid rgba(0,210,255,0.3);
         }
 
         .cart-total-price {
             font-size: 26px;
             font-weight: 800;
-            color: #667eea;
+            color: #00d2ff;
+        }
+
+        .cart-total-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
         }
 
         .checkout-btn {
@@ -286,10 +294,89 @@
             transform: scale(0.96);
         }
 
+        /* Модальное окно для контактов */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 32px;
+            padding: 28px;
+            max-width: 340px;
+            width: 90%;
+            border: 1px solid rgba(0,210,255,0.3);
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 15px;
+        }
+
+        .modal-content input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .send-order {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            border: none;
+            color: white;
+        }
+
+        .cancel-order {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
         /* Уведомление */
         .toast {
             position: fixed;
-            top: 80px;
+            top: 100px;
             left: 20px;
             right: 20px;
             background: #1a1a2e;
@@ -304,15 +391,13 @@
             z-index: 200;
             max-width: 300px;
             margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid #00d2ff;
         }
 
         .toast.show {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        /* Анимация появления */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -333,9 +418,9 @@
 
 <div class="container">
     <div class="header">
-        <h1>✨ Premium Services</h1>
-        <p>Профессиональные услуги для вашего бизнеса</p>
-        <div class="badge">🔥 Скидка 30% на первый заказ</div>
+        <h1>🤖 TG Bot Studio</h1>
+        <p>Профессиональная разработка Telegram ботов</p>
+        <div class="badge">⚡ Создание · Хостинг · Продвижение</div>
     </div>
 
     <div id="services-list"></div>
@@ -348,27 +433,39 @@
 
 <div id="cart-bar" class="cart-bar" style="display: none;">
     <div>
-        <div class="cart-total-label">Итого к оплате</div>
+        <div class="cart-total-label">Итого</div>
         <div class="cart-total-price"><span id="cart-total">0</span> ₽</div>
     </div>
     <button id="checkout-button" class="checkout-btn">Оформить заказ →</button>
 </div>
 
-<div id="toast-message" class="toast">✓ Добавлено в корзину</div>
+<div id="toast-message" class="toast">✓ Добавлено</div>
+
+<!-- Модальное окно для контактов -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <h3>📋 Оформление заказа</h3>
+        <input type="text" id="client-name" placeholder="Ваше имя" autocomplete="off">
+        <input type="text" id="client-phone" placeholder="Telemas (или номер телефона)" autocomplete="off">
+        <div class="modal-buttons">
+            <button class="cancel-order" onclick="closeModal()">Отмена</button>
+            <button class="send-order" onclick="sendOrderToTelegram()">Отправить</button>
+        </div>
+    </div>
+</div>
 
 <script>
-    // Список услуг с иконками
+    // УСЛУГИ
     const services = [
-        { id: 1, name: "Разработка сайта", description: "Landing page / визитка / интернет-магазин", price: 14900, oldPrice: 24900, icon: "💻" },
-        { id: 2, name: "Дизайн в Figma", description: "Интерфейс приложения или сайта", price: 8900, oldPrice: 14900, icon: "🎨" },
-        { id: 3, name: "SEO продвижение", description: "Полный аудит и оптимизация", price: 19900, oldPrice: 29900, icon: "📈" },
-        { id: 4, name: "Telegram бот", description: "Под ключ с админ-панелью", price: 12500, oldPrice: 19900, icon: "🤖" },
-        { id: 5, name: "Контекстная реклама", description: "Яндекс.Директ / Google Ads", price: 7900, oldPrice: 14900, icon: "📢" }
+        { id: 1, name: "🤖 Создание TG бота", description: "Бот под ключ любой сложности. Админ-панель, база данных, любые функции.", price: 14900, oldPrice: 24900, features: ["Любая тематика", "Админ-панель", "Исходный код"] },
+        { id: 2, name: "🚀 Установка на хостинг", description: "Размещение бота на сервере. Круглосуточная работа.", price: 3900, oldPrice: 7900, features: ["24/7 работа", "Бекапы", "Поддержка"] },
+        { id: 3, name: "📈 Продвижение бота", description: "Привлечение пользователей, реклама, раскрутка.", price: 9900, oldPrice: 19900, features: ["Таргет", "Чаты", "SEO"] },
+        { id: 4, name: "🎯 Комбо — Всё вместе", description: "Создание + хостинг на год + продвижение. Экономия 40%", price: 24900, oldPrice: 43700, features: ["Полный пакет", "Экономия", "Приоритет"] }
     ];
 
     let cart = [];
 
-    // Отрисовка списка услуг
+    // Отрисовка услуг
     function renderServices() {
         const container = document.getElementById('services-list');
         container.innerHTML = '';
@@ -378,16 +475,23 @@
             card.className = 'service-card';
             card.style.animationDelay = `${index * 0.05}s`;
             card.innerHTML = `
-                <div class="service-icon">${service.icon}</div>
-                <div class="service-info">
-                    <div class="service-title">${service.name}</div>
-                    <div class="service-desc">${service.description}</div>
-                    <div class="price-container">
+                <div class="service-header">
+                    <div class="service-icon">${service.name.split(' ')[0]}</div>
+                    <div>
+                        <div class="service-title">${service.name}</div>
+                        <div class="service-desc">${service.description}</div>
+                    </div>
+                </div>
+                <div class="service-features">
+                    ${service.features.map(f => `<span class="feature-tag">✓ ${f}</span>`).join('')}
+                </div>
+                <div class="price-row">
+                    <div>
                         <span class="price">${service.price.toLocaleString()} ₽</span>
                         ${service.oldPrice ? `<span class="price-old">${service.oldPrice.toLocaleString()} ₽</span>` : ''}
                     </div>
+                    <button class="buy-btn" data-id="${service.id}">Купить</button>
                 </div>
-                <button class="buy-btn" data-id="${service.id}">Купить</button>
             `;
             container.appendChild(card);
         });
@@ -401,14 +505,15 @@
     }
 
     function addToCart(serviceId) {
+        const service = services.find(s => s.id === serviceId);
         const existing = cart.find(item => item.id === serviceId);
         if (existing) {
             existing.quantity += 1;
         } else {
-            cart.push({ id: serviceId, quantity: 1 });
+            cart.push({ id: serviceId, name: service.name, price: service.price, quantity: 1 });
         }
         updateCartUI();
-        showToast('✓ Добавлено в корзину');
+        showToast(`✓ ${service.name.split(' ')[1] || 'Услуга'} добавлена`);
     }
 
     function removeFromCart(serviceId) {
@@ -429,17 +534,8 @@
         }
     }
 
-    function getServiceById(id) {
-        return services.find(s => s.id === id);
-    }
-
     function getTotalSum() {
-        let total = 0;
-        for (let item of cart) {
-            const service = getServiceById(item.id);
-            if (service) total += service.price * item.quantity;
-        }
-        return total;
+        return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     }
 
     function updateCartUI() {
@@ -452,30 +548,30 @@
 
         if (cart.length === 0) {
             cartBar.style.display = 'none';
-            cartBlock.innerHTML = '<div class="empty-cart">🛍 Корзина пуста<br><span style="font-size: 13px;">Добавьте услуги, чтобы продолжить</span></div>';
+            cartBlock.innerHTML = '<div class="empty-cart">🛍 Корзина пуста<br><span style="font-size: 12px;">Выберите услугу для заказа</span></div>';
         } else {
             cartBar.style.display = 'flex';
             let cartHtml = '';
             for (let item of cart) {
-                const service = getServiceById(item.id);
+                const service = services.find(s => s.id === item.id);
                 if (service) {
                     cartHtml += `
                         <div class="cart-item">
-                            <div class="cart-item-info">
+                            <div>
                                 <div class="cart-item-name">${service.name}</div>
                                 <div class="cart-item-price">${service.price.toLocaleString()} ₽</div>
                             </div>
                             <div class="cart-item-quantity">
-                                <button class="quantity-btn" data-id="${service.id}" data-delta="-1">−</button>
-                                <span style="font-weight: 600; min-width: 30px; text-align: center;">${item.quantity}</span>
-                                <button class="quantity-btn" data-id="${service.id}" data-delta="1">+</button>
-                                <button class="remove-item" data-id="${service.id}">Удалить</button>
+                                <button class="quantity-btn" data-id="${item.id}" data-delta="-1">−</button>
+                                <span style="min-width: 30px; text-align: center;">${item.quantity}</span>
+                                <button class="quantity-btn" data-id="${item.id}" data-delta="1">+</button>
+                                <button class="remove-item" data-id="${item.id}">Удалить</button>
                             </div>
                         </div>
                     `;
                 }
             }
-            cartHtml += `<div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #eee; font-size: 18px; font-weight: 700; text-align: right;">
+            cartHtml += `<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; font-weight: 700;">
                             Итого: ${total.toLocaleString()} ₽
                          </div>`;
             cartBlock.innerHTML = cartHtml;
@@ -497,38 +593,63 @@
         }
     }
 
-    function checkout() {
+    // Открыть модальное окно
+    function openModal() {
+        document.getElementById('contact-modal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('contact-modal').classList.remove('active');
+        document.getElementById('client-name').value = '';
+        document.getElementById('client-phone').value = '';
+    }
+
+    // Отправка заказа в Telegram
+    async function sendOrderToTelegram() {
+        const name = document.getElementById('client-name').value.trim();
+        const phone = document.getElementById('client-phone').value.trim();
+
+        if (!name || !phone) {
+            showToast('⚠️ Заполните имя и контакт');
+            return;
+        }
+
         if (cart.length === 0) {
             showToast('Корзина пуста');
+            closeModal();
             return;
         }
 
         const total = getTotalSum();
-        const orderItems = cart.map(item => {
-            const s = getServiceById(item.id);
-            return { name: s.name, price: s.price, quantity: item.quantity };
-        });
+        const items = cart.map(item => {
+            const service = services.find(s => s.id === item.id);
+            return `${service.name} × ${item.quantity} = ${(service.price * item.quantity).toLocaleString()} ₽`;
+        }).join('\n• ');
 
-        const orderData = {
-            items: orderItems,
-            total: total,
-            timestamp: new Date().toLocaleString(),
-            userId: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null,
-            username: window.Telegram?.WebApp?.initDataUnsafe?.user?.username || null
-        };
+        const message = `🆕 НОВЫЙ ЗАКАЗ!\n\n👤 Имя: ${name}\n📞 Контакт: ${phone}\n\n🛒 Состав заказа:\n• ${items}\n\n💰 Итого: ${total.toLocaleString()} ₽\n\n🕐 Время: ${new Date().toLocaleString()}`;
 
-        if (window.Telegram && Telegram.WebApp) {
-            Telegram.WebApp.sendData(JSON.stringify(orderData));
-            showToast('✅ Заказ отправлен! Менеджер свяжется');
-            cart = [];
-            updateCartUI();
-            setTimeout(() => {
-                Telegram.WebApp.close();
-            }, 1500);
-        } else {
-            alert(`📦 ЗАКАЗ ОФОРМЛЕН\n\n${JSON.stringify(orderData, null, 2)}\n\nВ Telegram данные уйдут автоматически`);
-            cart = [];
-            updateCartUI();
+        // Отправляем через бота-посредника
+        const BOT_TOKEN = '8128766310:AAElU3rQfLkPxLvDvZiE6X5Y0JxLcN7PqZw'; // ТОКЕН ВАШЕГО БОТА
+        const CHAT_ID = '8164402727'; // ID @serjantyabloko (получите через @userinfobot)
+
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
+            });
+            const result = await response.json();
+            if (result.ok) {
+                showToast('✅ Заказ отправлен! Свяжемся с вами');
+                cart = [];
+                updateCartUI();
+                closeModal();
+            } else {
+                showToast('❌ Ошибка, попробуйте позже');
+            }
+        } catch (error) {
+            console.error(error);
+            showToast('❌ Ошибка отправки');
         }
     }
 
@@ -536,28 +657,27 @@
         const toast = document.getElementById('toast-message');
         toast.innerText = message;
         toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 2000);
+        setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    // Инициализация Telegram WebApp
-    if (window.Telegram && Telegram.WebApp) {
-        const webapp = Telegram.WebApp;
-        webapp.ready();
-        webapp.expand();
-        webapp.setHeaderColor('#667eea');
-        webapp.setBackgroundColor('#667eea');
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderServices();
-        updateCartUI();
-        const checkoutBtn = document.getElementById('checkout-button');
-        if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', checkout);
+    // Обработчик кнопки "Оформить заказ"
+    document.getElementById('checkout-button').addEventListener('click', () => {
+        if (cart.length === 0) {
+            showToast('Корзина пуста');
+        } else {
+            openModal();
         }
     });
+
+    // Telegram WebApp
+    if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.setHeaderColor('#0f0c29');
+    }
+
+    renderServices();
+    updateCartUI();
 </script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
