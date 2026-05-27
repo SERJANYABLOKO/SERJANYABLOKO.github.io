@@ -622,7 +622,7 @@
         </div>
 
         <div class="header">
-            <h1>🤖Serjant Studio</h1>
+            <h1>🤖 Serjant Studio</h1>
             <p>Профессиональная разработка Telegram ботов</p>
             <div class="badge">⚡ Создание · Хостинг · Продвижение</div>
         </div>
@@ -676,10 +676,10 @@
 
     <script>
         // ========== НАСТРОЙКИ ==========
-        const BOT_TOKEN = '8886057284:AAHe0JOkmAn54vAjLMlBm7qDYt72yq2b9Sg';  // ЗАМЕНИТЕ
-        const CHAT_ID = '8673619246';  // ЗАМЕНИТЕ
+        const BOT_TOKEN = '8886057284:AAHe0JOkmAn54vAjLMlBm7qDYt72yq2b9Sg';  // ВАШ ТОКЕН
+        const CHAT_ID = '8673619246';  // ВАШ ID
         const PROMO_CODE = 'Family';
-        const DISCOUNT_PERCENT = 50;
+        const DISCOUNT_PERCENT = 50;  // Скидка 50%
         // ================================
 
         // Услуги
@@ -835,7 +835,7 @@
                             <input type="text" id="promo-input" class="promo-input" placeholder="Введите промокод" autocomplete="off">
                             <button id="apply-promo" class="promo-btn">Применить</button>
                         </div>
-                        ${!discountApplied ? '<div class="discount-info">💡 Промокод: <strong>Family</strong> — скидка 15%</div>' : '<div class="discount-info">✅ Промокод применён! Скидка 15%</div>'}
+                        ${discountApplied ? '<div class="discount-info">✅ Промокод применён! Скидка ' + DISCOUNT_PERCENT + '%</div>' : ''}
                     </div>
                 `;
                 for (let item of cart) {
