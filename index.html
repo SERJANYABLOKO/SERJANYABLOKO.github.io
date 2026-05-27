@@ -35,49 +35,129 @@
             margin: 0 auto;
         }
 
-        .theme-switch-wrapper {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
+        /* Меню настроек */
+        .settings-menu {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,210,255,0.2);
+            overflow: hidden;
         }
 
-        .theme-switch {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 5px;
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .settings-header h3 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-arrow {
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .settings-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .settings-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 20px;
+        }
+
+        .settings-content.open {
+            max-height: 300px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        body.light .setting-item {
+            border-bottom-color: rgba(0,0,0,0.1);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        /* Переключатель темы в настройках */
+        .theme-toggle {
             display: flex;
             gap: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 4px;
         }
 
-        .theme-btn {
-            padding: 8px 20px;
-            border-radius: 35px;
+        .theme-toggle-btn {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.2s;
-            border: none;
             background: transparent;
-            color: rgba(255,255,255,0.7);
+            border: none;
+            color: inherit;
+            transition: 0.2s;
         }
 
-        .theme-btn.active {
+        .theme-toggle-btn.active {
             background: #00d2ff;
             color: #1a1a2e;
-            box-shadow: 0 2px 8px rgba(0,210,255,0.3);
         }
 
-        body.light .theme-btn {
-            color: #1a1a2e;
+        /* Выбор языка */
+        .lang-select {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(0,210,255,0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: inherit;
+            font-size: 14px;
+            cursor: pointer;
         }
 
-        body.light .theme-btn.active {
-            background: #00d2ff;
+        body.light .lang-select {
+            background: white;
+        }
+
+        /* Кнопка поддержки */
+        .support-btn {
+            background: linear-gradient(135deg, #feca57 0%, #ff6b6b 100%);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
             color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
         }
 
+        /* Шапка */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -604,60 +684,84 @@
 </head>
 <body class="dark">
     <div class="container">
-        <div class="theme-switch-wrapper">
-            <div class="theme-switch">
-                <button class="theme-btn active" data-theme="dark">🌙 Тёмная</button>
-                <button class="theme-btn" data-theme="light">☀️ Светлая</button>
+        <!-- Меню настроек -->
+        <div class="settings-menu">
+            <div class="settings-header" id="settings-header">
+                <h3>⚙️ Настройки</h3>
+                <span class="settings-arrow" id="settings-arrow">▼</span>
+            </div>
+            <div class="settings-content" id="settings-content">
+                <!-- Тема -->
+                <div class="setting-item">
+                    <div class="setting-label">🌙 Тема</div>
+                    <div class="theme-toggle" id="theme-toggle-settings">
+                        <button class="theme-toggle-btn" data-theme="dark">Тёмная</button>
+                        <button class="theme-toggle-btn" data-theme="light">Светлая</button>
+                    </div>
+                </div>
+                <!-- Язык -->
+                <div class="setting-item">
+                    <div class="setting-label">🌍 Язык / Language</div>
+                    <select class="lang-select" id="lang-select">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <!-- Поддержка -->
+                <div class="setting-item">
+                    <div class="setting-label">💬 Поддержка</div>
+                    <button class="support-btn" id="support-btn">Написать @serjantyabloko</button>
+                </div>
             </div>
         </div>
 
         <div class="header">
             <h1>🤖 Serjant Studio</h1>
-            <p>Профессиональная разработка Telegram ботов</p>
+            <p id="header-desc">Профессиональная разработка Telegram ботов</p>
             <div class="badge">⚡ Создание · Хостинг · Продвижение</div>
         </div>
 
         <div class="ideas-section">
-            <div class="ideas-title">💡 ИДЕИ ДЛЯ ВАШЕГО БОТА</div>
+            <div class="ideas-title">💡 <span id="ideas-title">ИДЕИ ДЛЯ ВАШЕГО БОТА</span></div>
             <div class="ideas-grid" id="ideas-grid"></div>
         </div>
 
         <div id="services-list"></div>
 
         <div class="cart-section">
-            <div class="cart-title">🛒 Корзина</div>
+            <div class="cart-title">🛒 <span id="cart-title">Корзина</span></div>
             <div id="cart-block" class="cart-card"></div>
         </div>
     </div>
 
     <div id="cart-bar" class="cart-bar" style="display: none;">
         <div>
-            <div class="cart-total-label">Итого</div>
+            <div class="cart-total-label" id="total-label">Итого</div>
             <div class="cart-total-price"><span id="cart-total">0</span> ₽</div>
         </div>
-        <button id="checkout-button" class="checkout-btn">Оформить заказ →</button>
+        <button id="checkout-button" class="checkout-btn" id="checkout-btn">Оформить заказ →</button>
     </div>
 
     <div id="toast-message" class="toast">✓ Добавлено</div>
 
     <div id="contact-modal" class="modal">
         <div class="modal-content">
-            <h3>📋 Оформление заказа</h3>
+            <h3 id="modal-title">📋 Оформление заказа</h3>
             <div class="form-group">
-                <label>ФИО <span class="required">*</span></label>
+                <label id="label-fullname">ФИО <span class="required">*</span></label>
                 <input type="text" id="client-fullname" placeholder="Иванов Иван Иванович">
             </div>
             <div class="form-group">
-                <label>Телефон <span class="required">*</span></label>
+                <label id="label-phone">Телефон <span class="required">*</span></label>
                 <input type="tel" id="client-phone" placeholder="+7 (999) 123-45-67">
             </div>
             <div class="form-group">
-                <label>Email (необязательно)</label>
+                <label id="label-email">Email (необязательно)</label>
                 <input type="email" id="client-email" placeholder="ivan@example.com">
             </div>
             <div class="modal-buttons">
-                <button class="cancel-order" onclick="closeModal()">Отмена</button>
-                <button class="send-order" onclick="sendOrderToTelegram()">Отправить</button>
+                <button class="cancel-order" id="cancel-btn" onclick="closeModal()">Отмена</button>
+                <button class="send-order" id="send-btn" onclick="sendOrderToTelegram()">Отправить</button>
             </div>
         </div>
     </div>
@@ -669,6 +773,64 @@
         const PROMO_CODE = 'Family';
         const DISCOUNT_PERCENT = 50;
         // ================================
+
+        // Тексты для языков
+        const translations = {
+            ru: {
+                headerDesc: "Профессиональная разработка Telegram ботов",
+                ideasTitle: "ИДЕИ ДЛЯ ВАШЕГО БОТА",
+                cartTitle: "Корзина",
+                totalLabel: "Итого",
+                checkoutBtn: "Оформить заказ →",
+                modalTitle: "📋 Оформление заказа",
+                labelFullname: "ФИО",
+                labelPhone: "Телефон",
+                labelEmail: "Email (необязательно)",
+                cancelBtn: "Отмена",
+                sendBtn: "Отправить",
+                emptyCart: "🛍 Корзина пуста",
+                promoTitle: "🎁 Промокод",
+                promoPlaceholder: "Введите промокод",
+                promoApply: "Применить",
+                promoApplied: "✅ Промокод применён! Скидка",
+                promoError: "❌ Неверный промокод",
+                promoSuccess: "🎉 Промокод применён! Скидка",
+                addedToCart: "✓ Добавлена",
+                removedFromCart: "🗑 Удалено",
+                fillRequired: "⚠️ Заполните ФИО и телефон",
+                orderSent: "✅ Заказ отправлен!",
+                errorSend: "❌ Ошибка отправки",
+                errorConnection: "❌ Ошибка соединения"
+            },
+            en: {
+                headerDesc: "Professional Telegram bot development",
+                ideasTitle: "IDEAS FOR YOUR BOT",
+                cartTitle: "Cart",
+                totalLabel: "Total",
+                checkoutBtn: "Checkout →",
+                modalTitle: "📋 Order form",
+                labelFullname: "Full name",
+                labelPhone: "Phone",
+                labelEmail: "Email (optional)",
+                cancelBtn: "Cancel",
+                sendBtn: "Send",
+                emptyCart: "🛍 Cart is empty",
+                promoTitle: "🎁 Promo code",
+                promoPlaceholder: "Enter promo code",
+                promoApply: "Apply",
+                promoApplied: "✅ Promo code applied! Discount",
+                promoError: "❌ Invalid promo code",
+                promoSuccess: "🎉 Promo code applied! Discount",
+                addedToCart: "✓ Added",
+                removedFromCart: "🗑 Removed",
+                fillRequired: "⚠️ Fill in name and phone",
+                orderSent: "✅ Order sent!",
+                errorSend: "❌ Send error",
+                errorConnection: "❌ Connection error"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'ru';
 
         const services = [
             { id: 1, name: "🤖 Создание TG бота", description: "Бот под ключ любой сложности", price: 14900, oldPrice: 24900, features: ["Любая тематика", "Админ-панель", "Исходный код"] },
@@ -685,6 +847,22 @@
         let cart = [];
         let discountApplied = false;
 
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('header-desc').innerText = t.headerDesc;
+            document.getElementById('ideas-title').innerText = t.ideasTitle;
+            document.getElementById('cart-title').innerText = t.cartTitle;
+            document.getElementById('total-label').innerText = t.totalLabel;
+            document.getElementById('checkout-button').innerText = t.checkoutBtn;
+            document.getElementById('modal-title').innerText = t.modalTitle;
+            document.getElementById('label-fullname').innerHTML = t.labelFullname + ' <span class="required">*</span>';
+            document.getElementById('label-phone').innerHTML = t.labelPhone + ' <span class="required">*</span>';
+            document.getElementById('label-email').innerText = t.labelEmail;
+            document.getElementById('cancel-btn').innerText = t.cancelBtn;
+            document.getElementById('send-btn').innerText = t.sendBtn;
+            updateCartUI();
+        }
+
         function renderIdeas() {
             const container = document.getElementById('ideas-grid');
             container.innerHTML = '';
@@ -693,7 +871,7 @@
                 const chip = document.createElement('div');
                 chip.className = 'idea-chip';
                 chip.textContent = idea;
-                chip.onclick = () => showToast(`💡 Идея: ${idea}`);
+                chip.onclick = () => showToast(`💡 ${idea}`);
                 container.appendChild(chip);
             });
         }
@@ -744,7 +922,7 @@
             }
             if (discountApplied) applyPromoCode(true);
             updateCartUI();
-            showToast(`✓ ${service.name.split(' ')[1] || 'Услуга'} добавлена`);
+            showToast(`${translations[currentLang].addedToCart} ${service.name.split(' ')[1] || ''}`);
         }
 
         function removeFromCart(serviceId) {
@@ -755,7 +933,7 @@
                 applyPromoCode(true);
             }
             updateCartUI();
-            showToast('🗑 Удалено');
+            showToast(translations[currentLang].removedFromCart);
         }
 
         function updateQuantity(serviceId, delta) {
@@ -785,13 +963,14 @@
 
         function applyPromoCode(silent = false) {
             const input = document.getElementById('promo-input');
+            const t = translations[currentLang];
             if (input && input.value.toUpperCase() === PROMO_CODE.toUpperCase()) {
                 discountApplied = true;
-                if (!silent) showToast(`🎉 Промокод применён! Скидка ${DISCOUNT_PERCENT}%`);
+                if (!silent) showToast(`${t.promoSuccess} ${DISCOUNT_PERCENT}%`);
                 updateCartUI();
                 return true;
             } else if (input && !silent) {
-                showToast('❌ Неверный промокод');
+                showToast(t.promoError);
                 return false;
             }
             return false;
@@ -801,6 +980,7 @@
             const cartBlock = document.getElementById('cart-block');
             const cartBar = document.getElementById('cart-bar');
             const totalSpan = document.getElementById('cart-total');
+            const t = translations[currentLang];
 
             const subtotal = getSubtotal();
             const total = getTotal();
@@ -809,17 +989,17 @@
 
             if (cart.length === 0) {
                 cartBar.style.display = 'none';
-                cartBlock.innerHTML = '<div class="empty-cart">🛍 Корзина пуста</div>';
+                cartBlock.innerHTML = `<div class="empty-cart">${t.emptyCart}</div>`;
             } else {
                 cartBar.style.display = 'flex';
                 let cartHtml = `
                     <div class="promo-section">
-                        <div class="promo-title">🎁 Промокод</div>
+                        <div class="promo-title">${t.promoTitle}</div>
                         <div class="promo-input-group">
-                            <input type="text" id="promo-input" class="promo-input" placeholder="Введите промокод" autocomplete="off">
-                            <button id="apply-promo" class="promo-btn">Применить</button>
+                            <input type="text" id="promo-input" class="promo-input" placeholder="${t.promoPlaceholder}" autocomplete="off">
+                            <button id="apply-promo" class="promo-btn">${t.promoApply}</button>
                         </div>
-                        ${discountApplied ? '<div class="discount-info">✅ Промокод применён! Скидка ' + DISCOUNT_PERCENT + '%</div>' : ''}
+                        ${discountApplied ? `<div class="discount-info">✅ ${t.promoApplied} ${DISCOUNT_PERCENT}%</div>` : ''}
                     </div>
                 `;
                 for (let item of cart) {
@@ -845,7 +1025,7 @@
                     cartHtml += `<div style="margin-top: 12px; text-align: right; font-size: 13px; color: #feca57;">Скидка ${DISCOUNT_PERCENT}%: -${Math.round(subtotal * DISCOUNT_PERCENT / 100).toLocaleString()} ₽</div>`;
                 }
                 cartHtml += `<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; font-weight: 700;">
-                                Итого: ${total.toLocaleString()} ₽
+                                ${t.totalLabel}: ${total.toLocaleString()} ₽
                              </div>`;
                 cartBlock.innerHTML = cartHtml;
 
@@ -882,16 +1062,17 @@
         }
 
         async function sendOrderToTelegram() {
+            const t = translations[currentLang];
             const fullname = document.getElementById('client-fullname').value.trim();
             const phone = document.getElementById('client-phone').value.trim();
             const email = document.getElementById('client-email').value.trim();
 
             if (!fullname || !phone) {
-                showToast('⚠️ Заполните ФИО и телефон');
+                showToast(t.fillRequired);
                 return;
             }
             if (cart.length === 0) {
-                showToast('Корзина пуста');
+                showToast(t.emptyCart);
                 closeModal();
                 return;
             }
@@ -919,23 +1100,24 @@
                 });
                 const result = await response.json();
                 if (result.ok) {
-                    showToast('✅ Заказ отправлен!');
+                    showToast(t.orderSent);
                     cart = [];
                     discountApplied = false;
                     updateCartUI();
                     closeModal();
                 } else {
-                    showToast('❌ Ошибка отправки');
+                    showToast(t.errorSend);
                 }
             } catch (error) {
-                showToast('❌ Ошибка соединения');
+                showToast(t.errorConnection);
             }
         }
 
+        // Тема в настройках
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.className = savedTheme;
-            document.querySelectorAll('.theme-btn').forEach(btn => {
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
                 if (btn.dataset.theme === savedTheme) {
                     btn.classList.add('active');
                 } else {
@@ -947,7 +1129,7 @@
         function setTheme(theme) {
             document.body.className = theme;
             localStorage.setItem('theme', theme);
-            document.querySelectorAll('.theme-btn').forEach(btn => {
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
                 if (btn.dataset.theme === theme) {
                     btn.classList.add('active');
                 } else {
@@ -956,12 +1138,52 @@
             });
         }
 
-        document.querySelectorAll('.theme-btn').forEach(btn => {
+        // Язык
+        function initLanguage() {
+            const savedLang = localStorage.getItem('language') || 'ru';
+            currentLang = savedLang;
+            document.getElementById('lang-select').value = savedLang;
+            updateLanguage();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            updateLanguage();
+        }
+
+        // Меню настроек (сворачивание)
+        let settingsOpen = localStorage.getItem('settingsOpen') === 'true';
+        const settingsContent = document.getElementById('settings-content');
+        const settingsArrow = document.getElementById('settings-arrow');
+
+        function toggleSettings() {
+            settingsOpen = !settingsOpen;
+            localStorage.setItem('settingsOpen', settingsOpen);
+            if (settingsOpen) {
+                settingsContent.classList.add('open');
+                settingsArrow.classList.add('open');
+            } else {
+                settingsContent.classList.remove('open');
+                settingsArrow.classList.remove('open');
+            }
+        }
+
+        if (settingsOpen) {
+            settingsContent.classList.add('open');
+            settingsArrow.classList.add('open');
+        }
+
+        document.getElementById('settings-header').addEventListener('click', toggleSettings);
+        document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
             btn.addEventListener('click', () => setTheme(btn.dataset.theme));
         });
-
+        document.getElementById('lang-select').addEventListener('change', (e) => setLanguage(e.target.value));
+        document.getElementById('support-btn').addEventListener('click', () => {
+            window.open('https://t.me/serjantyabloko', '_blank');
+        });
         document.getElementById('checkout-button')?.addEventListener('click', () => {
-            if (cart.length === 0) showToast('Корзина пуста');
+            if (cart.length === 0) showToast(translations[currentLang].emptyCart);
             else openModal();
         });
 
@@ -971,6 +1193,7 @@
         }
 
         initTheme();
+        initLanguage();
         renderIdeas();
         renderServices();
         updateCartUI();
