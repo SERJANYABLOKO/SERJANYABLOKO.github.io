@@ -532,100 +532,6 @@
             cursor: pointer;
         }
 
-        /* Модальное окно выбора оплаты */
-        .payment-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 400;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-
-        .payment-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .payment-options {
-            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%);
-            border-radius: 40px;
-            padding: 30px 25px;
-            max-width: 340px;
-            width: 90%;
-            border: 1px solid rgba(0,210,255,0.4);
-            text-align: center;
-        }
-
-        body.light .payment-options {
-            background: white;
-        }
-
-        .payment-options h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #00d2ff;
-        }
-
-        .payment-options p {
-            font-size: 14px;
-            margin-bottom: 25px;
-            opacity: 0.7;
-        }
-
-        .payment-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .payment-rub-btn {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            border: none;
-            padding: 14px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .payment-stars-btn {
-            background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
-            border: none;
-            padding: 14px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .payment-cancel {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 12px;
-            border-radius: 50px;
-            color: inherit;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        body.light .payment-cancel {
-            background: #e0e0e0;
-            border-color: #ccc;
-            color: #333;
-        }
-
         /* Модальное окно контактов */
         .modal {
             position: fixed;
@@ -733,6 +639,49 @@
             color: #333;
         }
 
+        /* Блок выбора оплаты (две кнопки рядом) */
+        .payment-choice {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .payment-choice p {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #00d2ff;
+            text-align: center;
+        }
+
+        .payment-buttons-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .payment-rub-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .payment-stars-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
         .toast {
             position: fixed;
             bottom: 100px;
@@ -832,7 +781,7 @@
 
     <div id="toast-message" class="toast">✓ Добавлено</div>
 
-    <!-- Модальное окно контактов -->
+    <!-- Модальное окно контактов с выбором оплаты -->
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <h3 id="modal-title">📋 Оформление заказа</h3>
@@ -848,22 +797,18 @@
                 <label id="label-email">Email (необязательно)</label>
                 <input type="email" id="client-email" placeholder="ivan@example.com">
             </div>
-            <div class="modal-buttons">
-                <button class="cancel-order" id="cancel-btn" onclick="closeModal()">Отмена</button>
-                <button class="send-order" id="send-btn" onclick="submitOrder()">Продолжить</button>
+            
+            <!-- Блок выбора оплаты (две кнопки рядом) -->
+            <div class="payment-choice">
+                <p>💰 Выберите способ оплаты</p>
+                <div class="payment-buttons-row">
+                    <button class="payment-rub-btn" id="pay-rub-btn-modal">💰 Рубли</button>
+                    <button class="payment-stars-btn" id="pay-stars-btn-modal">⭐ Telegram Stars</button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно выбора оплаты -->
-    <div id="payment-modal" class="payment-modal">
-        <div class="payment-options">
-            <h3>💳 Выберите способ оплаты</h3>
-            <p>Сумма заказа: <strong id="payment-amount">0</strong> ₽</p>
-            <div class="payment-buttons">
-                <button class="payment-rub-btn" id="pay-rub-btn">💰 Оплатить рублями</button>
-                <button class="payment-stars-btn" id="pay-stars-btn">⭐ Оплатить Telegram Stars</button>
-                <button class="payment-cancel" id="payment-cancel-btn">Отмена</button>
+            
+            <div class="modal-buttons" style="margin-top: 15px;">
+                <button class="cancel-order" id="cancel-btn" onclick="closeModal()">Отмена</button>
             </div>
         </div>
     </div>
@@ -888,7 +833,6 @@
                 labelPhone: "Телефон",
                 labelEmail: "Email (необязательно)",
                 cancelBtn: "Отмена",
-                sendBtn: "Продолжить",
                 emptyCart: "🛍 Корзина пуста",
                 promoTitle: "🎁 Промокод",
                 promoPlaceholder: "Введите промокод",
@@ -901,10 +845,7 @@
                 fillRequired: "⚠️ Заполните ФИО и телефон",
                 orderSent: "✅ Заказ отправлен!",
                 errorSend: "❌ Ошибка отправки",
-                errorConnection: "❌ Ошибка соединения",
-                paymentTitle: "Выберите способ оплаты",
-                rubPay: "Оплатить рублями",
-                starsPay: "Оплатить Telegram Stars"
+                errorConnection: "❌ Ошибка соединения"
             },
             en: {
                 headerDesc: "Professional Telegram bot development",
@@ -917,7 +858,6 @@
                 labelPhone: "Phone",
                 labelEmail: "Email (optional)",
                 cancelBtn: "Cancel",
-                sendBtn: "Continue",
                 emptyCart: "🛍 Cart is empty",
                 promoTitle: "🎁 Promo code",
                 promoPlaceholder: "Enter promo code",
@@ -930,10 +870,7 @@
                 fillRequired: "⚠️ Fill in name and phone",
                 orderSent: "✅ Order sent!",
                 errorSend: "❌ Send error",
-                errorConnection: "❌ Connection error",
-                paymentTitle: "Select payment method",
-                rubPay: "Pay in RUB",
-                starsPay: "Pay with Telegram Stars"
+                errorConnection: "❌ Connection error"
             }
         };
 
@@ -967,7 +904,6 @@
             document.getElementById('label-phone').innerHTML = t.labelPhone + ' <span class="required">*</span>';
             document.getElementById('label-email').innerText = t.labelEmail;
             document.getElementById('cancel-btn').innerText = t.cancelBtn;
-            document.getElementById('send-btn').innerText = t.sendBtn;
             updateCartUI();
         }
 
@@ -1162,15 +1098,6 @@
             document.getElementById('contact-modal').classList.remove('active');
         }
 
-        function openPaymentModal(total) {
-            document.getElementById('payment-amount').innerText = total.toLocaleString();
-            document.getElementById('payment-modal').classList.add('active');
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').classList.remove('active');
-        }
-
         function showToast(message) {
             const toast = document.getElementById('toast-message');
             toast.innerText = message;
@@ -1190,7 +1117,7 @@
             message += `━━━━━━━━━━━━━━━━━━━━\n🛒 СОСТАВ ЗАКАЗА:\n${itemsList}\n━━━━━━━━━━━━━━━━━━━━\n`;
             if (orderData.discountApplied) message += `💰 Скидка: ${DISCOUNT_PERCENT}% (${orderData.discount.toLocaleString()} ₽)\n`;
             message += `💳 ИТОГО: ${orderData.total.toLocaleString()} ₽\n`;
-            message += `💸 Способ оплаты: ${paymentMethod === 'rub' ? '💰 Рубли (через менеджера)' : '⭐ Telegram Stars'}\n`;
+            message += `💸 Способ оплаты: ${paymentMethod === 'rub' ? '💰 Рубли' : '⭐ Telegram Stars'}\n`;
             message += `━━━━━━━━━━━━━━━━━━━━\n🕐 ${new Date().toLocaleString()}`;
 
             try {
@@ -1207,41 +1134,11 @@
             }
         }
 
-        function payWithStars(amount, orderData) {
-            // Конвертируем рубли в Stars (примерный курс: 1 Star = 1.5 рубля)
-            const starsAmount = Math.ceil(amount / 1.5);
-            
-            if (window.Telegram && Telegram.WebApp) {
-                // В реальном приложении нужно создать инвойс через бекенд
-                // Сейчас показываем демо-версию
-                Telegram.WebApp.showAlert(`⭐ Демо-оплата Stars\nСумма: ${starsAmount} ⭐\n\nВ реальном проекте здесь откроется окно оплаты Telegram Stars.`);
-                showToast(`⭐ Заказ на ${starsAmount} Stars отправлен! Менеджер свяжется`);
-                
-                // Очищаем корзину
-                cart = [];
-                discountApplied = false;
-                updateCartUI();
-                closePaymentModal();
-                closeModal();
-            } else {
-                showToast('⭐ Оплата Stars доступна только в Telegram');
-            }
-        }
-
-        function payWithRubles(orderData) {
-            showToast('💰 Заказ оформлен! Менеджер свяжется для оплаты');
-            cart = [];
-            discountApplied = false;
-            updateCartUI();
-            closePaymentModal();
-            closeModal();
-        }
-
-        async function submitOrder() {
-            const t = translations[currentLang];
+        function processOrder(paymentMethod) {
             const fullname = document.getElementById('client-fullname').value.trim();
             const phone = document.getElementById('client-phone').value.trim();
             const email = document.getElementById('client-email').value.trim();
+            const t = translations[currentLang];
 
             if (!fullname || !phone) {
                 showToast(t.fillRequired);
@@ -1267,7 +1164,7 @@
                 };
             });
 
-            currentOrderData = {
+            const orderData = {
                 fullname,
                 phone,
                 email: email || null,
@@ -1278,39 +1175,27 @@
                 discountApplied
             };
 
-            closeModal();
-            openPaymentModal(total);
+            sendOrderToTelegram(orderData, paymentMethod).then(success => {
+                if (success) {
+                    if (paymentMethod === 'rub') {
+                        showToast('💰 Заказ оформлен! Менеджер свяжется для оплаты');
+                    } else {
+                        const starsAmount = Math.ceil(total / 1.5);
+                        showToast(`⭐ Заказ на ${starsAmount} Stars отправлен! Менеджер свяжется`);
+                    }
+                    cart = [];
+                    discountApplied = false;
+                    updateCartUI();
+                    closeModal();
+                } else {
+                    showToast(t.errorSend);
+                }
+            });
         }
 
-        // Обработчики оплаты
-        document.getElementById('pay-rub-btn')?.addEventListener('click', () => {
-            if (currentOrderData) {
-                sendOrderToTelegram(currentOrderData, 'rub').then(success => {
-                    if (success) {
-                        payWithRubles(currentOrderData);
-                    } else {
-                        showToast(translations[currentLang].errorSend);
-                    }
-                });
-            }
-        });
-
-        document.getElementById('pay-stars-btn')?.addEventListener('click', () => {
-            if (currentOrderData) {
-                sendOrderToTelegram(currentOrderData, 'stars').then(success => {
-                    if (success) {
-                        payWithStars(currentOrderData.total, currentOrderData);
-                    } else {
-                        showToast(translations[currentLang].errorSend);
-                    }
-                });
-            }
-        });
-
-        document.getElementById('payment-cancel-btn')?.addEventListener('click', () => {
-            closePaymentModal();
-            openModal();
-        });
+        // Обработчики кнопок оплаты в модальном окне
+        document.getElementById('pay-rub-btn-modal')?.addEventListener('click', () => processOrder('rub'));
+        document.getElementById('pay-stars-btn-modal')?.addEventListener('click', () => processOrder('stars'));
 
         // Переключение темы
         function initTheme() {
@@ -1396,7 +1281,6 @@
         updateCartUI();
 
         window.closeModal = closeModal;
-        window.submitOrder = submitOrder;
     </script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
