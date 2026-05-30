@@ -35,9 +35,10 @@
             margin: 0 auto;
         }
 
+        /* Верхняя панель с профилем */
         .top-bar {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             margin-bottom: 15px;
         }
@@ -60,7 +61,8 @@
             transform: scale(1.05);
         }
 
-        .settings-menu {
+        /* ===== ОБЪЕДИНЕННОЕ МИНИ-ОКНО ===== */
+        .unified-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(15px);
             border-radius: 30px;
@@ -69,43 +71,49 @@
             overflow: hidden;
         }
 
-        .settings-header {
+        /* Табы */
+        .tabs {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            background: rgba(0,0,0,0.2);
-        }
-
-        .settings-header h3 {
-            font-size: 16px;
+            transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
         }
 
-        .settings-arrow {
-            font-size: 18px;
-            transition: transform 0.3s;
+        .tab-btn.active {
+            background: rgba(0,210,255,0.2);
+            color: #00d2ff;
+            border-bottom: 2px solid #00d2ff;
         }
 
-        .settings-arrow.open {
-            transform: rotate(180deg);
+        body.light .tab-btn.active {
+            background: rgba(0,210,255,0.1);
         }
 
-        .settings-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            padding: 0 20px;
+        /* Содержимое табов */
+        .tab-content {
+            display: none;
+            padding: 20px;
         }
 
-        .settings-content.open {
-            max-height: 350px;
-            padding: 0 20px 20px 20px;
+        .tab-content.active {
+            display: block;
         }
 
+        /* Стили для настроек внутри таба */
         .setting-item {
             display: flex;
             justify-content: space-between;
@@ -178,6 +186,56 @@
             font-size: 13px;
         }
 
+        /* Стили для регистрации/входа внутри таба */
+        .auth-form input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: inherit;
+            font-size: 14px;
+        }
+
+        body.light .auth-form input {
+            background: white;
+            border-color: #ddd;
+            color: #1a1a2e;
+        }
+
+        .auth-form input::placeholder {
+            opacity: 0.6;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .auth-switch-inline {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .auth-switch-inline span {
+            color: #00d2ff;
+            cursor: pointer;
+        }
+
+        .auth-title {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00d2ff;
+        }
+
+        /* Остальные стили */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -500,7 +558,7 @@
             cursor: pointer;
         }
 
-        .modal, .auth-modal {
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -517,12 +575,12 @@
             transition: 0.3s;
         }
 
-        .modal.active, .auth-modal.active {
+        .modal.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .modal-content, .auth-content {
+        .modal-content {
             background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%);
             border-radius: 40px;
             padding: 25px;
@@ -531,11 +589,11 @@
             border: 1px solid rgba(0,210,255,0.4);
         }
 
-        body.light .modal-content, body.light .auth-content {
+        body.light .modal-content {
             background: white;
         }
 
-        .modal-content h3, .auth-content h3 {
+        .modal-content h3 {
             font-size: 22px;
             margin-bottom: 15px;
             text-align: center;
@@ -701,32 +759,23 @@
         .toast.show {
             opacity: 1;
         }
-
-        .auth-switch {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 12px;
-        }
-
-        .auth-switch span {
-            color: #00d2ff;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body class="dark">
     <div class="container">
         <div class="top-bar">
-            <div></div>
             <div class="profile-icon" id="profile-icon">👤</div>
         </div>
 
-        <div class="settings-menu">
-            <div class="settings-header" id="settings-header">
-                <h3>⚙️ Настройки</h3>
-                <span class="settings-arrow" id="settings-arrow">▼</span>
+        <!-- ОБЪЕДИНЕННОЕ МИНИ-ОКНО: Настройки + Аккаунт -->
+        <div class="unified-card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="settings">⚙️ Настройки</button>
+                <button class="tab-btn" data-tab="account">👤 Аккаунт</button>
             </div>
-            <div class="settings-content" id="settings-content">
+            
+            <!-- Вкладка Настройки -->
+            <div class="tab-content active" id="tab-settings">
                 <div class="setting-item">
                     <div class="setting-label">🌙 Тема</div>
                     <div class="theme-toggle">
@@ -744,6 +793,38 @@
                 <div class="setting-item">
                     <div class="setting-label">💬 Поддержка</div>
                     <button class="support-btn" id="support-btn">Написать @serjantyabloko</button>
+                </div>
+            </div>
+            
+            <!-- Вкладка Аккаунт (вход/регистрация) -->
+            <div class="tab-content" id="tab-account">
+                <div id="auth-login-form">
+                    <div class="auth-title">🔐 Вход</div>
+                    <input type="email" id="login-email" placeholder="Email" autocomplete="off">
+                    <input type="password" id="login-password" placeholder="Пароль">
+                    <button class="btn-primary auth-btn" id="login-btn-tab">Войти</button>
+                    <div class="auth-switch-inline">
+                        Нет аккаунта? <span id="show-register-tab">Зарегистрироваться</span>
+                    </div>
+                </div>
+                <div id="auth-register-form" style="display: none;">
+                    <div class="auth-title">📝 Регистрация</div>
+                    <input type="text" id="reg-name" placeholder="Имя">
+                    <input type="tel" id="reg-phone" placeholder="Телефон">
+                    <input type="email" id="reg-email" placeholder="Email">
+                    <input type="password" id="reg-password" placeholder="Пароль">
+                    <button class="btn-primary auth-btn" id="register-btn-tab">Зарегистрироваться</button>
+                    <div class="auth-switch-inline">
+                        Уже есть аккаунт? <span id="show-login-tab">Войти</span>
+                    </div>
+                </div>
+                <div id="auth-user-info" style="display: none;">
+                    <div class="auth-title" id="user-welcome"></div>
+                    <div style="margin-bottom: 15px;">
+                        <div><strong>📧 Email:</strong> <span id="user-email-display"></span></div>
+                        <div><strong>📞 Телефон:</strong> <span id="user-phone-display"></span></div>
+                    </div>
+                    <button class="btn-secondary auth-btn" id="logout-tab-btn">🚪 Выйти</button>
                 </div>
             </div>
         </div>
@@ -777,52 +858,6 @@
 
     <div id="toast-message" class="toast">✓ Добавлено</div>
 
-    <!-- Модальное окно авторизации -->
-    <div id="auth-modal" class="auth-modal">
-        <div class="auth-content">
-            <h3 id="auth-title">🔐 Вход</h3>
-            <div id="login-form">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="login-email" placeholder="example@mail.com">
-                </div>
-                <div class="form-group">
-                    <label>Пароль</label>
-                    <input type="password" id="login-password" placeholder="••••••">
-                </div>
-                <div class="modal-buttons">
-                    <button class="btn-primary" id="login-btn">Войти</button>
-                    <button class="btn-secondary" id="close-auth-btn">Отмена</button>
-                </div>
-                <div class="auth-switch">
-                    Нет аккаунта? <span id="show-register">Зарегистрироваться</span>
-                </div>
-            </div>
-            <div id="register-form" style="display: none;">
-                <div class="form-group">
-                    <label>Имя <span class="required">*</span></label>
-                    <input type="text" id="reg-name" placeholder="Иван">
-                </div>
-                <div class="form-group">
-                    <label>Телефон <span class="required">*</span></label>
-                    <input type="tel" id="reg-phone" placeholder="+7 (999) 123-45-67">
-                </div>
-                <div class="form-group">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" id="reg-email" placeholder="example@mail.com">
-                </div>
-                <div class="form-group">
-                    <label>Пароль <span class="required">*</span></label>
-                    <input type="password" id="reg-password" placeholder="••••••">
-                </div>
-                <div class="modal-buttons">
-                    <button class="btn-primary" id="register-btn">Зарегистрироваться</button>
-                    <button class="btn-secondary" id="back-to-login">Назад</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Модальное окно личного кабинета -->
     <div id="profile-modal" class="modal">
         <div class="modal-content">
@@ -840,13 +875,7 @@
                         <div style="text-align: center; opacity: 0.6; padding: 20px;">Нет заказов</div>
                     </div>
                 </div>
-                <button class="logout-btn" id="logout-btn">🚪 Выйти из аккаунта</button>
                 <button class="btn-secondary" id="close-profile-btn" style="margin-top: 10px; width: 100%;">Закрыть</button>
-            </div>
-            <div id="profile-guest" style="display: none; text-align: center;">
-                <p style="margin-bottom: 20px;">Войдите в аккаунт, чтобы видеть историю заказов</p>
-                <button class="btn-primary" id="guest-login-btn">Войти</button>
-                <button class="btn-secondary" id="guest-close-btn" style="margin-top: 10px;">Закрыть</button>
             </div>
         </div>
     </div>
@@ -1118,13 +1147,34 @@
             }
         }
 
+        // АВТОРИЗАЦИЯ
+        function updateAuthUI() {
+            const loginForm = document.getElementById('auth-login-form');
+            const registerForm = document.getElementById('auth-register-form');
+            const userInfo = document.getElementById('auth-user-info');
+            
+            if (currentUser) {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+                userInfo.style.display = 'block';
+                document.getElementById('user-welcome').innerHTML = `👋 Здравствуйте, ${currentUser.name}!`;
+                document.getElementById('user-email-display').innerText = currentUser.email;
+                document.getElementById('user-phone-display').innerText = currentUser.phone || 'Не указан';
+                updateProfileIcon();
+            } else {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                userInfo.style.display = 'none';
+                updateProfileIcon();
+            }
+        }
+
         function login(email, password) {
             if (users[email] && users[email].password === password) {
                 currentUser = { email, name: users[email].name, phone: users[email].phone };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 showToast(`✅ Добро пожаловать, ${users[email].name}!`);
-                closeAuthModal();
-                updateProfileIcon();
+                updateAuthUI();
                 return true;
             }
             showToast('❌ Неверный email или пароль');
@@ -1145,8 +1195,7 @@
             currentUser = { email, name, phone };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             showToast(`✅ Добро пожаловать, ${name}!`);
-            closeAuthModal();
-            updateProfileIcon();
+            updateAuthUI();
             return true;
         }
 
@@ -1154,7 +1203,7 @@
             currentUser = null;
             localStorage.removeItem('currentUser');
             showToast('👋 Вы вышли из аккаунта');
-            updateProfileIcon();
+            updateAuthUI();
             closeProfileModal();
         }
 
@@ -1167,12 +1216,7 @@
         }
 
         function showProfile() {
-            const profileContent = document.getElementById('profile-content');
-            const profileGuest = document.getElementById('profile-guest');
-            
             if (currentUser) {
-                profileContent.style.display = 'block';
-                profileGuest.style.display = 'none';
                 document.getElementById('profile-name').innerText = currentUser.name;
                 document.getElementById('profile-email').innerText = currentUser.email;
                 document.getElementById('profile-phone').innerHTML = `📞 ${currentUser.phone || 'Не указан'}`;
@@ -1196,9 +1240,7 @@
                 }
                 document.getElementById('profile-modal').classList.add('active');
             } else {
-                profileContent.style.display = 'none';
-                profileGuest.style.display = 'block';
-                document.getElementById('profile-modal').classList.add('active');
+                showToast('⚠️ Сначала войдите в аккаунт');
             }
         }
 
@@ -1206,18 +1248,14 @@
             const icon = document.getElementById('profile-icon');
             if (currentUser) {
                 icon.innerHTML = currentUser.name.charAt(0).toUpperCase();
-                icon.style.background = 'linear-gradient(135deg, #00d2ff, #7b2cbf)';
             } else {
                 icon.innerHTML = '👤';
-                icon.style.background = 'linear-gradient(135deg, #00d2ff, #7b2cbf)';
             }
         }
 
-        function openAuthModal() { document.getElementById('auth-modal').classList.add('active'); }
-        function closeAuthModal() { document.getElementById('auth-modal').classList.remove('active'); }
-        function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
         function openOrderModal() { document.getElementById('order-modal').classList.add('active'); }
         function closeOrderModal() { document.getElementById('order-modal').classList.remove('active'); }
+        function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
         
         function showToast(msg) {
             const toast = document.getElementById('toast-message');
@@ -1277,6 +1315,7 @@
             }
         }
 
+        // Тема
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.className = savedTheme;
@@ -1295,6 +1334,7 @@
             });
         }
 
+        // Язык
         function initLanguage() {
             const savedLang = localStorage.getItem('language') || 'ru';
             currentLang = savedLang;
@@ -1308,50 +1348,59 @@
             updateLanguage();
         }
 
+        // Табы
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.dataset.tab;
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                });
+            });
+        }
+
+        // Восстановление сессии
         const savedUser = localStorage.getItem('currentUser');
         if (savedUser) currentUser = JSON.parse(savedUser);
-        updateProfileIcon();
+        updateAuthUI();
 
+        // Обработчики
         document.getElementById('profile-icon').addEventListener('click', showProfile);
         document.getElementById('close-profile-btn').addEventListener('click', closeProfileModal);
-        document.getElementById('guest-login-btn').addEventListener('click', () => { closeProfileModal(); openAuthModal(); });
-        document.getElementById('guest-close-btn').addEventListener('click', closeProfileModal);
-        document.getElementById('logout-btn').addEventListener('click', logout);
-        document.getElementById('show-register').addEventListener('click', () => { 
-            document.getElementById('login-form').style.display = 'none'; 
-            document.getElementById('register-form').style.display = 'block'; 
-            document.getElementById('auth-title').innerText = '📝 Регистрация'; 
+        document.getElementById('logout-tab-btn').addEventListener('click', logout);
+        
+        document.getElementById('show-register-tab').addEventListener('click', () => {
+            document.getElementById('auth-login-form').style.display = 'none';
+            document.getElementById('auth-register-form').style.display = 'block';
         });
-        document.getElementById('back-to-login').addEventListener('click', () => { 
-            document.getElementById('login-form').style.display = 'block'; 
-            document.getElementById('register-form').style.display = 'none'; 
-            document.getElementById('auth-title').innerText = '🔐 Вход'; 
+        document.getElementById('show-login-tab').addEventListener('click', () => {
+            document.getElementById('auth-login-form').style.display = 'block';
+            document.getElementById('auth-register-form').style.display = 'none';
         });
-        document.getElementById('login-btn').addEventListener('click', () => login(document.getElementById('login-email').value, document.getElementById('login-password').value));
-        document.getElementById('register-btn').addEventListener('click', () => register(
-            document.getElementById('reg-name').value, 
-            document.getElementById('reg-phone').value, 
-            document.getElementById('reg-email').value, 
-            document.getElementById('reg-password').value
-        ));
-        document.getElementById('close-auth-btn').addEventListener('click', closeAuthModal);
+        
+        document.getElementById('login-btn-tab').addEventListener('click', () => {
+            login(document.getElementById('login-email').value, document.getElementById('login-password').value);
+        });
+        document.getElementById('register-btn-tab').addEventListener('click', () => {
+            register(
+                document.getElementById('reg-name').value,
+                document.getElementById('reg-phone').value,
+                document.getElementById('reg-email').value,
+                document.getElementById('reg-password').value
+            );
+        });
+        
         document.getElementById('pay-rub-btn-modal').addEventListener('click', () => processOrder('rub'));
         document.getElementById('pay-stars-btn-modal').addEventListener('click', () => processOrder('stars'));
         document.getElementById('cancel-order-btn').addEventListener('click', closeOrderModal);
-        document.getElementById('checkout-button').addEventListener('click', () => { 
-            if (cart.length === 0) showToast(translations[currentLang].emptyCart); 
-            else openOrderModal(); 
-        });
-        
-        let settingsOpen = localStorage.getItem('settingsOpen') === 'true';
-        const settingsContent = document.getElementById('settings-content');
-        const settingsArrow = document.getElementById('settings-arrow');
-        if (settingsOpen) { settingsContent.classList.add('open'); settingsArrow.classList.add('open'); }
-        document.getElementById('settings-header').addEventListener('click', () => {
-            settingsOpen = !settingsOpen;
-            localStorage.setItem('settingsOpen', settingsOpen);
-            if (settingsOpen) { settingsContent.classList.add('open'); settingsArrow.classList.add('open'); }
-            else { settingsContent.classList.remove('open'); settingsArrow.classList.remove('open'); }
+        document.getElementById('checkout-button').addEventListener('click', () => {
+            if (cart.length === 0) showToast(translations[currentLang].emptyCart);
+            else openOrderModal();
         });
 
         document.querySelectorAll('.theme-toggle-btn').forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
@@ -1362,6 +1411,7 @@
 
         initTheme();
         initLanguage();
+        initTabs();
         renderIdeas();
         renderServices();
         updateCartUI();
