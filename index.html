@@ -35,7 +35,6 @@
             margin: 0 auto;
         }
 
-        /* Шапка с профилем */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -61,7 +60,6 @@
             transform: scale(1.05);
         }
 
-        /* Меню настроек */
         .settings-menu {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(15px);
@@ -104,7 +102,7 @@
         }
 
         .settings-content.open {
-            max-height: 300px;
+            max-height: 350px;
             padding: 0 20px 20px 20px;
         }
 
@@ -180,7 +178,6 @@
             font-size: 13px;
         }
 
-        /* Header основной */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -503,7 +500,6 @@
             cursor: pointer;
         }
 
-        /* Модальные окна */
         .modal, .auth-modal {
             position: fixed;
             top: 0;
@@ -557,6 +553,10 @@
             opacity: 0.8;
         }
 
+        .form-group .required {
+            color: #ff6b6b;
+        }
+
         .form-group input {
             width: 100%;
             padding: 10px 14px;
@@ -605,7 +605,6 @@
             color: #333;
         }
 
-        /* Личный кабинет */
         .profile-info {
             text-align: center;
             margin-bottom: 20px;
@@ -631,6 +630,12 @@
         .profile-email {
             font-size: 12px;
             opacity: 0.7;
+        }
+
+        .profile-phone {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 4px;
         }
 
         .orders-list {
@@ -711,13 +716,11 @@
 </head>
 <body class="dark">
     <div class="container">
-        <!-- Верхняя панель с профилем -->
         <div class="top-bar">
             <div></div>
             <div class="profile-icon" id="profile-icon">👤</div>
         </div>
 
-        <!-- Меню настроек -->
         <div class="settings-menu">
             <div class="settings-header" id="settings-header">
                 <h3>⚙️ Настройки</h3>
@@ -797,15 +800,19 @@
             </div>
             <div id="register-form" style="display: none;">
                 <div class="form-group">
-                    <label>Имя</label>
+                    <label>Имя <span class="required">*</span></label>
                     <input type="text" id="reg-name" placeholder="Иван">
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>Телефон <span class="required">*</span></label>
+                    <input type="tel" id="reg-phone" placeholder="+7 (999) 123-45-67">
+                </div>
+                <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
                     <input type="email" id="reg-email" placeholder="example@mail.com">
                 </div>
                 <div class="form-group">
-                    <label>Пароль</label>
+                    <label>Пароль <span class="required">*</span></label>
                     <input type="password" id="reg-password" placeholder="••••••">
                 </div>
                 <div class="modal-buttons">
@@ -825,6 +832,7 @@
                     <div class="profile-avatar" id="profile-avatar">👤</div>
                     <div class="profile-name" id="profile-name">Гость</div>
                     <div class="profile-email" id="profile-email"></div>
+                    <div class="profile-phone" id="profile-phone"></div>
                 </div>
                 <div id="orders-history">
                     <h4 style="margin: 15px 0 10px; font-size: 16px;">📦 История заказов</h4>
@@ -880,7 +888,6 @@
         const DISCOUNT_PERCENT = 50;
         // ================================
 
-        // Пользователи и данные
         let currentUser = null;
         let users = JSON.parse(localStorage.getItem('users')) || {};
         let userOrders = JSON.parse(localStorage.getItem('userOrders')) || {};
@@ -1111,10 +1118,9 @@
             }
         }
 
-        // Авторизация
         function login(email, password) {
             if (users[email] && users[email].password === password) {
-                currentUser = { email, name: users[email].name };
+                currentUser = { email, name: users[email].name, phone: users[email].phone };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 showToast(`✅ Добро пожаловать, ${users[email].name}!`);
                 closeAuthModal();
@@ -1125,14 +1131,18 @@
             return false;
         }
 
-        function register(name, email, password) {
+        function register(name, phone, email, password) {
             if (users[email]) {
-                showToast('❌ Пользователь уже существует');
+                showToast('❌ Пользователь с таким email уже существует');
                 return false;
             }
-            users[email] = { name, password };
+            if (!phone || phone.length < 10) {
+                showToast('❌ Введите корректный номер телефона');
+                return false;
+            }
+            users[email] = { name, phone, password };
             localStorage.setItem('users', JSON.stringify(users));
-            currentUser = { email, name };
+            currentUser = { email, name, phone };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             showToast(`✅ Добро пожаловать, ${name}!`);
             closeAuthModal();
@@ -1165,6 +1175,7 @@
                 profileGuest.style.display = 'none';
                 document.getElementById('profile-name').innerText = currentUser.name;
                 document.getElementById('profile-email').innerText = currentUser.email;
+                document.getElementById('profile-phone').innerHTML = `📞 ${currentUser.phone || 'Не указан'}`;
                 document.getElementById('profile-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
                 
                 const orders = userOrders[currentUser.email] || [];
@@ -1202,12 +1213,12 @@
             }
         }
 
-        // Модальные окна
         function openAuthModal() { document.getElementById('auth-modal').classList.add('active'); }
         function closeAuthModal() { document.getElementById('auth-modal').classList.remove('active'); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
         function openOrderModal() { document.getElementById('order-modal').classList.add('active'); }
         function closeOrderModal() { document.getElementById('order-modal').classList.remove('active'); }
+        
         function showToast(msg) {
             const toast = document.getElementById('toast-message');
             toast.innerText = msg;
@@ -1266,7 +1277,6 @@
             }
         }
 
-        // Инициализация
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.body.className = savedTheme;
@@ -1298,26 +1308,40 @@
             updateLanguage();
         }
 
-        // Восстановление сессии
         const savedUser = localStorage.getItem('currentUser');
         if (savedUser) currentUser = JSON.parse(savedUser);
         updateProfileIcon();
 
-        // Обработчики
         document.getElementById('profile-icon').addEventListener('click', showProfile);
         document.getElementById('close-profile-btn').addEventListener('click', closeProfileModal);
         document.getElementById('guest-login-btn').addEventListener('click', () => { closeProfileModal(); openAuthModal(); });
         document.getElementById('guest-close-btn').addEventListener('click', closeProfileModal);
         document.getElementById('logout-btn').addEventListener('click', logout);
-        document.getElementById('show-register').addEventListener('click', () => { document.getElementById('login-form').style.display = 'none'; document.getElementById('register-form').style.display = 'block'; document.getElementById('auth-title').innerText = '📝 Регистрация'; });
-        document.getElementById('back-to-login').addEventListener('click', () => { document.getElementById('login-form').style.display = 'block'; document.getElementById('register-form').style.display = 'none'; document.getElementById('auth-title').innerText = '🔐 Вход'; });
+        document.getElementById('show-register').addEventListener('click', () => { 
+            document.getElementById('login-form').style.display = 'none'; 
+            document.getElementById('register-form').style.display = 'block'; 
+            document.getElementById('auth-title').innerText = '📝 Регистрация'; 
+        });
+        document.getElementById('back-to-login').addEventListener('click', () => { 
+            document.getElementById('login-form').style.display = 'block'; 
+            document.getElementById('register-form').style.display = 'none'; 
+            document.getElementById('auth-title').innerText = '🔐 Вход'; 
+        });
         document.getElementById('login-btn').addEventListener('click', () => login(document.getElementById('login-email').value, document.getElementById('login-password').value));
-        document.getElementById('register-btn').addEventListener('click', () => register(document.getElementById('reg-name').value, document.getElementById('reg-email').value, document.getElementById('reg-password').value));
+        document.getElementById('register-btn').addEventListener('click', () => register(
+            document.getElementById('reg-name').value, 
+            document.getElementById('reg-phone').value, 
+            document.getElementById('reg-email').value, 
+            document.getElementById('reg-password').value
+        ));
         document.getElementById('close-auth-btn').addEventListener('click', closeAuthModal);
         document.getElementById('pay-rub-btn-modal').addEventListener('click', () => processOrder('rub'));
         document.getElementById('pay-stars-btn-modal').addEventListener('click', () => processOrder('stars'));
         document.getElementById('cancel-order-btn').addEventListener('click', closeOrderModal);
-        document.getElementById('checkout-button').addEventListener('click', () => { if (cart.length === 0) showToast(translations[currentLang].emptyCart); else openOrderModal(); });
+        document.getElementById('checkout-button').addEventListener('click', () => { 
+            if (cart.length === 0) showToast(translations[currentLang].emptyCart); 
+            else openOrderModal(); 
+        });
         
         let settingsOpen = localStorage.getItem('settingsOpen') === 'true';
         const settingsContent = document.getElementById('settings-content');
