@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameDev Studio | Боты и мини-приложения</title>
+    <title>GameDev Studio | Боты, Сайты, Хостинг, Приложения</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
     <style>
-        /* ===== БАЗА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -45,7 +44,6 @@
             padding: 0 20px;
         }
 
-        /* ===== НАВИГАЦИЯ ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -145,7 +143,6 @@
             transition: all 0.3s ease;
         }
 
-        /* ===== СТРАНИЦЫ ===== */
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
@@ -236,7 +233,6 @@
             box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
         }
 
-        /* ===== ГЛАВНАЯ ===== */
         .hero {
             min-height: 90vh;
             display: flex;
@@ -425,7 +421,6 @@
         .hero-code .code-window .function { color: #6bcbff; }
         .hero-code .code-window .variable { color: #ff9f43; }
 
-        /* ===== УСЛУГИ ===== */
         .services-page {
             padding: 40px 0 100px;
             background: rgba(0, 255, 136, 0.01);
@@ -433,7 +428,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
@@ -498,7 +493,22 @@
             border: 1px solid rgba(0, 255, 136, 0.05);
         }
 
-        /* ===== ПОРТФОЛИО ===== */
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .service-features span {
+            font-size: 0.75rem;
+            padding: 3px 12px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 20px;
+            color: #9090a0;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
         .portfolio-page {
             padding: 40px 0 100px;
             background: rgba(0, 204, 255, 0.01);
@@ -566,7 +576,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== КАЛЬКУЛЯТОР ===== */
         .calculator-page {
             padding: 40px 0 100px;
         }
@@ -662,7 +671,6 @@
             margin-bottom: 5px;
         }
 
-        /* ===== КОНТАКТЫ ===== */
         .contact-page {
             padding: 40px 0 100px;
             background: rgba(0, 255, 136, 0.01);
@@ -760,7 +768,6 @@
             text-decoration: none;
         }
 
-        /* ===== ПОДВАЛ ===== */
         .footer {
             padding: 40px 0;
             text-align: center;
@@ -779,7 +786,6 @@
             color: #00ccff;
         }
 
-        /* ===== УВЕДОМЛЕНИЕ ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -808,7 +814,6 @@
             box-shadow: 0 10px 40px rgba(255, 71, 87, 0.2);
         }
 
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 992px) {
             .hero .container {
                 grid-template-columns: 1fr;
@@ -943,15 +948,17 @@
                         <span class="badge">⚡ Python</span>
                         <span class="badge">🕹️ TG Mini Apps</span>
                         <span class="badge">🎮 Rust / MC / FN</span>
+                        <span class="badge">☁️ Хостинг</span>
+                        <span class="badge">📲 Приложения</span>
                     </div>
                     <h1>
                         Создаю <br />
-                        <span class="highlight">ботов и мини-приложения</span><br />
+                        <span class="highlight">ботов, сайты, приложения</span><br />
                         для игровых сообществ
                     </h1>
                     <p>
-                        Разрабатываю Telegram-ботов, Mini Apps и веб-сервисы для серверов
-                        Rust, Minecraft и Fortnite. Быстро, качественно, с душой.
+                        Разрабатываю Telegram-ботов, Mini Apps, веб-сервисы, приложения
+                        и предоставляю хостинг для игровых проектов. Быстро, качественно, с душой.
                     </p>
                     <div class="hero-buttons">
                         <a href="#" class="btn" data-page="contact">Заказать проект</a>
@@ -974,12 +981,12 @@
                 </div>
                 <div class="hero-code">
                     <div class="code-window">
-                        <div class="line"><span class="comment"># Бот для вашего сервера</span></div>
+                        <div class="line"><span class="comment"># Полный стек для вашего проекта</span></div>
                         <div class="line"><span class="keyword">from</span> telegram <span class="keyword">import</span> Bot</div>
-                        <div class="line"><span class="keyword">class</span> <span class="function">GameBot</span>:</div>
+                        <div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</div>
+                        <div class="line"><span class="keyword">class</span> <span class="function">GameProject</span>:</div>
                         <div class="line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):</div>
-                        <div class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">self</span>.<span class="variable">status</span> = <span class="string">"Online"</span></div>
-                        <div class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">self</span>.<span class="variable">players</span> = <span class="string">"🚀"</span></div>
+                        <div class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">self</span>.<span class="variable">status</span> = <span class="string">"🚀 Готов к работе!"</span></div>
                     </div>
                 </div>
             </div>
@@ -992,29 +999,65 @@
             <div class="container">
                 <h2 class="section-title">Мои услуги</h2>
                 <div class="services-grid">
+                    <!-- 1. Telegram Боты -->
                     <div class="service-card">
                         <span class="service-icon">🤖</span>
                         <h3>Telegram Боты</h3>
                         <p>Автоматизация серверов, розыгрыши, модерация, статистика игроков и админ-панели.</p>
                         <span class="service-tag">Python + aiogram</span>
                     </div>
+
+                    <!-- 2. Mini Apps -->
                     <div class="service-card">
                         <span class="service-icon">📱</span>
                         <h3>Mini Apps</h3>
                         <p>Интерактивные приложения внутри Telegram: магазины скинов, клановые чаты, доски лидеров.</p>
                         <span class="service-tag">HTML + CSS + JS</span>
                     </div>
+
+                    <!-- 3. Веб-сервисы -->
                     <div class="service-card">
                         <span class="service-icon">🌐</span>
                         <h3>Веб-сервисы</h3>
                         <p>Сайты для серверов, панели статистики, лендинги для игровых проектов.</p>
                         <span class="service-tag">Flask + HTML</span>
                     </div>
+
+                    <!-- 4. Игровые интеграции -->
                     <div class="service-card">
                         <span class="service-icon">🎮</span>
                         <h3>Игровые интеграции</h3>
                         <p>Связка ботов с Rust, Minecraft и Fortnite через RCON, API и вебхуки.</p>
                         <span class="service-tag">RCON + Webhooks</span>
+                    </div>
+
+                    <!-- 5. Хостинг (объединенный) -->
+                    <div class="service-card">
+                        <span class="service-icon">☁️</span>
+                        <h3>Хостинг ботов и сайтов</h3>
+                        <p>24/7 размещение ботов и сайтов на надежных серверах. SSL-сертификаты, бекапы, мониторинг, авто-перезапуск.</p>
+                        <span class="service-tag">Linux + Docker + Nginx</span>
+                        <div class="service-features">
+                            <span>🛡️ SSL</span>
+                            <span>💾 Бекапы</span>
+                            <span>📊 Мониторинг</span>
+                            <span>🔄 Авто-рестарт</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Приложения (десктоп + мобильные) -->
+                    <div class="service-card">
+                        <span class="service-icon">💻</span>
+                        <h3>Создание приложений</h3>
+                        <p>Десктопные приложения для Windows, macOS, Linux и мобильные для iOS, Android. Для игровых сообществ.</p>
+                        <span class="service-tag">Flutter / React Native / Python</span>
+                        <div class="service-features">
+                            <span>🪟 Windows</span>
+                            <span>🍎 macOS</span>
+                            <span>🐧 Linux</span>
+                            <span>📱 iOS</span>
+                            <span>🤖 Android</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1072,6 +1115,8 @@
                         <option value="bot">Бот для Telegram</option>
                         <option value="miniapp">Mini App в Telegram</option>
                         <option value="website">Веб-сайт / Панель</option>
+                        <option value="app">Приложение (десктоп/мобильное)</option>
+                        <option value="hosting">Хостинг (ботов + сайтов)</option>
                         <option value="full">Полный комплекс</option>
                     </select>
 
@@ -1111,6 +1156,18 @@
                             <option value="minecraft">⛏️ Minecraft</option>
                             <option value="fortnite">🔫 Fortnite</option>
                             <option value="other">🎯 Другая</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Какая услуга интересует?</label>
+                        <select id="service">
+                            <option value="bot">🤖 Telegram Бот</option>
+                            <option value="miniapp">📱 Mini App</option>
+                            <option value="website">🌐 Веб-сервис</option>
+                            <option value="integration">🎮 Игровая интеграция</option>
+                            <option value="hosting">☁️ Хостинг</option>
+                            <option value="app">💻 Приложение</option>
+                            <option value="full">🔥 Полный комплекс</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1171,22 +1228,16 @@
         };
 
         function showPage(pageId) {
-            // Скрываем все страницы
             Object.values(pages).forEach(page => page.classList.remove('active'));
-            // Показываем нужную
             if (pages[pageId]) pages[pageId].classList.add('active');
-            // Обновляем ссылки
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.page === pageId) link.classList.add('active');
             });
-            // Закрываем бургер
             document.getElementById('navLinks').classList.remove('active');
-            // Скролл наверх
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Клики по ссылкам в навигации
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1195,7 +1246,6 @@
             });
         });
 
-        // Клики по кнопкам с data-page
         document.querySelectorAll('[data-page]').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1230,10 +1280,10 @@
         const priceDisplay = document.getElementById('priceDisplay');
 
         const basePrices = {
-            rust: { bot: 8000, miniapp: 15000, website: 12000, full: 25000 },
-            minecraft: { bot: 7000, miniapp: 12000, website: 10000, full: 20000 },
-            fortnite: { bot: 6000, miniapp: 10000, website: 8000, full: 18000 },
-            other: { bot: 5000, miniapp: 8000, website: 7000, full: 15000 }
+            rust: { bot: 8000, miniapp: 15000, website: 12000, app: 25000, hosting: 5000, full: 30000 },
+            minecraft: { bot: 7000, miniapp: 12000, website: 10000, app: 20000, hosting: 4000, full: 25000 },
+            fortnite: { bot: 6000, miniapp: 10000, website: 8000, app: 18000, hosting: 4000, full: 22000 },
+            other: { bot: 5000, miniapp: 8000, website: 7000, app: 15000, hosting: 3000, full: 18000 }
         };
 
         const complexityLabels = ['Очень простая', 'Простая', 'Средняя', 'Сложная', 'Очень сложная'];
@@ -1267,12 +1317,23 @@
             other: '🎯 Другая'
         };
 
+        const serviceNames = {
+            bot: '🤖 Telegram Бот',
+            miniapp: '📱 Mini App',
+            website: '🌐 Веб-сервис',
+            integration: '🎮 Игровая интеграция',
+            hosting: '☁️ Хостинг',
+            app: '💻 Приложение',
+            full: '🔥 Полный комплекс'
+        };
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name').value.trim();
             const tg = document.getElementById('tg').value.trim();
             const game = document.getElementById('game').value;
+            const service = document.getElementById('service').value;
             const message = document.getElementById('message').value.trim();
 
             if (!name || !tg || !message) {
@@ -1292,6 +1353,7 @@
         👤 Имя: ${name}
         📱 Telegram: ${tg}
         🎮 Игра: ${gameNames[game] || game}
+        🔧 Услуга: ${serviceNames[service] || service}
 
         📝 Задача:
         ${message}
