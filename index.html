@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GameDev Studio | Боты и мини-приложения</title>
     
-    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
     <style>
-        /* ===== ОБНУЛЕНИЕ И БАЗА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== СКРОЛЛБАР ===== */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -40,7 +37,6 @@
             border-radius: 4px;
         }
 
-        /* ===== ОБЩИЕ КЛАССЫ ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -96,7 +92,6 @@
             box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
         }
 
-        /* ===== НАВИГАЦИЯ ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -182,7 +177,6 @@
             transition: all 0.3s ease;
         }
 
-        /* ===== ГЛАВНЫЙ ЭКРАН (HERO) ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -192,7 +186,6 @@
             overflow: hidden;
         }
 
-        /* Анимированный фон с сеткой */
         .hero::before {
             content: '';
             position: absolute;
@@ -294,7 +287,6 @@
             color: #707080;
         }
 
-        /* Анимация для героя (код) */
         .hero-code {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(0, 255, 136, 0.1);
@@ -353,7 +345,6 @@
             color: #6bcbff;
         }
 
-        /* ===== УСЛУГИ ===== */
         .services {
             padding: 100px 0;
             background: rgba(0, 255, 136, 0.02);
@@ -424,7 +415,6 @@
             color: #00ff88;
         }
 
-        /* ===== КАЛЬКУЛЯТОР ===== */
         .calculator {
             padding: 100px 0;
         }
@@ -508,7 +498,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== ПОРТФОЛИО ===== */
         .portfolio {
             padding: 100px 0;
             background: rgba(0, 255, 136, 0.02);
@@ -558,7 +547,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== ФОРМА ЗАЯВКИ ===== */
         .contact {
             padding: 100px 0;
         }
@@ -612,7 +600,6 @@
             width: 100%;
         }
 
-        /* ===== ПОДВАЛ ===== */
         .footer {
             padding: 40px 0;
             text-align: center;
@@ -626,7 +613,6 @@
             text-decoration: none;
         }
 
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 992px) {
             .hero .container {
                 grid-template-columns: 1fr;
@@ -712,7 +698,6 @@
             }
         }
 
-        /* ===== УВЕДОМЛЕНИЕ ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -732,11 +717,15 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        .toast.error {
+            background: #ff4757;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ===== НАВИГАЦИЯ ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo">GAME<span>DEV</span></a>
@@ -754,7 +743,6 @@
         </div>
     </nav>
 
-    <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-content">
@@ -804,7 +792,6 @@
         </div>
     </section>
 
-    <!-- ===== УСЛУГИ ===== -->
     <section class="services" id="services">
         <div class="container">
             <h2 class="section-title">Что я делаю</h2>
@@ -837,7 +824,6 @@
         </div>
     </section>
 
-    <!-- ===== КАЛЬКУЛЯТОР ===== -->
     <section class="calculator" id="calculator">
         <div class="container">
             <h2 class="section-title">Калькулятор стоимости</h2>
@@ -872,7 +858,6 @@
         </div>
     </section>
 
-    <!-- ===== ПОРТФОЛИО ===== -->
     <section class="portfolio" id="portfolio">
         <div class="container">
             <h2 class="section-title">Мои работы</h2>
@@ -902,7 +887,6 @@
         </div>
     </section>
 
-    <!-- ===== ФОРМА ===== -->
     <section class="contact" id="contact">
         <div class="container">
             <h2 class="section-title">Обсудить проект</h2>
@@ -933,7 +917,6 @@
         </div>
     </section>
 
-    <!-- ===== ПОДВАЛ ===== -->
     <footer class="footer">
         <div class="container">
             <p>
@@ -943,10 +926,8 @@
         </div>
     </footer>
 
-    <!-- ===== УВЕДОМЛЕНИЕ ===== -->
     <div class="toast" id="toast">✅ Заявка отправлена! Я свяжусь с вами в Telegram</div>
 
-    <!-- ===== СКРИПТЫ ===== -->
     <script>
         // ===== БУРГЕР =====
         const burger = document.getElementById('burger');
@@ -956,14 +937,13 @@
             navLinks.classList.toggle('active');
         });
 
-        // Закрываем меню при клике на ссылку
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
 
-        // ===== НАВИГАЦИЯ ПРИ СКРОЛЛЕ =====
+        // ===== НАВИГАЦИЯ =====
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -1007,11 +987,15 @@
         complexity.addEventListener('input', updatePrice);
         updatePrice();
 
-        // ===== ФОРМА =====
+        // ===== ОТПРАВКА ЗАЯВКИ В ТЕЛЕГРАМ =====
         const form = document.getElementById('contactForm');
         const toast = document.getElementById('toast');
 
-        form.addEventListener('submit', (e) => {
+        // !!! ВСТАВЬ СВОИ ДАННЫЕ СЮДА !!!
+        const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g'; // Замени на свой токен
+        const CHAT_ID = '8673619246'; // Замени на свой ID
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name').value.trim();
@@ -1024,33 +1008,66 @@
                 return;
             }
 
-            // Собираем данные для отправки (можно потом переделать под реальный бэкенд)
-            const data = {
-                name,
-                tg,
-                game,
-                message,
-                timestamp: new Date().toLocaleString()
+            // Карта для красивого вывода игры
+            const gameNames = {
+                rust: '🦀 RUST',
+                minecraft: '⛏️ Minecraft',
+                fortnite: '🔫 Fortnite',
+                other: '🎯 Другая'
             };
 
-            console.log('Новая заявка:', data);
+            // Формируем сообщение для Telegram
+            const text = `
+        🆕 НОВАЯ ЗАЯВКА!
 
-            // В реальном проекте здесь был бы fetch() на твой Flask бэкенд
-            // Пример:
-            // fetch('https://твой-сервер.ru/api/order', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(data)
-            // });
+        👤 Имя: ${name}
+        📱 Telegram: ${tg}
+        🎮 Игра: ${gameNames[game] || game}
 
-            // Показываем уведомление
-            toast.classList.add('show');
+        📝 Задача:
+        ${message}
+
+        ⏰ Время: ${new Date().toLocaleString('ru-RU')}
+            `;
+
+            // Отправляем в Telegram
+            try {
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: text,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    // Успех
+                    toast.textContent = '✅ Заявка отправлена! Я свяжусь с вами в Telegram';
+                    toast.classList.remove('error');
+                    toast.classList.add('show');
+                    form.reset();
+                    updatePrice();
+                } else {
+                    throw new Error('Ошибка отправки');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                toast.textContent = '❌ Ошибка отправки! Напиши мне напрямую в @serjantyabloko';
+                toast.classList.add('error');
+                toast.classList.add('show');
+            }
+
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 4000);
-
-            form.reset();
-            updatePrice();
+                toast.classList.remove('error');
+            }, 5000);
         });
 
         // ===== ПЛАВНЫЙ СКРОЛЛ =====
