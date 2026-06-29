@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Serjant Studio | Создание и продвижение ботов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark {
+            background: radial-gradient(circle at 10% 20%, rgb(0, 20, 50) 0%, rgb(0, 5, 20) 90%);
+            color: #ffffff;
+        }
+
+        body.light {
+            background: radial-gradient(circle at 10% 20%, #f5f0ff 0%, #e8e0ff 100%);
+            color: #1a1a2e;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        /* Кнопка "Назад" */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 16px;
+            padding: 10px 24px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,210,255,0.3);
+            border-radius: 40px;
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(0,210,255,0.2);
+            border-color: #00d2ff;
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Верхняя панель с профилем */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00d2ff, #7b2cbf);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            border: 2px solid rgba(0,210,255,0.5);
+            transition: 0.2s;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.05);
+        }
+
+        /* ОБЪЕДИНЕННОЕ МИНИ-ОКНО */
+        .unified-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,210,255,0.2);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background: rgba(0,210,255,0.2);
+            color: #00d2ff;
+            border-bottom: 2px solid #00d2ff;
+        }
+
+        body.light .tab-btn.active {
+            background: rgba(0,210,255,0.1);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        body.light .setting-item {
+            border-bottom-color: rgba(0,0,0,0.1);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .theme-toggle {
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 4px;
+        }
+
+        .theme-toggle-btn {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: inherit;
+            transition: 0.2s;
+        }
+
+        .theme-toggle-btn.active {
+            background: #00d2ff;
+            color: #1a1a2e;
+        }
+
+        .lang-select {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(0,210,255,0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: inherit;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        body.light .lang-select {
+            background: white;
+        }
+
+        .support-btn {
+            background: linear-gradient(135deg, #feca57 0%, #ff6b6b 100%);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-field {
+            margin-bottom: 0;
+        }
+
+        .form-field.full-width {
+            grid-column: span 2;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .form-field label .required {
+            color: #ff6b6b;
+            margin-left: 3px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: inherit;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        body.light .form-field input {
+            background: white;
+            border-color: #ddd;
+            color: #1a1a2e;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #00d2ff;
+            box-shadow: 0 0 0 2px rgba(0,210,255,0.2);
+        }
+
+        .form-field input::placeholder {
+            opacity: 0.5;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .form-field.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        .auth-title {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00d2ff;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .auth-switch-inline {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        .auth-switch-inline span {
+            color: #00d2ff;
+            cursor: pointer;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            border: 1px solid rgba(0,210,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 5px 20px rgba(0,210,255,0.2); border-color: rgba(0,210,255,0.3); }
+            to { box-shadow: 0 10px 40px rgba(0,210,255,0.5); border-color: rgba(0,210,255,0.7); }
+        }
+
+        .header h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #00d2ff 0%, #7b2cbf 50%, #3a7bd5 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .ideas-section {
+            background: rgba(255,255,255,0.08);
+            border-radius: 30px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .ideas-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #00d2ff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ideas-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .idea-chip {
+            background: rgba(0,210,255,0.15);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(0,210,255,0.3);
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        body.light .service-card {
+            background: rgba(255,255,255,0.8);
+            border-color: rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0,210,255,0.5);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d2ff 0%, #7b2cbf 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .service-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .service-desc {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .feature-tag {
+            background: rgba(0,210,255,0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            color: #00d2ff;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d2ff, #7b2cbf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .price-old {
+            font-size: 12px;
+            opacity: 0.5;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cart-section {
+            margin-top: 25px;
+        }
+
+        .cart-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cart-card {
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 16px;
+            border: 1px solid rgba(0,210,255,0.2);
+        }
+
+        .promo-section {
+            background: rgba(0,210,255,0.1);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .promo-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promo-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(0,210,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: inherit;
+            font-size: 13px;
+        }
+
+        .promo-btn {
+            background: linear-gradient(135deg, #feca57 0%, #ff6b6b 100%);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .remove-item {
+            background: rgba(255,107,107,0.7);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .empty-cart {
+            text-align: center;
+            opacity: 0.6;
+            padding: 25px;
+            font-size: 14px;
+        }
+
+        .cart-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(10,10,25,0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+            border: 1px solid rgba(0,210,255,0.4);
+        }
+
+        body.light .cart-bar {
+            background: rgba(255,255,255,0.98);
+        }
+
+        .cart-total-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: #00d2ff;
+        }
+
+        .cart-total-label {
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%);
+            border-radius: 40px;
+            padding: 25px;
+            max-width: 360px;
+            width: 90%;
+            border: 1px solid rgba(0,210,255,0.4);
+        }
+
+        body.light .modal-content {
+            background: white;
+        }
+
+        .modal-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #00d2ff;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00d2ff, #7b2cbf);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 12px;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .profile-email {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .profile-phone {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .orders-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .order-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .order-status {
+            color: #feca57;
+        }
+
+        .order-items {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .logout-btn {
+            background: rgba(255,107,107,0.7);
+            border: none;
+            padding: 10px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 280px;
+            margin: 0 auto;
+            border: 1px solid #00d2ff;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .payment-buttons-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .payment-rub-btn, .payment-stars-btn {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .payment-rub-btn {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .payment-stars-btn {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 40px;
+            color: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: inherit;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00d2ff;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .modal-buttons .btn-secondary {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="dark">
+    <div class="container">
+        <!-- Кнопка назад -->
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад к выбору</a>
+
+        <div class="top-bar">
+            <div></div>
+            <div class="profile-icon" id="profile-icon">👤</div>
+        </div>
+
+        <!-- ОБЪЕДИНЕННОЕ МИНИ-ОКНО -->
+        <div class="unified-card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="settings">⚙️ Настройки</button>
+                <button class="tab-btn" data-tab="account">👤 Аккаунт</button>
+            </div>
+            
+            <div class="tab-content active" id="tab-settings">
+                <div class="setting-item">
+                    <div class="setting-label">🌙 Тема</div>
+                    <div class="theme-toggle">
+                        <button class="theme-toggle-btn" data-theme="dark">Тёмная</button>
+                        <button class="theme-toggle-btn" data-theme="light">Светлая</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">🌍 Язык</div>
+                    <select class="lang-select" id="lang-select">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">💬 Поддержка</div>
+                    <button class="support-btn" id="support-btn">Написать @serjantyabloko</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-account">
+                <div id="auth-login-form">
+                    <div class="auth-title">🔐 Вход в аккаунт</div>
+                    <div class="form-grid">
+                        <div class="form-field full-width">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" id="login-email" placeholder="example@mail.com" autocomplete="off">
+                        </div>
+                        <div class="form-field full-width">
+                            <label>Пароль <span class="required">*</span></label>
+                            <input type="password" id="login-password" placeholder="••••••">
+                        </div>
+                    </div>
+                    <button class="auth-btn" id="login-btn-tab" style="background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:white;border:none;">Войти</button>
+                    <div class="auth-switch-inline">
+                        Нет аккаунта? <span id="show-register-tab">Зарегистрироваться</span>
+                    </div>
+                </div>
+
+                <div id="auth-register-form" style="display: none;">
+                    <div class="auth-title">📝 Создание аккаунта</div>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Имя <span class="required">*</span></label>
+                            <input type="text" id="reg-name" placeholder="Иван">
+                        </div>
+                        <div class="form-field">
+                            <label>Телефон <span class="required">*</span></label>
+                            <input type="tel" id="reg-phone" placeholder="+7 (999) 123-45-67">
+                        </div>
+                        <div class="form-field full-width">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" id="reg-email" placeholder="example@mail.com">
+                        </div>
+                        <div class="form-field full-width">
+                            <label>Пароль <span class="required">*</span></label>
+                            <input type="password" id="reg-password" placeholder="••••••">
+                        </div>
+                    </div>
+                    <button class="auth-btn" id="register-btn-tab" style="background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:white;border:none;">Зарегистрироваться</button>
+                    <div class="auth-switch-inline">
+                        Уже есть аккаунт? <span id="show-login-tab">Войти</span>
+                    </div>
+                </div>
+
+                <div id="auth-user-info" style="display: none;">
+                    <div class="auth-title" id="user-welcome"></div>
+                    <div class="form-grid">
+                        <div class="form-field full-width">
+                            <label>📧 Email</label>
+                            <div style="padding: 10px 16px; background: rgba(255,255,255,0.05); border-radius: 30px;" id="user-email-display"></div>
+                        </div>
+                        <div class="form-field full-width">
+                            <label>📞 Телефон</label>
+                            <div style="padding: 10px 16px; background: rgba(255,255,255,0.05); border-radius: 30px;" id="user-phone-display"></div>
+                        </div>
+                    </div>
+                    <button class="logout-btn" id="logout-tab-btn">🚪 Выйти из аккаунта</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>🤖 Serjant Studio</h1>
+            <p id="header-desc">Профессиональная разработка Telegram ботов</p>
+            <div class="badge">⚡ Создание · Хостинг · Продвижение</div>
+        </div>
+
+        <div class="ideas-section">
+            <div class="ideas-title">💡 <span id="ideas-title">ИДЕИ ДЛЯ ВАШЕГО БОТА</span></div>
+            <div class="ideas-grid" id="ideas-grid"></div>
+        </div>
+
+        <div id="services-list"></div>
+
+        <div class="cart-section">
+            <div class="cart-title">🛒 <span id="cart-title">Корзина</span></div>
+            <div id="cart-block" class="cart-card"></div>
+        </div>
+    </div>
+
+    <div id="cart-bar" class="cart-bar" style="display: none;">
+        <div>
+            <div class="cart-total-label" id="total-label">Итого</div>
+            <div class="cart-total-price"><span id="cart-total">0</span> ₽</div>
+        </div>
+        <button id="checkout-button" class="checkout-btn">Оформить заказ →</button>
+    </div>
+
+    <div id="toast-message" class="toast">✓ Добавлено</div>
+
+    <!-- Модальное окно личного кабинета -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <h3>👤 Личный кабинет</h3>
+            <div id="profile-content">
+                <div class="profile-info">
+                    <div class="profile-avatar" id="profile-avatar">👤</div>
+                    <div class="profile-name" id="profile-name">Гость</div>
+                    <div class="profile-email" id="profile-email"></div>
+                    <div class="profile-phone" id="profile-phone"></div>
+                </div>
+                <div id="orders-history">
+                    <h4 style="margin: 15px 0 10px; font-size: 16px;">📦 История заказов</h4>
+                    <div class="orders-list" id="orders-list">
+                        <div style="text-align: center; opacity: 0.6; padding: 20px;">Нет заказов</div>
+                    </div>
+                </div>
+                <button class="btn-secondary" id="close-profile-btn" style="margin-top: 10px; width: 100%;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно оформления заказа -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">📋 Оформление заказа</h3>
+            <div class="form-group">
+                <label id="label-fullname">ФИО <span class="required">*</span></label>
+                <input type="text" id="client-fullname" placeholder="Иванов Иван Иванович">
+            </div>
+            <div class="form-group">
+                <label id="label-phone">Телефон <span class="required">*</span></label>
+                <input type="tel" id="client-phone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-group">
+                <label id="label-email">Email (необязательно)</label>
+                <input type="email" id="client-email" placeholder="ivan@example.com">
+            </div>
+            <div class="payment-choice" style="margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p style="font-size: 13px; margin-bottom: 10px;">💰 Выберите способ оплаты</p>
+                <div class="payment-buttons-row">
+                    <button class="payment-rub-btn" id="pay-rub-btn-modal">💰 Рубли</button>
+                    <button class="payment-stars-btn" id="pay-stars-btn-modal">⭐ Telegram Stars</button>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" id="cancel-order-btn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== НАСТРОЙКИ ==========
+        const BOT_TOKEN = '8886057284:AAHe0JOkmAn54vAjLMlBm7qDYt72yq2b9Sg';
+        const CHAT_ID = '8673619246';
+        const PROMO_CODE = 'Family';
+        const DISCOUNT_PERCENT = 50;
+        // ================================
+
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+        let userOrders = JSON.parse(localStorage.getItem('userOrders')) || {};
+
+        const translations = {
+            ru: {
+                headerDesc: "Профессиональная разработка Telegram ботов",
+                ideasTitle: "ИДЕИ ДЛЯ ВАШЕГО БОТА",
+                cartTitle: "Корзина",
+                totalLabel: "Итого",
+                checkoutBtn: "Оформить заказ →",
+                modalTitle: "📋 Оформление заказа",
+                labelFullname: "ФИО",
+                labelPhone: "Телефон",
+                labelEmail: "Email (необязательно)",
+                emptyCart: "🛍 Корзина пуста",
+                promoTitle: "🎁 Промокод",
+                promoPlaceholder: "Введите промокод",
+                promoApply: "Применить",
+                promoApplied: "✅ Промокод применён! Скидка",
+                addedToCart: "✓ Добавлена",
+                removedFromCart: "🗑 Удалено",
+                fillRequired: "⚠️ Заполните ФИО и телефон",
+                orderSent: "✅ Заказ отправлен!",
+                errorSend: "❌ Ошибка отправки"
+            },
+            en: {
+                headerDesc: "Professional Telegram bot development",
+                ideasTitle: "IDEAS FOR YOUR BOT",
+                cartTitle: "Cart",
+                totalLabel: "Total",
+                checkoutBtn: "Checkout →",
+                modalTitle: "📋 Order form",
+                labelFullname: "Full name",
+                labelPhone: "Phone",
+                labelEmail: "Email (optional)",
+                emptyCart: "🛍 Cart is empty",
+                promoTitle: "🎁 Promo code",
+                promoPlaceholder: "Enter promo code",
+                promoApply: "Apply",
+                promoApplied: "✅ Promo code applied! Discount",
+                addedToCart: "✓ Added",
+                removedFromCart: "🗑 Removed",
+                fillRequired: "⚠️ Fill in name and phone",
+                orderSent: "✅ Order sent!",
+                errorSend: "❌ Send error"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'ru';
+        let cart = [];
+        let discountApplied = false;
+
+        const services = [
+            { id: 1, name: "🤖 Создание TG бота", description: "Бот под ключ любой сложности", price: 14900, oldPrice: 24900, features: ["Любая тематика", "Админ-панель", "Исходный код"] },
+            { id: 2, name: "🚀 Установка на хостинг", description: "Размещение бота на сервере 24/7", price: 3900, oldPrice: 7900, features: ["Круглосуточно", "Бекапы", "Поддержка"] },
+            { id: 3, name: "📈 Продвижение бота", description: "Привлечение пользователей", price: 9900, oldPrice: 19900, features: ["Таргет", "Чаты", "SEO"] },
+            { id: 4, name: "🎯 Комбо — Всё вместе", description: "Создание + хостинг + продвижение", price: 24900, oldPrice: 43700, features: ["Экономия 40%", "Приоритет", "Полный пакет"] }
+        ];
+
+        const ideas = ["📚 Образовательный бот", "🛍 Интернет-магазин", "🎮 Игровой бот", "📅 Бот-запись", "💼 Корпоративный бот", "📊 Бот-аналитика"];
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('header-desc').innerText = t.headerDesc;
+            document.getElementById('ideas-title').innerText = t.ideasTitle;
+            document.getElementById('cart-title').innerText = t.cartTitle;
+            document.getElementById('total-label').innerText = t.totalLabel;
+            document.getElementById('checkout-button').innerText = t.checkoutBtn;
+            document.getElementById('modal-title').innerText = t.modalTitle;
+            document.getElementById('label-fullname').innerHTML = t.labelFullname + ' <span class="required">*</span>';
+            document.getElementById('label-phone').innerHTML = t.labelPhone + ' <span class="required">*</span>';
+            document.getElementById('label-email').innerText = t.labelEmail;
+            updateCartUI();
+        }
+
+        function renderIdeas() {
+            const container = document.getElementById('ideas-grid');
+            container.innerHTML = '';
+            const shuffled = [...ideas].sort(() => 0.5 - Math.random());
+            shuffled.slice(0, 6).forEach(idea => {
+                const chip = document.createElement('div');
+                chip.className = 'idea-chip';
+                chip.textContent = idea;
+                chip.onclick = () => showToast(`💡 ${idea}`);
+                container.appendChild(chip);
+            });
+        }
+
+        function renderServices() {
+            const container = document.getElementById('services-list');
+            container.innerHTML = '';
+            services.forEach((service) => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    <div class="service-header">
+                        <div class="service-icon">${service.name.split(' ')[0]}</div>
+                        <div>
+                            <div class="service-title">${service.name}</div>
+                            <div class="service-desc">${service.description}</div>
+                        </div>
+                    </div>
+                    <div class="service-features">
+                        ${service.features.map(f => `<span class="feature-tag">✓ ${f}</span>`).join('')}
+                    </div>
+                    <div class="price-row">
+                        <div>
+                            <span class="price">${service.price.toLocaleString()} ₽</span>
+                            ${service.oldPrice ? `<span class="price-old">${service.oldPrice.toLocaleString()} ₽</span>` : ''}
+                        </div>
+                        <button class="buy-btn" data-id="${service.id}">Купить</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    addToCart(id);
+                });
+            });
+        }
+
+        function addToCart(serviceId) {
+            const service = services.find(s => s.id === serviceId);
+            const existing = cart.find(item => item.id === serviceId);
+            if (existing) existing.quantity++;
+            else cart.push({ id: serviceId, name: service.name, price: service.price, quantity: 1 });
+            if (discountApplied) applyPromoCode(true);
+            updateCartUI();
+            showToast(`${translations[currentLang].addedToCart}`);
+        }
+
+        function removeFromCart(serviceId) {
+            cart = cart.filter(item => item.id !== serviceId);
+            if (cart.length === 0) discountApplied = false;
+            updateCartUI();
+            showToast(translations[currentLang].removedFromCart);
+        }
+
+        function updateQuantity(serviceId, delta) {
+            const item = cart.find(item => item.id === serviceId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) removeFromCart(serviceId);
+                else updateCartUI();
+            }
+        }
+
+        function getSubtotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        function getTotal() {
+            let total = getSubtotal();
+            if (discountApplied) total = total * (1 - DISCOUNT_PERCENT / 100);
+            return Math.round(total);
+        }
+
+        function applyPromoCode(silent = false) {
+            const input = document.getElementById('promo-input');
+            if (input && input.value.toUpperCase() === PROMO_CODE.toUpperCase()) {
+                discountApplied = true;
+                if (!silent) showToast(`🎉 Скидка ${DISCOUNT_PERCENT}%`);
+                updateCartUI();
+                return true;
+            } else if (input && !silent) {
+                showToast('❌ Неверный промокод');
+                return false;
+            }
+            return false;
+        }
+
+        function updateCartUI() {
+            const cartBlock = document.getElementById('cart-block');
+            const cartBar = document.getElementById('cart-bar');
+            const totalSpan = document.getElementById('cart-total');
+            const t = translations[currentLang];
+            const total = getTotal();
+
+            if (totalSpan) totalSpan.innerText = total.toLocaleString();
+
+            if (cart.length === 0) {
+                cartBar.style.display = 'none';
+                cartBlock.innerHTML = `<div class="empty-cart">${t.emptyCart}</div>`;
+            } else {
+                cartBar.style.display = 'flex';
+                let cartHtml = `
+                    <div class="promo-section">
+                        <div class="promo-title">${t.promoTitle}</div>
+                        <div class="promo-input-group">
+                            <input type="text" id="promo-input" class="promo-input" placeholder="${t.promoPlaceholder}" autocomplete="off">
+                            <button id="apply-promo" class="promo-btn">${t.promoApply}</button>
+                        </div>
+                        ${discountApplied ? `<div class="discount-info">✅ ${t.promoApplied} ${DISCOUNT_PERCENT}%</div>` : ''}
+                    </div>
+                `;
+                for (let item of cart) {
+                    const service = services.find(s => s.id === item.id);
+                    if (service) {
+                        cartHtml += `
+                            <div class="cart-item">
+                                <div><div class="cart-item-name">${service.name}</div><div class="cart-item-price">${service.price.toLocaleString()} ₽</div></div>
+                                <div class="cart-item-quantity">
+                                    <button class="quantity-btn" data-id="${item.id}" data-delta="-1">−</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn" data-id="${item.id}" data-delta="1">+</button>
+                                    <button class="remove-item" data-id="${item.id}">Удалить</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                if (discountApplied) {
+                    cartHtml += `<div style="margin-top: 10px; text-align: right; font-size: 12px; color: #feca57;">Скидка ${DISCOUNT_PERCENT}%: -${Math.round(getSubtotal() * DISCOUNT_PERCENT / 100).toLocaleString()} ₽</div>`;
+                }
+                cartHtml += `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; font-weight: 700;">${t.totalLabel}: ${total.toLocaleString()} ₽</div>`;
+                cartBlock.innerHTML = cartHtml;
+
+                document.querySelectorAll('.quantity-btn').forEach(btn => {
+                    btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), parseInt(btn.dataset.delta)));
+                });
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+                });
+                document.getElementById('apply-promo')?.addEventListener('click', () => applyPromoCode(false));
+            }
+        }
+
+        // АВТОРИЗАЦИЯ
+        function updateAuthUI() {
+            const loginForm = document.getElementById('auth-login-form');
+            const registerForm = document.getElementById('auth-register-form');
+            const userInfo = document.getElementById('auth-user-info');
+            
+            if (currentUser) {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+                userInfo.style.display = 'block';
+                document.getElementById('user-welcome').innerHTML = `👋 Здравствуйте, ${currentUser.name}!`;
+                document.getElementById('user-email-display').innerHTML = currentUser.email;
+                document.getElementById('user-phone-display').innerHTML = currentUser.phone || 'Не указан';
+                updateProfileIcon();
+            } else {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                userInfo.style.display = 'none';
+                updateProfileIcon();
+            }
+        }
+
+        function login(email, password) {
+            if (users[email] && users[email].password === password) {
+                currentUser = { email, name: users[email].name, phone: users[email].phone };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast(`✅ Добро пожаловать, ${users[email].name}!`);
+                updateAuthUI();
+                return true;
+            }
+            showToast('❌ Неверный email или пароль');
+            return false;
+        }
+
+        function register(name, phone, email, password) {
+            if (users[email]) {
+                showToast('❌ Пользователь с таким email уже существует');
+                return false;
+            }
+            if (!phone || phone.length < 10) {
+                showToast('❌ Введите корректный номер телефона');
+                return false;
+            }
+            users[email] = { name, phone, password };
+            localStorage.setItem('users', JSON.stringify(users));
+            currentUser = { email, name, phone };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showToast(`✅ Добро пожаловать, ${name}!`);
+            updateAuthUI();
+            return true;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            showToast('👋 Вы вышли из аккаунта');
+            updateAuthUI();
+            closeProfileModal();
+        }
+
+        function saveOrderToHistory(orderData) {
+            if (currentUser) {
+                if (!userOrders[currentUser.email]) userOrders[currentUser.email] = [];
+                userOrders[currentUser.email].unshift(orderData);
+                localStorage.setItem('userOrders', JSON.stringify(userOrders));
+            }
+        }
+
+        function showProfile() {
+            if (currentUser) {
+                document.getElementById('profile-name').innerText = currentUser.name;
+                document.getElementById('profile-email').innerText = currentUser.email;
+                document.getElementById('profile-phone').innerHTML = `📞 ${currentUser.phone || 'Не указан'}`;
+                document.getElementById('profile-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
+                
+                const orders = userOrders[currentUser.email] || [];
+                const ordersList = document.getElementById('orders-list');
+                if (orders.length === 0) {
+                    ordersList.innerHTML = '<div style="text-align: center; opacity: 0.6; padding: 20px;">Нет заказов</div>';
+                } else {
+                    ordersList.innerHTML = orders.map(order => `
+                        <div class="order-item">
+                            <div class="order-header">
+                                <span>${new Date(order.date).toLocaleString()}</span>
+                                <span class="order-status">${order.status || '✅ Выполнен'}</span>
+                            </div>
+                            <div class="order-items">${order.items.map(i => `${i.name} × ${i.quantity}`).join(', ')}</div>
+                            <div><strong>${order.total.toLocaleString()} ₽</strong></div>
+                        </div>
+                    `).join('');
+                }
+                document.getElementById('profile-modal').classList.add('active');
+            } else {
+                showToast('⚠️ Сначала войдите в аккаунт');
+            }
+        }
+
+        function updateProfileIcon() {
+            const icon = document.getElementById('profile-icon');
+            if (currentUser) {
+                icon.innerHTML = currentUser.name.charAt(0).toUpperCase();
+            } else {
+                icon.innerHTML = '👤';
+            }
+        }
+
+        function openOrderModal() { document.getElementById('order-modal').classList.add('active'); }
+        function closeOrderModal() { document.getElementById('order-modal').classList.remove('active'); }
+        function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast-message');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        async function processOrder(paymentMethod) {
+            const fullname = document.getElementById('client-fullname').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const email = document.getElementById('client-email').value.trim();
+            const t = translations[currentLang];
+
+            if (!fullname || !phone) {
+                showToast(t.fillRequired);
+                return;
+            }
+            if (cart.length === 0) {
+                showToast(t.emptyCart);
+                closeOrderModal();
+                return;
+            }
+
+            const total = getTotal();
+            const orderItems = cart.map(item => {
+                const service = services.find(s => s.id === item.id);
+                return { name: service.name, quantity: item.quantity, price: service.price, total: service.price * item.quantity };
+            });
+
+            const orderData = {
+                fullname, phone, email: email || null,
+                items: orderItems, total, discountApplied,
+                date: new Date().toISOString(),
+                status: '✅ Оплачен'
+            };
+
+            saveOrderToHistory(orderData);
+
+            const itemsList = orderItems.map(i => `└ ${i.name} × ${i.quantity} = ${i.total.toLocaleString()} ₽`).join('\n');
+            let message = `🆕 НОВЫЙ ЗАКАЗ!\n\n━━━━━━━━━━━━━━━━━━━━\n👤 ФИО: ${fullname}\n📞 Телефон: ${phone}\n`;
+            if (email) message += `📧 Email: ${email}\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━\n🛒 СОСТАВ:\n${itemsList}\n━━━━━━━━━━━━━━━━━━━━\n💳 ИТОГО: ${total.toLocaleString()} ₽\n💸 Оплата: ${paymentMethod === 'rub' ? '💰 Рубли' : '⭐ Stars'}\n━━━━━━━━━━━━━━━━━━━━\n🕐 ${new Date().toLocaleString()}`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
+                showToast(t.orderSent);
+                cart = [];
+                discountApplied = false;
+                updateCartUI();
+                closeOrderModal();
+            } catch (error) {
+                showToast(t.errorSend);
+            }
+        }
+
+        // Тема
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme;
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+                if (btn.dataset.theme === savedTheme) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
+
+        function setTheme(theme) {
+            document.body.className = theme;
+            localStorage.setItem('theme', theme);
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+                if (btn.dataset.theme === theme) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
+
+        function initLanguage() {
+            const savedLang = localStorage.getItem('language') || 'ru';
+            currentLang = savedLang;
+            document.getElementById('lang-select').value = savedLang;
+            updateLanguage();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            updateLanguage();
+        }
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.dataset.tab;
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                });
+            });
+        }
+
+        // Восстановление сессии
+        const savedUser = localStorage.getItem('currentUser');
+        if (savedUser) currentUser = JSON.parse(savedUser);
+        updateAuthUI();
+
+        // Обработчики
+        document.getElementById('profile-icon').addEventListener('click', showProfile);
+        document.getElementById('close-profile-btn').addEventListener('click', closeProfileModal);
+        document.getElementById('logout-tab-btn').addEventListener('click', logout);
+        
+        document.getElementById('show-register-tab').addEventListener('click', () => {
+            document.getElementById('auth-login-form').style.display = 'none';
+            document.getElementById('auth-register-form').style.display = 'block';
+        });
+        document.getElementById('show-login-tab').addEventListener('click', () => {
+            document.getElementById('auth-login-form').style.display = 'block';
+            document.getElementById('auth-register-form').style.display = 'none';
+        });
+        
+        document.getElementById('login-btn-tab').addEventListener('click', () => {
+            login(document.getElementById('login-email').value, document.getElementById('login-password').value);
+        });
+        document.getElementById('register-btn-tab').addEventListener('click', () => {
+            register(
+                document.getElementById('reg-name').value,
+                document.getElementById('reg-phone').value,
+                document.getElementById('reg-email').value,
+                document.getElementById('reg-password').value
+            );
+        });
+        
+        document.getElementById('pay-rub-btn-modal').addEventListener('click', () => processOrder('rub'));
+        document.getElementById('pay-stars-btn-modal').addEventListener('click', () => processOrder('stars'));
+        document.getElementById('cancel-order-btn').addEventListener('click', closeOrderModal);
+        document.getElementById('checkout-button').addEventListener('click', () => {
+            if (cart.length === 0) showToast(translations[currentLang].emptyCart);
+            else openOrderModal();
+        });
+
+        document.querySelectorAll('.theme-toggle-btn').forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+        document.getElementById('lang-select').addEventListener('change', (e) => setLanguage(e.target.value));
+        document.getElementById('support-btn').addEventListener('click', () => window.open('https://t.me/serjantyabloko', '_blank'));
+
+        if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); }
+
+        initTheme();
+        initLanguage();
+        initTabs();
+        renderIdeas();
+        renderServices();
+        updateCartUI();
+    </script>
+</body>
+</html>
