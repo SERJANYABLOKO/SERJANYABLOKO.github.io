@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Craft | Minecraft сервер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #0d0f14;
+            color: #eaeef2;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Кнопка "Назад" */
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0 0;
+            padding: 10px 28px;
+            background: #232832;
+            border: 1px solid #3b414e;
+            border-radius: 40px;
+            color: #eaeef2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #2f3645;
+            border-color: #6fc3ff;
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* ШАПКА */
+        .navbar {
+            padding: 18px 0;
+            border-bottom: 1px solid #2a2f3a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            color: #6fc3ff;
+            font-size: 2rem;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #6fc3ff, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: #c8d0da;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1.05rem;
+        }
+
+        .nav-links a:hover {
+            color: #6fc3ff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #6fc3ff;
+            color: #6fc3ff;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: default;
+            transition: 0.2s;
+        }
+
+        .btn-outline i {
+            margin-right: 8px;
+        }
+
+        /* ГЛАВНЫЙ ЭКРАН */
+        .hero {
+            padding: 60px 0 70px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1 1 400px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.1rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .hero-content h1 i {
+            color: #fbbf24;
+            margin-right: 8px;
+        }
+
+        .hero-content .highlight {
+            background: linear-gradient(135deg, #6fc3ff, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #b0bccd;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .btn-primary {
+            background: #6fc3ff;
+            border: none;
+            padding: 14px 38px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0d0f14;
+            cursor: default;
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(111, 195, 255, 0.25);
+        }
+
+        .btn-primary i {
+            margin-right: 10px;
+        }
+
+        .btn-secondary {
+            background: #232832;
+            border: 1px solid #3b414e;
+            padding: 14px 38px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #eaeef2;
+            cursor: default;
+            transition: 0.2s;
+        }
+
+        .btn-secondary i {
+            margin-right: 8px;
+        }
+
+        .hero-stats {
+            flex: 1 1 300px;
+            background: #171c24;
+            padding: 28px 30px;
+            border-radius: 32px;
+            border: 1px solid #2c3340;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+
+        .hero-stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .hero-stats .stat-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            background: #232a34;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #6fc3ff;
+        }
+
+        .stat-info h4 {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stat-info p {
+            color: #8f9bb3;
+            font-size: 0.95rem;
+        }
+
+        /* РЕЖИМЫ */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 50px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: #6fc3ff;
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin: 30px 0 20px;
+        }
+
+        .mode-card {
+            background: #161c25;
+            border-radius: 28px;
+            padding: 28px 24px;
+            border: 1px solid #29303d;
+            transition: 0.25s;
+        }
+
+        .mode-card:hover {
+            border-color: #6fc3ff;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+        }
+
+        .mode-card .mode-icon {
+            font-size: 2.4rem;
+            color: #6fc3ff;
+            margin-bottom: 12px;
+        }
+
+        .mode-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .mode-card p {
+            color: #a6b3cc;
+            font-size: 0.98rem;
+        }
+
+        .mode-tag {
+            display: inline-block;
+            margin-top: 16px;
+            background: #1f2a36;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #b8c7e0;
+        }
+
+        /* ПРЕИМУЩЕСТВА */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 30px 0 20px;
+        }
+
+        .feature-item {
+            background: #131a22;
+            padding: 24px 20px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid #262e3c;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #fbbf24;
+            margin-bottom: 12px;
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+
+        .feature-item p {
+            color: #96a3bb;
+            font-size: 0.95rem;
+        }
+
+        /* IP-БЛОК */
+        .ip-section {
+            background: #131b24;
+            border-radius: 40px;
+            padding: 40px 36px;
+            margin: 50px 0 40px;
+            border: 1px solid #2b3442;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .ip-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ip-box .ip-address {
+            background: #0b1118;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #6fc3ff;
+            border: 1px solid #2f3a4b;
+            font-family: 'Courier New', monospace;
+        }
+
+        .ip-box .copy-btn {
+            background: #252e3b;
+            border: none;
+            color: #c8d6e8;
+            padding: 12px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: default;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .ip-box .copy-btn i {
+            margin-right: 8px;
+        }
+
+        .ip-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1a232e;
+            padding: 10px 24px 10px 18px;
+            border-radius: 40px;
+        }
+
+        .ip-status .online-dot {
+            width: 14px;
+            height: 14px;
+            background: #3bde7c;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #3bde7c;
+        }
+
+        .ip-status span {
+            font-weight: 500;
+        }
+
+        .ip-status .players-online {
+            color: #b0c7e0;
+        }
+
+        /* ПОДВАЛ */
+        .footer {
+            border-top: 1px solid #242b36;
+            padding: 28px 0 32px;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: #7d8aa3;
+            font-size: 0.95rem;
+        }
+
+        .footer-social i {
+            font-size: 1.6rem;
+            margin-left: 18px;
+            color: #5c6b84;
+            transition: 0.2s;
+            cursor: default;
+        }
+
+        .footer-social i:hover {
+            color: #6fc3ff;
+        }
+
+        .footer .copy {
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .ip-box .ip-address {
+                font-size: 1.2rem;
+                padding: 10px 18px;
+            }
+            .ip-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .ip-status {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                padding: 20px;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Кнопка назад -->
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад к выбору</a>
+
+    <!-- ШАПКА -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-cube"></i>
+            <span>MVP<span style="color:#eaeef2;">Craft</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Главная</a>
+            <a href="#">Режимы</a>
+            <a href="#">Рейтинг</a>
+            <a href="#">Донат</a>
+            <span class="btn-outline"><i class="fas fa-users"></i> 84 онлайн</span>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                <i class="fas fa-gamepad"></i> 
+                <span class="highlight">MVP</span> сервер
+            </h1>
+            <p>
+                Лучший Minecraft-опыт с уникальными режимами, дружелюбным комьюнити и круглосуточной поддержкой. 
+                Присоединяйся к тысячам игроков!
+            </p>
+            <div class="hero-buttons">
+                <span class="btn-primary"><i class="fas fa-rocket"></i> Играть сейчас</span>
+                <span class="btn-secondary"><i class="fab fa-discord"></i> Discord</span>
+            </div>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+                <div class="stat-info">
+                    <h4>1 284 игрока</h4>
+                    <p>онлайн прямо сейчас</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-info">
+                    <h4>ТОП-3</h4>
+                    <p>по версии MinecraftRate</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h4>24/7</h4>
+                    <p>без лагов и рестартов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- РЕЖИМЫ -->
+    <div class="section-title">
+        <i class="fas fa-dice-d6"></i> Наши режимы
+    </div>
+    <div class="modes-grid">
+        <div class="mode-card">
+            <div class="mode-icon"><i class="fas fa-crosshairs"></i></div>
+            <h3>SkyWars</h3>
+            <p>Сражайся на парящих островах. Кто последний выживет — тот чемпион!</p>
+            <span class="mode-tag"><i class="fas fa-users"></i> 234 игрока</span>
+        </div>
+        <div class="mode-card">
+            <div class="mode-icon"><i class="fas fa-helmet-safety"></i></div>
+            <h3>BedWars</h3>
+            <p>Защищай свою кровать и разрушай чужие. Тактика и командная игра.</p>
+            <span class="mode-tag"><i class="fas fa-users"></i> 401 игрок</span>
+        </div>
+        <div class="mode-card">
+            <div class="mode-icon"><i class="fas fa-tree"></i></div>
+            <h3>Survival</h3>
+            <p>Классический выживание с приватами, экономикой и квестами.</p>
+            <span class="mode-tag"><i class="fas fa-users"></i> 512 игроков</span>
+        </div>
+        <div class="mode-card">
+            <div class="mode-icon"><i class="fas fa-crown"></i></div>
+            <h3>Hardcore</h3>
+            <p>Одна жизнь. Без права на ошибку. Только для настоящих героев.</p>
+            <span class="mode-tag"><i class="fas fa-users"></i> 97 игроков</span>
+        </div>
+    </div>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <div class="section-title">
+        <i class="fas fa-bolt"></i> Почему MVP?
+    </div>
+    <div class="features-grid">
+        <div class="feature-item">
+            <i class="fas fa-shield-alt"></i>
+            <h4>Анти-чит</h4>
+            <p>Современная защита от читеров и макросов.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <h4>Низкий пинг</h4>
+            <p>Сервера в РФ и Европе, оптимальные маршруты.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-gem"></i>
+            <h4>Щедрые бонусы</h4>
+            <p>Ежедневные награды, кейсы и ивенты.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-headset"></i>
+            <h4>Поддержка 24/7</h4>
+            <p>Модераторы и админы всегда на связи.</p>
+        </div>
+    </div>
+
+    <!-- IP-БЛОК -->
+    <div class="ip-section">
+        <div class="ip-box">
+            <span class="ip-address"><i class="fas fa-server" style="margin-right: 12px; color:#a78bfa;"></i>play.mvp-craft.ru</span>
+            <span class="copy-btn"><i class="far fa-copy"></i> Копировать</span>
+        </div>
+        <div class="ip-status">
+            <span class="online-dot"></span>
+            <span><i class="fas fa-signal" style="margin-right: 6px;"></i> 1.20.4</span>
+            <span class="players-online"><i class="fas fa-user"></i> 1 284 / 2 000</span>
+        </div>
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <div class="copy">
+            <i class="fas fa-cube" style="margin-right: 6px; color:#6fc3ff;"></i> MVP Craft 2026 · Неофициальный MVP-сайт
+        </div>
+        <div class="footer-social">
+            <i class="fab fa-vk"></i>
+            <i class="fab fa-discord"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-telegram"></i>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
