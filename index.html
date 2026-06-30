@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SerjantDev | Сайты, Боты, Хостинг, Моды, Текстуры</title>
+    <title>SerjantDev | Сайты, Боты, Mini Apps, Хостинг, Моды, Текстуры</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
@@ -85,7 +85,7 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 18px;
             list-style: none;
             align-items: center;
             flex-wrap: wrap;
@@ -95,7 +95,7 @@
             color: #a0a0b0;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 5px 0;
@@ -138,14 +138,6 @@
             font-size: 0.7rem;
             font-weight: 700;
             margin-left: 5px;
-        }
-
-        .admin-lock {
-            color: #ff6b9d !important;
-        }
-
-        .admin-lock::after {
-            background: #ff6b9d !important;
         }
 
         .burger {
@@ -464,7 +456,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
         }
 
@@ -516,7 +508,23 @@
         .service-card p {
             color: #a0a0b0;
             font-size: 0.9rem;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .service-features span {
+            font-size: 0.7rem;
+            padding: 3px 12px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 20px;
+            color: #9090a0;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
         .service-tag {
@@ -661,14 +669,6 @@
             font-weight: 700;
             color: #00ccff;
             margin-bottom: 12px;
-        }
-
-        .shop-item .info .price .old {
-            font-size: 0.8rem;
-            color: #505060;
-            text-decoration: line-through;
-            margin-left: 10px;
-            font-weight: 400;
         }
 
         .shop-item .info .actions {
@@ -1427,18 +1427,18 @@
                 <div class="hero-content">
                     <div class="hero-badges">
                         <span class="badge">🌐 Сайты</span>
-                        <span class="badge">🤖 Telegram Боты</span>
+                        <span class="badge">🤖 Боты</span>
+                        <span class="badge">📱 Mini Apps</span>
                         <span class="badge">☁️ Хостинг</span>
                         <span class="badge">⛏️ Моды</span>
                         <span class="badge">🎨 Текстуры</span>
-                        <span class="badge">📦 Всё для проекта</span>
                     </div>
                     <h1>
                         Разработка и <br />
                         <span class="highlight">продажа цифровых продуктов</span>
                     </h1>
                     <p>
-                        Сайты, Telegram-боты, хостинг, моды, текстуры и многое другое.
+                        Сайты, Telegram-боты, Mini Apps, хостинг, моды и текстуры для Minecraft.
                         Всё, что нужно для вашего проекта — в одном месте.
                     </p>
                     <div class="hero-buttons">
@@ -1480,34 +1480,82 @@
             <div class="container">
                 <h2 class="section-title">Мои услуги</h2>
                 <div class="services-grid">
+                    <!-- 1. Сайты -->
                     <div class="service-card">
                         <span class="service-icon">🌐</span>
                         <h3>Сайты</h3>
                         <p>Лендинги, магазины, панели управления, админ-панели, личные кабинеты.</p>
+                        <div class="service-features">
+                            <span>Адаптив</span>
+                            <span>SEO</span>
+                            <span>Админ-панель</span>
+                        </div>
                         <span class="service-tag">Flask + HTML + CSS + JS</span>
                     </div>
+
+                    <!-- 2. Telegram Боты -->
                     <div class="service-card">
                         <span class="service-icon">🤖</span>
                         <h3>Telegram Боты</h3>
                         <p>Автоматизация, уведомления, рассылки, поддержка, платежи, розыгрыши.</p>
+                        <div class="service-features">
+                            <span>Авто-респондер</span>
+                            <span>Платежи</span>
+                            <span>Аналитика</span>
+                        </div>
                         <span class="service-tag">Python + aiogram</span>
                     </div>
+
+                    <!-- 3. Telegram Mini Apps (НОВОЕ) -->
+                    <div class="service-card">
+                        <span class="service-icon">📱</span>
+                        <h3>Telegram Mini Apps</h3>
+                        <p>Интерактивные приложения внутри Telegram: магазины, клановые чаты, доски лидеров, игры, панели управления.</p>
+                        <div class="service-features">
+                            <span>Магазины</span>
+                            <span>Игры</span>
+                            <span>Панели</span>
+                            <span>Чаты</span>
+                        </div>
+                        <span class="service-tag">HTML + CSS + JS + WebApp</span>
+                    </div>
+
+                    <!-- 4. Хостинг -->
                     <div class="service-card">
                         <span class="service-icon">☁️</span>
                         <h3>Хостинг</h3>
                         <p>Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг.</p>
+                        <div class="service-features">
+                            <span>🛡️ SSL</span>
+                            <span>💾 Бекапы</span>
+                            <span>📊 Мониторинг</span>
+                        </div>
                         <span class="service-tag">Linux + Docker + Nginx</span>
                     </div>
+
+                    <!-- 5. Моды для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">⛏️</span>
                         <h3>Моды для Minecraft</h3>
                         <p>Кастомные моды: новые механики, предметы, мобы, измерения, магия, технологии.</p>
+                        <div class="service-features">
+                            <span>Новые предметы</span>
+                            <span>Новые мобы</span>
+                            <span>Измерения</span>
+                        </div>
                         <span class="service-tag">Java + Fabric / Forge</span>
                     </div>
+
+                    <!-- 6. Текстуры для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">🎨</span>
                         <h3>Текстуры для Minecraft</h3>
                         <p>Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт.</p>
+                        <div class="service-features">
+                            <span>Ресурс-паки</span>
+                            <span>Скины</span>
+                            <span>3D-модели</span>
+                        </div>
                         <span class="service-tag">Photoshop + Blockbench</span>
                     </div>
                 </div>
@@ -1526,6 +1574,7 @@
                         <button class="active" data-filter="all">Все</button>
                         <button data-filter="mod">⛏️ Моды</button>
                         <button data-filter="texture">🎨 Текстуры</button>
+                        <button data-filter="miniapp">📱 Mini Apps</button>
                         <button data-filter="site">🌐 Сайты</button>
                         <button data-filter="bot">🤖 Боты</button>
                         <button data-filter="hosting">☁️ Хостинг</button>
@@ -1542,13 +1591,14 @@
                     <form class="admin-form" id="adminForm">
                         <div class="form-group">
                             <label>Название товара</label>
-                            <input type="text" id="adminName" placeholder="Например: Магический мод" required />
+                            <input type="text" id="adminName" placeholder="Например: Mini App для клана" required />
                         </div>
                         <div class="form-group">
                             <label>Категория</label>
                             <select id="adminCategory">
                                 <option value="mod">⛏️ Моды</option>
                                 <option value="texture">🎨 Текстуры</option>
+                                <option value="miniapp">📱 Mini Apps</option>
                                 <option value="site">🌐 Сайты</option>
                                 <option value="bot">🤖 Боты</option>
                                 <option value="hosting">☁️ Хостинг</option>
@@ -1557,11 +1607,11 @@
                         </div>
                         <div class="form-group">
                             <label>Иконка (эмодзи)</label>
-                            <input type="text" id="adminIcon" placeholder="🔮" required />
+                            <input type="text" id="adminIcon" placeholder="📱" required />
                         </div>
                         <div class="form-group">
                             <label>Цена (₽)</label>
-                            <input type="number" id="adminPrice" placeholder="2900" required />
+                            <input type="number" id="adminPrice" placeholder="5000" required />
                         </div>
                         <div class="form-group full-width">
                             <label>Описание</label>
@@ -1595,6 +1645,7 @@
                     <select id="calcService">
                         <option value="site">🌐 Сайт</option>
                         <option value="bot">🤖 Telegram Бот</option>
+                        <option value="miniapp">📱 Telegram Mini App</option>
                         <option value="hosting">☁️ Хостинг</option>
                         <option value="mod">⛏️ Мод для Minecraft</option>
                         <option value="texture">🎨 Текстуры для Minecraft</option>
@@ -1635,6 +1686,7 @@
                         <select id="contactService">
                             <option value="site">🌐 Сайт</option>
                             <option value="bot">🤖 Telegram Бот</option>
+                            <option value="miniapp">📱 Telegram Mini App</option>
                             <option value="hosting">☁️ Хостинг</option>
                             <option value="mod">⛏️ Мод для Minecraft</option>
                             <option value="texture">🎨 Текстуры для Minecraft</option>
@@ -1675,7 +1727,7 @@
         <div class="container">
             <p>
                 © 2026 SerjantDev. Сделано с ❤️ для ваших проектов.<br />
-                Сайты · Боты · Хостинг · Моды · Текстуры и многое другое<br />
+                Сайты · Боты · Mini Apps · Хостинг · Моды · Текстуры<br />
                 <a href="mailto:geraskinlev81@gmail.com">geraskinlev81@gmail.com</a>
             </p>
         </div>
@@ -1694,21 +1746,33 @@
 
         // ===== НАЧАЛЬНЫЕ ТОВАРЫ =====
         const defaultProducts = [
+            // Моды
             { id: 1, name: 'Магический мод "Арканум"', category: 'mod', icon: '🔮', desc: '15 заклинаний, 8 магических предметов, 3 измерения.', price: 2900, tag: 'Популярный' },
             { id: 2, name: 'Техно-мод "Индустрия 2.0"', category: 'mod', icon: '⚡', desc: 'Автоматизация, механизмы, энергосети, реакторы.', price: 3500, tag: 'Новинка' },
             { id: 3, name: 'Мод "Приключение"', category: 'mod', icon: '🗡️', desc: 'Новые мобы, подземелья, боссы, прокачка.', price: 2500, tag: '' },
+            // Текстуры
             { id: 4, name: 'Ресурс-пак "Средневековье"', category: 'texture', icon: '🏰', desc: 'Полная смена текстур в средневековом стиле. 512x.', price: 1200, tag: 'Хит' },
             { id: 5, name: 'Ресурс-пак "Киберпанк"', category: 'texture', icon: '🌆', desc: 'Футуристические текстуры с неоном. 512x.', price: 1500, tag: '' },
             { id: 6, name: 'Ресурс-пак "Реализм"', category: 'texture', icon: '🌿', desc: 'Реалистичные текстуры с PBR-эффектами. 1024x.', price: 1800, tag: 'Премиум' },
-            { id: 7, name: 'Лендинг "Игровой сервер"', category: 'site', icon: '🎮', desc: 'Готовый лендинг для Minecraft/Rust сервера.', price: 4500, tag: '' },
-            { id: 8, name: 'Интернет-магазин', category: 'site', icon: '🛒', desc: 'Готовый магазин с корзиной и оплатой.', price: 8900, tag: 'Популярный' },
-            { id: 9, name: 'Telegram Бот "Авто-ответчик"', category: 'bot', icon: '💬', desc: 'Автоматические ответы на вопросы клиентов.', price: 3000, tag: '' },
-            { id: 10, name: 'Telegram Бот "Рассылка"', category: 'bot', icon: '📢', desc: 'Массовая рассылка сообщений подписчикам.', price: 4000, tag: '' },
-            { id: 11, name: 'Хостинг "Старт"', category: 'hosting', icon: '☁️', desc: 'Размещение одного сайта/бота. SSL, бекапы.', price: 500, tag: 'Популярный' },
-            { id: 12, name: 'Хостинг "Про"', category: 'hosting', icon: '☁️', desc: 'Безлимит сайтов и ботов. Приоритетная поддержка.', price: 1500, tag: 'Лучший выбор' },
-            { id: 13, name: 'Сборка "Магия + Техно"', category: 'mod', icon: '📦', desc: 'Готовая сборка на 30+ модов для сервера.', price: 5900, tag: 'Экономия' },
-            { id: 14, name: 'Сборка "All-in-One"', category: 'mod', icon: '📦', desc: 'Всё в одном: магия, техника, приключения, 50+ модов.', price: 7900, tag: 'Лучший выбор' },
-            { id: 15, name: 'Кастомный заказ', category: 'other', icon: '🎯', desc: 'Любая разработка на заказ. Обсудим детали.', price: 1000, tag: 'Гибкая цена' }
+            // Mini Apps (НОВЫЕ)
+            { id: 7, name: 'Mini App "Магазин скинов"', category: 'miniapp', icon: '🛍️', desc: 'Магазин скинов и привилегий внутри Telegram с оплатой.', price: 8900, tag: 'Популярный' },
+            { id: 8, name: 'Mini App "Клановый чат"', category: 'miniapp', icon: '💬', desc: 'Чат для клана с доской лидеров и системой рангов.', price: 6500, tag: '' },
+            { id: 9, name: 'Mini App "Кликер-игра"', category: 'miniapp', icon: '🕹️', desc: 'Простая кликер-игра с таблицей рекордов и бонусами.', price: 4500, tag: 'Новинка' },
+            { id: 10, name: 'Mini App "Панель сервера"', category: 'miniapp', icon: '📊', desc: 'Управление сервером Minecraft через Telegram: онлайн, кик, бан.', price: 12000, tag: '' },
+            // Сайты
+            { id: 11, name: 'Лендинг "Игровой сервер"', category: 'site', icon: '🎮', desc: 'Готовый лендинг для Minecraft/Rust сервера.', price: 4500, tag: '' },
+            { id: 12, name: 'Интернет-магазин', category: 'site', icon: '🛒', desc: 'Готовый магазин с корзиной и оплатой.', price: 8900, tag: 'Популярный' },
+            // Боты
+            { id: 13, name: 'Telegram Бот "Авто-ответчик"', category: 'bot', icon: '💬', desc: 'Автоматические ответы на вопросы клиентов.', price: 3000, tag: '' },
+            { id: 14, name: 'Telegram Бот "Рассылка"', category: 'bot', icon: '📢', desc: 'Массовая рассылка сообщений подписчикам.', price: 4000, tag: '' },
+            // Хостинг
+            { id: 15, name: 'Хостинг "Старт"', category: 'hosting', icon: '☁️', desc: 'Размещение одного сайта/бота. SSL, бекапы.', price: 500, tag: 'Популярный' },
+            { id: 16, name: 'Хостинг "Про"', category: 'hosting', icon: '☁️', desc: 'Безлимит сайтов и ботов. Приоритетная поддержка.', price: 1500, tag: 'Лучший выбор' },
+            // Сборки
+            { id: 17, name: 'Сборка "Магия + Техно"', category: 'mod', icon: '📦', desc: 'Готовая сборка на 30+ модов для сервера.', price: 5900, tag: 'Экономия' },
+            { id: 18, name: 'Сборка "All-in-One"', category: 'mod', icon: '📦', desc: 'Всё в одном: магия, техника, приключения, 50+ модов.', price: 7900, tag: 'Лучший выбор' },
+            // Другое
+            { id: 19, name: 'Кастомный заказ', category: 'other', icon: '🎯', desc: 'Любая разработка на заказ. Обсудим детали.', price: 1000, tag: 'Гибкая цена' }
         ];
 
         // ===== ЗАГРУЗКА ТОВАРОВ ИЗ localStorage =====
@@ -1821,6 +1885,7 @@
             const labels = {
                 mod: '⛏️ Мод',
                 texture: '🎨 Текстуры',
+                miniapp: '📱 Mini App',
                 site: '🌐 Сайт',
                 bot: '🤖 Бот',
                 hosting: '☁️ Хостинг',
@@ -1983,7 +2048,6 @@
 
         document.getElementById('toggleAdmin').addEventListener('click', () => {
             if (adminOpen) {
-                // Закрываем админку
                 adminOpen = false;
                 adminPanel.classList.remove('open');
                 document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
@@ -1993,7 +2057,6 @@
                 return;
             }
 
-            // Проверяем сессию
             if (checkAdminSession()) {
                 adminOpen = true;
                 adminPanel.classList.add('open');
@@ -2003,7 +2066,6 @@
                 return;
             }
 
-            // Показываем модалку
             passwordModal.classList.add('show');
             passwordInput.value = '';
             passwordError.classList.remove('show');
@@ -2011,7 +2073,6 @@
             passwordInput.focus();
         });
 
-        // Ввод пароля по Enter
         passwordInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 passwordSubmit.click();
@@ -2036,7 +2097,6 @@
             }
         });
 
-        // Закрытие модалки по клику вне
         passwordModal.addEventListener('click', (e) => {
             if (e.target === passwordModal) {
                 passwordModal.classList.remove('show');
@@ -2184,10 +2244,11 @@
         const servicePrices = {
             site: 15000,
             bot: 12000,
+            miniapp: 18000,
             hosting: 5000,
             mod: 20000,
             texture: 8000,
-            full: 35000
+            full: 40000
         };
 
         const complexityLabels = ['Очень простая', 'Простая', 'Средняя', 'Сложная', 'Очень сложная'];
@@ -2210,6 +2271,7 @@
         const serviceNames = {
             site: '🌐 Сайт',
             bot: '🤖 Telegram Бот',
+            miniapp: '📱 Telegram Mini App',
             hosting: '☁️ Хостинг',
             mod: '⛏️ Мод для Minecraft',
             texture: '🎨 Текстуры для Minecraft',
@@ -2253,10 +2315,8 @@
         renderProducts();
         updateCart();
 
-        // Проверяем сессию админа
         if (checkAdminSession()) {
-            // Админ уже авторизован, но админка закрыта
-            // Ничего не делаем, ждем клика
+            // Админ уже авторизован
         }
     </script>
 
