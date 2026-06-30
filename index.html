@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SerjantDev | Сайты, Боты, Хостинг, Моды для Minecraft</title>
+    <title>SerjantDev | Сайты, Боты, Хостинг, Моды, Текстуры</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
@@ -85,16 +85,17 @@
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             list-style: none;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             color: #a0a0b0;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 5px 0;
@@ -134,7 +135,7 @@
             color: #0a0a0f;
             border-radius: 50%;
             padding: 2px 10px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             margin-left: 5px;
         }
@@ -157,7 +158,7 @@
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
-            padding-top: 100px;
+            padding-top: 90px;
             min-height: 100vh;
         }
 
@@ -178,10 +179,10 @@
 
         .section-title {
             font-family: 'Orbitron', monospace;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             background: linear-gradient(135deg, #00ff88, #00ccff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -245,8 +246,8 @@
         }
 
         .btn-sm {
-            padding: 8px 20px;
-            font-size: 0.8rem;
+            padding: 8px 18px;
+            font-size: 0.75rem;
         }
 
         .btn-danger {
@@ -298,7 +299,7 @@
 
         .hero-content h1 {
             font-family: 'Orbitron', monospace;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 20px;
@@ -312,7 +313,7 @@
         }
 
         .hero-content p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #a0a0b0;
             margin-bottom: 30px;
             max-width: 500px;
@@ -320,16 +321,16 @@
 
         .hero-badges {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .badge {
-            padding: 8px 20px;
+            padding: 6px 18px;
             border: 1px solid rgba(0, 255, 136, 0.15);
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: #00ff88;
             background: rgba(0, 255, 136, 0.05);
@@ -410,9 +411,9 @@
         .hero-code .code-window {
             background: #0d0d14;
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #00ff88;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.03);
@@ -449,21 +450,21 @@
 
         /* ===== УСЛУГИ ===== */
         .services-page {
-            padding: 40px 0 100px;
+            padding: 40px 0 80px;
             background: rgba(0, 255, 136, 0.01);
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
         }
 
         .service-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 35px 25px;
+            padding: 30px 25px;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -492,14 +493,14 @@
         }
 
         .service-icon {
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 15px;
             display: block;
         }
 
         .service-card h3 {
             font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 10px;
             color: #00ff88;
         }
@@ -515,42 +516,33 @@
             padding: 4px 15px;
             background: rgba(0, 255, 136, 0.08);
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #00ff88;
             border: 1px solid rgba(0, 255, 136, 0.05);
         }
 
-        .service-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 10px;
-        }
-
-        .service-features span {
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 20px;
-            color: #9090a0;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
         /* ===== МАГАЗИН ===== */
         .shop-page {
-            padding: 40px 0 100px;
+            padding: 40px 0 80px;
+        }
+
+        .shop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
         .shop-filters {
             display: flex;
-            gap: 15px;
-            justify-content: center;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
         }
 
         .shop-filters button {
-            padding: 10px 25px;
+            padding: 8px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
@@ -559,7 +551,7 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .shop-filters button:hover {
@@ -573,10 +565,20 @@
             color: #00ff88;
         }
 
+        .shop-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .shop-actions .btn-sm {
+            padding: 8px 18px;
+            font-size: 0.75rem;
+        }
+
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
         }
 
         .shop-item {
@@ -585,6 +587,7 @@
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s ease;
+            position: relative;
         }
 
         .shop-item:hover {
@@ -594,12 +597,12 @@
         }
 
         .shop-item .image {
-            height: 180px;
+            height: 140px;
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3.5rem;
             position: relative;
         }
 
@@ -607,41 +610,53 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 4px 14px;
+            padding: 3px 12px;
             background: rgba(0, 255, 136, 0.15);
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #00ff88;
             border: 1px solid rgba(0, 255, 136, 0.1);
         }
 
+        .shop-item .image .category-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            padding: 3px 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50px;
+            font-size: 0.6rem;
+            color: #a0a0b0;
+        }
+
         .shop-item .info {
-            padding: 25px;
+            padding: 20px;
         }
 
         .shop-item .info h4 {
             font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 5px;
             color: #00ff88;
         }
 
         .shop-item .info .desc {
             color: #a0a0b0;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-bottom: 10px;
+            min-height: 40px;
         }
 
         .shop-item .info .price {
             font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #00ccff;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .shop-item .info .price .old {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #505060;
             text-decoration: line-through;
             margin-left: 10px;
@@ -650,7 +665,95 @@
 
         .shop-item .info .actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .shop-item .info .actions .btn-sm {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .shop-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #707080;
+        }
+
+        .shop-empty .icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .admin-panel.open {
+            display: block;
+        }
+
+        .admin-panel h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .admin-form .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .admin-form label {
+            font-size: 0.8rem;
+            color: #a0a0b0;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .admin-form input,
+        .admin-form select,
+        .admin-form textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0d0d14;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-form input:focus,
+        .admin-form select:focus,
+        .admin-form textarea:focus {
+            border-color: #00ff88;
+        }
+
+        .admin-form textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .admin-form .btn {
+            padding: 10px 25px;
+            font-size: 0.85rem;
         }
 
         /* ===== КОРЗИНА ===== */
@@ -676,7 +779,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -684,6 +787,7 @@
         .cart-sidebar .cart-header h3 {
             font-family: 'Orbitron', monospace;
             color: #00ff88;
+            font-size: 1.2rem;
         }
 
         .cart-sidebar .cart-close {
@@ -703,7 +807,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
@@ -714,12 +818,12 @@
 
         .cart-item .item-name {
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .cart-item .item-price {
             color: #00ccff;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .cart-item .item-remove {
@@ -729,6 +833,7 @@
             cursor: pointer;
             font-size: 1.2rem;
             transition: transform 0.2s ease;
+            padding: 0 10px;
         }
 
         .cart-item .item-remove:hover {
@@ -753,6 +858,11 @@
             font-size: 0.9rem;
         }
 
+        .cart-total .btn {
+            width: 100%;
+            margin-top: 15px;
+        }
+
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -771,7 +881,7 @@
 
         /* ===== КАЛЬКУЛЯТОР ===== */
         .calculator-page {
-            padding: 40px 0 100px;
+            padding: 40px 0 80px;
         }
 
         .calc-box {
@@ -780,7 +890,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
-            padding: 50px;
+            padding: 40px;
             backdrop-filter: blur(10px);
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
@@ -790,13 +900,13 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: #c0c0d0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .calc-box select,
         .calc-box input[type="range"] {
             width: 100%;
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: #0d0d14;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
@@ -830,8 +940,8 @@
         .calc-box input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             background: #00ff88;
             border-radius: 50%;
             cursor: pointer;
@@ -845,7 +955,7 @@
 
         .calc-result {
             text-align: center;
-            padding: 35px;
+            padding: 30px;
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
             border-radius: 16px;
             border: 1px solid rgba(0, 255, 136, 0.08);
@@ -853,7 +963,7 @@
 
         .calc-result .price {
             font-family: 'Orbitron', monospace;
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 900;
             color: #00ff88;
             text-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
@@ -867,7 +977,7 @@
 
         /* ===== КОНТАКТЫ ===== */
         .contact-page {
-            padding: 40px 0 100px;
+            padding: 40px 0 80px;
             background: rgba(0, 255, 136, 0.01);
         }
 
@@ -877,27 +987,28 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
-            padding: 50px;
+            padding: 40px;
             backdrop-filter: blur(10px);
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .contact-form .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .contact-form label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #c0c0d0;
+            font-size: 0.9rem;
         }
 
         .contact-form input,
         .contact-form textarea,
         .contact-form select {
             width: 100%;
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: #0d0d14;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
@@ -915,7 +1026,7 @@
         }
 
         .contact-form textarea {
-            min-height: 130px;
+            min-height: 120px;
             resize: vertical;
         }
 
@@ -925,9 +1036,9 @@
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -935,7 +1046,7 @@
 
         .contact-info-item {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -948,14 +1059,14 @@
         }
 
         .contact-info-item .icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .contact-info-item .text {
             color: #a0a0b0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .contact-info-item .text a {
@@ -964,11 +1075,11 @@
         }
 
         .footer {
-            padding: 40px 0;
+            padding: 30px 0;
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.03);
             color: #505060;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .footer a {
@@ -987,7 +1098,7 @@
             right: 30px;
             background: #00ff88;
             color: #0a0a0f;
-            padding: 18px 35px;
+            padding: 16px 30px;
             border-radius: 16px;
             font-weight: 700;
             transform: translateY(120px);
@@ -995,7 +1106,8 @@
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 9999;
             box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            max-width: 90%;
         }
 
         .toast.show {
@@ -1033,12 +1145,16 @@
             }
 
             .hero-content h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
+            }
+
+            .admin-form {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1051,8 +1167,8 @@
                 left: 0;
                 right: 0;
                 background: rgba(10, 10, 15, 0.98);
-                padding: 25px;
-                gap: 20px;
+                padding: 20px;
+                gap: 15px;
                 border-bottom: 1px solid rgba(0, 255, 136, 0.08);
                 backdrop-filter: blur(20px);
             }
@@ -1066,19 +1182,19 @@
             }
 
             .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
                 font-size: 2rem;
             }
 
+            .section-title {
+                font-size: 1.8rem;
+            }
+
             .calc-box {
-                padding: 30px 20px;
+                padding: 25px 15px;
             }
 
             .contact-form {
-                padding: 30px 20px;
+                padding: 25px 15px;
             }
 
             .hero-code {
@@ -1102,24 +1218,45 @@
                 right: -100%;
                 padding: 20px;
             }
+
+            .shop-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .shop-filters {
+                justify-content: center;
+            }
+
+            .shop-actions {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
             .hero-content h1 {
-                font-size: 2rem;
-            }
-
-            .section-title {
                 font-size: 1.6rem;
             }
 
+            .section-title {
+                font-size: 1.4rem;
+            }
+
             .calc-result .price {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .btn {
-                padding: 12px 25px;
-                font-size: 0.8rem;
+                padding: 10px 20px;
+                font-size: 0.75rem;
+            }
+
+            .shop-item .info .actions {
+                flex-direction: column;
+            }
+
+            .shop-item .info .actions .btn-sm {
+                width: 100%;
             }
         }
     </style>
@@ -1167,9 +1304,7 @@
         <div class="cart-total" id="cartTotal" style="display: none;">
             <div class="total-label">Итого:</div>
             <div class="total-price" id="totalPrice">0 ₽</div>
-            <button class="btn" style="margin-top: 20px; width: 100%;" id="checkoutBtn">
-                Оформить заказ
-            </button>
+            <button class="btn" id="checkoutBtn">Оформить заказ</button>
         </div>
     </div>
 
@@ -1182,24 +1317,27 @@
                         <span class="badge">🌐 Сайты</span>
                         <span class="badge">🤖 Telegram Боты</span>
                         <span class="badge">☁️ Хостинг</span>
-                        <span class="badge">⛏️ Моды для Minecraft</span>
+                        <span class="badge">⛏️ Моды</span>
                         <span class="badge">🎨 Текстуры</span>
+                        <span class="badge">📦 Всё для проекта</span>
                     </div>
                     <h1>
-                        Разработка <br />
-                        <span class="highlight">сайтов, ботов, хостинга</span><br />
-                        и контента для Minecraft
+                        Разработка и <br />
+                        <span class="highlight">продажа цифровых продуктов</span>
                     </h1>
                     <p>
-                        Создаю сайты, Telegram-ботов, предоставляю хостинг,
-                        а также делаю качественные моды и текстуры для Minecraft.
-                        Всё — от идеи до работающего продукта.
+                        Сайты, Telegram-боты, хостинг, моды, текстуры и многое другое.
+                        Всё, что нужно для вашего проекта — в одном месте.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn" data-page="contact">Заказать проект</a>
-                        <a href="#" class="btn btn-secondary" data-page="shop">Магазин модов</a>
+                        <a href="#" class="btn" data-page="shop">В магазин</a>
+                        <a href="#" class="btn btn-secondary" data-page="contact">Заказать разработку</a>
                     </div>
                     <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="number">20+</div>
+                            <div class="label">Товаров</div>
+                        </div>
                         <div class="stat-item">
                             <div class="number">15+</div>
                             <div class="label">Проектов</div>
@@ -1207,10 +1345,6 @@
                         <div class="stat-item">
                             <div class="number">100%</div>
                             <div class="label">Довольных клиентов</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="number">24/7</div>
-                            <div class="label">Поддержка</div>
                         </div>
                     </div>
                 </div>
@@ -1234,69 +1368,35 @@
             <div class="container">
                 <h2 class="section-title">Мои услуги</h2>
                 <div class="services-grid">
-                    <!-- 1. Сайты -->
                     <div class="service-card">
                         <span class="service-icon">🌐</span>
                         <h3>Сайты</h3>
-                        <p>Лендинги, интернет-магазины, панели управления, админ-панели, личные кабинеты.</p>
+                        <p>Лендинги, магазины, панели управления, админ-панели, личные кабинеты.</p>
                         <span class="service-tag">Flask + HTML + CSS + JS</span>
-                        <div class="service-features">
-                            <span>Адаптив</span>
-                            <span>SEO</span>
-                            <span>Админ-панель</span>
-                        </div>
                     </div>
-
-                    <!-- 2. Telegram Боты -->
                     <div class="service-card">
                         <span class="service-icon">🤖</span>
                         <h3>Telegram Боты</h3>
-                        <p>Автоматизация, уведомления, рассылки, поддержка клиентов, розыгрыши, платежи.</p>
+                        <p>Автоматизация, уведомления, рассылки, поддержка, платежи, розыгрыши.</p>
                         <span class="service-tag">Python + aiogram</span>
-                        <div class="service-features">
-                            <span>Авто-респондер</span>
-                            <span>Платежи</span>
-                            <span>Аналитика</span>
-                        </div>
                     </div>
-
-                    <!-- 3. Хостинг -->
                     <div class="service-card">
                         <span class="service-icon">☁️</span>
                         <h3>Хостинг</h3>
-                        <p>Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг, авто-перезапуск.</p>
+                        <p>Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг.</p>
                         <span class="service-tag">Linux + Docker + Nginx</span>
-                        <div class="service-features">
-                            <span>🛡️ SSL</span>
-                            <span>💾 Бекапы</span>
-                            <span>📊 Мониторинг</span>
-                        </div>
                     </div>
-
-                    <!-- 4. Моды для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">⛏️</span>
                         <h3>Моды для Minecraft</h3>
-                        <p>Кастомные моды на заказ: новые механики, предметы, мобы, измерения, магия, технологии.</p>
+                        <p>Кастомные моды: новые механики, предметы, мобы, измерения, магия, технологии.</p>
                         <span class="service-tag">Java + Fabric / Forge</span>
-                        <div class="service-features">
-                            <span>Новые предметы</span>
-                            <span>Новые мобы</span>
-                            <span>Измерения</span>
-                        </div>
                     </div>
-
-                    <!-- 5. Текстуры для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">🎨</span>
                         <h3>Текстуры для Minecraft</h3>
-                        <p>Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт. Скины, 3D-модели.</p>
+                        <p>Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт.</p>
                         <span class="service-tag">Photoshop + Blockbench</span>
-                        <div class="service-features">
-                            <span>Ресурс-паки</span>
-                            <span>Скины</span>
-                            <span>3D-модели блоков</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1307,13 +1407,63 @@
     <div class="page" id="page-shop">
         <section class="shop-page">
             <div class="container">
-                <h2 class="section-title">Магазин модов и текстур</h2>
+                <h2 class="section-title">Магазин цифровых продуктов</h2>
                 
-                <div class="shop-filters" id="shopFilters">
-                    <button class="active" data-filter="all">Все</button>
-                    <button data-filter="mod">⛏️ Моды</button>
-                    <button data-filter="texture">🎨 Текстуры</button>
-                    <button data-filter="bundle">📦 Сборки</button>
+                <div class="shop-controls">
+                    <div class="shop-filters" id="shopFilters">
+                        <button class="active" data-filter="all">Все</button>
+                        <button data-filter="mod">⛏️ Моды</button>
+                        <button data-filter="texture">🎨 Текстуры</button>
+                        <button data-filter="site">🌐 Сайты</button>
+                        <button data-filter="bot">🤖 Боты</button>
+                        <button data-filter="hosting">☁️ Хостинг</button>
+                        <button data-filter="other">🎯 Другое</button>
+                    </div>
+                    <div class="shop-actions">
+                        <button class="btn btn-sm btn-secondary" id="toggleAdmin">⚙️ Админ</button>
+                    </div>
+                </div>
+
+                <!-- Админ-панель -->
+                <div class="admin-panel" id="adminPanel">
+                    <h3>⚙️ Управление товарами</h3>
+                    <form class="admin-form" id="adminForm">
+                        <div class="form-group">
+                            <label>Название товара</label>
+                            <input type="text" id="adminName" placeholder="Например: Магический мод" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Категория</label>
+                            <select id="adminCategory">
+                                <option value="mod">⛏️ Моды</option>
+                                <option value="texture">🎨 Текстуры</option>
+                                <option value="site">🌐 Сайты</option>
+                                <option value="bot">🤖 Боты</option>
+                                <option value="hosting">☁️ Хостинг</option>
+                                <option value="other">🎯 Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Иконка (эмодзи)</label>
+                            <input type="text" id="adminIcon" placeholder="🔮" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Цена (₽)</label>
+                            <input type="number" id="adminPrice" placeholder="2900" required />
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Описание</label>
+                            <textarea id="adminDesc" placeholder="Краткое описание товара..." required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Тег (необязательно)</label>
+                            <input type="text" id="adminTag" placeholder="Популярный, Новинка, Хит..." />
+                        </div>
+                        <div class="form-group full-width" style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn btn-sm">➕ Добавить товар</button>
+                            <button type="button" class="btn btn-sm btn-secondary" id="adminClose">✕ Закрыть</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="shop-grid" id="shopGrid">
@@ -1413,117 +1563,110 @@
         <div class="container">
             <p>
                 © 2026 SerjantDev. Сделано с ❤️ для ваших проектов.<br />
-                Сайты · Боты · Хостинг · Моды и текстуры для Minecraft
+                Сайты · Боты · Хостинг · Моды · Текстуры и многое другое
             </p>
         </div>
     </footer>
 
     <!-- ===== УВЕДОМЛЕНИЕ ===== -->
-    <div class="toast" id="toast">✅ Заявка отправлена! Я свяжусь с вами в Telegram</div>
+    <div class="toast" id="toast">✅ Готово!</div>
 
     <script>
         // ===== ДАННЫЕ БОТА =====
         const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
         const CHAT_ID = '8673619246';
 
-        // ===== ТОВАРЫ =====
-        const products = [
-            {
-                id: 1,
-                name: 'Магический мод "Арканум"',
-                category: 'mod',
-                icon: '🔮',
-                desc: 'Добавляет 15 новых заклинаний, 8 магических предметов и 3 новые измерения.',
-                price: 2900,
-                tag: 'Популярный'
-            },
-            {
-                id: 2,
-                name: 'Техно-мод "Индустрия 2.0"',
-                category: 'mod',
-                icon: '⚡',
-                desc: 'Автоматизация добычи, новые механизмы, энергетические сети и реакторы.',
-                price: 3500,
-                tag: 'Новинка'
-            },
-            {
-                id: 3,
-                name: 'Мод "Приключение"',
-                category: 'mod',
-                icon: '🗡️',
-                desc: 'Новые мобы, подземелья, боссы и уникальная система прокачки.',
-                price: 2500,
-                tag: null
-            },
-            {
-                id: 4,
-                name: 'Ресурс-пак "Средневековье"',
-                category: 'texture',
-                icon: '🏰',
-                desc: 'Полная смена текстур в средневековом стиле. 512x, 1024x.',
-                price: 1200,
-                tag: 'Хит'
-            },
-            {
-                id: 5,
-                name: 'Ресурс-пак "Киберпанк"',
-                category: 'texture',
-                icon: '🌆',
-                desc: 'Футуристические текстуры с неоновой подсветкой. 512x.',
-                price: 1500,
-                tag: null
-            },
-            {
-                id: 6,
-                name: 'Ресурс-пак "Реализм"',
-                category: 'texture',
-                icon: '🌿',
-                desc: 'Максимально реалистичные текстуры с PBR-эффектами. 1024x.',
-                price: 1800,
-                tag: 'Премиум'
-            },
-            {
-                id: 7,
-                name: 'Сборка "Магия + Техно"',
-                category: 'bundle',
-                icon: '📦',
-                desc: 'Готовая сборка модов на 30+ плагинов. Идеально для сервера.',
-                price: 5900,
-                tag: 'Экономия'
-            },
-            {
-                id: 8,
-                name: 'Сборка "Приключение + Реализм"',
-                category: 'bundle',
-                icon: '📦',
-                desc: 'Сборка с новыми мобами, измерениями и реалистичной графикой.',
-                price: 4900,
-                tag: null
-            },
-            {
-                id: 9,
-                name: 'Сборка "All-in-One"',
-                category: 'bundle',
-                icon: '📦',
-                desc: 'Всё в одном: магия, техника, приключения, реализм. Более 50 модов.',
-                price: 7900,
-                tag: 'Лучший выбор'
-            }
+        // ===== НАЧАЛЬНЫЕ ТОВАРЫ =====
+        const defaultProducts = [
+            { id: 1, name: 'Магический мод "Арканум"', category: 'mod', icon: '🔮', desc: '15 заклинаний, 8 магических предметов, 3 измерения.', price: 2900, tag: 'Популярный' },
+            { id: 2, name: 'Техно-мод "Индустрия 2.0"', category: 'mod', icon: '⚡', desc: 'Автоматизация, механизмы, энергосети, реакторы.', price: 3500, tag: 'Новинка' },
+            { id: 3, name: 'Мод "Приключение"', category: 'mod', icon: '🗡️', desc: 'Новые мобы, подземелья, боссы, прокачка.', price: 2500, tag: '' },
+            { id: 4, name: 'Ресурс-пак "Средневековье"', category: 'texture', icon: '🏰', desc: 'Полная смена текстур в средневековом стиле. 512x.', price: 1200, tag: 'Хит' },
+            { id: 5, name: 'Ресурс-пак "Киберпанк"', category: 'texture', icon: '🌆', desc: 'Футуристические текстуры с неоном. 512x.', price: 1500, tag: '' },
+            { id: 6, name: 'Ресурс-пак "Реализм"', category: 'texture', icon: '🌿', desc: 'Реалистичные текстуры с PBR-эффектами. 1024x.', price: 1800, tag: 'Премиум' },
+            { id: 7, name: 'Лендинг "Игровой сервер"', category: 'site', icon: '🎮', desc: 'Готовый лендинг для Minecraft/Rust сервера.', price: 4500, tag: '' },
+            { id: 8, name: 'Интернет-магазин', category: 'site', icon: '🛒', desc: 'Готовый магазин с корзиной и оплатой.', price: 8900, tag: 'Популярный' },
+            { id: 9, name: 'Telegram Бот "Авто-ответчик"', category: 'bot', icon: '💬', desc: 'Автоматические ответы на вопросы клиентов.', price: 3000, tag: '' },
+            { id: 10, name: 'Telegram Бот "Рассылка"', category: 'bot', icon: '📢', desc: 'Массовая рассылка сообщений подписчикам.', price: 4000, tag: '' },
+            { id: 11, name: 'Хостинг "Старт"', category: 'hosting', icon: '☁️', desc: 'Размещение одного сайта/бота. SSL, бекапы.', price: 500, tag: 'Популярный' },
+            { id: 12, name: 'Хостинг "Про"', category: 'hosting', icon: '☁️', desc: 'Безлимит сайтов и ботов. Приоритетная поддержка.', price: 1500, tag: 'Лучший выбор' },
+            { id: 13, name: 'Сборка "Магия + Техно"', category: 'mod', icon: '📦', desc: 'Готовая сборка на 30+ модов для сервера.', price: 5900, tag: 'Экономия' },
+            { id: 14, name: 'Сборка "All-in-One"', category: 'mod', icon: '📦', desc: 'Всё в одном: магия, техника, приключения, 50+ модов.', price: 7900, tag: 'Лучший выбор' },
+            { id: 15, name: 'Кастомный заказ', category: 'other', icon: '🎯', desc: 'Любая разработка на заказ. Обсудим детали.', price: 1000, tag: 'Гибкая цена' }
         ];
+
+        // ===== ЗАГРУЗКА ТОВАРОВ ИЗ localStorage =====
+        let products = [];
+
+        function loadProducts() {
+            const saved = localStorage.getItem('shopProducts');
+            if (saved) {
+                try {
+                    products = JSON.parse(saved);
+                    // Проверяем, что товары есть
+                    if (!products || products.length === 0) {
+                        products = JSON.parse(JSON.stringify(defaultProducts));
+                        saveProducts();
+                    }
+                } catch (e) {
+                    products = JSON.parse(JSON.stringify(defaultProducts));
+                    saveProducts();
+                }
+            } else {
+                products = JSON.parse(JSON.stringify(defaultProducts));
+                saveProducts();
+            }
+            // Убедимся, что у всех товаров есть id
+            products.forEach((p, i) => {
+                if (!p.id) p.id = Date.now() + i;
+            });
+            saveProducts();
+        }
+
+        function saveProducts() {
+            localStorage.setItem('shopProducts', JSON.stringify(products));
+        }
 
         // ===== КОРЗИНА =====
         let cart = [];
+
+        function loadCart() {
+            const saved = localStorage.getItem('shopCart');
+            if (saved) {
+                try {
+                    cart = JSON.parse(saved);
+                } catch (e) {
+                    cart = [];
+                }
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('shopCart', JSON.stringify(cart));
+        }
 
         // ===== ОТРИСОВКА ТОВАРОВ =====
         function renderProducts(filter = 'all') {
             const grid = document.getElementById('shopGrid');
             const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
             
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="shop-empty">
+                        <span class="icon">📭</span>
+                        <h3>Товаров нет</h3>
+                        <p style="color: #707080;">Добавьте товары через админ-панель</p>
+                    </div>
+                `;
+                return;
+            }
+
             grid.innerHTML = filtered.map(p => `
                 <div class="shop-item" data-id="${p.id}">
                     <div class="image">
-                        ${p.icon}
+                        ${p.icon || '📦'}
                         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+                        <span class="category-tag">${getCategoryLabel(p.category)}</span>
                     </div>
                     <div class="info">
                         <h4>${p.name}</h4>
@@ -1531,18 +1674,44 @@
                         <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
                         <div class="actions">
                             <button class="btn btn-sm add-to-cart" data-id="${p.id}">В корзину</button>
+                            <button class="btn btn-sm btn-secondary delete-product" data-id="${p.id}">✕</button>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            // Добавляем обработчики для кнопок "В корзину"
+            // Обработчики "В корзину"
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = parseInt(btn.dataset.id);
                     addToCart(id);
                 });
             });
+
+            // Обработчики "Удалить"
+            document.querySelectorAll('.delete-product').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    if (confirm('Удалить товар?')) {
+                        products = products.filter(p => p.id !== id);
+                        saveProducts();
+                        renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+                        showToast('🗑️ Товар удален');
+                    }
+                });
+            });
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                mod: '⛏️ Мод',
+                texture: '🎨 Текстуры',
+                site: '🌐 Сайт',
+                bot: '🤖 Бот',
+                hosting: '☁️ Хостинг',
+                other: '🎯 Другое'
+            };
+            return labels[category] || category;
         }
 
         // ===== ФИЛЬТРЫ =====
@@ -1566,23 +1735,23 @@
                 cart.push({ ...product, quantity: 1 });
             }
 
+            saveCart();
             updateCart();
             showToast('✅ ' + product.name + ' добавлен в корзину!');
         }
 
         function removeFromCart(id) {
             cart = cart.filter(p => p.id !== id);
+            saveCart();
             updateCart();
         }
 
         function updateCart() {
-            const sidebar = document.getElementById('cartSidebar');
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
             const totalPrice = document.getElementById('totalPrice');
             const cartCount = document.getElementById('cartCount');
 
-            // Обновляем счетчик
             const totalItems = cart.reduce((sum, p) => sum + p.quantity, 0);
             cartCount.textContent = totalItems;
 
@@ -1597,14 +1766,13 @@
             cartItems.innerHTML = cart.map(p => `
                 <div class="cart-item">
                     <div class="item-info">
-                        <span class="item-name">${p.icon} ${p.name}</span>
+                        <span class="item-name">${p.icon || '📦'} ${p.name}</span>
                         <span class="item-price">${p.price.toLocaleString('ru-RU')} ₽ × ${p.quantity}</span>
                     </div>
                     <button class="item-remove" data-id="${p.id}">✕</button>
                 </div>
             `).join('');
 
-            // Удаление из корзины
             document.querySelectorAll('.item-remove').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = parseInt(btn.dataset.id);
@@ -1616,7 +1784,7 @@
             totalPrice.textContent = total.toLocaleString('ru-RU') + ' ₽';
         }
 
-        // ===== ТОГГЛ КОРЗИНЫ =====
+        // ===== КОРЗИНА: ОТКРЫТИЕ/ЗАКРЫТИЕ =====
         const cartToggle = document.getElementById('cartToggle');
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -1648,7 +1816,7 @@
             }
 
             const total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
-            const items = cart.map(p => `${p.icon} ${p.name} × ${p.quantity} = ${(p.price * p.quantity).toLocaleString('ru-RU')} ₽`).join('\n');
+            const items = cart.map(p => `${p.icon || '📦'} ${p.name} × ${p.quantity} = ${(p.price * p.quantity).toLocaleString('ru-RU')} ₽`).join('\n');
 
             const text = `
         🛒 НОВЫЙ ЗАКАЗ ИЗ МАГАЗИНА!
@@ -1666,8 +1834,57 @@
             sendToTelegram(text);
             showToast('✅ Заказ отправлен! Я свяжусь с вами!');
             cart = [];
+            saveCart();
             updateCart();
             closeCart();
+        });
+
+        // ===== АДМИН-ПАНЕЛЬ =====
+        const adminPanel = document.getElementById('adminPanel');
+        let adminOpen = false;
+
+        document.getElementById('toggleAdmin').addEventListener('click', () => {
+            adminOpen = !adminOpen;
+            adminPanel.classList.toggle('open', adminOpen);
+            document.getElementById('toggleAdmin').textContent = adminOpen ? '✕ Закрыть' : '⚙️ Админ';
+        });
+
+        document.getElementById('adminClose').addEventListener('click', () => {
+            adminOpen = false;
+            adminPanel.classList.remove('open');
+            document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('adminName').value.trim();
+            const category = document.getElementById('adminCategory').value;
+            const icon = document.getElementById('adminIcon').value.trim() || '📦';
+            const price = parseInt(document.getElementById('adminPrice').value);
+            const desc = document.getElementById('adminDesc').value.trim();
+            const tag = document.getElementById('adminTag').value.trim();
+
+            if (!name || !price || !desc) {
+                showToast('⚠️ Заполните все поля!');
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                category,
+                icon,
+                price,
+                desc,
+                tag: tag || ''
+            };
+
+            products.push(newProduct);
+            saveProducts();
+            renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+            document.getElementById('adminForm').reset();
+            showToast('✅ Товар добавлен!');
         });
 
         // ===== ОТПРАВКА В TELEGRAM =====
@@ -1688,13 +1905,14 @@
             }
         }
 
-        // ===== ПОКАЗ УВЕДОМЛЕНИЯ =====
+        // ===== УВЕДОМЛЕНИЯ =====
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.remove('error');
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         // ===== НАВИГАЦИЯ =====
@@ -1717,6 +1935,12 @@
             document.getElementById('navLinks').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             closeCart();
+            // Закрываем админку при смене страницы
+            if (adminOpen) {
+                adminOpen = false;
+                adminPanel.classList.remove('open');
+                document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+            }
         }
 
         navLinks.forEach(link => {
@@ -1783,10 +2007,8 @@
         calcComplexity.addEventListener('input', updateCalc);
         updateCalc();
 
-        // ===== ФОРМА =====
+        // ===== ФОРМА СВЯЗИ =====
         const form = document.getElementById('contactForm');
-        const toast = document.getElementById('toast');
-
         const serviceNames = {
             site: '🌐 Сайт',
             bot: '🤖 Telegram Бот',
@@ -1805,13 +2027,7 @@
             const message = document.getElementById('message').value.trim();
 
             if (!name || !tg || !message) {
-                toast.textContent = '⚠️ Заполните все поля!';
-                toast.classList.add('error');
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    toast.classList.remove('error');
-                }, 3000);
+                showToast('⚠️ Заполните все поля!');
                 return;
             }
 
@@ -1829,14 +2045,13 @@
             `;
 
             await sendToTelegram(text);
-            toast.textContent = '✅ Заявка отправлена! Я свяжусь с вами в Telegram';
-            toast.classList.remove('error');
-            toast.classList.add('show');
+            showToast('✅ Заявка отправлена! Я свяжусь с вами в Telegram');
             form.reset();
-            setTimeout(() => toast.classList.remove('show'), 3000);
         });
 
         // ===== ИНИЦИАЛИЗАЦИЯ =====
+        loadProducts();
+        loadCart();
         renderProducts();
         updateCart();
     </script>
