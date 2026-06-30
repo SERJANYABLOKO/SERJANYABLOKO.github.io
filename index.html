@@ -140,6 +140,14 @@
             margin-left: 5px;
         }
 
+        .admin-lock {
+            color: #ff6b9d !important;
+        }
+
+        .admin-lock::after {
+            background: #ff6b9d !important;
+        }
+
         .burger {
             display: none;
             flex-direction: column;
@@ -370,7 +378,7 @@
         .stat-item:hover {
             border-color: rgba(0, 255, 136, 0.2);
             transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .stat-item .number {
@@ -754,6 +762,94 @@
         .admin-form .btn {
             padding: 10px 25px;
             font-size: 0.85rem;
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ПАРОЛЯ ===== */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.show {
+            display: flex;
+        }
+
+        .password-modal .modal-content {
+            background: #0d0d14;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .password-modal .modal-content .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .password-modal .modal-content h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .password-modal .modal-content p {
+            color: #a0a0b0;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .password-modal .modal-content input {
+            width: 100%;
+            padding: 14px 20px;
+            background: #0a0a0f;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .password-modal .modal-content input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.05);
+        }
+
+        .password-modal .modal-content input.error {
+            border-color: #ff4757;
+            box-shadow: 0 0 30px rgba(255, 71, 87, 0.1);
+        }
+
+        .password-modal .modal-content .btn {
+            width: 100%;
+        }
+
+        .password-modal .modal-content .error-msg {
+            color: #ff4757;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-modal .modal-content .error-msg.show {
+            display: block;
         }
 
         /* ===== КОРЗИНА ===== */
@@ -1231,6 +1327,10 @@
             .shop-actions {
                 justify-content: center;
             }
+
+            .password-modal .modal-content {
+                padding: 30px 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1286,6 +1386,18 @@
             </div>
         </div>
     </nav>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ПАРОЛЯ ===== -->
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-content">
+            <span class="lock-icon">🔐</span>
+            <h3>Вход в админ-панель</h3>
+            <p>Введите пароль для управления товарами</p>
+            <input type="password" id="passwordInput" placeholder="Введите пароль" />
+            <button class="btn" id="passwordSubmit">Войти</button>
+            <div class="error-msg" id="passwordError">❌ Неверный пароль! Попробуйте снова.</div>
+        </div>
+    </div>
 
     <!-- ===== ОВЕРЛЕЙ КОРЗИНЫ ===== -->
     <div class="cart-overlay" id="cartOverlay"></div>
@@ -1546,7 +1658,7 @@
                     <div class="contact-info-item">
                         <span class="icon">📧</span>
                         <div class="text">
-                            <a href="mailto:serjantyabloko@gmail.com">serjantyabloko@gmail.com</a>
+                            <a href="mailto:geraskinlev81@gmail.com">geraskinlev81@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-info-item">
@@ -1563,7 +1675,8 @@
         <div class="container">
             <p>
                 © 2026 SerjantDev. Сделано с ❤️ для ваших проектов.<br />
-                Сайты · Боты · Хостинг · Моды · Текстуры и многое другое
+                Сайты · Боты · Хостинг · Моды · Текстуры и многое другое<br />
+                <a href="mailto:geraskinlev81@gmail.com">geraskinlev81@gmail.com</a>
             </p>
         </div>
     </footer>
@@ -1575,6 +1688,9 @@
         // ===== ДАННЫЕ БОТА =====
         const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
         const CHAT_ID = '8673619246';
+
+        // ===== ПАРОЛЬ АДМИНКИ =====
+        const ADMIN_PASSWORD = 'L20812081';
 
         // ===== НАЧАЛЬНЫЕ ТОВАРЫ =====
         const defaultProducts = [
@@ -1597,13 +1713,13 @@
 
         // ===== ЗАГРУЗКА ТОВАРОВ ИЗ localStorage =====
         let products = [];
+        let isAdmin = false;
 
         function loadProducts() {
             const saved = localStorage.getItem('shopProducts');
             if (saved) {
                 try {
                     products = JSON.parse(saved);
-                    // Проверяем, что товары есть
                     if (!products || products.length === 0) {
                         products = JSON.parse(JSON.stringify(defaultProducts));
                         saveProducts();
@@ -1616,7 +1732,6 @@
                 products = JSON.parse(JSON.stringify(defaultProducts));
                 saveProducts();
             }
-            // Убедимся, что у всех товаров есть id
             products.forEach((p, i) => {
                 if (!p.id) p.id = Date.now() + i;
             });
@@ -1674,13 +1789,12 @@
                         <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
                         <div class="actions">
                             <button class="btn btn-sm add-to-cart" data-id="${p.id}">В корзину</button>
-                            <button class="btn btn-sm btn-secondary delete-product" data-id="${p.id}">✕</button>
+                            ${isAdmin ? `<button class="btn btn-sm btn-secondary delete-product" data-id="${p.id}">✕</button>` : ''}
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            // Обработчики "В корзину"
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = parseInt(btn.dataset.id);
@@ -1688,18 +1802,19 @@
                 });
             });
 
-            // Обработчики "Удалить"
-            document.querySelectorAll('.delete-product').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = parseInt(btn.dataset.id);
-                    if (confirm('Удалить товар?')) {
-                        products = products.filter(p => p.id !== id);
-                        saveProducts();
-                        renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
-                        showToast('🗑️ Товар удален');
-                    }
+            if (isAdmin) {
+                document.querySelectorAll('.delete-product').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.dataset.id);
+                        if (confirm('Удалить товар?')) {
+                            products = products.filter(p => p.id !== id);
+                            saveProducts();
+                            renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+                            showToast('🗑️ Товар удален');
+                        }
+                    });
                 });
-            });
+            }
         }
 
         function getCategoryLabel(category) {
@@ -1839,24 +1954,113 @@
             closeCart();
         });
 
-        // ===== АДМИН-ПАНЕЛЬ =====
+        // ===== АДМИН-ПАНЕЛЬ (С ПАРОЛЕМ) =====
         const adminPanel = document.getElementById('adminPanel');
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordSubmit = document.getElementById('passwordSubmit');
+        const passwordError = document.getElementById('passwordError');
         let adminOpen = false;
 
+        function checkAdminSession() {
+            const session = sessionStorage.getItem('adminSession');
+            if (session === 'true') {
+                isAdmin = true;
+                return true;
+            }
+            return false;
+        }
+
+        function setAdminSession() {
+            sessionStorage.setItem('adminSession', 'true');
+            isAdmin = true;
+        }
+
+        function clearAdminSession() {
+            sessionStorage.removeItem('adminSession');
+            isAdmin = false;
+        }
+
         document.getElementById('toggleAdmin').addEventListener('click', () => {
-            adminOpen = !adminOpen;
-            adminPanel.classList.toggle('open', adminOpen);
-            document.getElementById('toggleAdmin').textContent = adminOpen ? '✕ Закрыть' : '⚙️ Админ';
+            if (adminOpen) {
+                // Закрываем админку
+                adminOpen = false;
+                adminPanel.classList.remove('open');
+                document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+                clearAdminSession();
+                renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+                showToast('🔒 Админ-панель закрыта');
+                return;
+            }
+
+            // Проверяем сессию
+            if (checkAdminSession()) {
+                adminOpen = true;
+                adminPanel.classList.add('open');
+                document.getElementById('toggleAdmin').textContent = '✕ Закрыть';
+                renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+                showToast('🔓 Добро пожаловать в админ-панель!');
+                return;
+            }
+
+            // Показываем модалку
+            passwordModal.classList.add('show');
+            passwordInput.value = '';
+            passwordError.classList.remove('show');
+            passwordInput.classList.remove('error');
+            passwordInput.focus();
+        });
+
+        // Ввод пароля по Enter
+        passwordInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                passwordSubmit.click();
+            }
+        });
+
+        passwordSubmit.addEventListener('click', () => {
+            const pass = passwordInput.value.trim();
+            if (pass === ADMIN_PASSWORD) {
+                passwordModal.classList.remove('show');
+                setAdminSession();
+                adminOpen = true;
+                adminPanel.classList.add('open');
+                document.getElementById('toggleAdmin').textContent = '✕ Закрыть';
+                renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
+                showToast('🔓 Добро пожаловать в админ-панель!');
+            } else {
+                passwordInput.classList.add('error');
+                passwordError.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        // Закрытие модалки по клику вне
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) {
+                passwordModal.classList.remove('show');
+                passwordError.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
         });
 
         document.getElementById('adminClose').addEventListener('click', () => {
             adminOpen = false;
             adminPanel.classList.remove('open');
             document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+            clearAdminSession();
+            renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
         });
 
+        // ===== ДОБАВЛЕНИЕ ТОВАРА =====
         document.getElementById('adminForm').addEventListener('submit', (e) => {
             e.preventDefault();
+
+            if (!isAdmin) {
+                showToast('⚠️ Доступ запрещен! Войдите в админ-панель.');
+                return;
+            }
 
             const name = document.getElementById('adminName').value.trim();
             const category = document.getElementById('adminCategory').value;
@@ -1935,12 +2139,6 @@
             document.getElementById('navLinks').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             closeCart();
-            // Закрываем админку при смене страницы
-            if (adminOpen) {
-                adminOpen = false;
-                adminPanel.classList.remove('open');
-                document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
-            }
         }
 
         navLinks.forEach(link => {
@@ -2054,6 +2252,12 @@
         loadCart();
         renderProducts();
         updateCart();
+
+        // Проверяем сессию админа
+        if (checkAdminSession()) {
+            // Админ уже авторизован, но админка закрыта
+            // Ничего не делаем, ждем клика
+        }
     </script>
 
 </body>
