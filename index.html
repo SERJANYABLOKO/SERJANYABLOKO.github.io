@@ -1217,6 +1217,141 @@
             box-shadow: 0 10px 40px rgba(255, 71, 87, 0.2);
         }
 
+        /* ===== НАСТРОЙКИ ===== */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-modal.show {
+            display: flex;
+        }
+
+        .settings-modal .modal-content {
+            background: #0d0d14;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-modal .modal-content h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .settings-modal .settings-group {
+            margin-bottom: 25px;
+        }
+
+        .settings-modal .settings-group label {
+            display: block;
+            color: #a0a0b0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .settings-modal .theme-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .settings-modal .theme-options button {
+            flex: 1;
+            padding: 10px 0;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: transparent;
+            color: #e0e0e0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .settings-modal .theme-options button:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+
+        .settings-modal .theme-options button.active-theme {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0,255,136,0.1);
+        }
+
+        .settings-modal .theme-options button[data-theme="green"] {
+            border-color: rgba(0, 255, 136, 0.4);
+            color: #00ff88;
+        }
+        .settings-modal .theme-options button[data-theme="red"] {
+            border-color: rgba(255, 71, 87, 0.4);
+            color: #ff4757;
+        }
+        .settings-modal .theme-options button[data-theme="blue"] {
+            border-color: rgba(54, 166, 255, 0.4);
+            color: #36a6ff;
+        }
+        .settings-modal .theme-options button[data-theme="green"].active-theme {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+        .settings-modal .theme-options button[data-theme="red"].active-theme {
+            border-color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+        }
+        .settings-modal .theme-options button[data-theme="blue"].active-theme {
+            border-color: #36a6ff;
+            background: rgba(54, 166, 255, 0.1);
+        }
+
+        .settings-modal .lang-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .settings-modal .lang-options button {
+            flex: 1;
+            padding: 10px 0;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: transparent;
+            color: #e0e0e0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .settings-modal .lang-options button:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+
+        .settings-modal .lang-options button.active-lang {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .settings-modal .settings-close {
+            width: 100%;
+            margin-top: 10px;
+        }
+
         @media (max-width: 992px) {
             .hero .container {
                 grid-template-columns: 1fr;
@@ -1331,6 +1466,14 @@
             .password-modal .modal-content {
                 padding: 30px 20px;
             }
+
+            .settings-modal .modal-content {
+                padding: 25px 15px;
+            }
+            .settings-modal .theme-options,
+            .settings-modal .lang-options {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1368,11 +1511,12 @@
         <div class="container">
             <a href="#" class="logo" data-page="home">SERJANT<span>DEV</span></a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#" data-page="home" class="active">Главная</a></li>
-                <li><a href="#" data-page="services">Услуги</a></li>
-                <li><a href="#" data-page="shop">Магазин</a></li>
-                <li><a href="#" data-page="calculator">Калькулятор</a></li>
-                <li><a href="#" data-page="contact">Контакты</a></li>
+                <li><a href="#" data-page="home" class="active" data-i18n="nav_home">Главная</a></li>
+                <li><a href="#" data-page="services" data-i18n="nav_services">Услуги</a></li>
+                <li><a href="#" data-page="shop" data-i18n="nav_shop">Магазин</a></li>
+                <li><a href="#" data-page="calculator" data-i18n="nav_calculator">Калькулятор</a></li>
+                <li><a href="#" data-page="contact" data-i18n="nav_contact">Контакты</a></li>
+                <li><a href="#" id="settingsToggle">⚙️</a></li>
                 <li>
                     <a href="#" id="cartToggle">
                         🛒 <span class="cart-badge" id="cartCount">0</span>
@@ -1391,11 +1535,37 @@
     <div class="password-modal" id="passwordModal">
         <div class="modal-content">
             <span class="lock-icon">🔐</span>
-            <h3>Вход в админ-панель</h3>
-            <p>Введите пароль для управления товарами</p>
+            <h3 data-i18n="admin_title">Вход в админ-панель</h3>
+            <p data-i18n="admin_desc">Введите пароль для управления товарами</p>
             <input type="password" id="passwordInput" placeholder="Введите пароль" />
-            <button class="btn" id="passwordSubmit">Войти</button>
+            <button class="btn" id="passwordSubmit" data-i18n="admin_enter">Войти</button>
             <div class="error-msg" id="passwordError">❌ Неверный пароль! Попробуйте снова.</div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО НАСТРОЕК ===== -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="modal-content">
+            <h3>⚙️ Настройки</h3>
+            
+            <div class="settings-group">
+                <label data-i18n="settings_theme">Тема оформления</label>
+                <div class="theme-options">
+                    <button data-theme="green" class="active-theme">🟢 Зеленая</button>
+                    <button data-theme="red">🔴 Красная</button>
+                    <button data-theme="blue">🔵 Синяя</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <label data-i18n="settings_lang">Язык</label>
+                <div class="lang-options">
+                    <button data-lang="ru" class="active-lang">🇷🇺 Русский</button>
+                    <button data-lang="en">🇬🇧 English</button>
+                </div>
+            </div>
+
+            <button class="btn settings-close" id="settingsClose">✕ Закрыть</button>
         </div>
     </div>
 
@@ -1414,9 +1584,9 @@
             </p>
         </div>
         <div class="cart-total" id="cartTotal" style="display: none;">
-            <div class="total-label">Итого:</div>
+            <div class="total-label" data-i18n="cart_total">Итого:</div>
             <div class="total-price" id="totalPrice">0 ₽</div>
-            <button class="btn" id="checkoutBtn">Оформить заказ</button>
+            <button class="btn" id="checkoutBtn" data-i18n="cart_checkout">Оформить заказ</button>
         </div>
     </div>
 
@@ -1434,29 +1604,29 @@
                         <span class="badge">🎨 Текстуры</span>
                     </div>
                     <h1>
-                        Разработка и <br />
-                        <span class="highlight">продажа цифровых продуктов</span>
+                        <span data-i18n="hero_title1">Разработка и</span> <br />
+                        <span class="highlight" data-i18n="hero_title2">продажа цифровых продуктов</span>
                     </h1>
-                    <p>
+                    <p data-i18n="hero_desc">
                         Сайты, Telegram-боты, Mini Apps, хостинг, моды и текстуры для Minecraft.
                         Всё, что нужно для вашего проекта — в одном месте.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn" data-page="shop">В магазин</a>
-                        <a href="#" class="btn btn-secondary" data-page="contact">Заказать разработку</a>
+                        <a href="#" class="btn" data-page="shop" data-i18n="hero_btn_shop">В магазин</a>
+                        <a href="#" class="btn btn-secondary" data-page="contact" data-i18n="hero_btn_order">Заказать разработку</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat-item">
                             <div class="number">20+</div>
-                            <div class="label">Товаров</div>
+                            <div class="label" data-i18n="stat_products">Товаров</div>
                         </div>
                         <div class="stat-item">
                             <div class="number">15+</div>
-                            <div class="label">Проектов</div>
+                            <div class="label" data-i18n="stat_projects">Проектов</div>
                         </div>
                         <div class="stat-item">
                             <div class="number">100%</div>
-                            <div class="label">Довольных клиентов</div>
+                            <div class="label" data-i18n="stat_clients">Довольных клиентов</div>
                         </div>
                     </div>
                 </div>
@@ -1478,13 +1648,13 @@
     <div class="page" id="page-services">
         <section class="services-page">
             <div class="container">
-                <h2 class="section-title">Мои услуги</h2>
+                <h2 class="section-title" data-i18n="services_title">Мои услуги</h2>
                 <div class="services-grid">
                     <!-- 1. Сайты -->
                     <div class="service-card">
                         <span class="service-icon">🌐</span>
-                        <h3>Сайты</h3>
-                        <p>Лендинги, магазины, панели управления, админ-панели, личные кабинеты.</p>
+                        <h3 data-i18n="service_sites_title">Сайты</h3>
+                        <p data-i18n="service_sites_desc">Лендинги, магазины, панели управления, админ-панели, личные кабинеты.</p>
                         <div class="service-features">
                             <span>Адаптив</span>
                             <span>SEO</span>
@@ -1496,8 +1666,8 @@
                     <!-- 2. Telegram Боты -->
                     <div class="service-card">
                         <span class="service-icon">🤖</span>
-                        <h3>Telegram Боты</h3>
-                        <p>Автоматизация, уведомления, рассылки, поддержка, платежи, розыгрыши.</p>
+                        <h3 data-i18n="service_bots_title">Telegram Боты</h3>
+                        <p data-i18n="service_bots_desc">Автоматизация, уведомления, рассылки, поддержка, платежи, розыгрыши.</p>
                         <div class="service-features">
                             <span>Авто-респондер</span>
                             <span>Платежи</span>
@@ -1506,11 +1676,11 @@
                         <span class="service-tag">Python + aiogram</span>
                     </div>
 
-                    <!-- 3. Telegram Mini Apps (НОВОЕ) -->
+                    <!-- 3. Telegram Mini Apps -->
                     <div class="service-card">
                         <span class="service-icon">📱</span>
-                        <h3>Telegram Mini Apps</h3>
-                        <p>Интерактивные приложения внутри Telegram: магазины, клановые чаты, доски лидеров, игры, панели управления.</p>
+                        <h3 data-i18n="service_miniapps_title">Telegram Mini Apps</h3>
+                        <p data-i18n="service_miniapps_desc">Интерактивные приложения внутри Telegram: магазины, клановые чаты, доски лидеров, игры, панели управления.</p>
                         <div class="service-features">
                             <span>Магазины</span>
                             <span>Игры</span>
@@ -1523,8 +1693,8 @@
                     <!-- 4. Хостинг -->
                     <div class="service-card">
                         <span class="service-icon">☁️</span>
-                        <h3>Хостинг</h3>
-                        <p>Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг.</p>
+                        <h3 data-i18n="service_hosting_title">Хостинг</h3>
+                        <p data-i18n="service_hosting_desc">Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг.</p>
                         <div class="service-features">
                             <span>🛡️ SSL</span>
                             <span>💾 Бекапы</span>
@@ -1536,8 +1706,8 @@
                     <!-- 5. Моды для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">⛏️</span>
-                        <h3>Моды для Minecraft</h3>
-                        <p>Кастомные моды: новые механики, предметы, мобы, измерения, магия, технологии.</p>
+                        <h3 data-i18n="service_mods_title">Моды для Minecraft</h3>
+                        <p data-i18n="service_mods_desc">Кастомные моды: новые механики, предметы, мобы, измерения, магия, технологии.</p>
                         <div class="service-features">
                             <span>Новые предметы</span>
                             <span>Новые мобы</span>
@@ -1549,8 +1719,8 @@
                     <!-- 6. Текстуры для Minecraft -->
                     <div class="service-card">
                         <span class="service-icon">🎨</span>
-                        <h3>Текстуры для Minecraft</h3>
-                        <p>Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт.</p>
+                        <h3 data-i18n="service_textures_title">Текстуры для Minecraft</h3>
+                        <p data-i18n="service_textures_desc">Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт.</p>
                         <div class="service-features">
                             <span>Ресурс-паки</span>
                             <span>Скины</span>
@@ -1567,11 +1737,11 @@
     <div class="page" id="page-shop">
         <section class="shop-page">
             <div class="container">
-                <h2 class="section-title">Магазин цифровых продуктов</h2>
+                <h2 class="section-title" data-i18n="shop_title">Магазин цифровых продуктов</h2>
                 
                 <div class="shop-controls">
                     <div class="shop-filters" id="shopFilters">
-                        <button class="active" data-filter="all">Все</button>
+                        <button class="active" data-filter="all" data-i18n="filter_all">Все</button>
                         <button data-filter="mod">⛏️ Моды</button>
                         <button data-filter="texture">🎨 Текстуры</button>
                         <button data-filter="miniapp">📱 Mini Apps</button>
@@ -1581,7 +1751,7 @@
                         <button data-filter="other">🎯 Другое</button>
                     </div>
                     <div class="shop-actions">
-                        <button class="btn btn-sm btn-secondary" id="toggleAdmin">⚙️ Админ</button>
+                        <button class="btn btn-sm btn-secondary" id="toggleAdmin" data-i18n="admin_btn">⚙️ Админ</button>
                     </div>
                 </div>
 
@@ -1590,11 +1760,11 @@
                     <h3>⚙️ Управление товарами</h3>
                     <form class="admin-form" id="adminForm">
                         <div class="form-group">
-                            <label>Название товара</label>
+                            <label data-i18n="admin_name">Название товара</label>
                             <input type="text" id="adminName" placeholder="Например: Mini App для клана" required />
                         </div>
                         <div class="form-group">
-                            <label>Категория</label>
+                            <label data-i18n="admin_category">Категория</label>
                             <select id="adminCategory">
                                 <option value="mod">⛏️ Моды</option>
                                 <option value="texture">🎨 Текстуры</option>
@@ -1606,24 +1776,24 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Иконка (эмодзи)</label>
+                            <label data-i18n="admin_icon">Иконка (эмодзи)</label>
                             <input type="text" id="adminIcon" placeholder="📱" required />
                         </div>
                         <div class="form-group">
-                            <label>Цена (₽)</label>
+                            <label data-i18n="admin_price">Цена (₽)</label>
                             <input type="number" id="adminPrice" placeholder="5000" required />
                         </div>
                         <div class="form-group full-width">
-                            <label>Описание</label>
+                            <label data-i18n="admin_desc">Описание</label>
                             <textarea id="adminDesc" placeholder="Краткое описание товара..." required></textarea>
                         </div>
                         <div class="form-group full-width">
-                            <label>Тег (необязательно)</label>
+                            <label data-i18n="admin_tag">Тег (необязательно)</label>
                             <input type="text" id="adminTag" placeholder="Популярный, Новинка, Хит..." />
                         </div>
                         <div class="form-group full-width" style="display: flex; gap: 10px;">
-                            <button type="submit" class="btn btn-sm">➕ Добавить товар</button>
-                            <button type="button" class="btn btn-sm btn-secondary" id="adminClose">✕ Закрыть</button>
+                            <button type="submit" class="btn btn-sm" data-i18n="admin_add">➕ Добавить товар</button>
+                            <button type="button" class="btn btn-sm btn-secondary" id="adminClose" data-i18n="admin_close">✕ Закрыть</button>
                         </div>
                     </form>
                 </div>
@@ -1639,9 +1809,9 @@
     <div class="page" id="page-calculator">
         <section class="calculator-page">
             <div class="container">
-                <h2 class="section-title">Калькулятор стоимости</h2>
+                <h2 class="section-title" data-i18n="calc_title">Калькулятор стоимости</h2>
                 <div class="calc-box">
-                    <label for="calcService">Что нужно разработать?</label>
+                    <label for="calcService" data-i18n="calc_service">Что нужно разработать?</label>
                     <select id="calcService">
                         <option value="site">🌐 Сайт</option>
                         <option value="bot">🤖 Telegram Бот</option>
@@ -1652,13 +1822,13 @@
                         <option value="full">🔥 Полный комплекс</option>
                     </select>
 
-                    <label for="calcComplexity">Сложность: <span id="calcComplexityLabel">Средняя</span></label>
+                    <label for="calcComplexity" data-i18n="calc_complexity">Сложность: <span id="calcComplexityLabel">Средняя</span></label>
                     <input type="range" id="calcComplexity" min="1" max="5" value="3" />
 
                     <div class="calc-result">
-                        <div class="price-label">Ориентировочная стоимость</div>
+                        <div class="price-label" data-i18n="calc_estimated">Ориентировочная стоимость</div>
                         <div class="price" id="calcPrice">12 500 ₽</div>
-                        <div style="font-size: 0.8rem; color: #707080; margin-top: 8px;">
+                        <div style="font-size: 0.8rem; color: #707080; margin-top: 8px;" data-i18n="calc_note">
                             * Точная цена после обсуждения задач
                         </div>
                     </div>
@@ -1671,18 +1841,18 @@
     <div class="page" id="page-contact">
         <section class="contact-page">
             <div class="container">
-                <h2 class="section-title">Обсудить проект</h2>
+                <h2 class="section-title" data-i18n="contact_title">Обсудить проект</h2>
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <label for="name">Как к вам обращаться?</label>
+                        <label for="name" data-i18n="contact_name">Как к вам обращаться?</label>
                         <input type="text" id="name" placeholder="Ваше имя или никнейм" required />
                     </div>
                     <div class="form-group">
-                        <label for="tg">Ваш Telegram</label>
+                        <label for="tg" data-i18n="contact_tg">Ваш Telegram</label>
                         <input type="text" id="tg" placeholder="@username" required />
                     </div>
                     <div class="form-group">
-                        <label for="contactService">Что вас интересует?</label>
+                        <label for="contactService" data-i18n="contact_service">Что вас интересует?</label>
                         <select id="contactService">
                             <option value="site">🌐 Сайт</option>
                             <option value="bot">🤖 Telegram Бот</option>
@@ -1694,10 +1864,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Опишите задачу</label>
+                        <label for="message" data-i18n="contact_message">Опишите задачу</label>
                         <textarea id="message" placeholder="Расскажите, что нужно сделать..." required></textarea>
                     </div>
-                    <button type="submit" class="btn">Отправить заявку</button>
+                    <button type="submit" class="btn" data-i18n="contact_submit">Отправить заявку</button>
                 </form>
 
                 <div class="contact-info">
@@ -1715,7 +1885,7 @@
                     </div>
                     <div class="contact-info-item">
                         <span class="icon">⏰</span>
-                        <div class="text">24/7 Онлайн</div>
+                        <div class="text" data-i18n="contact_online">24/7 Онлайн</div>
                     </div>
                 </div>
             </div>
@@ -1726,8 +1896,8 @@
     <footer class="footer">
         <div class="container">
             <p>
-                © 2026 SerjantDev. Сделано с ❤️ для ваших проектов.<br />
-                Сайты · Боты · Mini Apps · Хостинг · Моды · Текстуры<br />
+                © 2026 SerjantDev. <span data-i18n="footer_made">Сделано с ❤️ для ваших проектов.</span><br />
+                <span data-i18n="footer_tags">Сайты · Боты · Mini Apps · Хостинг · Моды · Текстуры</span><br />
                 <a href="mailto:geraskinlev81@gmail.com">geraskinlev81@gmail.com</a>
             </p>
         </div>
@@ -1754,7 +1924,7 @@
             { id: 4, name: 'Ресурс-пак "Средневековье"', category: 'texture', icon: '🏰', desc: 'Полная смена текстур в средневековом стиле. 512x.', price: 1200, tag: 'Хит' },
             { id: 5, name: 'Ресурс-пак "Киберпанк"', category: 'texture', icon: '🌆', desc: 'Футуристические текстуры с неоном. 512x.', price: 1500, tag: '' },
             { id: 6, name: 'Ресурс-пак "Реализм"', category: 'texture', icon: '🌿', desc: 'Реалистичные текстуры с PBR-эффектами. 1024x.', price: 1800, tag: 'Премиум' },
-            // Mini Apps (НОВЫЕ)
+            // Mini Apps
             { id: 7, name: 'Mini App "Магазин скинов"', category: 'miniapp', icon: '🛍️', desc: 'Магазин скинов и привилегий внутри Telegram с оплатой.', price: 8900, tag: 'Популярный' },
             { id: 8, name: 'Mini App "Клановый чат"', category: 'miniapp', icon: '💬', desc: 'Чат для клана с доской лидеров и системой рангов.', price: 6500, tag: '' },
             { id: 9, name: 'Mini App "Кликер-игра"', category: 'miniapp', icon: '🕹️', desc: 'Простая кликер-игра с таблицей рекордов и бонусами.', price: 4500, tag: 'Новинка' },
@@ -1824,6 +1994,287 @@
             localStorage.setItem('shopCart', JSON.stringify(cart));
         }
 
+        // ===== ТЕМЫ =====
+        let currentTheme = 'green';
+
+        function loadTheme() {
+            const saved = localStorage.getItem('siteTheme');
+            if (saved) {
+                currentTheme = saved;
+            } else {
+                currentTheme = 'green';
+            }
+            applyTheme(currentTheme);
+        }
+
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('siteTheme', theme);
+            
+            const root = document.documentElement;
+            const allLinks = document.querySelectorAll('a, .btn, .badge, .stat-item .number, .service-card h3, .shop-item .info h4, .shop-item .info .price, .cart-sidebar .cart-header h3, .cart-total .total-price');
+            
+            // Удаляем старые классы темы
+            document.body.classList.remove('theme-green', 'theme-red', 'theme-blue');
+            
+            if (theme === 'green') {
+                document.body.classList.add('theme-green');
+                // Зеленая тема (по умолчанию)
+                document.documentElement.style.setProperty('--primary-color', '#00ff88');
+                document.documentElement.style.setProperty('--primary-glow', 'rgba(0, 255, 136, 0.3)');
+                document.documentElement.style.setProperty('--secondary-color', '#00ccff');
+                updateStyleOverrides('#00ff88', '#00ccff');
+            } else if (theme === 'red') {
+                document.body.classList.add('theme-red');
+                document.documentElement.style.setProperty('--primary-color', '#ff4757');
+                document.documentElement.style.setProperty('--primary-glow', 'rgba(255, 71, 87, 0.3)');
+                document.documentElement.style.setProperty('--secondary-color', '#ff6b81');
+                updateStyleOverrides('#ff4757', '#ff6b81');
+            } else if (theme === 'blue') {
+                document.body.classList.add('theme-blue');
+                document.documentElement.style.setProperty('--primary-color', '#36a6ff');
+                document.documentElement.style.setProperty('--primary-glow', 'rgba(54, 166, 255, 0.3)');
+                document.documentElement.style.setProperty('--secondary-color', '#5cb8ff');
+                updateStyleOverrides('#36a6ff', '#5cb8ff');
+            }
+
+            // Обновляем активную кнопку в настройках
+            document.querySelectorAll('.theme-options button').forEach(btn => {
+                btn.classList.toggle('active-theme', btn.dataset.theme === theme);
+            });
+        }
+
+        function updateStyleOverrides(primary, secondary) {
+            const style = document.createElement('style');
+            style.id = 'theme-overrides';
+            const old = document.getElementById('theme-overrides');
+            if (old) old.remove();
+            
+            style.id = 'theme-overrides';
+            style.textContent = `
+                .logo { color: ${primary} !important; text-shadow: 0 0 30px ${primary}33 !important; }
+                .logo span { color: ${secondary} !important; text-shadow: 0 0 30px ${secondary}33 !important; }
+                .btn { background: linear-gradient(135deg, ${primary}, ${secondary}) !important; box-shadow: 0 0 30px ${primary}33 !important; }
+                .btn:hover { box-shadow: 0 0 60px ${primary}66 !important; }
+                .btn-secondary { color: ${primary} !important; border-color: ${primary} !important; }
+                .btn-secondary:hover { background: ${primary} !important; color: #0a0a0f !important; }
+                .nav-links a::after { background: linear-gradient(90deg, ${primary}, ${secondary}) !important; box-shadow: 0 0 20px ${primary} !important; }
+                .nav-links a:hover, .nav-links a.active { color: ${primary} !important; }
+                .cart-badge { background: ${primary} !important; }
+                .burger span { background: ${primary} !important; }
+                .section-title { background: linear-gradient(135deg, ${primary}, ${secondary}) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+                .hero-content h1 .highlight { background: linear-gradient(135deg, ${primary}, ${secondary}) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+                .badge { border-color: ${primary}44 !important; color: ${primary} !important; background: ${primary}11 !important; }
+                .badge:hover { background: ${primary}22 !important; border-color: ${primary} !important; }
+                .stat-item .number { color: ${primary} !important; text-shadow: 0 0 30px ${primary}33 !important; }
+                .service-card h3 { color: ${primary} !important; }
+                .service-card::before { background: linear-gradient(90deg, ${primary}, ${secondary}) !important; }
+                .service-tag { color: ${primary} !important; background: ${primary}11 !important; border-color: ${primary}22 !important; }
+                .shop-item .info h4 { color: ${primary} !important; }
+                .shop-item .info .price { color: ${secondary} !important; }
+                .shop-filters button:hover { border-color: ${primary} !important; color: ${primary} !important; }
+                .shop-filters button.active { background: ${primary}22 !important; border-color: ${primary} !important; color: ${primary} !important; }
+                .admin-panel h3 { color: ${primary} !important; }
+                .admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus { border-color: ${primary} !important; }
+                .calc-box input[type="range"] { background: linear-gradient(90deg, ${primary}, ${secondary}) !important; }
+                .calc-box input[type="range"]::-webkit-slider-thumb { background: ${primary} !important; box-shadow: 0 0 30px ${primary}66 !important; }
+                .calc-result .price { color: ${primary} !important; text-shadow: 0 0 40px ${primary}33 !important; }
+                .cart-sidebar .cart-header h3 { color: ${primary} !important; }
+                .cart-total .total-price { color: ${primary} !important; }
+                .cart-sidebar { border-left: 1px solid ${primary}22 !important; }
+                .password-modal .modal-content { border-color: ${primary}44 !important; }
+                .password-modal .modal-content h3 { color: ${primary} !important; }
+                .settings-modal .modal-content { border-color: ${primary}44 !important; }
+                .settings-modal .modal-content h3 { color: ${primary} !important; }
+                .settings-modal .theme-options button.active-theme { border-color: ${primary} !important; box-shadow: 0 0 20px ${primary}33 !important; }
+                .settings-modal .lang-options button.active-lang { border-color: ${primary} !important; background: ${primary}22 !important; }
+                .contact-info-item .text a { color: ${primary} !important; }
+                .footer a { color: ${primary} !important; }
+                ::-webkit-scrollbar-thumb { background: ${primary} !important; box-shadow: 0 0 20px ${primary}66 !important; }
+                .toast { background: ${primary} !important; }
+                .shop-item .image .tag { color: ${primary} !important; border-color: ${primary}44 !important; background: ${primary}22 !important; }
+                .service-features span { border-color: ${primary}22 !important; }
+                .hero-code::before { background: linear-gradient(135deg, ${primary}22, transparent, ${secondary}22) !important; }
+                .hero-code .code-window { color: ${primary} !important; }
+                .cart-total { border-top: 2px solid ${primary}22 !important; }
+                .cart-item .item-price { color: ${secondary} !important; }
+                .settings-modal .theme-options button[data-theme="green"].active-theme { border-color: #00ff88; background: rgba(0,255,136,0.1); }
+                .settings-modal .theme-options button[data-theme="red"].active-theme { border-color: #ff4757; background: rgba(255,71,87,0.1); }
+                .settings-modal .theme-options button[data-theme="blue"].active-theme { border-color: #36a6ff; background: rgba(54,166,255,0.1); }
+                .calc-result { background: linear-gradient(135deg, ${primary}11, ${secondary}11) !important; border-color: ${primary}22 !important; }
+                .navbar { border-bottom: 1px solid ${primary}22 !important; }
+                .navbar.scrolled { border-bottom: 1px solid ${primary}44 !important; }
+                .hero::before { background-image: linear-gradient(${primary}11 1px, transparent 1px), linear-gradient(90deg, ${primary}11 1px, transparent 1px) !important; }
+                .contact-page { background: ${primary}11 !important; }
+                .services-page { background: ${primary}11 !important; }
+                .shop-item .image { background: linear-gradient(135deg, ${primary}11, ${secondary}11) !important; }
+                .shop-item:hover { border-color: ${primary}44 !important; }
+                .service-card:hover { border-color: ${primary}44 !important; }
+                .stat-item:hover { border-color: ${primary}44 !important; }
+                .cart-overlay { background: rgba(0,0,0,0.6) !important; }
+                .password-modal { background: rgba(0,0,0,0.8) !important; }
+                .settings-modal { background: rgba(0,0,0,0.8) !important; }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // ===== ЯЗЫКИ =====
+        let currentLang = 'ru';
+
+        const translations = {
+            ru: {
+                nav_home: 'Главная',
+                nav_services: 'Услуги',
+                nav_shop: 'Магазин',
+                nav_calculator: 'Калькулятор',
+                nav_contact: 'Контакты',
+                admin_title: 'Вход в админ-панель',
+                admin_desc: 'Введите пароль для управления товарами',
+                admin_enter: 'Войти',
+                admin_btn: '⚙️ Админ',
+                admin_name: 'Название товара',
+                admin_category: 'Категория',
+                admin_icon: 'Иконка (эмодзи)',
+                admin_price: 'Цена (₽)',
+                admin_desc: 'Описание',
+                admin_tag: 'Тег (необязательно)',
+                admin_add: '➕ Добавить товар',
+                admin_close: '✕ Закрыть',
+                settings_theme: 'Тема оформления',
+                settings_lang: 'Язык',
+                hero_title1: 'Разработка и',
+                hero_title2: 'продажа цифровых продуктов',
+                hero_desc: 'Сайты, Telegram-боты, Mini Apps, хостинг, моды и текстуры для Minecraft. Всё, что нужно для вашего проекта — в одном месте.',
+                hero_btn_shop: 'В магазин',
+                hero_btn_order: 'Заказать разработку',
+                stat_products: 'Товаров',
+                stat_projects: 'Проектов',
+                stat_clients: 'Довольных клиентов',
+                services_title: 'Мои услуги',
+                service_sites_title: 'Сайты',
+                service_sites_desc: 'Лендинги, магазины, панели управления, админ-панели, личные кабинеты.',
+                service_bots_title: 'Telegram Боты',
+                service_bots_desc: 'Автоматизация, уведомления, рассылки, поддержка, платежи, розыгрыши.',
+                service_miniapps_title: 'Telegram Mini Apps',
+                service_miniapps_desc: 'Интерактивные приложения внутри Telegram: магазины, клановые чаты, доски лидеров, игры, панели управления.',
+                service_hosting_title: 'Хостинг',
+                service_hosting_desc: 'Размещение сайтов и ботов на 24/7 серверах. SSL, бекапы, мониторинг.',
+                service_mods_title: 'Моды для Minecraft',
+                service_mods_desc: 'Кастомные моды: новые механики, предметы, мобы, измерения, магия, технологии.',
+                service_textures_title: 'Текстуры для Minecraft',
+                service_textures_desc: 'Ресурс-паки любой стилистики: средневековье, футуризм, реализм, пиксель-арт.',
+                shop_title: 'Магазин цифровых продуктов',
+                filter_all: 'Все',
+                calc_title: 'Калькулятор стоимости',
+                calc_service: 'Что нужно разработать?',
+                calc_complexity: 'Сложность:',
+                calc_estimated: 'Ориентировочная стоимость',
+                calc_note: '* Точная цена после обсуждения задач',
+                contact_title: 'Обсудить проект',
+                contact_name: 'Как к вам обращаться?',
+                contact_tg: 'Ваш Telegram',
+                contact_service: 'Что вас интересует?',
+                contact_message: 'Опишите задачу',
+                contact_submit: 'Отправить заявку',
+                contact_online: '24/7 Онлайн',
+                footer_made: 'Сделано с ❤️ для ваших проектов.',
+                footer_tags: 'Сайты · Боты · Mini Apps · Хостинг · Моды · Текстуры',
+                cart_total: 'Итого:',
+                cart_checkout: 'Оформить заказ'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_services: 'Services',
+                nav_shop: 'Shop',
+                nav_calculator: 'Calculator',
+                nav_contact: 'Contact',
+                admin_title: 'Admin Panel Login',
+                admin_desc: 'Enter password to manage products',
+                admin_enter: 'Login',
+                admin_btn: '⚙️ Admin',
+                admin_name: 'Product Name',
+                admin_category: 'Category',
+                admin_icon: 'Icon (emoji)',
+                admin_price: 'Price (₽)',
+                admin_desc: 'Description',
+                admin_tag: 'Tag (optional)',
+                admin_add: '➕ Add Product',
+                admin_close: '✕ Close',
+                settings_theme: 'Theme',
+                settings_lang: 'Language',
+                hero_title1: 'Development and',
+                hero_title2: 'sale of digital products',
+                hero_desc: 'Websites, Telegram bots, Mini Apps, hosting, Minecraft mods and textures. Everything you need for your project — in one place.',
+                hero_btn_shop: 'Go to Shop',
+                hero_btn_order: 'Order Development',
+                stat_products: 'Products',
+                stat_projects: 'Projects',
+                stat_clients: 'Happy Clients',
+                services_title: 'My Services',
+                service_sites_title: 'Websites',
+                service_sites_desc: 'Landing pages, stores, control panels, admin panels, personal accounts.',
+                service_bots_title: 'Telegram Bots',
+                service_bots_desc: 'Automation, notifications, mailing, support, payments, giveaways.',
+                service_miniapps_title: 'Telegram Mini Apps',
+                service_miniapps_desc: 'Interactive apps inside Telegram: stores, clan chats, leaderboards, games, control panels.',
+                service_hosting_title: 'Hosting',
+                service_hosting_desc: 'Hosting websites and bots on 24/7 servers. SSL, backups, monitoring.',
+                service_mods_title: 'Minecraft Mods',
+                service_mods_desc: 'Custom mods: new mechanics, items, mobs, dimensions, magic, technology.',
+                service_textures_title: 'Minecraft Textures',
+                service_textures_desc: 'Resource packs of any style: medieval, futuristic, realistic, pixel art.',
+                shop_title: 'Digital Products Store',
+                filter_all: 'All',
+                calc_title: 'Cost Calculator',
+                calc_service: 'What needs to be developed?',
+                calc_complexity: 'Complexity:',
+                calc_estimated: 'Estimated cost',
+                calc_note: '* Exact price after discussing the task',
+                contact_title: 'Discuss Project',
+                contact_name: 'What is your name?',
+                contact_tg: 'Your Telegram',
+                contact_service: 'What are you interested in?',
+                contact_message: 'Describe your task',
+                contact_submit: 'Send Request',
+                contact_online: '24/7 Online',
+                footer_made: 'Made with ❤️ for your projects.',
+                footer_tags: 'Websites · Bots · Mini Apps · Hosting · Mods · Textures',
+                cart_total: 'Total:',
+                cart_checkout: 'Checkout'
+            }
+        };
+
+        function loadLang() {
+            const saved = localStorage.getItem('siteLang');
+            if (saved) {
+                currentLang = saved;
+            } else {
+                currentLang = 'ru';
+            }
+            applyLang(currentLang);
+        }
+
+        function applyLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('siteLang', lang);
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Обновляем активную кнопку в настройках
+            document.querySelectorAll('.lang-options button').forEach(btn => {
+                btn.classList.toggle('active-lang', btn.dataset.lang === lang);
+            });
+        }
+
         // ===== ОТРИСОВКА ТОВАРОВ =====
         function renderProducts(filter = 'all') {
             const grid = document.getElementById('shopGrid');
@@ -1833,8 +2284,8 @@
                 grid.innerHTML = `
                     <div class="shop-empty">
                         <span class="icon">📭</span>
-                        <h3>Товаров нет</h3>
-                        <p style="color: #707080;">Добавьте товары через админ-панель</p>
+                        <h3>${currentLang === 'ru' ? 'Товаров нет' : 'No products'}</h3>
+                        <p style="color: #707080;">${currentLang === 'ru' ? 'Добавьте товары через админ-панель' : 'Add products via admin panel'}</p>
                     </div>
                 `;
                 return;
@@ -1852,7 +2303,7 @@
                         <div class="desc">${p.desc}</div>
                         <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
                         <div class="actions">
-                            <button class="btn btn-sm add-to-cart" data-id="${p.id}">В корзину</button>
+                            <button class="btn btn-sm add-to-cart" data-id="${p.id}">${currentLang === 'ru' ? 'В корзину' : 'Add to cart'}</button>
                             ${isAdmin ? `<button class="btn btn-sm btn-secondary delete-product" data-id="${p.id}">✕</button>` : ''}
                         </div>
                     </div>
@@ -1870,11 +2321,11 @@
                 document.querySelectorAll('.delete-product').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const id = parseInt(btn.dataset.id);
-                        if (confirm('Удалить товар?')) {
+                        if (confirm(currentLang === 'ru' ? 'Удалить товар?' : 'Delete product?')) {
                             products = products.filter(p => p.id !== id);
                             saveProducts();
                             renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
-                            showToast('🗑️ Товар удален');
+                            showToast(currentLang === 'ru' ? '🗑️ Товар удален' : '🗑️ Product deleted');
                         }
                     });
                 });
@@ -1917,7 +2368,7 @@
 
             saveCart();
             updateCart();
-            showToast('✅ ' + product.name + ' добавлен в корзину!');
+            showToast('✅ ' + product.name + ' ' + (currentLang === 'ru' ? 'добавлен в корзину!' : 'added to cart!'));
         }
 
         function removeFromCart(id) {
@@ -1936,7 +2387,7 @@
             cartCount.textContent = totalItems;
 
             if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="color: #707080; text-align: center; padding: 30px 0;">Корзина пуста</p>';
+                cartItems.innerHTML = `<p style="color: #707080; text-align: center; padding: 30px 0;">${currentLang === 'ru' ? 'Корзина пуста' : 'Cart is empty'}</p>`;
                 cartTotal.style.display = 'none';
                 return;
             }
@@ -1991,7 +2442,7 @@
         // ===== ОФОРМЛЕНИЕ ЗАКАЗА =====
         document.getElementById('checkoutBtn').addEventListener('click', () => {
             if (cart.length === 0) {
-                showToast('⚠️ Корзина пуста!');
+                showToast(currentLang === 'ru' ? '⚠️ Корзина пуста!' : '⚠️ Cart is empty!');
                 return;
             }
 
@@ -1999,20 +2450,20 @@
             const items = cart.map(p => `${p.icon || '📦'} ${p.name} × ${p.quantity} = ${(p.price * p.quantity).toLocaleString('ru-RU')} ₽`).join('\n');
 
             const text = `
-        🛒 НОВЫЙ ЗАКАЗ ИЗ МАГАЗИНА!
+        🛒 ${currentLang === 'ru' ? 'НОВЫЙ ЗАКАЗ ИЗ МАГАЗИНА!' : 'NEW ORDER FROM THE STORE!'}
 
-        📦 Товары:
+        📦 ${currentLang === 'ru' ? 'Товары' : 'Products'}:
         ${items}
 
-        💰 Итого: ${total.toLocaleString('ru-RU')} ₽
+        💰 ${currentLang === 'ru' ? 'Итого' : 'Total'}: ${total.toLocaleString('ru-RU')} ₽
 
-        ⏰ Время: ${new Date().toLocaleString('ru-RU')}
+        ⏰ ${currentLang === 'ru' ? 'Время' : 'Time'}: ${new Date().toLocaleString('ru-RU')}
 
-        👤 Для связи укажите контакты в следующем сообщении!
+        ${currentLang === 'ru' ? '👤 Для связи укажите контакты в следующем сообщении!' : '👤 Please provide your contact details in the next message!'}
             `;
 
             sendToTelegram(text);
-            showToast('✅ Заказ отправлен! Я свяжусь с вами!');
+            showToast(currentLang === 'ru' ? '✅ Заказ отправлен! Я свяжусь с вами!' : '✅ Order sent! I will contact you!');
             cart = [];
             saveCart();
             updateCart();
@@ -2050,19 +2501,19 @@
             if (adminOpen) {
                 adminOpen = false;
                 adminPanel.classList.remove('open');
-                document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+                document.getElementById('toggleAdmin').textContent = currentLang === 'ru' ? '⚙️ Админ' : '⚙️ Admin';
                 clearAdminSession();
                 renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
-                showToast('🔒 Админ-панель закрыта');
+                showToast(currentLang === 'ru' ? '🔒 Админ-панель закрыта' : '🔒 Admin panel closed');
                 return;
             }
 
             if (checkAdminSession()) {
                 adminOpen = true;
                 adminPanel.classList.add('open');
-                document.getElementById('toggleAdmin').textContent = '✕ Закрыть';
+                document.getElementById('toggleAdmin').textContent = '✕ ' + (currentLang === 'ru' ? 'Закрыть' : 'Close');
                 renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
-                showToast('🔓 Добро пожаловать в админ-панель!');
+                showToast(currentLang === 'ru' ? '🔓 Добро пожаловать в админ-панель!' : '🔓 Welcome to admin panel!');
                 return;
             }
 
@@ -2086,9 +2537,9 @@
                 setAdminSession();
                 adminOpen = true;
                 adminPanel.classList.add('open');
-                document.getElementById('toggleAdmin').textContent = '✕ Закрыть';
+                document.getElementById('toggleAdmin').textContent = '✕ ' + (currentLang === 'ru' ? 'Закрыть' : 'Close');
                 renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
-                showToast('🔓 Добро пожаловать в админ-панель!');
+                showToast(currentLang === 'ru' ? '🔓 Добро пожаловать в админ-панель!' : '🔓 Welcome to admin panel!');
             } else {
                 passwordInput.classList.add('error');
                 passwordError.classList.add('show');
@@ -2108,7 +2559,7 @@
         document.getElementById('adminClose').addEventListener('click', () => {
             adminOpen = false;
             adminPanel.classList.remove('open');
-            document.getElementById('toggleAdmin').textContent = '⚙️ Админ';
+            document.getElementById('toggleAdmin').textContent = currentLang === 'ru' ? '⚙️ Админ' : '⚙️ Admin';
             clearAdminSession();
             renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
         });
@@ -2118,7 +2569,7 @@
             e.preventDefault();
 
             if (!isAdmin) {
-                showToast('⚠️ Доступ запрещен! Войдите в админ-панель.');
+                showToast(currentLang === 'ru' ? '⚠️ Доступ запрещен! Войдите в админ-панель.' : '⚠️ Access denied! Please login to admin panel.');
                 return;
             }
 
@@ -2130,7 +2581,7 @@
             const tag = document.getElementById('adminTag').value.trim();
 
             if (!name || !price || !desc) {
-                showToast('⚠️ Заполните все поля!');
+                showToast(currentLang === 'ru' ? '⚠️ Заполните все поля!' : '⚠️ Please fill all fields!');
                 return;
             }
 
@@ -2148,7 +2599,47 @@
             saveProducts();
             renderProducts(document.querySelector('.shop-filters .active')?.dataset?.filter || 'all');
             document.getElementById('adminForm').reset();
-            showToast('✅ Товар добавлен!');
+            showToast(currentLang === 'ru' ? '✅ Товар добавлен!' : '✅ Product added!');
+        });
+
+        // ===== НАСТРОЙКИ =====
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsClose = document.getElementById('settingsClose');
+
+        settingsToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            settingsModal.classList.add('show');
+        });
+
+        settingsClose.addEventListener('click', () => {
+            settingsModal.classList.remove('show');
+        });
+
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.remove('show');
+            }
+        });
+
+        // Настройки: тема
+        document.querySelectorAll('.theme-options button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                applyTheme(theme);
+                showToast(currentLang === 'ru' ? '🎨 Тема изменена' : '🎨 Theme changed');
+            });
+        });
+
+        // Настройки: язык
+        document.querySelectorAll('.lang-options button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                applyLang(lang);
+                // Обновляем кнопку админа
+                document.getElementById('toggleAdmin').textContent = currentLang === 'ru' ? '⚙️ Админ' : '⚙️ Admin';
+                showToast(currentLang === 'ru' ? '🌍 Язык изменен' : '🌍 Language changed');
+            });
         });
 
         // ===== ОТПРАВКА В TELEGRAM =====
@@ -2251,12 +2742,16 @@
             full: 40000
         };
 
-        const complexityLabels = ['Очень простая', 'Простая', 'Средняя', 'Сложная', 'Очень сложная'];
+        const complexityLabels = {
+            ru: ['Очень простая', 'Простая', 'Средняя', 'Сложная', 'Очень сложная'],
+            en: ['Very simple', 'Simple', 'Medium', 'Complex', 'Very complex']
+        };
 
         function updateCalc() {
             const service = calcService.value;
             const level = parseInt(calcComplexity.value);
-            calcComplexityLabel.textContent = complexityLabels[level - 1];
+            const labels = complexityLabels[currentLang] || complexityLabels.ru;
+            calcComplexityLabel.textContent = labels[level - 1];
             let price = servicePrices[service] || 10000;
             price = Math.round(price * (0.8 + level * 0.1));
             calcPrice.textContent = price.toLocaleString('ru-RU') + ' ₽';
@@ -2269,13 +2764,24 @@
         // ===== ФОРМА СВЯЗИ =====
         const form = document.getElementById('contactForm');
         const serviceNames = {
-            site: '🌐 Сайт',
-            bot: '🤖 Telegram Бот',
-            miniapp: '📱 Telegram Mini App',
-            hosting: '☁️ Хостинг',
-            mod: '⛏️ Мод для Minecraft',
-            texture: '🎨 Текстуры для Minecraft',
-            full: '🔥 Полный комплекс'
+            ru: {
+                site: '🌐 Сайт',
+                bot: '🤖 Telegram Бот',
+                miniapp: '📱 Telegram Mini App',
+                hosting: '☁️ Хостинг',
+                mod: '⛏️ Мод для Minecraft',
+                texture: '🎨 Текстуры для Minecraft',
+                full: '🔥 Полный комплекс'
+            },
+            en: {
+                site: '🌐 Website',
+                bot: '🤖 Telegram Bot',
+                miniapp: '📱 Telegram Mini App',
+                hosting: '☁️ Hosting',
+                mod: '⛏️ Minecraft Mod',
+                texture: '🎨 Minecraft Textures',
+                full: '🔥 Full Package'
+            }
         };
 
         form.addEventListener('submit', async (e) => {
@@ -2287,31 +2793,35 @@
             const message = document.getElementById('message').value.trim();
 
             if (!name || !tg || !message) {
-                showToast('⚠️ Заполните все поля!');
+                showToast(currentLang === 'ru' ? '⚠️ Заполните все поля!' : '⚠️ Please fill all fields!');
                 return;
             }
 
+            const serviceLabel = (serviceNames[currentLang] || serviceNames.ru)[service] || service;
+
             const text = `
-        🆕 НОВАЯ ЗАЯВКА!
+        🆕 ${currentLang === 'ru' ? 'НОВАЯ ЗАЯВКА!' : 'NEW REQUEST!'}
 
-        👤 Имя: ${name}
+        👤 ${currentLang === 'ru' ? 'Имя' : 'Name'}: ${name}
         📱 Telegram: ${tg}
-        🔧 Услуга: ${serviceNames[service] || service}
+        🔧 ${currentLang === 'ru' ? 'Услуга' : 'Service'}: ${serviceLabel}
 
-        📝 Задача:
+        📝 ${currentLang === 'ru' ? 'Задача' : 'Task'}:
         ${message}
 
-        ⏰ Время: ${new Date().toLocaleString('ru-RU')}
+        ⏰ ${currentLang === 'ru' ? 'Время' : 'Time'}: ${new Date().toLocaleString('ru-RU')}
             `;
 
             await sendToTelegram(text);
-            showToast('✅ Заявка отправлена! Я свяжусь с вами в Telegram');
+            showToast(currentLang === 'ru' ? '✅ Заявка отправлена! Я свяжусь с вами в Telegram' : '✅ Request sent! I will contact you on Telegram');
             form.reset();
         });
 
         // ===== ИНИЦИАЛИЗАЦИЯ =====
         loadProducts();
         loadCart();
+        loadTheme();
+        loadLang();
         renderProducts();
         updateCart();
 
