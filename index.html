@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olymp Project - RolePlay в SAMP</title>
+    <style>
+        /* Сброс стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fcfcfc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Контейнер по центру */
+        .container {
+            background-color: #ffffff;
+            max-width: 800px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        /* Логотип */
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Заголовки */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Основной текст */
+        .description {
+            font-size: 1.05rem;
+            color: #444;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 16px;
+            border-left: 5px solid #f39c12; /* Желтая полоса, под цвет лого */
+        }
+
+        .description p {
+            margin-bottom: 15px;
+        }
+
+        .description p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Список преимуществ */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 40px;
+            border: 1px solid #eee;
+            color: #f39c12; /* Золотистый цвет логотипа */
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .feature-item span {
+            color: #444; /* Темный текст для "Твоя..." */
+        }
+
+        /* Кнопка действия */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #f1c40f, #e67e22); /* Градиент под логотип */
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 20px 0 30px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+        }
+
+        /* Футер / Поддержка */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .footer strong {
+            color: #e67e22;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                width: 95%;
+                margin: 20px auto;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .features {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            .feature-item {
+                width: 100%;
+                max-width: 280px;
+            }
+            .logo-container img {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Логотип -->
+        <div class="logo-container">
+            <!-- ВСТАВЬТЕ СЮДА ССЫЛКУ НА ВАШУ КАРТИНКУ С ЛОГОТИПОМ -->
+            <!-- Например: <img src="logo.png" alt="Olymp Project Logo"> -->
+            <!-- Пока стоит заглушка для примера -->
+            <img src="https://i.ibb.co/L9H8X5Z/logo-placeholder.png" alt="Olymp Project Logo" style="border-radius: 20px;">
+        </div>
+
+        <!-- Заголовок -->
+        <h1>Olymp Project</h1>
+        <div class="subtitle">RolePlay в SAMP</div>
+
+        <!-- Основное описание -->
+        <div class="description">
+            <p><strong>RolePlay — это не просто игра, это жизнь, которую мы выбираем сами.</strong> Наш проект объединяет ценителей жанра, для которых важен каждый диалог, каждая деталь и каждая роль. Здесь нет ограничений для фантазии, кроме тех, что диктует здравый смысл и законы нашего мира.</p>
+        </div>
+
+        <!-- Преимущества -->
+        <div class="features">
+            <div class="feature-item">🎯 <span>Твоя карьера</span></div>
+            <div class="feature-item">⚡ <span>Твои правила</span></div>
+            <div class="feature-item">📜 <span>Твоя история</span></div>
+        </div>
+
+        <!-- Кнопка перехода -->
+        <a href="#" class="btn-primary">Присоединиться к проекту</a>
+
+        <!-- Футер с упоминанием RaidX -->
+        <div class="footer">
+            Проект поддерживается современным игровым сообществом <strong>RaidX</strong>.
+            <br><br>
+            <span style="font-size: 0.8rem; opacity: 0.6;">© 2026 Olymp Project. Все права защищены.</span>
+        </div>
+    </div>
+
+</body>
+</html>
