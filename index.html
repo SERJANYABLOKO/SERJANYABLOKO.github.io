@@ -69,11 +69,7 @@
             transition: all 0.3s ease;
         }
 
-        .tab-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
+        .tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
         .tab-btn.active {
             color: #fff;
             background: linear-gradient(135deg, rgba(253, 200, 48, 0.15), rgba(243, 115, 53, 0.15));
@@ -81,20 +77,15 @@
         }
 
         /* --- Секции (Вкладки) --- */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- CSS Нарисованный Логотип --- */
+        /* --- Логотип (CSS Art) --- */
         .logo-wrapper {
             display: flex;
             flex-direction: column;
@@ -108,42 +99,24 @@
             height: 120px;
         }
 
-        /* Лента 1 - Желтая внешняя */
         .swirl-1 {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 16px solid transparent;
-            border-top-color: var(--yellow);
-            border-right-color: var(--yellow);
-            transform: rotate(45deg);
-            top: 0; left: 0;
-            clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%);
-            /* Создаем эффект градиента с помощью масок, упрощенно для чистоты кода используем тени и градиенты */
+            width: 120px; height: 120px; top: 0; left: 0;
             background: conic-gradient(from 45deg, var(--yellow), var(--orange), transparent 70%);
             -webkit-mask: radial-gradient(circle at 50% 50%, transparent 40px, black 41px);
             mask: radial-gradient(circle at 50% 50%, transparent 40px, black 41px);
         }
 
-        /* Лента 2 - Внутренняя оранжевая */
         .swirl-2 {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 16px solid transparent;
-            border-bottom-color: var(--orange);
-            border-left-color: var(--orange);
-            transform: rotate(45deg) scaleX(-1);
-            top: 20px; left: 20px;
+            width: 80px; height: 80px; top: 20px; left: 20px;
             background: conic-gradient(from 225deg, var(--yellow), var(--orange), transparent 70%);
             -webkit-mask: radial-gradient(circle at 50% 50%, transparent 22px, black 23px);
             mask: radial-gradient(circle at 50% 50%, transparent 22px, black 23px);
+            transform: rotate(45deg) scaleX(-1);
             box-shadow: 0 0 20px rgba(243, 115, 53, 0.2);
         }
 
-        /* Логотип текст */
         .logo-text {
             margin-top: 10px;
             font-weight: 700;
@@ -213,23 +186,78 @@
         .feature-card p { font-size: 0.85rem; color: var(--text-muted); }
         .feature-icon { font-size: 1.8rem; display: block; margin-bottom: 10px; }
 
-        .cta-btn {
-            display: block;
-            width: 100%;
-            max-width: 350px;
-            margin: 0 auto;
-            text-align: center;
-            padding: 16px;
+        /* ========================================= */
+        /* --- СУПЕР-КНОПКА "НАЧАТЬ ИГРУ" (ПУШКА) --- */
+        /* ========================================= */
+        .cta-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-play {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 55px;
             background: linear-gradient(135deg, var(--yellow), var(--orange));
             color: #0b0c0e;
-            font-weight: 700;
-            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.3rem;
             text-decoration: none;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            box-shadow: 0 5px 25px rgba(243, 115, 53, 0.2);
+            border-radius: 60px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 25px rgba(243, 115, 53, 0.3);
+            border: none;
+            cursor: pointer;
+            z-index: 1;
         }
-        .cta-btn:hover { transform: scale(1.02); box-shadow: 0 8px 40px rgba(243, 115, 53, 0.4); }
+
+        /* Иконка Play (треугольник) внутри кнопки */
+        .btn-play svg {
+            width: 22px;
+            height: 22px;
+            fill: #0b0c0e;
+            transition: transform 0.3s ease;
+        }
+
+        /* Эффект свечения сзади */
+        .btn-play::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border-radius: 60px;
+            filter: blur(15px);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* HOVER: Взрывной эффект */
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(243, 115, 53, 0.7);
+        }
+
+        .btn-play:hover::before {
+            opacity: 1;
+            filter: blur(25px);
+        }
+
+        .btn-play:hover svg {
+            transform: translateX(4px) scale(1.1); /* Иконка двигается вправо */
+        }
+
+        /* ACTIVE: При клике */
+        .btn-play:active {
+            transform: scale(0.95);
+        }
+        /* ========================================= */
 
         /* --- Контент О нас --- */
         .about-grid {
@@ -274,7 +302,7 @@
             gap: 15px;
         }
 
-        /* --- Адаптивность --- */
+        /* --- Адаптивность (Мобилка) --- */
         @media (max-width: 768px) {
             .app-container { padding: 25px; }
             .navbar { justify-content: center; }
@@ -286,6 +314,14 @@
             .swirl-1 { width: 90px; height: 90px; -webkit-mask: radial-gradient(circle at 50% 50%, transparent 30px, black 31px); }
             .swirl-2 { width: 60px; height: 60px; top: 15px; left: 15px; -webkit-mask: radial-gradient(circle at 50% 50%, transparent 16px, black 17px); }
             .logo-text { font-size: 1.5rem; }
+            
+            /* Кнопка на мобилке */
+            .btn-play {
+                width: 100%;
+                padding: 18px 20px;
+                font-size: 1.1rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -298,13 +334,11 @@
             <button class="tab-btn active" onclick="openTab('home')">🏠 Главная</button>
             <button class="tab-btn" onclick="openTab('about')">📖 О проекте</button>
             <button class="tab-btn" onclick="openTab('raidx')">⚡ RaidX</button>
-            <button class="tab-btn" onclick="openTab('contacts')">📞 Контакты</button>
         </div>
 
-        <!-- Вкладка 1: Главная -->
+        <!-- Вкладка 1: Главная (Здесь наша кнопка) -->
         <div id="home" class="tab-content active">
             <div class="logo-wrapper">
-                <!-- Нарисованный логотип -->
                 <div class="css-icon">
                     <div class="swirl-1"></div>
                     <div class="swirl-2"></div>
@@ -340,7 +374,16 @@
                 </div>
             </div>
 
-            <a href="#" class="cta-btn">Присоединиться к проекту</a>
+            <!-- ВОТ ОНА, ПУШКА! -->
+            <div class="cta-wrapper">
+                <a href="#" class="btn-play">
+                    <!-- Иконка Play -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    Начать играть
+                </a>
+            </div>
         </div>
 
         <!-- Вкладка 2: О проекте -->
@@ -376,25 +419,6 @@
             </div>
         </div>
 
-        <!-- Вкладка 4: Контакты -->
-        <div id="contacts" class="tab-content">
-            <h2 style="font-size: 2rem; margin-bottom: 20px; color: #fff;">Связаться с нами</h2>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 2rem;">📱</div>
-                    <h4 style="margin: 10px 0 5px;">Сообщество ВК</h4>
-                    <a href="#" style="color: var(--orange); text-decoration: none;">vk.com/olymp_project</a>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 2rem;">💬</div>
-                    <h4 style="margin: 10px 0 5px;">Техническая поддержка</h4>
-                    <a href="#" style="color: var(--orange); text-decoration: none;">support@olymp.ru</a>
-                </div>
-            </div>
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Мы всегда на связи! Обращайтесь по любым вопросам.</p>
-        </div>
-
         <!-- Футер -->
         <div class="footer">
             <div>© 2026 <strong style="color: var(--yellow);">Olymp Project</strong></div>
@@ -406,18 +430,13 @@
     <!-- Скрипт для переключения вкладок -->
     <script>
         function openTab(tabName) {
-            // Скрыть все вкладки и убрать активный класс с кнопок
             const tabs = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('.tab-btn');
             
             tabs.forEach(tab => tab.classList.remove('active'));
             buttons.forEach(btn => btn.classList.remove('active'));
 
-            // Показать нужную вкладку и активировать кнопку
             document.getElementById(tabName).classList.add('active');
-            
-            // Находим кнопку по тексту или по порядку (используем простой способ поиска)
-            // Но проще всего найти кнопку, которая вызывает эту функцию.
             event.target.classList.add('active');
         }
     </script>
