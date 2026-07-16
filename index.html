@@ -3,209 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olymp Project - RolePlay в SAMP</title>
+    <title>Olymp Project | SAMP RolePlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
     <style>
-        /* Сброс стилей */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            /* Цвета бренда (из вашего логотипа) */
+            --brand-yellow: #f1c40f;
+            --brand-orange: #e67e22;
+            --brand-dark: #0f1012;
+            --brand-surface: #18191c;
+            --brand-text: #e4e6eb;
+            --brand-text-muted: #9ca3af;
+            --glow-yellow: rgba(241, 196, 15, 0.4);
+            --glow-orange: rgba(230, 126, 34, 0.3);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fcfcfc;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--brand-dark);
+            color: var(--brand-text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            line-height: 1.6;
+            overflow-x: hidden;
+            /* Красивый едва заметный градиент на фоне */
+            background: radial-gradient(circle at 50% 0%, #1e2026 0%, var(--brand-dark) 60%);
         }
 
-        /* Контейнер по центру */
-        .container {
-            background-color: #ffffff;
-            max-width: 800px;
-            width: 90%;
-            margin: 40px auto;
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        /* Основной карточный контейнер */
+        .glass-card {
+            background: rgba(24, 25, 28, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            max-width: 820px;
+            width: 92%;
+            padding: 50px 60px;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             text-align: center;
-            border: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 40px auto;
         }
 
-        /* Логотип */
+        /* Декоративные размытые круги (эффект глубины) */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: var(--glow-orange);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--glow-yellow);
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.2;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Все контенты поверх фона */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Генерация логотипа CSS (Олимпийские кольца в стиле киберпанк) */
         .logo-container {
-            margin-bottom: 30px;
-        }
-
-        .logo-container img {
-            max-width: 250px;
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Заголовки */
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: #555;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Основной текст */
-        .description {
-            font-size: 1.05rem;
-            color: #444;
-            text-align: left;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-            background: #f9f9f9;
-            padding: 25px;
-            border-radius: 16px;
-            border-left: 5px solid #f39c12; /* Желтая полоса, под цвет лого */
-        }
-
-        .description p {
-            margin-bottom: 15px;
-        }
-
-        .description p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Список преимуществ */
-        .features {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
 
-        .feature-item {
-            background-color: #fff;
-            padding: 15px 20px;
-            border-radius: 40px;
-            border: 1px solid #eee;
-            color: #f39c12; /* Золотистый цвет логотипа */
-            font-weight: 600;
+        .css-logo {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 8px solid transparent;
+        }
+
+        /* Создаем кольца с градиентами под цвет логотипа */
+        .ring-1 {
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            border-top-color: var(--brand-yellow);
+            border-right-color: var(--brand-orange);
+            transform: rotate(45deg);
+            filter: drop-shadow(0 0 15px var(--glow-yellow));
+        }
+
+        .ring-2 {
+            width: 70px;
+            height: 70px;
+            top: 15px;
+            left: 15px;
+            border-bottom-color: var(--brand-yellow);
+            border-left-color: var(--brand-orange);
+            transform: rotate(-45deg);
+            filter: drop-shadow(0 0 10px var(--glow-orange));
+        }
+
+        .ring-3 {
+            width: 40px;
+            height: 40px;
+            top: 30px;
+            left: 30px;
+            border-top-color: #fff;
+            border-right-color: var(--brand-yellow);
+            transform: rotate(45deg);
+            opacity: 0.8;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+        }
+
+        /* Текст логотипа */
+        .brand-name {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--brand-yellow), var(--brand-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .brand-tagline {
             font-size: 1.1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-
-        .feature-item span {
-            color: #444; /* Темный текст для "Твоя..." */
-        }
-
-        /* Кнопка действия */
-        .btn-primary {
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--brand-text-muted);
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 20px;
             display: inline-block;
-            background: linear-gradient(135deg, #f1c40f, #e67e22); /* Градиент под логотип */
-            color: white;
-            text-decoration: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-weight: 600;
+        }
+
+        /* Текст описания с красивым форматированием */
+        .hero-text {
             font-size: 1.1rem;
-            margin: 20px 0 30px 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            line-height: 1.8;
+            color: #d1d5db;
+            max-width: 650px;
+            margin: 0 auto 35px auto;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 28px 32px;
+            border-radius: 20px;
+            border-left: 4px solid var(--brand-yellow);
+            position: relative;
+        }
+
+        .hero-text strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .hero-text i {
+            color: var(--brand-orange);
+            font-style: normal;
+        }
+
+        /* Сетка преимуществ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 40px 0 45px 0;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 20px 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(241, 196, 15, 0.3);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .feature-icon {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-sub {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--brand-text-muted);
+            margin-top: 4px;
+        }
+
+        /* Кнопка с градиентом и свечением */
+        .cta-wrapper {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--brand-yellow), var(--brand-orange));
+            color: #0f1012;
+            text-decoration: none;
+            padding: 18px 48px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(230, 126, 34, 0.4);
         }
 
-        /* Футер / Поддержка */
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        /* Футер */
         .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
-            color: #888;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--brand-text-muted);
         }
 
         .footer strong {
-            color: #e67e22;
+            color: var(--brand-yellow);
+            font-weight: 600;
         }
 
-        /* Адаптивность для мобильных */
-        @media (max-width: 600px) {
-            .container {
+        .footer-links a {
+            color: var(--brand-text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .glass-card {
                 padding: 30px 20px;
-                width: 95%;
-                margin: 20px auto;
+                width: 96%;
+                border-radius: 20px;
             }
-            h1 {
-                font-size: 2rem;
+            .brand-name {
+                font-size: 2.5rem;
             }
-            .features {
-                flex-direction: column;
-                gap: 15px;
+            .brand-tagline {
+                font-size: 0.8rem;
+                letter-spacing: 4px;
+            }
+            .hero-text {
+                font-size: 0.95rem;
+                padding: 20px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .feature-box {
+                padding: 15px;
+                display: flex;
                 align-items: center;
+                gap: 15px;
+                text-align: left;
             }
-            .feature-item {
+            .feature-icon {
+                margin-bottom: 0;
+                font-size: 1.5rem;
+            }
+            .btn-primary {
+                padding: 16px 30px;
                 width: 100%;
-                max-width: 280px;
+                font-size: 1rem;
             }
-            .logo-container img {
-                max-width: 180px;
+            .footer {
+                flex-direction: column;
+                text-align: center;
             }
+            .footer-links a {
+                margin: 0 10px;
+            }
+            .css-logo {
+                width: 80px;
+                height: 80px;
+            }
+            .ring-1 { width: 80px; height: 80px; border-width: 6px;}
+            .ring-2 { width: 56px; height: 56px; top: 12px; left: 12px; border-width: 6px;}
+            .ring-3 { width: 32px; height: 32px; top: 24px; left: 24px; border-width: 4px;}
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Логотип -->
-        <div class="logo-container">
-            <!-- ВСТАВЬТЕ СЮДА ССЫЛКУ НА ВАШУ КАРТИНКУ С ЛОГОТИПОМ -->
-            <!-- Например: <img src="logo.png" alt="Olymp Project Logo"> -->
-            <!-- Пока стоит заглушка для примера -->
-            <img src="https://i.ibb.co/L9H8X5Z/logo-placeholder.png" alt="Olymp Project Logo" style="border-radius: 20px;">
-        </div>
+    <div class="glass-card">
+        <div class="content-wrapper">
+            
+            <!-- 1. Сгенерированное лого -->
+            <div class="logo-container">
+                <div class="css-logo">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                </div>
+            </div>
 
-        <!-- Заголовок -->
-        <h1>Olymp Project</h1>
-        <div class="subtitle">RolePlay в SAMP</div>
+            <!-- 2. Название -->
+            <h1 class="brand-name">Olymp Project</h1>
+            <div class="brand-tagline">RolePlay в SAMP</div>
 
-        <!-- Основное описание -->
-        <div class="description">
-            <p><strong>RolePlay — это не просто игра, это жизнь, которую мы выбираем сами.</strong> Наш проект объединяет ценителей жанра, для которых важен каждый диалог, каждая деталь и каждая роль. Здесь нет ограничений для фантазии, кроме тех, что диктует здравый смысл и законы нашего мира.</p>
-        </div>
+            <!-- 3. Основной текст (Вариант А, который мы выбрали) -->
+            <div class="hero-text">
+                <p><strong>RolePlay — это не просто игра, это жизнь, которую мы выбираем сами.</strong> Наш проект объединяет ценителей жанра, для которых важен каждый диалог, каждая деталь и каждая роль. Здесь нет ограничений для фантазии, кроме тех, что диктует здравый смысл и законы нашего мира.</p>
+            </div>
 
-        <!-- Преимущества -->
-        <div class="features">
-            <div class="feature-item">🎯 <span>Твоя карьера</span></div>
-            <div class="feature-item">⚡ <span>Твои правила</span></div>
-            <div class="feature-item">📜 <span>Твоя история</span></div>
-        </div>
+            <!-- 4. Сетка с тремя фишками -->
+            <div class="features-grid">
+                <div class="feature-box">
+                    <span class="feature-icon">⚔️</span>
+                    <span class="feature-title">Твоя карьера</span>
+                    <span class="feature-sub">Построй путь от новичка до легенды</span>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-icon">⚡</span>
+                    <span class="feature-title">Твои правила</span>
+                    <span class="feature-sub">Диктуй условия в этом мире</span>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-icon">📜</span>
+                    <span class="feature-title">Твоя история</span>
+                    <span class="feature-sub">Каждый твой шаг меняет сюжет</span>
+                </div>
+            </div>
 
-        <!-- Кнопка перехода -->
-        <a href="#" class="btn-primary">Присоединиться к проекту</a>
+            <!-- 5. Кнопка призыва -->
+            <div class="cta-wrapper">
+                <a href="#" class="btn-primary">Войти в мир Olymp</a>
+            </div>
 
-        <!-- Футер с упоминанием RaidX -->
-        <div class="footer">
-            Проект поддерживается современным игровым сообществом <strong>RaidX</strong>.
-            <br><br>
-            <span style="font-size: 0.8rem; opacity: 0.6;">© 2026 Olymp Project. Все права защищены.</span>
+            <!-- 6. Подвал с RaidX -->
+            <div class="footer">
+                <div>
+                    Поддержка сообщества <strong>RaidX</strong>
+                </div>
+                <div class="footer-links">
+                    <a href="#">VK</a>
+                    <a href="#">Правила</a>
+                    <a href="#">Форум</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
