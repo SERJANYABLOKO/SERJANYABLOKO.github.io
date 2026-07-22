@@ -204,6 +204,31 @@
         body.dark .test-options input[type="radio"] {
             accent-color: #60a5fa;
         }
+        body.dark .modal-content {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        body.dark .modal-content input {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+        body.dark .modal-content input::placeholder {
+            color: #94a3b8;
+        }
+        body.dark .modal-content .btn-primary {
+            background: #3b82f6;
+        }
+        body.dark .modal-content .btn-primary:hover {
+            background: #2563eb;
+        }
+        body.dark .modal-content .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        body.dark .modal-content .btn-secondary:hover {
+            background: #475569;
+        }
 
         .platform-wrapper {
             max-width: 1400px;
@@ -711,6 +736,31 @@
             background: #1e293b;
             color: #e2e8f0;
         }
+        .account-selector .add-account-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .account-selector .add-account-btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+        body.dark .account-selector .add-account-btn {
+            background: #3b82f6;
+        }
+        body.dark .account-selector .add-account-btn:hover {
+            background: #2563eb;
+        }
 
         .test-progress-bar {
             display: flex;
@@ -740,6 +790,113 @@
             width: 0%;
         }
 
+        /* Модальное окно регистрации */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 48px;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: modalSlide 0.3s ease;
+        }
+        @keyframes modalSlide {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .modal-content .subtitle {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+        .modal-content .form-group {
+            margin-bottom: 18px;
+        }
+        .modal-content label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-content input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .modal-content .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .modal-content .btn-primary {
+            flex: 1;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-content .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        .modal-content .btn-secondary {
+            flex: 1;
+            background: #f1f5f9;
+            color: #1e293b;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-content .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        .modal-content .error-text {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 4px;
+            display: none;
+        }
+        .modal-content .error-text.show {
+            display: block;
+        }
+
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: stretch; }
             .search-bar { max-width: 100%; }
@@ -748,6 +905,7 @@
             .main-content { padding: 20px; }
             .stats-row { flex-direction: column; }
             .account-selector { width: 100%; justify-content: space-between; }
+            .modal-content { padding: 30px 24px; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
@@ -758,6 +916,27 @@
 <body>
 
 <div id="toast" class="toast-message">✨ Действие выполнено</div>
+
+<!-- Модальное окно регистрации -->
+<div class="modal-overlay" id="registerModal">
+    <div class="modal-content">
+        <h2>📝 Создать аккаунт</h2>
+        <p class="subtitle">Введите имя и фамилию для регистрации</p>
+        <div class="form-group">
+            <label for="regFirstName">Имя</label>
+            <input type="text" id="regFirstName" placeholder="Введите имя" maxlength="30">
+        </div>
+        <div class="form-group">
+            <label for="regLastName">Фамилия</label>
+            <input type="text" id="regLastName" placeholder="Введите фамилию" maxlength="30">
+        </div>
+        <div class="error-text" id="regError">Пожалуйста, заполните имя и фамилию</div>
+        <div class="btn-row">
+            <button class="btn-secondary" id="regCancelBtn">Отмена</button>
+            <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
+        </div>
+    </div>
+</div>
 
 <div class="platform-wrapper">
 
@@ -774,6 +953,9 @@
             <div class="account-selector">
                 <i class="fas fa-user-circle" style="color: #2563eb;"></i>
                 <select id="accountSelect"></select>
+                <button class="add-account-btn" id="addAccountBtn" title="Создать новый аккаунт">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
             <span class="badge" id="premiumBadge"><i class="fas fa-crown"></i> Премиум</span>
             <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
@@ -838,10 +1020,11 @@
 <script>
     (function() {
         // ----- ДАННЫЕ АККАУНТОВ -----
-        const accounts = [
+        let accounts = [
             {
                 id: 1,
-                name: 'Алексей',
+                firstName: 'Алексей',
+                lastName: 'Иванов',
                 coursesProgress: {
                     'Веб-разработка 2026': 74,
                     'Анализ данных с Python': 32,
@@ -864,7 +1047,8 @@
             },
             {
                 id: 2,
-                name: 'Мария',
+                firstName: 'Мария',
+                lastName: 'Петрова',
                 coursesProgress: {
                     'Веб-разработка 2026': 45,
                     'Анализ данных с Python': 78,
@@ -887,7 +1071,8 @@
             },
             {
                 id: 3,
-                name: 'Иван',
+                firstName: 'Иван',
+                lastName: 'Смирнов',
                 coursesProgress: {
                     'Веб-разработка 2026': 90,
                     'Анализ данных с Python': 15,
@@ -909,6 +1094,8 @@
                 stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
             }
         ];
+
+        let nextId = 4;
 
         // ----- ДАННЫЕ КУРСОВ (общие) -----
         const courseList = [
@@ -973,7 +1160,7 @@
 
         // ----- СОСТОЯНИЕ -----
         let currentAccountId = 1;
-        let testStates = {}; // { testId: { answered: [bool] } }
+        let testStates = {};
 
         // ----- TOAST -----
         function showToast(msg) {
@@ -991,6 +1178,52 @@
 
         function getCurrentAccount() {
             return getAccount(currentAccountId);
+        }
+
+        // ----- ГЕНЕРАЦИЯ ДЕФОЛТНЫХ ДАННЫХ ДЛЯ НОВОГО АККАУНТА -----
+        function createDefaultAccount(firstName, lastName) {
+            const defaultProgress = {};
+            courseList.forEach(c => {
+                defaultProgress[c.title] = Math.floor(Math.random() * 30); // случайный прогресс 0-29%
+            });
+            const defaultResults = {};
+            testList.forEach(t => {
+                const arr = t.questions.map(() => Math.random() > 0.5);
+                defaultResults[t.title] = arr;
+            });
+            return {
+                id: nextId++,
+                firstName: firstName,
+                lastName: lastName,
+                coursesProgress: defaultProgress,
+                testsResults: defaultResults,
+                stats: {
+                    courses: Math.floor(Math.random() * 15) + 5,
+                    completed: Math.floor(Math.random() * 20) + 10,
+                    certificates: Math.floor(Math.random() * 6) + 2,
+                    tests: 0
+                }
+            };
+        }
+
+        // ----- РЕГИСТРАЦИЯ -----
+        function registerUser(firstName, lastName) {
+            if (!firstName.trim() || !lastName.trim()) {
+                document.getElementById('regError').classList.add('show');
+                return false;
+            }
+            document.getElementById('regError').classList.remove('show');
+
+            const newAccount = createDefaultAccount(firstName.trim(), lastName.trim());
+            accounts.push(newAccount);
+
+            // Обновляем select
+            populateAccountSelect();
+            // Переключаемся на новый аккаунт
+            document.getElementById('accountSelect').value = newAccount.id;
+            switchAccount(newAccount.id);
+            showToast(`✅ Аккаунт ${firstName} ${lastName} создан!`);
+            return true;
         }
 
         // ----- РЕНДЕР КУРСОВ -----
@@ -1120,16 +1353,14 @@
             if (!container) return;
             container.innerHTML = '';
 
-            // Инициализация состояний тестов для аккаунта
             if (!testStates[currentAccountId]) {
                 testStates[currentAccountId] = {};
             }
             const accTestState = testStates[currentAccountId];
 
-            testList.forEach((test, testIndex) => {
+            testList.forEach((test) => {
                 const results = account.testsResults[test.title] || [];
                 const answered = accTestState[test.id] || results.map(() => false);
-                // сохраняем состояние
                 if (!accTestState[test.id]) {
                     accTestState[test.id] = answered;
                 }
@@ -1214,12 +1445,9 @@
                                     newResults[qIndex] = isCorrect;
                                     account.testsResults[test.title] = newResults;
                                     state[qIndex] = true;
-                                    // обновляем статистику
                                     updateStats(account);
                                     showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Правильный ответ подсвечен.');
-                                    // перерисовываем тесты
                                     renderTests('testsContainer', account);
-                                    // обновляем статистику в stats row
                                     updateStatsDisplay(account);
                                 }
                             });
@@ -1243,7 +1471,6 @@
                 if (correct === arr.length && arr.length > 0) testsPassed++;
             }
             account.stats.tests = testsPassed;
-            // обновляем отображение
             updateStatsDisplay(account);
         }
 
@@ -1258,17 +1485,16 @@
         function switchAccount(accountId) {
             currentAccountId = accountId;
             const account = getCurrentAccount();
-            document.getElementById('userNameDisplay').textContent = account.name;
+            if (!account) return;
+            document.getElementById('userNameDisplay').textContent = account.firstName;
 
-            // обновляем курсы
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
             updateStatsDisplay(account);
 
-            // обновляем приветствие
-            document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.name}</span>!`;
-            showToast(`👤 Переключено на аккаунт: ${account.name}`);
+            document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
+            showToast(`👤 Переключено на аккаунт: ${account.firstName} ${account.lastName}`);
         }
 
         // ----- ЗАПОЛНЕНИЕ СПИСКА АККАУНТОВ -----
@@ -1278,24 +1504,74 @@
             accounts.forEach(acc => {
                 const option = document.createElement('option');
                 option.value = acc.id;
-                option.textContent = acc.name;
+                option.textContent = `${acc.firstName} ${acc.lastName}`;
                 if (acc.id === currentAccountId) option.selected = true;
                 select.appendChild(option);
             });
-            select.addEventListener('change', function() {
-                switchAccount(parseInt(this.value));
-            });
         }
+
+        // ----- МОДАЛЬНОЕ ОКНО -----
+        const modal = document.getElementById('registerModal');
+        const addBtn = document.getElementById('addAccountBtn');
+        const cancelBtn = document.getElementById('regCancelBtn');
+        const submitBtn = document.getElementById('regSubmitBtn');
+        const firstNameInput = document.getElementById('regFirstName');
+        const lastNameInput = document.getElementById('regLastName');
+        const errorEl = document.getElementById('regError');
+
+        function openModal() {
+            modal.classList.add('active');
+            firstNameInput.value = '';
+            lastNameInput.value = '';
+            errorEl.classList.remove('show');
+            firstNameInput.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        addBtn.addEventListener('click', openModal);
+        cancelBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            if (!firstName || !lastName) {
+                errorEl.classList.add('show');
+                return;
+            }
+            errorEl.classList.remove('show');
+            if (registerUser(firstName, lastName)) {
+                closeModal();
+            }
+        });
+
+        firstNameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                lastNameInput.focus();
+            }
+        });
+        lastNameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
 
         // ----- ИНИЦИАЛИЗАЦИЯ -----
         function init() {
             populateAccountSelect();
             const account = getCurrentAccount();
-            document.getElementById('userNameDisplay').textContent = account.name;
-            renderCourses('courseGrid', courseList, account);
-            renderRecommend('recommendGrid', recommendList);
-            renderTests('testsContainer', account);
-            updateStatsDisplay(account);
+            if (account) {
+                document.getElementById('userNameDisplay').textContent = account.firstName;
+                renderCourses('courseGrid', courseList, account);
+                renderRecommend('recommendGrid', recommendList);
+                renderTests('testsContainer', account);
+                updateStatsDisplay(account);
+            }
 
             // ВКЛАДКИ
             const navLinks = document.querySelectorAll('.nav-link');
@@ -1397,7 +1673,7 @@
             // АВАТАР, БЕЙДЖ, ЛОГО
             document.querySelector('.avatar').addEventListener('click', () => {
                 const acc = getCurrentAccount();
-                showToast(`👤 Профиль: ${acc.name}`);
+                showToast(`👤 Профиль: ${acc.firstName} ${acc.lastName}`);
             });
             document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
             document.getElementById('logoArea').addEventListener('click', () => {
@@ -1407,11 +1683,16 @@
                 showTab('overview');
             });
 
+            // Обработчик смены аккаунта
+            document.getElementById('accountSelect').addEventListener('change', function() {
+                switchAccount(parseInt(this.value));
+            });
+
             showTab('overview');
         }
 
         init();
-        console.log('✅ Платформа с аккаунтами и уровнями тестов загружена');
+        console.log('✅ Платформа с регистрацией по имени и фамилии загружена');
     })();
 </script>
 
