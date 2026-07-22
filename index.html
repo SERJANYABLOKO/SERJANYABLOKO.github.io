@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduCore — образовательная платформа</title>
-    <!-- Font Awesome 6 (бесплатные иконки) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -12,6 +12,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         body {
@@ -24,6 +25,165 @@
             justify-content: center;
         }
 
+        /* ===== ТЕМНАЯ ТЕМА (body.dark) ===== */
+        body.dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark .platform-wrapper {
+            background: #1e293b;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        body.dark .header {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+
+        body.dark .logo-text {
+            color: #f1f5f9;
+        }
+        body.dark .logo-text span {
+            color: #60a5fa;
+        }
+
+        body.dark .search-bar {
+            background: #334155;
+        }
+        body.dark .search-bar i {
+            color: #94a3b8;
+        }
+        body.dark .search-bar input {
+            color: #f1f5f9;
+        }
+        body.dark .search-bar input::placeholder {
+            color: #94a3b8;
+        }
+
+        body.dark .user-profile .badge {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.dark .user-profile .avatar {
+            background: #3b82f6;
+        }
+
+        body.dark .nav-bar {
+            background: #1e293b;
+            border-bottom-color: #334155;
+        }
+        body.dark .nav-link {
+            color: #94a3b8;
+        }
+        body.dark .nav-link i {
+            color: #64748b;
+        }
+        body.dark .nav-link.active {
+            color: #60a5fa;
+            border-bottom-color: #60a5fa;
+        }
+        body.dark .nav-link.active i {
+            color: #60a5fa;
+        }
+
+        body.dark .main-content {
+            background: #0f172a;
+        }
+
+        body.dark .welcome-section h1 {
+            color: #f1f5f9;
+        }
+        body.dark .welcome-section p {
+            color: #94a3b8;
+        }
+
+        body.dark .stats-row {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .stat-item i {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.dark .stat-info .number {
+            color: #f1f5f9;
+        }
+        body.dark .stat-info .label {
+            color: #94a3b8;
+        }
+
+        body.dark .section-title h2 {
+            color: #f1f5f9;
+        }
+        body.dark .section-title a {
+            color: #60a5fa;
+        }
+
+        body.dark .course-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .course-card:hover {
+            border-color: #64748b;
+            box-shadow: 0 20px 25px -8px rgba(0, 0, 0, 0.6);
+        }
+        body.dark .card-body h3 {
+            color: #f1f5f9;
+        }
+        body.dark .card-body .meta {
+            color: #94a3b8;
+        }
+        body.dark .progress-bar-bg {
+            background: #334155;
+        }
+        body.dark .progress-fill {
+            background: #3b82f6;
+        }
+        body.dark .progress-label {
+            color: #e2e8f0;
+        }
+
+        body.dark .card-footer {
+            background: #0f172a;
+            border-top-color: #334155;
+        }
+        body.dark .btn-outline {
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .btn-outline:hover {
+            background: #334155;
+        }
+        body.dark .badge-status {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.dark .badge-status.ongoing {
+            background: #713f12;
+            color: #fcd34d;
+        }
+
+        body.dark .footer-note {
+            background: #1e293b;
+            border-top-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark .footer-note i {
+            color: #60a5fa;
+        }
+
+        /* карточки с цветными фонами в темной теме — делаем более приглушёнными */
+        body.dark .card-thumb {
+            opacity: 0.8;
+        }
+        body.dark .card-thumb.green { background: linear-gradient(145deg, #134e4a, #0f3d3a); color: #6ee7b7; }
+        body.dark .card-thumb.purple { background: linear-gradient(145deg, #2e1a47, #1e1035); color: #a78bfa; }
+        body.dark .card-thumb.orange { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fbbf24; }
+        body.dark .card-thumb.rose { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
+        body.dark .card-thumb { background: linear-gradient(145deg, #1a365d, #0f2a4a); color: #60a5fa; }
+
+        /* общие стили */
         .platform-wrapper {
             max-width: 1300px;
             width: 100%;
@@ -36,7 +196,6 @@
             height: fit-content;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: white;
             padding: 20px 30px;
@@ -114,6 +273,7 @@
             justify-content: center;
             font-weight: 600;
             font-size: 18px;
+            cursor: default;
         }
         .user-profile .badge {
             background: #eef2ff;
@@ -122,9 +282,33 @@
             font-size: 14px;
             color: #2563eb;
             font-weight: 500;
+            cursor: default;
         }
 
-        /* ===== NAV ===== */
+        /* theme toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 40px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .theme-toggle:hover {
+            background: #e2e8f0;
+        }
+        body.dark .theme-toggle {
+            color: #f1f5f9;
+        }
+        body.dark .theme-toggle:hover {
+            background: #334155;
+        }
+
         .nav-bar {
             background: white;
             padding: 0 30px;
@@ -139,11 +323,16 @@
             color: #475569;
             border-bottom: 3px solid transparent;
             transition: 0.2s;
-            cursor: default;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 15px;
+            background: transparent;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: inherit;
         }
         .nav-link i {
             font-size: 16px;
@@ -156,14 +345,18 @@
         .nav-link.active i {
             color: #2563eb;
         }
+        .nav-link:hover {
+            color: #1e293b;
+        }
+        body.dark .nav-link:hover {
+            color: #e2e8f0;
+        }
 
-        /* ===== MAIN CONTENT ===== */
         .main-content {
             padding: 30px;
             background: #f8fafc;
         }
 
-        /* приветствие */
         .welcome-section {
             margin-bottom: 30px;
         }
@@ -176,7 +369,6 @@
             margin-top: 6px;
         }
 
-        /* карточки курсов */
         .section-title {
             display: flex;
             justify-content: space-between;
@@ -192,6 +384,10 @@
             font-weight: 500;
             text-decoration: none;
             font-size: 15px;
+            cursor: pointer;
+        }
+        .section-title a:hover {
+            text-decoration: underline;
         }
 
         .course-grid {
@@ -296,10 +492,12 @@
             font-size: 14px;
             color: #1e293b;
             transition: 0.15s;
-            cursor: default;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-outline i {
-            margin-right: 6px;
             font-size: 13px;
         }
         .btn-outline:hover {
@@ -312,10 +510,10 @@
             border-radius: 40px;
             font-size: 13px;
             font-weight: 500;
+            cursor: default;
         }
         .badge-status.ongoing { background: #fef9c3; color: #854d0e; }
 
-        /* статистика */
         .stats-row {
             display: flex;
             flex-wrap: wrap;
@@ -347,38 +545,8 @@
             font-size: 14px;
         }
 
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 700px) {
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .search-bar {
-                max-width: 100%;
-            }
-            .user-profile {
-                justify-content: flex-start;
-            }
-            .nav-bar {
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                padding: 0 16px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            .stats-row {
-                flex-direction: column;
-            }
-        }
-        @media (max-width: 480px) {
-            .logo-text { font-size: 20px; }
-            .course-grid { grid-template-columns: 1fr; }
-        }
-
-        /* подвал */
         .footer-note {
-            margin-top: 30px;
+            margin-top: 0;
             padding: 20px 30px;
             background: white;
             border-top: 1px solid #e9edf4;
@@ -389,9 +557,52 @@
         .footer-note i {
             color: #2563eb;
         }
+
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 15px;
+            border: 1px solid #475569;
+        }
+        body.dark .toast-message {
+            background: #0f172a;
+            border-color: #475569;
+        }
+        .toast-message.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 700px) {
+            .header { flex-direction: column; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+            .user-profile { justify-content: flex-start; }
+            .nav-bar { overflow-x: auto; flex-wrap: nowrap; padding: 0 16px; }
+            .main-content { padding: 20px; }
+            .stats-row { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .logo-text { font-size: 20px; }
+            .course-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
+
+<!-- Всплывающее уведомление -->
+<div id="toast" class="toast-message">✨ Действие выполнено</div>
+
 <div class="platform-wrapper">
 
     <!-- ШАПКА -->
@@ -402,204 +613,250 @@
         </div>
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Поиск курсов, лекций...">
+            <input type="text" placeholder="Поиск курсов, лекций..." id="searchInput">
         </div>
         <div class="user-profile">
             <span class="badge"><i class="fas fa-crown"></i> Премиум</span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                <i class="fas fa-moon"></i>
+            </button>
             <div class="avatar">А</div>
         </div>
     </header>
 
-    <!-- НАВИГАЦИЯ -->
-    <nav class="nav-bar">
-        <div class="nav-link active"><i class="fas fa-compass"></i> Обзор</div>
-        <div class="nav-link"><i class="fas fa-book-open"></i> Мои курсы</div>
-        <div class="nav-link"><i class="fas fa-chart-line"></i> Прогресс</div>
-        <div class="nav-link"><i class="fas fa-calendar-alt"></i> Расписание</div>
-        <div class="nav-link"><i class="fas fa-users"></i> Сообщество</div>
+    <!-- НАВИГАЦИЯ (вкладки кликабельны) -->
+    <nav class="nav-bar" id="navBar">
+        <button class="nav-link active" data-tab="overview"><i class="fas fa-compass"></i> Обзор</button>
+        <button class="nav-link" data-tab="mycourses"><i class="fas fa-book-open"></i> Мои курсы</button>
+        <button class="nav-link" data-tab="progress"><i class="fas fa-chart-line"></i> Прогресс</button>
+        <button class="nav-link" data-tab="schedule"><i class="fas fa-calendar-alt"></i> Расписание</button>
+        <button class="nav-link" data-tab="community"><i class="fas fa-users"></i> Сообщество</button>
     </nav>
 
     <!-- ОСНОВНАЯ ОБЛАСТЬ -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
 
         <!-- приветствие -->
         <div class="welcome-section">
-            <h1>👋 Добро пожаловать, Алексей!</h1>
-            <p>Продолжай учиться — сегодня отличный день для новых знаний.</p>
+            <h1 id="greeting">👋 Добро пожаловать, Алексей!</h1>
+            <p id="subGreeting">Продолжай учиться — сегодня отличный день для новых знаний.</p>
         </div>
 
         <!-- СТАТИСТИКА -->
         <div class="stats-row">
-            <div class="stat-item">
-                <i class="fas fa-book"></i>
-                <div class="stat-info">
-                    <div class="number">12</div>
-                    <div class="label">Курсов в процессе</div>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-check-circle"></i>
-                <div class="stat-info">
-                    <div class="number">34</div>
-                    <div class="label">Завершено</div>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-clock"></i>
-                <div class="stat-info">
-                    <div class="number">18 ч</div>
-                    <div class="label">Обучение на этой неделе</div>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-award"></i>
-                <div class="stat-info">
-                    <div class="number">7</div>
-                    <div class="label">Сертификатов</div>
-                </div>
-            </div>
+            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number">12</div><div class="label">Курсов в процессе</div></div></div>
+            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number">34</div><div class="label">Завершено</div></div></div>
+            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">18 ч</div><div class="label">Обучение на этой неделе</div></div></div>
+            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number">7</div><div class="label">Сертификатов</div></div></div>
         </div>
 
         <!-- раздел "Активные курсы" -->
         <div class="section-title">
             <h2>🔥 Активные курсы</h2>
-            <a href="#"><i class="fas fa-arrow-right"></i> Все курсы</a>
+            <a id="allCoursesLink">Все курсы <i class="fas fa-arrow-right"></i></a>
         </div>
 
-        <div class="course-grid">
-
-            <!-- Карточка 1 -->
-            <div class="course-card">
-                <div class="card-thumb"><i class="fas fa-code"></i></div>
-                <div class="card-body">
-                    <h3>Веб-разработка 2026</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 24 урока • <i class="fas fa-clock"></i> 8 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 74%;"></div></div>
-                        <span class="progress-label">74%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status">в процессе</span>
-                    <span class="btn-outline"><i class="fas fa-play"></i> Продолжить</span>
-                </div>
-            </div>
-
-            <!-- Карточка 2 -->
-            <div class="course-card">
-                <div class="card-thumb green"><i class="fas fa-chart-pie"></i></div>
-                <div class="card-body">
-                    <h3>Анализ данных с Python</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 18 уроков • <i class="fas fa-clock"></i> 11 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 32%;"></div></div>
-                        <span class="progress-label">32%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status ongoing">начат</span>
-                    <span class="btn-outline"><i class="fas fa-play"></i> Продолжить</span>
-                </div>
-            </div>
-
-            <!-- Карточка 3 -->
-            <div class="course-card">
-                <div class="card-thumb purple"><i class="fas fa-brain"></i></div>
-                <div class="card-body">
-                    <h3>Машинное обучение</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 32 урока • <i class="fas fa-clock"></i> 15 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 9%;"></div></div>
-                        <span class="progress-label">9%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status ongoing">начат</span>
-                    <span class="btn-outline"><i class="fas fa-play"></i> Продолжить</span>
-                </div>
-            </div>
-
-            <!-- Карточка 4 -->
-            <div class="course-card">
-                <div class="card-thumb orange"><i class="fas fa-pen-fancy"></i></div>
-                <div class="card-body">
-                    <h3>UX/UI дизайн</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 15 уроков • <i class="fas fa-clock"></i> 6 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 100%;"></div></div>
-                        <span class="progress-label">100%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status">завершён</span>
-                    <span class="btn-outline"><i class="fas fa-redo"></i> Повторить</span>
-                </div>
-            </div>
-
-            <!-- Карточка 5 (доп, чтобы показать разнообразие) -->
-            <div class="course-card">
-                <div class="card-thumb rose"><i class="fas fa-database"></i></div>
-                <div class="card-body">
-                    <h3>Базы данных SQL</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 20 уроков • <i class="fas fa-clock"></i> 9 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 45%;"></div></div>
-                        <span class="progress-label">45%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status ongoing">в процессе</span>
-                    <span class="btn-outline"><i class="fas fa-play"></i> Продолжить</span>
-                </div>
-            </div>
+        <div class="course-grid" id="courseGrid">
+            <!-- карточки будут вставлены через JS, но для совместимости оставим разметку, 
+                 но лучше пересоздадим через JS, чтобы все кнопки были кликабельны -->
         </div>
 
-        <!-- Рекомендации (блок) -->
+        <!-- Рекомендации -->
         <div class="section-title" style="margin-top: 40px;">
             <h2>📚 Рекомендуем к изучению</h2>
-            <a href="#"><i class="fas fa-arrow-right"></i> Все рекомендации</a>
+            <a id="recommendLink">Все рекомендации <i class="fas fa-arrow-right"></i></a>
         </div>
+        <div class="course-grid" id="recommendGrid"></div>
 
-        <div class="course-grid">
-            <div class="course-card">
-                <div class="card-thumb" style="background: linear-gradient(145deg, #fce7f3, #fbcfe8); color: #86198f;"><i class="fas fa-robot"></i></div>
-                <div class="card-body">
-                    <h3>AI для начинающих</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 12 уроков • <i class="fas fa-clock"></i> 4 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div>
-                        <span class="progress-label">0%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status ongoing">новый</span>
-                    <span class="btn-outline"><i class="fas fa-plus"></i> Начать</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="card-thumb" style="background: linear-gradient(145deg, #ccfbf1, #99f6e4); color: #115e59;"><i class="fas fa-cloud"></i></div>
-                <div class="card-body">
-                    <h3>Облачные технологии</h3>
-                    <div class="meta"><i class="fas fa-user"></i> 10 уроков • <i class="fas fa-clock"></i> 5 ч</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div>
-                        <span class="progress-label">0%</span>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge-status ongoing">новый</span>
-                    <span class="btn-outline"><i class="fas fa-plus"></i> Начать</span>
-                </div>
-            </div>
-        </div>
-
-    </div> <!-- /main-content -->
+    </div>
 
     <!-- ПОДВАЛ -->
     <div class="footer-note">
         <i class="fas fa-graduation-cap"></i> EduCore · Образовательная платформа · Сделано с ❤️ для студентов
     </div>
+</div>
 
-</div> <!-- /platform-wrapper -->
+<script>
+    (function() {
+        // ----- данные курсов -----
+        const courses = [
+            { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', progress: 74, status: 'в процессе', statusClass: '', thumb: 'fa-code', thumbClass: '' },
+            { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', progress: 32, status: 'начат', statusClass: 'ongoing', thumb: 'fa-chart-pie', thumbClass: 'green' },
+            { title: 'Машинное обучение', lessons: '32 урока', time: '15 ч', progress: 9, status: 'начат', statusClass: 'ongoing', thumb: 'fa-brain', thumbClass: 'purple' },
+            { title: 'UX/UI дизайн', lessons: '15 уроков', time: '6 ч', progress: 100, status: 'завершён', statusClass: '', thumb: 'fa-pen-fancy', thumbClass: 'orange' },
+            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', progress: 45, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-database', thumbClass: 'rose' }
+        ];
+
+        const recommend = [
+            { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, #fce7f3, #fbcfe8)', color: '#86198f' },
+            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' }
+        ];
+
+        // ----- вспомогательный тост -----
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg || '✨ Действие выполнено';
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        // ----- рендер карточек -----
+        function renderCourses(containerId, data, isRecommend = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+
+                // thumb
+                const thumb = document.createElement('div');
+                thumb.className = 'card-thumb' + (item.thumbClass ? ' ' + item.thumbClass : '');
+                if (isRecommend && item.bg) {
+                    thumb.style.background = item.bg;
+                    thumb.style.color = item.color;
+                }
+                thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
+                card.appendChild(thumb);
+
+                // body
+                const body = document.createElement('div');
+                body.className = 'card-body';
+                body.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div>
+                    <div class="progress-block">
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width: ${item.progress}%;"></div></div>
+                        <span class="progress-label">${item.progress}%</span>
+                    </div>
+                `;
+                card.appendChild(body);
+
+                // footer
+                const footer = document.createElement('div');
+                footer.className = 'card-footer';
+                const statusSpan = document.createElement('span');
+                statusSpan.className = 'badge-status' + (item.statusClass ? ' ' + item.statusClass : '');
+                statusSpan.textContent = item.status;
+                footer.appendChild(statusSpan);
+
+                const btn = document.createElement('button');
+                btn.className = 'btn-outline';
+                const icon = document.createElement('i');
+                if (item.progress === 100) {
+                    icon.className = 'fas fa-redo';
+                    btn.appendChild(icon);
+                    btn.appendChild(document.createTextNode(' Повторить'));
+                } else if (item.progress === 0) {
+                    icon.className = 'fas fa-plus';
+                    btn.appendChild(icon);
+                    btn.appendChild(document.createTextNode(' Начать'));
+                } else {
+                    icon.className = 'fas fa-play';
+                    btn.appendChild(icon);
+                    btn.appendChild(document.createTextNode(' Продолжить'));
+                }
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showToast(`🚀 "${item.title}" — продолжение обучения`);
+                });
+                footer.appendChild(btn);
+                card.appendChild(footer);
+
+                // клик по карточке
+                card.addEventListener('click', () => {
+                    showToast(`📖 Открыть курс: ${item.title}`);
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // ----- инициализация карточек -----
+        renderCourses('courseGrid', courses);
+        renderCourses('recommendGrid', recommend, true);
+
+        // ----- обработка вкладок (навигация) -----
+        const navLinks = document.querySelectorAll('.nav-link');
+        const greeting = document.getElementById('greeting');
+        const subGreeting = document.getElementById('subGreeting');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                const tab = this.dataset.tab;
+                let msg = '';
+                switch(tab) {
+                    case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
+                    case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
+                    case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
+                    case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
+                    case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
+                    default: msg = '✨ Раздел открыт';
+                }
+                // обновим приветствие для имитации
+                greeting.textContent = `👋 Раздел: ${this.textContent.trim()}`;
+                subGreeting.textContent = msg;
+                showToast(msg);
+            });
+        });
+
+        // ----- кнопка переключения темы -----
+        const themeToggle = document.getElementById('themeToggle');
+        let dark = false;
+        themeToggle.addEventListener('click', function() {
+            dark = !dark;
+            document.body.classList.toggle('dark', dark);
+            const icon = this.querySelector('i');
+            if (dark) {
+                icon.className = 'fas fa-sun';
+                showToast('🌙 Тёмная тема включена');
+            } else {
+                icon.className = 'fas fa-moon';
+                showToast('☀️ Светлая тема включена');
+            }
+        });
+
+        // ----- ссылки "Все курсы" и "Все рекомендации" -----
+        document.getElementById('allCoursesLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast('📋 Все курсы: полный каталог');
+        });
+        document.getElementById('recommendLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast('📚 Все рекомендации: подборка для тебя');
+        });
+
+        // ----- поиск (демо) -----
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const val = this.value.trim();
+                if (val) {
+                    showToast(`🔍 Поиск: "${val}"`);
+                } else {
+                    showToast('✏️ Введите запрос для поиска');
+                }
+            }
+        });
+
+        // ----- клик по аватарке / бейджу (демо) -----
+        document.querySelector('.avatar').addEventListener('click', () => {
+            showToast('👤 Профиль пользователя');
+        });
+        document.querySelector('.badge').addEventListener('click', () => {
+            showToast('⭐ Премиум-статус: доступны все курсы');
+        });
+
+        // ----- дополнительно: клик по иконке лого (для интереса) -----
+        document.querySelector('.logo-area').addEventListener('click', () => {
+            showToast('🏠 EduCore — главная страница');
+        });
+
+        console.log('✅ Все кнопки и вкладки кликабельны, тема переключается.');
+    })();
+</script>
+
 </body>
 </html>
