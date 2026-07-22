@@ -634,6 +634,8 @@
             z-index: 999;
             font-size: 15px;
             border: 1px solid #475569;
+            max-width: 90%;
+            text-align: center;
         }
         body.dark .toast-message {
             background: #0f172a;
@@ -724,6 +726,7 @@
             color: #1e293b;
             outline: none;
             cursor: pointer;
+            max-width: 120px;
         }
         body.dark .account-selector select {
             color: #e2e8f0;
@@ -905,6 +908,7 @@
             .stats-row { flex-direction: column; }
             .account-selector { width: 100%; justify-content: space-between; }
             .modal-content { padding: 30px 24px; }
+            .account-selector select { max-width: 100px; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
@@ -1681,10 +1685,17 @@
             });
 
             showTab('overview');
+            
+            // Убедимся, что всё отображается корректно
+            console.log('✅ Платформа загружена успешно');
         }
 
-        init();
-        console.log('✅ Платформа с регистрацией по имени и фамилии загружена');
+        // Запускаем, когда DOM полностью загружен
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     })();
 </script>
 
