@@ -15,8 +15,6 @@
             transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-
-        
         body {
             background: #f4f7fc;
             color: #1e293b;
@@ -27,7 +25,6 @@
             justify-content: center;
         }
 
-        /* ===== ТЕМНАЯ ТЕМА (body.dark) ===== */
         body.dark {
             background: #0f172a;
             color: #e2e8f0;
@@ -165,6 +162,10 @@
             background: #713f12;
             color: #fcd34d;
         }
+        body.dark .badge-status.test {
+            background: #4c1d95;
+            color: #c4b5fd;
+        }
 
         body.dark .footer-note {
             background: #1e293b;
@@ -175,7 +176,6 @@
             color: #60a5fa;
         }
 
-        /* карточки с цветными фонами в темной теме — делаем более приглушёнными */
         body.dark .card-thumb {
             opacity: 0.8;
         }
@@ -183,11 +183,16 @@
         body.dark .card-thumb.purple { background: linear-gradient(145deg, #2e1a47, #1e1035); color: #a78bfa; }
         body.dark .card-thumb.orange { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fbbf24; }
         body.dark .card-thumb.rose { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
+        body.dark .card-thumb.teal { background: linear-gradient(145deg, #134e4a, #0f3d3a); color: #5eead4; }
+        body.dark .card-thumb.indigo { background: linear-gradient(145deg, #1e1b4b, #13103a); color: #818cf8; }
+        body.dark .card-thumb.emerald { background: linear-gradient(145deg, #064e3b, #042f23); color: #6ee7b7; }
+        body.dark .card-thumb.cyan { background: linear-gradient(145deg, #164e63, #0e3a4a); color: #67e8f9; }
+        body.dark .card-thumb.pink { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
+        body.dark .card-thumb.amber { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fcd34d; }
         body.dark .card-thumb { background: linear-gradient(145deg, #1a365d, #0f2a4a); color: #60a5fa; }
 
-        /* общие стили */
         .platform-wrapper {
-            max-width: 1300px;
+            max-width: 1400px;
             width: 100%;
             background: white;
             border-radius: 32px;
@@ -213,6 +218,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
         }
 
         .logo-icon {
@@ -275,7 +281,7 @@
             justify-content: center;
             font-weight: 600;
             font-size: 18px;
-            cursor: default;
+            cursor: pointer;
         }
         .user-profile .badge {
             background: #eef2ff;
@@ -284,10 +290,9 @@
             font-size: 14px;
             color: #2563eb;
             font-weight: 500;
-            cursor: default;
+            cursor: pointer;
         }
 
-        /* theme toggle */
         .theme-toggle {
             background: transparent;
             border: none;
@@ -407,6 +412,7 @@
             border: 1px solid #edf2f7;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
         }
         .course-card:hover {
             transform: translateY(-5px);
@@ -422,11 +428,18 @@
             justify-content: center;
             font-size: 42px;
             color: #1e4f8a;
+            flex-shrink: 0;
         }
         .card-thumb.green { background: linear-gradient(145deg, #d1fae5, #a7f3d0); color: #0b5e42; }
         .card-thumb.purple { background: linear-gradient(145deg, #ede9fe, #c4b5fd); color: #4f2d7a; }
         .card-thumb.orange { background: linear-gradient(145deg, #fff3e0, #ffd7a5); color: #92400e; }
         .card-thumb.rose { background: linear-gradient(145deg, #ffe4e6, #fecdd3); color: #881337; }
+        .card-thumb.teal { background: linear-gradient(145deg, #ccfbf1, #99f6e4); color: #115e59; }
+        .card-thumb.indigo { background: linear-gradient(145deg, #e0e7ff, #c7d2fe); color: #3730a3; }
+        .card-thumb.emerald { background: linear-gradient(145deg, #d1fae5, #a7f3d0); color: #065f46; }
+        .card-thumb.cyan { background: linear-gradient(145deg, #cffafe, #a5f3fc); color: #0e7490; }
+        .card-thumb.pink { background: linear-gradient(145deg, #fce7f3, #fbcfe8); color: #9d174d; }
+        .card-thumb.amber { background: linear-gradient(145deg, #fef3c7, #fde68a); color: #b45309; }
 
         .card-body {
             padding: 18px 16px 16px 16px;
@@ -446,6 +459,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: wrap;
         }
         .card-body .meta i {
             margin-right: 4px;
@@ -484,6 +498,8 @@
             justify-content: space-between;
             align-items: center;
             background: #fafcff;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .btn-outline {
             background: transparent;
@@ -515,6 +531,7 @@
             cursor: default;
         }
         .badge-status.ongoing { background: #fef9c3; color: #854d0e; }
+        .badge-status.test { background: #ede9fe; color: #5b21b6; }
 
         .stats-row {
             display: flex;
@@ -586,6 +603,49 @@
             opacity: 1;
         }
 
+        .test-question {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border: 1px solid #edf2f7;
+        }
+        body.dark .test-question {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        .test-question h4 {
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .test-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .test-options label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: 0.15s;
+            border: 1px solid transparent;
+        }
+        .test-options label:hover {
+            background: #f1f5f9;
+        }
+        body.dark .test-options label:hover {
+            background: #334155;
+        }
+        .test-options input[type="radio"] {
+            accent-color: #2563eb;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: stretch; }
             .search-bar { max-width: 100%; }
@@ -602,14 +662,12 @@
 </head>
 <body>
 
-<!-- Всплывающее уведомление -->
 <div id="toast" class="toast-message">✨ Действие выполнено</div>
 
 <div class="platform-wrapper">
 
-    <!-- ШАПКА -->
     <header class="header">
-        <div class="logo-area">
+        <div class="logo-area" id="logoArea">
             <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
             <div class="logo-text">Edu<span>Core</span></div>
         </div>
@@ -618,50 +676,51 @@
             <input type="text" placeholder="Поиск курсов, лекций..." id="searchInput">
         </div>
         <div class="user-profile">
-            <span class="badge"><i class="fas fa-crown"></i> Премиум</span>
+            <span class="badge" id="premiumBadge"><i class="fas fa-crown"></i> Премиум</span>
             <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
                 <i class="fas fa-moon"></i>
             </button>
-            <div class="avatar">А</div>
+            <div class="avatar" id="avatarBtn">А</div>
         </div>
     </header>
 
-    <!-- НАВИГАЦИЯ (вкладки кликабельны) -->
     <nav class="nav-bar" id="navBar">
         <button class="nav-link active" data-tab="overview"><i class="fas fa-compass"></i> Обзор</button>
         <button class="nav-link" data-tab="mycourses"><i class="fas fa-book-open"></i> Мои курсы</button>
+        <button class="nav-link" data-tab="tests"><i class="fas fa-pencil-alt"></i> Тесты</button>
         <button class="nav-link" data-tab="progress"><i class="fas fa-chart-line"></i> Прогресс</button>
         <button class="nav-link" data-tab="schedule"><i class="fas fa-calendar-alt"></i> Расписание</button>
         <button class="nav-link" data-tab="community"><i class="fas fa-users"></i> Сообщество</button>
     </nav>
 
-    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
     <div class="main-content" id="mainContent">
 
-        <!-- приветствие -->
         <div class="welcome-section">
             <h1 id="greeting">👋 Добро пожаловать, Алексей!</h1>
             <p id="subGreeting">Продолжай учиться — сегодня отличный день для новых знаний.</p>
         </div>
 
-        <!-- СТАТИСТИКА -->
         <div class="stats-row">
-            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number">12</div><div class="label">Курсов в процессе</div></div></div>
-            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number">34</div><div class="label">Завершено</div></div></div>
-            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">18 ч</div><div class="label">Обучение на этой неделе</div></div></div>
-            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number">7</div><div class="label">Сертификатов</div></div></div>
+            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number">18</div><div class="label">Курсов в процессе</div></div></div>
+            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number">42</div><div class="label">Завершено</div></div></div>
+            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">24 ч</div><div class="label">Обучение на этой неделе</div></div></div>
+            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number">9</div><div class="label">Сертификатов</div></div></div>
+            <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number">15</div><div class="label">Пройдено тестов</div></div></div>
         </div>
 
-        <!-- раздел "Активные курсы" -->
+        <!-- Блок курсов -->
         <div class="section-title">
             <h2>🔥 Активные курсы</h2>
             <a id="allCoursesLink">Все курсы <i class="fas fa-arrow-right"></i></a>
         </div>
+        <div class="course-grid" id="courseGrid"></div>
 
-        <div class="course-grid" id="courseGrid">
-            <!-- карточки будут вставлены через JS, но для совместимости оставим разметку, 
-                 но лучше пересоздадим через JS, чтобы все кнопки были кликабельны -->
+        <!-- Блок тестов -->
+        <div class="section-title" style="margin-top: 40px;">
+            <h2>📝 Тесты и проверка знаний</h2>
+            <a id="allTestsLink">Все тесты <i class="fas fa-arrow-right"></i></a>
         </div>
+        <div id="testsContainer"></div>
 
         <!-- Рекомендации -->
         <div class="section-title" style="margin-top: 40px;">
@@ -672,7 +731,6 @@
 
     </div>
 
-    <!-- ПОДВАЛ -->
     <div class="footer-note">
         <i class="fas fa-graduation-cap"></i> EduCore · Образовательная платформа · Сделано с ❤️ для студентов
     </div>
@@ -680,39 +738,81 @@
 
 <script>
     (function() {
-        // ----- данные курсов -----
+        // ----- ДАННЫЕ -----
         const courses = [
             { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', progress: 74, status: 'в процессе', statusClass: '', thumb: 'fa-code', thumbClass: '' },
             { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', progress: 32, status: 'начат', statusClass: 'ongoing', thumb: 'fa-chart-pie', thumbClass: 'green' },
             { title: 'Машинное обучение', lessons: '32 урока', time: '15 ч', progress: 9, status: 'начат', statusClass: 'ongoing', thumb: 'fa-brain', thumbClass: 'purple' },
             { title: 'UX/UI дизайн', lessons: '15 уроков', time: '6 ч', progress: 100, status: 'завершён', statusClass: '', thumb: 'fa-pen-fancy', thumbClass: 'orange' },
-            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', progress: 45, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-database', thumbClass: 'rose' }
+            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', progress: 45, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-database', thumbClass: 'rose' },
+            { title: 'Фронтенд с React', lessons: '28 уроков', time: '12 ч', progress: 60, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-react', thumbClass: 'teal' },
+            { title: 'DevOps основы', lessons: '22 урока', time: '10 ч', progress: 15, status: 'начат', statusClass: 'ongoing', thumb: 'fa-server', thumbClass: 'indigo' },
+            { title: 'Английский для IT', lessons: '30 уроков', time: '14 ч', progress: 80, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-language', thumbClass: 'emerald' },
+            { title: 'Кибербезопасность', lessons: '26 уроков', time: '13 ч', progress: 5, status: 'начат', statusClass: 'ongoing', thumb: 'fa-shield-alt', thumbClass: 'cyan' },
+            { title: 'Мобильная разработка', lessons: '20 уроков', time: '10 ч', progress: 100, status: 'завершён', statusClass: '', thumb: 'fa-mobile-alt', thumbClass: 'pink' }
         ];
 
         const recommend = [
             { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, #fce7f3, #fbcfe8)', color: '#86198f' },
-            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' }
+            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' },
+            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, #ede9fe, #c4b5fd)', color: '#4f2d7a' },
+            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, #d1fae5, #a7f3d0)', color: '#0b5e42' }
         ];
 
-        // ----- вспомогательный тост -----
+        // Тесты с вопросами
+        const tests = [
+            {
+                title: 'Основы JavaScript',
+                questions: [
+                    { q: 'Как объявить переменную в JavaScript?', options: ['let', 'var', 'const', 'Все варианты'], correct: 3 },
+                    { q: 'Что выведет console.log(typeof null)?', options: ['null', 'object', 'undefined', 'number'], correct: 1 },
+                    { q: 'Какой метод добавляет элемент в конец массива?', options: ['push()', 'pop()', 'shift()', 'unshift()'], correct: 0 }
+                ]
+            },
+            {
+                title: 'Python для начинающих',
+                questions: [
+                    { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
+                    { q: 'Что делает функция print()?', options: ['Выводит данные', 'Вводит данные', 'Создает переменную', 'Удаляет данные'], correct: 0 },
+                    { q: 'Как создать список в Python?', options: ['[]', '{}', '()', '<>'], correct: 0 }
+                ]
+            },
+            {
+                title: 'SQL запросы',
+                questions: [
+                    { q: 'Какой оператор используется для выборки данных?', options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'], correct: 0 },
+                    { q: 'Что такое JOIN?', options: ['Объединение таблиц', 'Удаление данных', 'Создание таблицы', 'Изменение структуры'], correct: 0 },
+                    { q: 'Какой тип данных хранит текст?', options: ['VARCHAR', 'INT', 'DATE', 'BOOLEAN'], correct: 0 }
+                ]
+            },
+            {
+                title: 'React основы',
+                questions: [
+                    { q: 'Что такое JSX?', options: ['Синтаксис JavaScript + XML', 'Библиотека', 'Фреймворк', 'База данных'], correct: 0 },
+                    { q: 'Как создать компонент в React?', options: ['Функция или класс', 'Только класс', 'Только функция', 'HTML тег'], correct: 0 },
+                    { q: 'Что такое state?', options: ['Состояние компонента', 'Свойства компонента', 'Метод компонента', 'Стиль компонента'], correct: 0 }
+                ]
+            }
+        ];
+
+        // ----- TOAST -----
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg || '✨ Действие выполнено';
             toast.classList.add('show');
             clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ----- рендер карточек -----
+        // ----- РЕНДЕР КАРТОЧЕК КУРСОВ -----
         function renderCourses(containerId, data, isRecommend = false) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
-            data.forEach((item, index) => {
+            data.forEach((item) => {
                 const card = document.createElement('div');
                 card.className = 'course-card';
 
-                // thumb
                 const thumb = document.createElement('div');
                 thumb.className = 'card-thumb' + (item.thumbClass ? ' ' + item.thumbClass : '');
                 if (isRecommend && item.bg) {
@@ -722,7 +822,6 @@
                 thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
                 card.appendChild(thumb);
 
-                // body
                 const body = document.createElement('div');
                 body.className = 'card-body';
                 body.innerHTML = `
@@ -735,7 +834,6 @@
                 `;
                 card.appendChild(body);
 
-                // footer
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
                 const statusSpan = document.createElement('span');
@@ -766,7 +864,6 @@
                 footer.appendChild(btn);
                 card.appendChild(footer);
 
-                // клик по карточке
                 card.addEventListener('click', () => {
                     showToast(`📖 Открыть курс: ${item.title}`);
                 });
@@ -775,37 +872,134 @@
             });
         }
 
-        // ----- инициализация карточек -----
+        // ----- РЕНДЕР ТЕСТОВ -----
+        function renderTests(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            tests.forEach((test, testIndex) => {
+                const wrapper = document.createElement('div');
+                wrapper.style.marginBottom = '32px';
+
+                const title = document.createElement('h3');
+                title.style.marginBottom = '16px';
+                title.style.fontWeight = '600';
+                title.innerHTML = `<i class="fas fa-pencil-alt" style="color: #2563eb; margin-right: 10px;"></i>${test.title}`;
+                wrapper.appendChild(title);
+
+                test.questions.forEach((qItem, qIndex) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'test-question';
+                    questionDiv.style.cursor = 'default';
+
+                    const qHeader = document.createElement('h4');
+                    qHeader.textContent = `${qIndex+1}. ${qItem.q}`;
+                    questionDiv.appendChild(qHeader);
+
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'test-options';
+
+                    qItem.options.forEach((opt, optIndex) => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = `test_${testIndex}_q${qIndex}`;
+                        radio.value = optIndex;
+
+                        const span = document.createElement('span');
+                        span.textContent = opt;
+
+                        label.appendChild(radio);
+                        label.appendChild(span);
+                        optionsDiv.appendChild(label);
+
+                        radio.addEventListener('change', function() {
+                            if (this.checked) {
+                                const isCorrect = (optIndex === qItem.correct);
+                                showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Попробуй еще раз');
+                                // сбросить через 2с
+                                setTimeout(() => {
+                                    this.checked = false;
+                                }, 1500);
+                            }
+                        });
+                    });
+
+                    questionDiv.appendChild(optionsDiv);
+                    wrapper.appendChild(questionDiv);
+                });
+
+                container.appendChild(wrapper);
+            });
+        }
+
+        // ----- ИНИЦИАЛИЗАЦИЯ -----
         renderCourses('courseGrid', courses);
         renderCourses('recommendGrid', recommend, true);
+        renderTests('testsContainer');
 
-        // ----- обработка вкладок (навигация) -----
+        // ----- ВКЛАДКИ -----
         const navLinks = document.querySelectorAll('.nav-link');
         const greeting = document.getElementById('greeting');
         const subGreeting = document.getElementById('subGreeting');
+        const testsContainer = document.getElementById('testsContainer');
+        const courseGrid = document.getElementById('courseGrid');
+        const recommendGrid = document.getElementById('recommendGrid');
+        const allCoursesLink = document.getElementById('allCoursesLink');
+        const allTestsLink = document.getElementById('allTestsLink');
+        const recommendLink = document.getElementById('recommendLink');
+
+        // Функция показа/скрытия блоков
+        function showTab(tab) {
+            // все блоки видимы по умолчанию, но для "Тесты" показываем только тесты
+            const isTests = (tab === 'tests');
+            courseGrid.style.display = isTests ? 'none' : 'grid';
+            recommendGrid.style.display = isTests ? 'none' : 'grid';
+            allCoursesLink.style.display = isTests ? 'none' : 'inline';
+            recommendLink.style.display = isTests ? 'none' : 'inline';
+            testsContainer.style.display = isTests ? 'block' : 'none';
+            allTestsLink.style.display = isTests ? 'inline' : 'none';
+
+            // для остальных вкладок показываем всё
+            if (tab === 'overview' || tab === 'mycourses' || tab === 'progress' || tab === 'schedule' || tab === 'community') {
+                courseGrid.style.display = 'grid';
+                recommendGrid.style.display = 'grid';
+                allCoursesLink.style.display = 'inline';
+                recommendLink.style.display = 'inline';
+                testsContainer.style.display = 'none';
+                allTestsLink.style.display = 'none';
+            }
+
+            // обновляем приветствие
+            let msg = '';
+            switch(tab) {
+                case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
+                case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
+                case 'tests': msg = '📝 Тесты: проверь свои знания'; break;
+                case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
+                case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
+                case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
+                default: msg = '✨ Раздел открыт';
+            }
+            const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
+            greeting.textContent = `👋 Раздел: ${tabName}`;
+            subGreeting.textContent = msg;
+        }
 
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 navLinks.forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
                 const tab = this.dataset.tab;
-                let msg = '';
-                switch(tab) {
-                    case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
-                    case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
-                    case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
-                    case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
-                    case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
-                    default: msg = '✨ Раздел открыт';
-                }
-                // обновим приветствие для имитации
-                greeting.textContent = `👋 Раздел: ${this.textContent.trim()}`;
-                subGreeting.textContent = msg;
-                showToast(msg);
+                showTab(tab);
+                // тост
+                const names = { overview: 'Обзор', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
+                showToast(`📂 Переход в раздел: ${names[tab] || tab}`);
             });
         });
 
-        // ----- кнопка переключения темы -----
+        // ----- ТЕМА -----
         const themeToggle = document.getElementById('themeToggle');
         let dark = false;
         themeToggle.addEventListener('click', function() {
@@ -821,17 +1015,21 @@
             }
         });
 
-        // ----- ссылки "Все курсы" и "Все рекомендации" -----
-        document.getElementById('allCoursesLink').addEventListener('click', function(e) {
+        // ----- КЛИКИ ПО ССЫЛКАМ -----
+        document.getElementById('allCoursesLink').addEventListener('click', (e) => {
             e.preventDefault();
-            showToast('📋 Все курсы: полный каталог');
+            showToast('📋 Все курсы: полный каталог из 15+ курсов');
         });
-        document.getElementById('recommendLink').addEventListener('click', function(e) {
+        document.getElementById('allTestsLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('📝 Все тесты: более 20 тестов по разным темам');
+        });
+        document.getElementById('recommendLink').addEventListener('click', (e) => {
             e.preventDefault();
             showToast('📚 Все рекомендации: подборка для тебя');
         });
 
-        // ----- поиск (демо) -----
+        // ----- ПОИСК -----
         document.getElementById('searchInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 const val = this.value.trim();
@@ -843,20 +1041,21 @@
             }
         });
 
-        // ----- клик по аватарке / бейджу (демо) -----
-        document.querySelector('.avatar').addEventListener('click', () => {
-            showToast('👤 Профиль пользователя');
-        });
-        document.querySelector('.badge').addEventListener('click', () => {
-            showToast('⭐ Премиум-статус: доступны все курсы');
-        });
-
-        // ----- дополнительно: клик по иконке лого (для интереса) -----
-        document.querySelector('.logo-area').addEventListener('click', () => {
+        // ----- АВАТАР, БЕЙДЖ, ЛОГО -----
+        document.querySelector('.avatar').addEventListener('click', () => showToast('👤 Профиль пользователя'));
+        document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
+        document.getElementById('logoArea').addEventListener('click', () => {
             showToast('🏠 EduCore — главная страница');
+            // сброс на обзор
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.querySelector('.nav-link[data-tab="overview"]').classList.add('active');
+            showTab('overview');
         });
 
-        console.log('✅ Все кнопки и вкладки кликабельны, тема переключается.');
+        // стартовый вид
+        showTab('overview');
+
+        console.log('✅ Платформа загружена: курсы, тесты, тёмная тема, вкладки работают');
     })();
 </script>
 
