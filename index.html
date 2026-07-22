@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduCore — образовательная платформа</title>
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -166,6 +165,10 @@
             background: #4c1d95;
             color: #c4b5fd;
         }
+        body.dark .badge-status.completed {
+            background: #065f46;
+            color: #6ee7b7;
+        }
 
         body.dark .footer-note {
             background: #1e293b;
@@ -190,6 +193,17 @@
         body.dark .card-thumb.pink { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
         body.dark .card-thumb.amber { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fcd34d; }
         body.dark .card-thumb { background: linear-gradient(145deg, #1a365d, #0f2a4a); color: #60a5fa; }
+
+        body.dark .test-question {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .test-options label:hover {
+            background: #334155;
+        }
+        body.dark .test-options input[type="radio"] {
+            accent-color: #60a5fa;
+        }
 
         .platform-wrapper {
             max-width: 1400px;
@@ -269,7 +283,9 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
+
         .user-profile .avatar {
             background: #2563eb;
             color: white;
@@ -283,6 +299,7 @@
             font-size: 18px;
             cursor: pointer;
         }
+
         .user-profile .badge {
             background: #eef2ff;
             padding: 6px 14px;
@@ -515,9 +532,6 @@
             align-items: center;
             gap: 6px;
         }
-        .btn-outline i {
-            font-size: 13px;
-        }
         .btn-outline:hover {
             background: #f1f5f9;
         }
@@ -532,6 +546,7 @@
         }
         .badge-status.ongoing { background: #fef9c3; color: #854d0e; }
         .badge-status.test { background: #ede9fe; color: #5b21b6; }
+        .badge-status.completed { background: #d1fae5; color: #065f46; }
 
         .stats-row {
             display: flex;
@@ -645,6 +660,85 @@
             height: 18px;
             cursor: pointer;
         }
+        .test-options label.correct-answer {
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+        body.dark .test-options label.correct-answer {
+            background: #064e3b;
+            border-color: #34d399;
+        }
+        .test-options label.wrong-answer {
+            background: #fee2e2;
+            border-color: #fca5a5;
+        }
+        body.dark .test-options label.wrong-answer {
+            background: #450a0a;
+            border-color: #ef4444;
+        }
+
+        .account-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 4px 12px 4px 16px;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        body.dark .account-selector {
+            background: #334155;
+            border-color: #475569;
+        }
+        .account-selector select {
+            background: transparent;
+            border: none;
+            padding: 8px 4px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1e293b;
+            outline: none;
+            cursor: pointer;
+        }
+        body.dark .account-selector select {
+            color: #e2e8f0;
+        }
+        .account-selector select option {
+            background: white;
+            color: #1e293b;
+        }
+        body.dark .account-selector select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .test-progress-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+        body.dark .test-progress-bar {
+            color: #94a3b8;
+        }
+        .test-progress-bar .bar-bg {
+            flex: 1;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            min-width: 60px;
+        }
+        body.dark .test-progress-bar .bar-bg {
+            background: #334155;
+        }
+        .test-progress-bar .bar-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 10px;
+            width: 0%;
+        }
 
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: stretch; }
@@ -653,6 +747,7 @@
             .nav-bar { overflow-x: auto; flex-wrap: nowrap; padding: 0 16px; }
             .main-content { padding: 20px; }
             .stats-row { flex-direction: column; }
+            .account-selector { width: 100%; justify-content: space-between; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
@@ -676,6 +771,10 @@
             <input type="text" placeholder="Поиск курсов, лекций..." id="searchInput">
         </div>
         <div class="user-profile">
+            <div class="account-selector">
+                <i class="fas fa-user-circle" style="color: #2563eb;"></i>
+                <select id="accountSelect"></select>
+            </div>
             <span class="badge" id="premiumBadge"><i class="fas fa-crown"></i> Премиум</span>
             <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
                 <i class="fas fa-moon"></i>
@@ -696,16 +795,16 @@
     <div class="main-content" id="mainContent">
 
         <div class="welcome-section">
-            <h1 id="greeting">👋 Добро пожаловать, Алексей!</h1>
+            <h1 id="greeting">👋 Добро пожаловать, <span id="userNameDisplay">Алексей</span>!</h1>
             <p id="subGreeting">Продолжай учиться — сегодня отличный день для новых знаний.</p>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number">18</div><div class="label">Курсов в процессе</div></div></div>
-            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number">42</div><div class="label">Завершено</div></div></div>
-            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">24 ч</div><div class="label">Обучение на этой неделе</div></div></div>
-            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number">9</div><div class="label">Сертификатов</div></div></div>
-            <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number">15</div><div class="label">Пройдено тестов</div></div></div>
+        <div class="stats-row" id="statsRow">
+            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">18</div><div class="label">Курсов в процессе</div></div></div>
+            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">42</div><div class="label">Завершено</div></div></div>
+            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">24 ч</div><div class="label">Обучения на неделе</div></div></div>
+            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">9</div><div class="label">Сертификатов</div></div></div>
+            <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">15</div><div class="label">Пройдено тестов</div></div></div>
         </div>
 
         <!-- Блок курсов -->
@@ -738,30 +837,104 @@
 
 <script>
     (function() {
-        // ----- ДАННЫЕ -----
-        const courses = [
-            { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', progress: 74, status: 'в процессе', statusClass: '', thumb: 'fa-code', thumbClass: '' },
-            { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', progress: 32, status: 'начат', statusClass: 'ongoing', thumb: 'fa-chart-pie', thumbClass: 'green' },
-            { title: 'Машинное обучение', lessons: '32 урока', time: '15 ч', progress: 9, status: 'начат', statusClass: 'ongoing', thumb: 'fa-brain', thumbClass: 'purple' },
-            { title: 'UX/UI дизайн', lessons: '15 уроков', time: '6 ч', progress: 100, status: 'завершён', statusClass: '', thumb: 'fa-pen-fancy', thumbClass: 'orange' },
-            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', progress: 45, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-database', thumbClass: 'rose' },
-            { title: 'Фронтенд с React', lessons: '28 уроков', time: '12 ч', progress: 60, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-react', thumbClass: 'teal' },
-            { title: 'DevOps основы', lessons: '22 урока', time: '10 ч', progress: 15, status: 'начат', statusClass: 'ongoing', thumb: 'fa-server', thumbClass: 'indigo' },
-            { title: 'Английский для IT', lessons: '30 уроков', time: '14 ч', progress: 80, status: 'в процессе', statusClass: 'ongoing', thumb: 'fa-language', thumbClass: 'emerald' },
-            { title: 'Кибербезопасность', lessons: '26 уроков', time: '13 ч', progress: 5, status: 'начат', statusClass: 'ongoing', thumb: 'fa-shield-alt', thumbClass: 'cyan' },
-            { title: 'Мобильная разработка', lessons: '20 уроков', time: '10 ч', progress: 100, status: 'завершён', statusClass: '', thumb: 'fa-mobile-alt', thumbClass: 'pink' }
-        ];
-
-        const recommend = [
-            { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, #fce7f3, #fbcfe8)', color: '#86198f' },
-            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' },
-            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, #ede9fe, #c4b5fd)', color: '#4f2d7a' },
-            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', progress: 0, status: 'новый', statusClass: 'ongoing', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, #d1fae5, #a7f3d0)', color: '#0b5e42' }
-        ];
-
-        // Тесты с вопросами
-        const tests = [
+        // ----- ДАННЫЕ АККАУНТОВ -----
+        const accounts = [
             {
+                id: 1,
+                name: 'Алексей',
+                coursesProgress: {
+                    'Веб-разработка 2026': 74,
+                    'Анализ данных с Python': 32,
+                    'Машинное обучение': 9,
+                    'UX/UI дизайн': 100,
+                    'Базы данных SQL': 45,
+                    'Фронтенд с React': 60,
+                    'DevOps основы': 15,
+                    'Английский для IT': 80,
+                    'Кибербезопасность': 5,
+                    'Мобильная разработка': 100
+                },
+                testsResults: {
+                    'Основы JavaScript': [true, false, true],
+                    'Python для начинающих': [true, true, false],
+                    'SQL запросы': [false, true, true],
+                    'React основы': [true, false, true]
+                },
+                stats: { courses: 18, completed: 42, certificates: 9, tests: 15 }
+            },
+            {
+                id: 2,
+                name: 'Мария',
+                coursesProgress: {
+                    'Веб-разработка 2026': 45,
+                    'Анализ данных с Python': 78,
+                    'Машинное обучение': 50,
+                    'UX/UI дизайн': 30,
+                    'Базы данных SQL': 90,
+                    'Фронтенд с React': 20,
+                    'DevOps основы': 60,
+                    'Английский для IT': 95,
+                    'Кибербезопасность': 40,
+                    'Мобильная разработка': 70
+                },
+                testsResults: {
+                    'Основы JavaScript': [true, true, true],
+                    'Python для начинающих': [true, true, true],
+                    'SQL запросы': [true, true, false],
+                    'React основы': [false, false, true]
+                },
+                stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
+            },
+            {
+                id: 3,
+                name: 'Иван',
+                coursesProgress: {
+                    'Веб-разработка 2026': 90,
+                    'Анализ данных с Python': 15,
+                    'Машинное обучение': 70,
+                    'UX/UI дизайн': 10,
+                    'Базы данных SQL': 55,
+                    'Фронтенд с React': 85,
+                    'DevOps основы': 30,
+                    'Английский для IT': 20,
+                    'Кибербезопасность': 75,
+                    'Мобильная разработка': 40
+                },
+                testsResults: {
+                    'Основы JavaScript': [true, false, false],
+                    'Python для начинающих': [false, true, false],
+                    'SQL запросы': [true, true, true],
+                    'React основы': [true, true, false]
+                },
+                stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
+            }
+        ];
+
+        // ----- ДАННЫЕ КУРСОВ (общие) -----
+        const courseList = [
+            { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', thumb: 'fa-code', thumbClass: '' },
+            { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', thumb: 'fa-chart-pie', thumbClass: 'green' },
+            { title: 'Машинное обучение', lessons: '32 урока', time: '15 ч', thumb: 'fa-brain', thumbClass: 'purple' },
+            { title: 'UX/UI дизайн', lessons: '15 уроков', time: '6 ч', thumb: 'fa-pen-fancy', thumbClass: 'orange' },
+            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', thumb: 'fa-database', thumbClass: 'rose' },
+            { title: 'Фронтенд с React', lessons: '28 уроков', time: '12 ч', thumb: 'fa-react', thumbClass: 'teal' },
+            { title: 'DevOps основы', lessons: '22 урока', time: '10 ч', thumb: 'fa-server', thumbClass: 'indigo' },
+            { title: 'Английский для IT', lessons: '30 уроков', time: '14 ч', thumb: 'fa-language', thumbClass: 'emerald' },
+            { title: 'Кибербезопасность', lessons: '26 уроков', time: '13 ч', thumb: 'fa-shield-alt', thumbClass: 'cyan' },
+            { title: 'Мобильная разработка', lessons: '20 уроков', time: '10 ч', thumb: 'fa-mobile-alt', thumbClass: 'pink' }
+        ];
+
+        const recommendList = [
+            { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, #fce7f3, #fbcfe8)', color: '#86198f' },
+            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' },
+            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, #ede9fe, #c4b5fd)', color: '#4f2d7a' },
+            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, #d1fae5, #a7f3d0)', color: '#0b5e42' }
+        ];
+
+        // ----- ДАННЫЕ ТЕСТОВ (общие) -----
+        const testList = [
+            {
+                id: 'js',
                 title: 'Основы JavaScript',
                 questions: [
                     { q: 'Как объявить переменную в JavaScript?', options: ['let', 'var', 'const', 'Все варианты'], correct: 3 },
@@ -770,6 +943,7 @@
                 ]
             },
             {
+                id: 'python',
                 title: 'Python для начинающих',
                 questions: [
                     { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
@@ -778,6 +952,7 @@
                 ]
             },
             {
+                id: 'sql',
                 title: 'SQL запросы',
                 questions: [
                     { q: 'Какой оператор используется для выборки данных?', options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'], correct: 0 },
@@ -786,6 +961,7 @@
                 ]
             },
             {
+                id: 'react',
                 title: 'React основы',
                 questions: [
                     { q: 'Что такое JSX?', options: ['Синтаксис JavaScript + XML', 'Библиотека', 'Фреймворк', 'База данных'], correct: 0 },
@@ -794,6 +970,10 @@
                 ]
             }
         ];
+
+        // ----- СОСТОЯНИЕ -----
+        let currentAccountId = 1;
+        let testStates = {}; // { testId: { answered: [bool] } }
 
         // ----- TOAST -----
         function showToast(msg) {
@@ -804,21 +984,30 @@
             toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ----- РЕНДЕР КАРТОЧЕК КУРСОВ -----
-        function renderCourses(containerId, data, isRecommend = false) {
+        // ----- ПОЛУЧИТЬ АККАУНТ -----
+        function getAccount(id) {
+            return accounts.find(a => a.id === id);
+        }
+
+        function getCurrentAccount() {
+            return getAccount(currentAccountId);
+        }
+
+        // ----- РЕНДЕР КУРСОВ -----
+        function renderCourses(containerId, data, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             data.forEach((item) => {
+                const progress = account.coursesProgress[item.title] || 0;
+                const status = progress === 100 ? 'завершён' : (progress > 0 ? 'в процессе' : 'начат');
+                const statusClass = progress === 100 ? '' : (progress > 0 ? 'ongoing' : 'ongoing');
+
                 const card = document.createElement('div');
                 card.className = 'course-card';
 
                 const thumb = document.createElement('div');
                 thumb.className = 'card-thumb' + (item.thumbClass ? ' ' + item.thumbClass : '');
-                if (isRecommend && item.bg) {
-                    thumb.style.background = item.bg;
-                    thumb.style.color = item.color;
-                }
                 thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
                 card.appendChild(thumb);
 
@@ -828,8 +1017,8 @@
                     <h3>${item.title}</h3>
                     <div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div>
                     <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: ${item.progress}%;"></div></div>
-                        <span class="progress-label">${item.progress}%</span>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width: ${progress}%;"></div></div>
+                        <span class="progress-label">${progress}%</span>
                     </div>
                 `;
                 card.appendChild(body);
@@ -837,18 +1026,18 @@
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
                 const statusSpan = document.createElement('span');
-                statusSpan.className = 'badge-status' + (item.statusClass ? ' ' + item.statusClass : '');
-                statusSpan.textContent = item.status;
+                statusSpan.className = 'badge-status' + (statusClass ? ' ' + statusClass : '');
+                statusSpan.textContent = status;
                 footer.appendChild(statusSpan);
 
                 const btn = document.createElement('button');
                 btn.className = 'btn-outline';
                 const icon = document.createElement('i');
-                if (item.progress === 100) {
+                if (progress === 100) {
                     icon.className = 'fas fa-redo';
                     btn.appendChild(icon);
                     btn.appendChild(document.createTextNode(' Повторить'));
-                } else if (item.progress === 0) {
+                } else if (progress === 0) {
                     icon.className = 'fas fa-plus';
                     btn.appendChild(icon);
                     btn.appendChild(document.createTextNode(' Начать'));
@@ -859,7 +1048,7 @@
                 }
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    showToast(`🚀 "${item.title}" — продолжение обучения`);
+                    showToast(`🚀 "${item.title}" — продолжение обучения (${progress}%)`);
                 });
                 footer.appendChild(btn);
                 card.appendChild(footer);
@@ -872,26 +1061,113 @@
             });
         }
 
+        // ----- РЕНДЕР РЕКОМЕНДАЦИЙ -----
+        function renderRecommend(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            data.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                const thumb = document.createElement('div');
+                thumb.className = 'card-thumb';
+                if (item.bg) {
+                    thumb.style.background = item.bg;
+                    thumb.style.color = item.color;
+                }
+                thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
+                card.appendChild(thumb);
+
+                const body = document.createElement('div');
+                body.className = 'card-body';
+                body.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div>
+                    <div class="progress-block">
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div>
+                        <span class="progress-label">0%</span>
+                    </div>
+                `;
+                card.appendChild(body);
+
+                const footer = document.createElement('div');
+                footer.className = 'card-footer';
+                const statusSpan = document.createElement('span');
+                statusSpan.className = 'badge-status ongoing';
+                statusSpan.textContent = 'новый';
+                footer.appendChild(statusSpan);
+
+                const btn = document.createElement('button');
+                btn.className = 'btn-outline';
+                btn.innerHTML = '<i class="fas fa-plus"></i> Начать';
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showToast(`📚 Начать курс: ${item.title}`);
+                });
+                footer.appendChild(btn);
+                card.appendChild(footer);
+
+                card.addEventListener('click', () => {
+                    showToast(`📖 Открыть курс: ${item.title}`);
+                });
+                container.appendChild(card);
+            });
+        }
+
         // ----- РЕНДЕР ТЕСТОВ -----
-        function renderTests(containerId) {
+        function renderTests(containerId, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
 
-            tests.forEach((test, testIndex) => {
+            // Инициализация состояний тестов для аккаунта
+            if (!testStates[currentAccountId]) {
+                testStates[currentAccountId] = {};
+            }
+            const accTestState = testStates[currentAccountId];
+
+            testList.forEach((test, testIndex) => {
+                const results = account.testsResults[test.title] || [];
+                const answered = accTestState[test.id] || results.map(() => false);
+                // сохраняем состояние
+                if (!accTestState[test.id]) {
+                    accTestState[test.id] = answered;
+                }
+                const state = accTestState[test.id];
+
+                const total = test.questions.length;
+                const correctCount = results.filter(r => r === true).length;
+
                 const wrapper = document.createElement('div');
                 wrapper.style.marginBottom = '32px';
 
+                const header = document.createElement('div');
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.style.marginBottom = '12px';
+                header.style.flexWrap = 'wrap';
+                header.style.gap = '8px';
+
                 const title = document.createElement('h3');
-                title.style.marginBottom = '16px';
                 title.style.fontWeight = '600';
                 title.innerHTML = `<i class="fas fa-pencil-alt" style="color: #2563eb; margin-right: 10px;"></i>${test.title}`;
-                wrapper.appendChild(title);
+                header.appendChild(title);
+
+                const progressInfo = document.createElement('div');
+                progressInfo.className = 'test-progress-bar';
+                const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+                progressInfo.innerHTML = `
+                    <span>${correctCount}/${total}</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+                    <span>${pct}%</span>
+                `;
+                header.appendChild(progressInfo);
+                wrapper.appendChild(header);
 
                 test.questions.forEach((qItem, qIndex) => {
                     const questionDiv = document.createElement('div');
                     questionDiv.className = 'test-question';
-                    questionDiv.style.cursor = 'default';
 
                     const qHeader = document.createElement('h4');
                     qHeader.textContent = `${qIndex+1}. ${qItem.q}`;
@@ -900,30 +1176,54 @@
                     const optionsDiv = document.createElement('div');
                     optionsDiv.className = 'test-options';
 
+                    const isAnswered = state[qIndex] !== undefined && state[qIndex] === true;
+                    const userCorrect = isAnswered ? results[qIndex] : null;
+
                     qItem.options.forEach((opt, optIndex) => {
                         const label = document.createElement('label');
                         const radio = document.createElement('input');
                         radio.type = 'radio';
-                        radio.name = `test_${testIndex}_q${qIndex}`;
+                        radio.name = `test_${test.id}_q${qIndex}`;
                         radio.value = optIndex;
+                        radio.disabled = isAnswered;
 
                         const span = document.createElement('span');
                         span.textContent = opt;
 
                         label.appendChild(radio);
                         label.appendChild(span);
+
+                        if (isAnswered) {
+                            if (optIndex === qItem.correct) {
+                                label.classList.add('correct-answer');
+                            } else if (optIndex === results[qIndex] && optIndex !== qItem.correct) {
+                                label.classList.add('wrong-answer');
+                            }
+                            if (optIndex === results[qIndex]) {
+                                radio.checked = true;
+                            }
+                        }
+
                         optionsDiv.appendChild(label);
 
-                        radio.addEventListener('change', function() {
-                            if (this.checked) {
-                                const isCorrect = (optIndex === qItem.correct);
-                                showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Попробуй еще раз');
-                                // сбросить через 2с
-                                setTimeout(() => {
-                                    this.checked = false;
-                                }, 1500);
-                            }
-                        });
+                        if (!isAnswered) {
+                            radio.addEventListener('change', function() {
+                                if (this.checked) {
+                                    const isCorrect = (optIndex === qItem.correct);
+                                    const newResults = [...results];
+                                    newResults[qIndex] = isCorrect;
+                                    account.testsResults[test.title] = newResults;
+                                    state[qIndex] = true;
+                                    // обновляем статистику
+                                    updateStats(account);
+                                    showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Правильный ответ подсвечен.');
+                                    // перерисовываем тесты
+                                    renderTests('testsContainer', account);
+                                    // обновляем статистику в stats row
+                                    updateStatsDisplay(account);
+                                }
+                            });
+                        }
                     });
 
                     questionDiv.appendChild(optionsDiv);
@@ -934,128 +1234,184 @@
             });
         }
 
-        // ----- ИНИЦИАЛИЗАЦИЯ -----
-        renderCourses('courseGrid', courses);
-        renderCourses('recommendGrid', recommend, true);
-        renderTests('testsContainer');
-
-        // ----- ВКЛАДКИ -----
-        const navLinks = document.querySelectorAll('.nav-link');
-        const greeting = document.getElementById('greeting');
-        const subGreeting = document.getElementById('subGreeting');
-        const testsContainer = document.getElementById('testsContainer');
-        const courseGrid = document.getElementById('courseGrid');
-        const recommendGrid = document.getElementById('recommendGrid');
-        const allCoursesLink = document.getElementById('allCoursesLink');
-        const allTestsLink = document.getElementById('allTestsLink');
-        const recommendLink = document.getElementById('recommendLink');
-
-        // Функция показа/скрытия блоков
-        function showTab(tab) {
-            // все блоки видимы по умолчанию, но для "Тесты" показываем только тесты
-            const isTests = (tab === 'tests');
-            courseGrid.style.display = isTests ? 'none' : 'grid';
-            recommendGrid.style.display = isTests ? 'none' : 'grid';
-            allCoursesLink.style.display = isTests ? 'none' : 'inline';
-            recommendLink.style.display = isTests ? 'none' : 'inline';
-            testsContainer.style.display = isTests ? 'block' : 'none';
-            allTestsLink.style.display = isTests ? 'inline' : 'none';
-
-            // для остальных вкладок показываем всё
-            if (tab === 'overview' || tab === 'mycourses' || tab === 'progress' || tab === 'schedule' || tab === 'community') {
-                courseGrid.style.display = 'grid';
-                recommendGrid.style.display = 'grid';
-                allCoursesLink.style.display = 'inline';
-                recommendLink.style.display = 'inline';
-                testsContainer.style.display = 'none';
-                allTestsLink.style.display = 'none';
+        // ----- ОБНОВЛЕНИЕ СТАТИСТИКИ -----
+        function updateStats(account) {
+            let testsPassed = 0;
+            for (const key in account.testsResults) {
+                const arr = account.testsResults[key];
+                const correct = arr.filter(r => r === true).length;
+                if (correct === arr.length && arr.length > 0) testsPassed++;
             }
-
-            // обновляем приветствие
-            let msg = '';
-            switch(tab) {
-                case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
-                case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
-                case 'tests': msg = '📝 Тесты: проверь свои знания'; break;
-                case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
-                case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
-                case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
-                default: msg = '✨ Раздел открыт';
-            }
-            const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
-            greeting.textContent = `👋 Раздел: ${tabName}`;
-            subGreeting.textContent = msg;
+            account.stats.tests = testsPassed;
+            // обновляем отображение
+            updateStatsDisplay(account);
         }
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                const tab = this.dataset.tab;
-                showTab(tab);
-                // тост
-                const names = { overview: 'Обзор', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
-                showToast(`📂 Переход в раздел: ${names[tab] || tab}`);
+        function updateStatsDisplay(account) {
+            document.getElementById('statCourses').textContent = account.stats.courses || 0;
+            document.getElementById('statCompleted').textContent = account.stats.completed || 0;
+            document.getElementById('statCertificates').textContent = account.stats.certificates || 0;
+            document.getElementById('statTests').textContent = account.stats.tests || 0;
+        }
+
+        // ----- ПЕРЕКЛЮЧЕНИЕ АККАУНТА -----
+        function switchAccount(accountId) {
+            currentAccountId = accountId;
+            const account = getCurrentAccount();
+            document.getElementById('userNameDisplay').textContent = account.name;
+
+            // обновляем курсы
+            renderCourses('courseGrid', courseList, account);
+            renderRecommend('recommendGrid', recommendList);
+            renderTests('testsContainer', account);
+            updateStatsDisplay(account);
+
+            // обновляем приветствие
+            document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.name}</span>!`;
+            showToast(`👤 Переключено на аккаунт: ${account.name}`);
+        }
+
+        // ----- ЗАПОЛНЕНИЕ СПИСКА АККАУНТОВ -----
+        function populateAccountSelect() {
+            const select = document.getElementById('accountSelect');
+            select.innerHTML = '';
+            accounts.forEach(acc => {
+                const option = document.createElement('option');
+                option.value = acc.id;
+                option.textContent = acc.name;
+                if (acc.id === currentAccountId) option.selected = true;
+                select.appendChild(option);
             });
-        });
+            select.addEventListener('change', function() {
+                switchAccount(parseInt(this.value));
+            });
+        }
 
-        // ----- ТЕМА -----
-        const themeToggle = document.getElementById('themeToggle');
-        let dark = false;
-        themeToggle.addEventListener('click', function() {
-            dark = !dark;
-            document.body.classList.toggle('dark', dark);
-            const icon = this.querySelector('i');
-            if (dark) {
-                icon.className = 'fas fa-sun';
-                showToast('🌙 Тёмная тема включена');
-            } else {
-                icon.className = 'fas fa-moon';
-                showToast('☀️ Светлая тема включена');
-            }
-        });
+        // ----- ИНИЦИАЛИЗАЦИЯ -----
+        function init() {
+            populateAccountSelect();
+            const account = getCurrentAccount();
+            document.getElementById('userNameDisplay').textContent = account.name;
+            renderCourses('courseGrid', courseList, account);
+            renderRecommend('recommendGrid', recommendList);
+            renderTests('testsContainer', account);
+            updateStatsDisplay(account);
 
-        // ----- КЛИКИ ПО ССЫЛКАМ -----
-        document.getElementById('allCoursesLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast('📋 Все курсы: полный каталог из 15+ курсов');
-        });
-        document.getElementById('allTestsLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast('📝 Все тесты: более 20 тестов по разным темам');
-        });
-        document.getElementById('recommendLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast('📚 Все рекомендации: подборка для тебя');
-        });
+            // ВКЛАДКИ
+            const navLinks = document.querySelectorAll('.nav-link');
+            const greeting = document.getElementById('greeting');
+            const subGreeting = document.getElementById('subGreeting');
+            const testsContainer = document.getElementById('testsContainer');
+            const courseGrid = document.getElementById('courseGrid');
+            const recommendGrid = document.getElementById('recommendGrid');
+            const allCoursesLink = document.getElementById('allCoursesLink');
+            const allTestsLink = document.getElementById('allTestsLink');
+            const recommendLink = document.getElementById('recommendLink');
 
-        // ----- ПОИСК -----
-        document.getElementById('searchInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const val = this.value.trim();
-                if (val) {
-                    showToast(`🔍 Поиск: "${val}"`);
-                } else {
-                    showToast('✏️ Введите запрос для поиска');
+            function showTab(tab) {
+                const isTests = (tab === 'tests');
+                courseGrid.style.display = isTests ? 'none' : 'grid';
+                recommendGrid.style.display = isTests ? 'none' : 'grid';
+                allCoursesLink.style.display = isTests ? 'none' : 'inline';
+                recommendLink.style.display = isTests ? 'none' : 'inline';
+                testsContainer.style.display = isTests ? 'block' : 'none';
+                allTestsLink.style.display = isTests ? 'inline' : 'none';
+
+                if (tab === 'overview' || tab === 'mycourses' || tab === 'progress' || tab === 'schedule' || tab === 'community') {
+                    courseGrid.style.display = 'grid';
+                    recommendGrid.style.display = 'grid';
+                    allCoursesLink.style.display = 'inline';
+                    recommendLink.style.display = 'inline';
+                    testsContainer.style.display = 'none';
+                    allTestsLink.style.display = 'none';
                 }
+
+                let msg = '';
+                switch(tab) {
+                    case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
+                    case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
+                    case 'tests': msg = '📝 Тесты: проверь свои знания'; break;
+                    case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
+                    case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
+                    case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
+                    default: msg = '✨ Раздел открыт';
+                }
+                const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
+                const account = getCurrentAccount();
+                greeting.innerHTML = `👋 Раздел: ${tabName}`;
+                subGreeting.textContent = msg;
             }
-        });
 
-        // ----- АВАТАР, БЕЙДЖ, ЛОГО -----
-        document.querySelector('.avatar').addEventListener('click', () => showToast('👤 Профиль пользователя'));
-        document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
-        document.getElementById('logoArea').addEventListener('click', () => {
-            showToast('🏠 EduCore — главная страница');
-            // сброс на обзор
-            navLinks.forEach(l => l.classList.remove('active'));
-            document.querySelector('.nav-link[data-tab="overview"]').classList.add('active');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    showTab(this.dataset.tab);
+                    const names = { overview: 'Обзор', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
+                    showToast(`📂 Переход в раздел: ${names[this.dataset.tab] || this.dataset.tab}`);
+                });
+            });
+
+            // ТЕМА
+            const themeToggle = document.getElementById('themeToggle');
+            let dark = false;
+            themeToggle.addEventListener('click', function() {
+                dark = !dark;
+                document.body.classList.toggle('dark', dark);
+                const icon = this.querySelector('i');
+                if (dark) {
+                    icon.className = 'fas fa-sun';
+                    showToast('🌙 Тёмная тема включена');
+                } else {
+                    icon.className = 'fas fa-moon';
+                    showToast('☀️ Светлая тема включена');
+                }
+            });
+
+            // ССЫЛКИ
+            document.getElementById('allCoursesLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('📋 Все курсы: полный каталог из 15+ курсов');
+            });
+            document.getElementById('allTestsLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('📝 Все тесты: более 20 тестов по разным темам');
+            });
+            document.getElementById('recommendLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('📚 Все рекомендации: подборка для тебя');
+            });
+
+            // ПОИСК
+            document.getElementById('searchInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const val = this.value.trim();
+                    if (val) {
+                        showToast(`🔍 Поиск: "${val}"`);
+                    } else {
+                        showToast('✏️ Введите запрос для поиска');
+                    }
+                }
+            });
+
+            // АВАТАР, БЕЙДЖ, ЛОГО
+            document.querySelector('.avatar').addEventListener('click', () => {
+                const acc = getCurrentAccount();
+                showToast(`👤 Профиль: ${acc.name}`);
+            });
+            document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
+            document.getElementById('logoArea').addEventListener('click', () => {
+                showToast('🏠 EduCore — главная страница');
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector('.nav-link[data-tab="overview"]').classList.add('active');
+                showTab('overview');
+            });
+
             showTab('overview');
-        });
+        }
 
-        // стартовый вид
-        showTab('overview');
-
-        console.log('✅ Платформа загружена: курсы, тесты, тёмная тема, вкладки работают');
+        init();
+        console.log('✅ Платформа с аккаунтами и уровнями тестов загружена');
     })();
 </script>
 
