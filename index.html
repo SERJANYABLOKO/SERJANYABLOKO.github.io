@@ -6,7 +6,6 @@
     <title>EduCore — обучение с неоном</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== БАЗА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +36,6 @@
             border: 1px solid rgba(100, 0, 255, 0.2);
         }
 
-        /* ===== ХЕДЕР ===== */
         .header {
             background: rgba(13, 13, 26, 0.95);
             padding: 20px 30px;
@@ -189,7 +187,6 @@
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
         }
 
-        /* ===== НАВИГАЦИЯ ===== */
         .nav-bar {
             background: rgba(13, 13, 26, 0.9);
             padding: 0 30px;
@@ -232,7 +229,6 @@
             color: #c4b5fd;
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
         .main-content {
             padding: 30px;
             background: #0a0a15;
@@ -286,7 +282,6 @@
             gap: 24px;
         }
 
-        /* ===== КАРТОЧКИ КУРСОВ ===== */
         .course-card {
             background: rgba(20, 20, 45, 0.8);
             border-radius: 20px;
@@ -477,7 +472,6 @@
             color: #8b5cf6;
         }
 
-        /* ===== TOAST ===== */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -625,7 +619,146 @@
             box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
 
-        /* ===== АККАУНТЫ ===== */
+        /* ===== РАЗДЕЛ ПРОГРЕСС ===== */
+        .progress-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .progress-card {
+            background: rgba(20, 20, 45, 0.6);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(5px);
+        }
+
+        .progress-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .progress-card h3 i {
+            color: #8b5cf6;
+        }
+
+        .progress-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.06);
+        }
+        .progress-stat:last-child {
+            border-bottom: none;
+        }
+        .progress-stat .label {
+            color: #8b8bb8;
+            font-size: 14px;
+        }
+        .progress-stat .value {
+            font-weight: 700;
+            font-size: 18px;
+            color: #e0e0ff;
+        }
+        .progress-stat .value.green { color: #6ee7b7; }
+        .progress-stat .value.purple { color: #a78bfa; }
+        .progress-stat .value.cyan { color: #67e8f9; }
+        .progress-stat .value.orange { color: #fb923c; }
+        .progress-stat .value.pink { color: #f472b6; }
+
+        .course-progress-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.05);
+        }
+        .course-progress-item:last-child {
+            border-bottom: none;
+        }
+        .course-progress-item .course-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #8b5cf6;
+            flex-shrink: 0;
+        }
+        .course-progress-item .course-info {
+            flex: 1;
+        }
+        .course-progress-item .course-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0ff;
+        }
+        .course-progress-item .course-bar {
+            margin-top: 4px;
+            height: 4px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .course-progress-item .course-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .course-progress-item .course-pct {
+            font-size: 13px;
+            font-weight: 600;
+            color: #a78bfa;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .progress-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .test-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.05);
+        }
+        .test-result-item:last-child {
+            border-bottom: none;
+        }
+        .test-result-item .test-name {
+            font-size: 13px;
+            color: #c4c4f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-result-item .test-name i {
+            color: #8b5cf6;
+            font-size: 14px;
+        }
+        .test-result-item .test-score {
+            font-size: 13px;
+            font-weight: 600;
+            color: #a78bfa;
+        }
+        .test-result-item .test-score.green { color: #6ee7b7; }
+        .test-result-item .test-score.orange { color: #fb923c; }
+        .test-result-item .test-score.red { color: #f87171; }
+
         .account-selector {
             display: flex;
             gap: 8px;
@@ -671,7 +804,6 @@
             box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
         }
 
-        /* ===== МОДАЛКА ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -802,6 +934,8 @@
             .account-selector select { max-width: 100px; }
             .test-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; }
             .test-tab { flex-shrink: 0; font-size: 12px; padding: 8px 16px; }
+            .progress-container { grid-template-columns: 1fr; }
+            .progress-grid-2 { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
@@ -877,31 +1011,49 @@
             <p id="subGreeting">Создай аккаунт или войди в существующий 🔥</p>
         </div>
 
+        <!-- Блок статистики -->
         <div class="stats-row" id="statsRow">
             <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">0</div><div class="label">Курсов в процессе</div></div></div>
             <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">0</div><div class="label">Завершено</div></div></div>
-            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">0 ч</div><div class="label">Обучения на неделе</div></div></div>
+            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number" id="statHours">0</div><div class="label">Часов обучения</div></div></div>
             <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">0</div><div class="label">Сертификатов</div></div></div>
             <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">0</div><div class="label">Пройдено тестов</div></div></div>
         </div>
 
-        <div class="section-title">
-            <h2>🔥 Активные курсы</h2>
-            <a id="allCoursesLink">Все курсы <i class="fas fa-arrow-right"></i></a>
+        <!-- Раздел "Прогресс" (показывается только на вкладке Прогресс) -->
+        <div id="progressSection" style="display: none;">
+            <div class="section-title">
+                <h2>📊 Моя статистика</h2>
+            </div>
+            <div class="progress-container" id="progressContainer"></div>
         </div>
-        <div class="course-grid" id="courseGrid"></div>
 
-        <div class="section-title" style="margin-top: 40px;">
-            <h2>📝 Тесты по курсам</h2>
-            <a id="allTestsLink">Все тесты <i class="fas fa-arrow-right"></i></a>
+        <!-- Активные курсы (скрываются на вкладке Прогресс) -->
+        <div id="coursesSection">
+            <div class="section-title">
+                <h2>🔥 Активные курсы</h2>
+                <a id="allCoursesLink">Все курсы <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="course-grid" id="courseGrid"></div>
         </div>
-        <div id="testsContainer"></div>
 
-        <div class="section-title" style="margin-top: 40px;">
-            <h2>📚 Рекомендуем к изучению</h2>
-            <a id="recommendLink">Все рекомендации <i class="fas fa-arrow-right"></i></a>
+        <!-- Тесты (скрываются на вкладке Прогресс) -->
+        <div id="testsSection" style="margin-top: 40px;">
+            <div class="section-title">
+                <h2>📝 Тесты по курсам</h2>
+                <a id="allTestsLink">Все тесты <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="testsContainer"></div>
         </div>
-        <div class="course-grid" id="recommendGrid"></div>
+
+        <!-- Рекомендации (скрываются на вкладке Прогресс) -->
+        <div id="recommendSection" style="margin-top: 40px;">
+            <div class="section-title">
+                <h2>📚 Рекомендуем к изучению</h2>
+                <a id="recommendLink">Все рекомендации <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="course-grid" id="recommendGrid"></div>
+        </div>
 
     </div>
 
@@ -915,7 +1067,7 @@
         // ----- COOKIES -----
         function setCookie(name, value, days = 365) {
             const date = new Date();
-            date.setTime(date.getTime() (days * 24 * 60 * 60 * 1000));
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             document.cookie = name + "=" + JSON.stringify(value) + "; expires=" + date.toUTCString() + "; path=/";
         }
 
@@ -970,7 +1122,7 @@
                             'security': [false, true, true, false, true],
                             'mobile': [true, true, false, true, false]
                         },
-                        stats: { courses: 18, completed: 42, certificates: 9, tests: 15 }
+                        stats: { courses: 18, completed: 42, certificates: 9, tests: 15, hours: 24 }
                     },
                     {
                         id: 2,
@@ -1000,7 +1152,7 @@
                             'security': [false, true, true, true, false],
                             'mobile': [true, false, true, true, true]
                         },
-                        stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
+                        stats: { courses: 22, completed: 38, certificates: 12, tests: 20, hours: 32 }
                     },
                     {
                         id: 3,
@@ -1030,7 +1182,7 @@
                             'security': [true, true, false, true, false],
                             'mobile': [false, true, true, false, true]
                         },
-                        stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
+                        stats: { courses: 15, completed: 29, certificates: 5, tests: 10, hours: 18 }
                     }
                 ];
                 nextId = 4;
@@ -1075,7 +1227,7 @@
             { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, rgba(52,211,153,0.15), rgba(16,185,129,0.08))', color: '#6ee7b7' }
         ];
 
-        // ----- ТЕСТЫ (все темы с вопросами) -----
+        // ----- ТЕСТЫ -----
         const testList = [
             {
                 id: 'python',
@@ -1227,7 +1379,7 @@
                 lastName: lastName,
                 coursesProgress: defaultProgress,
                 testsResults: defaultResults,
-                stats: { courses: Math.floor(Math.random() * 15) + 5, completed: Math.floor(Math.random() * 20) + 10, certificates: Math.floor(Math.random() * 6) + 2, tests: 0 }
+                stats: { courses: Math.floor(Math.random() * 15) + 5, completed: Math.floor(Math.random() * 20) + 10, certificates: Math.floor(Math.random() * 6) + 2, tests: 0, hours: Math.floor(Math.random() * 30) + 5 }
             };
         }
 
@@ -1256,12 +1408,129 @@
             document.getElementById('courseGrid').innerHTML = '';
             document.getElementById('recommendGrid').innerHTML = '';
             document.getElementById('testsContainer').innerHTML = '';
+            document.getElementById('progressContainer').innerHTML = '';
             document.getElementById('statCourses').textContent = '0';
             document.getElementById('statCompleted').textContent = '0';
             document.getElementById('statCertificates').textContent = '0';
             document.getElementById('statTests').textContent = '0';
+            document.getElementById('statHours').textContent = '0';
             populateAccountSelect();
             showToast('👋 Выход выполнен');
+        }
+
+        // ----- РЕНДЕР ПРОГРЕССА -----
+        function renderProgress(account) {
+            const container = document.getElementById('progressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (!account) {
+                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">✨ Войди в аккаунт, чтобы увидеть прогресс</p>';
+                return;
+            }
+
+            // Подсчёт статистики по тестам
+            let totalTests = 0;
+            let passedTests = 0;
+            let totalQuestions = 0;
+            let correctQuestions = 0;
+
+            testList.forEach(test => {
+                const results = account.testsResults[test.id] || [];
+                if (results.length > 0) {
+                    totalTests++;
+                    const correct = results.filter(r => r === true).length;
+                    if (correct === results.length) passedTests++;
+                    totalQuestions += results.length;
+                    correctQuestions += correct;
+                }
+            });
+
+            const overallPct = totalQuestions > 0 ? Math.round((correctQuestions / totalQuestions) * 100) : 0;
+
+            // Курсы в процессе
+            const activeCourses = courseList.filter(c => account.coursesProgress[c.title] > 0 && account.coursesProgress[c.title] < 100);
+            const completedCourses = courseList.filter(c => account.coursesProgress[c.title] === 100);
+
+            container.innerHTML = `
+                <div class="progress-card">
+                    <h3><i class="fas fa-user-graduate"></i> Общая статистика</h3>
+                    <div class="progress-stat">
+                        <span class="label">Всего курсов</span>
+                        <span class="value">${courseList.length}</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="label">Активных курсов</span>
+                        <span class="value cyan">${activeCourses.length}</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="label">Завершено курсов</span>
+                        <span class="value green">${completedCourses.length}</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="label">Пройдено тестов</span>
+                        <span class="value purple">${passedTests}/${totalTests}</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="label">Правильных ответов</span>
+                        <span class="value ${overallPct >= 70 ? 'green' : 'orange'}">${correctQuestions}/${totalQuestions} (${overallPct}%)</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="label">Сертификатов</span>
+                        <span class="value pink">${account.stats.certificates || 0}</span>
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <h3><i class="fas fa-book"></i> Прогресс по курсам</h3>
+                    ${courseList.map(c => {
+                        const pct = account.coursesProgress[c.title] || 0;
+                        const iconMap = {
+                            'Python с нуля': 'fa-python',
+                            'HTML & CSS мастер': 'fa-code',
+                            'Создание TG-ботов': 'fa-telegram',
+                            'Веб-разработка 2026': 'fa-globe',
+                            'Базы данных SQL': 'fa-database',
+                            'Фронтенд с React': 'fa-react',
+                            'DevOps основы': 'fa-server',
+                            'Английский для IT': 'fa-language',
+                            'Кибербезопасность': 'fa-shield-alt',
+                            'Мобильная разработка': 'fa-mobile-alt'
+                        };
+                        return `
+                            <div class="course-progress-item">
+                                <div class="course-icon"><i class="fab ${iconMap[c.title] || 'fa-book'}"></i></div>
+                                <div class="course-info">
+                                    <div class="course-name">${c.title}</div>
+                                    <div class="course-bar"><div class="fill" style="width: ${pct}%;"></div></div>
+                                </div>
+                                <div class="course-pct">${pct}%</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="progress-card" style="grid-column: 1 / -1;">
+                    <h3><i class="fas fa-tasks"></i> Результаты тестов</h3>
+                    <div class="progress-grid-2">
+                        ${testList.map(test => {
+                            const results = account.testsResults[test.id] || [];
+                            const correct = results.filter(r => r === true).length;
+                            const total = results.length;
+                            const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+                            let scoreColor = 'green';
+                            if (pct < 50) scoreColor = 'red';
+                            else if (pct < 80) scoreColor = 'orange';
+                            return `
+                                <div class="test-result-item">
+                                    <span class="test-name"><i class="fas ${test.icon}"></i> ${test.title}</span>
+                                    <span class="test-score ${scoreColor}">${correct}/${total} (${pct}%)</span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
         }
 
         // ----- РЕНДЕР КУРСОВ -----
@@ -1393,7 +1662,6 @@
             }
             const accTestState = testStates[currentAccountId];
 
-            // ---- ВКЛАДКИ ----
             const tabsWrapper = document.createElement('div');
             tabsWrapper.className = 'test-tabs';
 
@@ -1401,7 +1669,6 @@
                 const results = account.testsResults[test.id] || [];
                 const total = test.questions.length;
                 const correctCount = results.filter(r => r === true).length;
-                const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
                 const tab = document.createElement('button');
                 tab.className = 'test-tab';
@@ -1425,7 +1692,6 @@
 
             container.appendChild(tabsWrapper);
 
-            // ---- КОНТЕНТ АКТИВНОЙ ВКЛАДКИ ----
             const contentWrapper = document.createElement('div');
             contentWrapper.className = 'test-content';
             contentWrapper.id = 'testContentWrapper';
@@ -1456,7 +1722,6 @@
             const total = test.questions.length;
             const correctCount = results.filter(r => r === true).length;
 
-            // заголовок с прогрессом
             const header = document.createElement('div');
             header.style.display = 'flex';
             header.style.justifyContent = 'space-between';
@@ -1482,7 +1747,6 @@
             header.appendChild(progressInfo);
             wrapper.appendChild(header);
 
-            // вопросы
             test.questions.forEach((qItem, qIndex) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'test-question';
@@ -1536,6 +1800,7 @@
                                 showToast(isCorrect ? '✅ Правильно! Красава!' : '❌ Неправильно. Правильный ответ подсвечен.');
                                 renderTests('testsContainer', account);
                                 updateStatsDisplay(account);
+                                renderProgress(account);
                             }
                         });
                     }
@@ -1565,12 +1830,14 @@
                 document.getElementById('statCompleted').textContent = '0';
                 document.getElementById('statCertificates').textContent = '0';
                 document.getElementById('statTests').textContent = '0';
+                document.getElementById('statHours').textContent = '0';
                 return;
             }
             document.getElementById('statCourses').textContent = account.stats.courses || 0;
             document.getElementById('statCompleted').textContent = account.stats.completed || 0;
             document.getElementById('statCertificates').textContent = account.stats.certificates || 0;
             document.getElementById('statTests').textContent = account.stats.tests || 0;
+            document.getElementById('statHours').textContent = account.stats.hours || 0;
         }
 
         // ----- ПЕРЕКЛЮЧЕНИЕ АККАУНТА -----
@@ -1585,6 +1852,7 @@
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
+            renderProgress(account);
             updateStatsDisplay(account);
             populateAccountSelect();
             document.getElementById('accountSelect').value = account.id;
@@ -1653,6 +1921,7 @@
                 renderCourses('courseGrid', courseList, account);
                 renderRecommend('recommendGrid', recommendList);
                 renderTests('testsContainer', account);
+                renderProgress(account);
                 updateStatsDisplay(account);
             } else {
                 logout();
@@ -1668,32 +1937,36 @@
             const testsContainer = document.getElementById('testsContainer');
             const courseGrid = document.getElementById('courseGrid');
             const recommendGrid = document.getElementById('recommendGrid');
+            const progressSection = document.getElementById('progressSection');
+            const coursesSection = document.getElementById('coursesSection');
+            const testsSection = document.getElementById('testsSection');
+            const recommendSection = document.getElementById('recommendSection');
             const allCoursesLink = document.getElementById('allCoursesLink');
             const allTestsLink = document.getElementById('allTestsLink');
             const recommendLink = document.getElementById('recommendLink');
 
             function showTab(tab) {
+                const isProgress = (tab === 'progress');
                 const isTests = (tab === 'tests');
-                courseGrid.style.display = isTests ? 'none' : 'grid';
-                recommendGrid.style.display = isTests ? 'none' : 'grid';
-                allCoursesLink.style.display = isTests ? 'none' : 'inline';
-                recommendLink.style.display = isTests ? 'none' : 'inline';
-                testsContainer.style.display = isTests ? 'block' : 'none';
-                allTestsLink.style.display = isTests ? 'inline' : 'none';
-                if (tab === 'overview' || tab === 'mycourses' || tab === 'progress' || tab === 'schedule' || tab === 'community') {
-                    courseGrid.style.display = 'grid';
-                    recommendGrid.style.display = 'grid';
-                    allCoursesLink.style.display = 'inline';
-                    recommendLink.style.display = 'inline';
-                    testsContainer.style.display = 'none';
-                    allTestsLink.style.display = 'none';
+                
+                // Показываем/скрываем секции
+                progressSection.style.display = isProgress ? 'block' : 'none';
+                coursesSection.style.display = isProgress ? 'none' : 'block';
+                testsSection.style.display = (isProgress || isTests) ? 'block' : 'block';
+                recommendSection.style.display = isProgress ? 'none' : 'block';
+                
+                // Для тестов всегда показываем, но на прогресс-вкладке тоже показываем тесты (как было)
+                if (isProgress) {
+                    testsSection.style.display = 'block';
                 }
+                
+                // Обновляем приветствие
                 let msg = '';
                 switch(tab) {
                     case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
                     case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
                     case 'tests': msg = '📝 Тесты по курсам: выбирай тему и проверяй знания'; break;
-                    case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
+                    case 'progress': msg = '📈 Прогресс: детальная статистика твоего обучения'; break;
                     case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
                     case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
                     default: msg = '✨ Раздел открыт';
@@ -1701,6 +1974,12 @@
                 const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
                 greeting.innerHTML = `👋 Раздел: ${tabName}`;
                 subGreeting.textContent = msg;
+                
+                // Если перешли на прогресс — обновляем данные
+                if (isProgress) {
+                    const account = getCurrentAccount();
+                    if (account) renderProgress(account);
+                }
             }
 
             navLinks.forEach(link => {
@@ -1754,7 +2033,7 @@
             });
 
             showTab('overview');
-            console.log('🚀 EduCore Neon с вкладками тестов запущен!');
+            console.log('🚀 EduCore Neon с разделом прогресса запущен!');
         }
 
         if (document.readyState === 'loading') {
