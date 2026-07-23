@@ -235,7 +235,7 @@
             width: 100%;
             background: white;
             border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -449,7 +449,7 @@
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             transition: 0.25s ease;
             border: 1px solid #edf2f7;
             display: flex;
@@ -458,7 +458,7 @@
         }
         .course-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -8px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 25px -8px rgba(0, 0, 0, 0.08);
             border-color: #cbd5e1;
         }
 
@@ -627,7 +627,7 @@
             padding: 12px 28px;
             border-radius: 60px;
             font-weight: 500;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
@@ -800,7 +800,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -815,7 +815,7 @@
             padding: 40px 48px;
             max-width: 460px;
             width: 90%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
             animation: modalSlide 0.3s ease;
         }
         @keyframes modalSlide {
@@ -899,6 +899,31 @@
             display: block;
         }
 
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-size: 14px;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logout-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        body.dark .logout-btn {
+            border-color: #475569;
+            color: #94a3b8;
+        }
+        body.dark .logout-btn:hover {
+            background: #334155;
+        }
+
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: stretch; }
             .search-bar { max-width: 100%; }
@@ -964,6 +989,7 @@
                 <i class="fas fa-moon"></i>
             </button>
             <div class="avatar" id="avatarBtn">А</div>
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
         </div>
     </header>
 
@@ -979,16 +1005,16 @@
     <div class="main-content" id="mainContent">
 
         <div class="welcome-section">
-            <h1 id="greeting">👋 Добро пожаловать, <span id="userNameDisplay">Алексей</span>!</h1>
-            <p id="subGreeting">Продолжай учиться — сегодня отличный день для новых знаний.</p>
+            <h1 id="greeting">👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!</h1>
+            <p id="subGreeting">Создайте аккаунт или войдите в существующий</p>
         </div>
 
         <div class="stats-row" id="statsRow">
-            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">18</div><div class="label">Курсов в процессе</div></div></div>
-            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">42</div><div class="label">Завершено</div></div></div>
-            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">24 ч</div><div class="label">Обучения на неделе</div></div></div>
-            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">9</div><div class="label">Сертификатов</div></div></div>
-            <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">15</div><div class="label">Пройдено тестов</div></div></div>
+            <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">0</div><div class="label">Курсов в процессе</div></div></div>
+            <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">0</div><div class="label">Завершено</div></div></div>
+            <div class="stat-item"><i class="fas fa-clock"></i><div class="stat-info"><div class="number">0 ч</div><div class="label">Обучения на неделе</div></div></div>
+            <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">0</div><div class="label">Сертификатов</div></div></div>
+            <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">0</div><div class="label">Пройдено тестов</div></div></div>
         </div>
 
         <div class="section-title">
@@ -1018,83 +1044,115 @@
 
 <script>
     (function() {
-        // ----- ДАННЫЕ АККАУНТОВ -----
-        let accounts = [
-            {
-                id: 1,
-                firstName: 'Алексей',
-                lastName: 'Иванов',
-                coursesProgress: {
-                    'Веб-разработка 2026': 74,
-                    'Анализ данных с Python': 32,
-                    'Машинное обучение': 9,
-                    'UX/UI дизайн': 100,
-                    'Базы данных SQL': 45,
-                    'Фронтенд с React': 60,
-                    'DevOps основы': 15,
-                    'Английский для IT': 80,
-                    'Кибербезопасность': 5,
-                    'Мобильная разработка': 100
-                },
-                testsResults: {
-                    'Основы JavaScript': [true, false, true],
-                    'Python для начинающих': [true, true, false],
-                    'SQL запросы': [false, true, true],
-                    'React основы': [true, false, true]
-                },
-                stats: { courses: 18, completed: 42, certificates: 9, tests: 15 }
-            },
-            {
-                id: 2,
-                firstName: 'Мария',
-                lastName: 'Петрова',
-                coursesProgress: {
-                    'Веб-разработка 2026': 45,
-                    'Анализ данных с Python': 78,
-                    'Машинное обучение': 50,
-                    'UX/UI дизайн': 30,
-                    'Базы данных SQL': 90,
-                    'Фронтенд с React': 20,
-                    'DevOps основы': 60,
-                    'Английский для IT': 95,
-                    'Кибербезопасность': 40,
-                    'Мобильная разработка': 70
-                },
-                testsResults: {
-                    'Основы JavaScript': [true, true, true],
-                    'Python для начинающих': [true, true, true],
-                    'SQL запросы': [true, true, false],
-                    'React основы': [false, false, true]
-                },
-                stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
-            },
-            {
-                id: 3,
-                firstName: 'Иван',
-                lastName: 'Смирнов',
-                coursesProgress: {
-                    'Веб-разработка 2026': 90,
-                    'Анализ данных с Python': 15,
-                    'Машинное обучение': 70,
-                    'UX/UI дизайн': 10,
-                    'Базы данных SQL': 55,
-                    'Фронтенд с React': 85,
-                    'DevOps основы': 30,
-                    'Английский для IT': 20,
-                    'Кибербезопасность': 75,
-                    'Мобильная разработка': 40
-                },
-                testsResults: {
-                    'Основы JavaScript': [true, false, false],
-                    'Python для начинающих': [false, true, false],
-                    'SQL запросы': [true, true, true],
-                    'React основы': [true, true, false]
-                },
-                stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
-            }
-        ];
+        // ----- РАБОТА С COOKIES -----
+        function setCookie(name, value, days = 365) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + "=" + JSON.stringify(value) + "; expires=" + date.toUTCString() + "; path=/";
+        }
 
-        let nextId = 4;
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ');
+            for (let cookie of cookies) {
+                const [key, value] = cookie.split('=');
+                if (key === name) {
+                    try {
+                        return JSON.parse(decodeURIComponent(value));
+                    } catch {
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // ----- ДАННЫЕ АККАУНТОВ (хранятся в cookie) -----
+        let accounts = [];
+        let currentAccountId = null;
+        let nextId = 1;
+
+        // ----- ЗАГРУЗКА ДАННЫХ ИЗ COOKIE -----
+        function loadAccountsFromCookie() {
+            const saved = getCookie('edu_accounts');
+            if (saved && Array.isArray(saved)) {
+                accounts = saved;
+                // Находим максимальный id
+                accounts.forEach(acc => {
+                    if (acc.id >= nextId) nextId = acc.id + 1;
+                });
+            } else {
+                // Создаём демо-аккаунты только если нет сохранённых
+                accounts = [
+                    {
+                        id: 1,
+                        firstName: 'Алексей',
+                        lastName: 'Иванов',
+                        coursesProgress: {
+                            'Веб-разработка 2026': 74,
+                            'Анализ данных с Python': 32,
+                            'Машинное обучение': 9,
+                            'UX/UI дизайн': 100,
+                            'Базы данных SQL': 45,
+                            'Фронтенд с React': 60,
+                            'DevOps основы': 15,
+                            'Английский для IT': 80,
+                            'Кибербезопасность': 5,
+                            'Мобильная разработка': 100
+                        },
+                        testsResults: {
+                            'Основы JavaScript': [true, false, true],
+                            'Python для начинающих': [true, true, false],
+                            'SQL запросы': [false, true, true],
+                            'React основы': [true, false, true]
+                        },
+                        stats: { courses: 18, completed: 42, certificates: 9, tests: 15 }
+                    },
+                    {
+                        id: 2,
+                        firstName: 'Мария',
+                        lastName: 'Петрова',
+                        coursesProgress: {
+                            'Веб-разработка 2026': 45,
+                            'Анализ данных с Python': 78,
+                            'Машинное обучение': 50,
+                            'UX/UI дизайн': 30,
+                            'Базы данных SQL': 90,
+                            'Фронтенд с React': 20,
+                            'DevOps основы': 60,
+                            'Английский для IT': 95,
+                            'Кибербезопасность': 40,
+                            'Мобильная разработка': 70
+                        },
+                        testsResults: {
+                            'Основы JavaScript': [true, true, true],
+                            'Python для начинающих': [true, true, true],
+                            'SQL запросы': [true, true, false],
+                            'React основы': [false, false, true]
+                        },
+                        stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
+                    }
+                ];
+                nextId = 3;
+                saveAccountsToCookie();
+            }
+            
+            // Загружаем текущий аккаунт
+            const savedCurrent = getCookie('edu_current_account');
+            if (savedCurrent && accounts.some(a => a.id === savedCurrent)) {
+                currentAccountId = savedCurrent;
+            } else if (accounts.length > 0) {
+                currentAccountId = accounts[0].id;
+                setCookie('edu_current_account', currentAccountId);
+            }
+        }
+
+        function saveAccountsToCookie() {
+            setCookie('edu_accounts', accounts);
+        }
+
+        function saveCurrentAccount() {
+            setCookie('edu_current_account', currentAccountId);
+        }
 
         // ----- ДАННЫЕ КУРСОВ (общие) -----
         const courseList = [
@@ -1157,8 +1215,7 @@
             }
         ];
 
-        // ----- СОСТОЯНИЕ -----
-        let currentAccountId = 1;
+        // ----- СОСТОЯНИЕ ТЕСТОВ -----
         let testStates = {};
 
         // ----- TOAST -----
@@ -1215,6 +1272,7 @@
 
             const newAccount = createDefaultAccount(firstName.trim(), lastName.trim());
             accounts.push(newAccount);
+            saveAccountsToCookie();
 
             populateAccountSelect();
             document.getElementById('accountSelect').value = newAccount.id;
@@ -1223,11 +1281,39 @@
             return true;
         }
 
+        // ----- ВЫХОД -----
+        function logout() {
+            currentAccountId = null;
+            setCookie('edu_current_account', null, -1);
+            document.getElementById('userNameDisplay').textContent = 'Гость';
+            document.getElementById('greeting').innerHTML = '👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!';
+            document.getElementById('subGreeting').textContent = 'Создайте аккаунт или войдите в существующий';
+            
+            // Очищаем контент
+            document.getElementById('courseGrid').innerHTML = '';
+            document.getElementById('recommendGrid').innerHTML = '';
+            document.getElementById('testsContainer').innerHTML = '';
+            
+            // Обнуляем статистику
+            document.getElementById('statCourses').textContent = '0';
+            document.getElementById('statCompleted').textContent = '0';
+            document.getElementById('statCertificates').textContent = '0';
+            document.getElementById('statTests').textContent = '0';
+            
+            // Обновляем селект
+            populateAccountSelect();
+            showToast('👋 Вы вышли из аккаунта');
+        }
+
         // ----- РЕНДЕР КУРСОВ -----
         function renderCourses(containerId, data, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
+            if (!account) {
+                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы увидеть курсы</p>';
+                return;
+            }
             data.forEach((item) => {
                 const progress = account.coursesProgress[item.title] || 0;
                 const status = progress === 100 ? 'завершён' : (progress > 0 ? 'в процессе' : 'начат');
@@ -1296,6 +1382,10 @@
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
+            if (!getCurrentAccount()) {
+                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы увидеть рекомендации</p>';
+                return;
+            }
             data.forEach((item) => {
                 const card = document.createElement('div');
                 card.className = 'course-card';
@@ -1349,6 +1439,10 @@
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
+            if (!account) {
+                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы пройти тесты</p>';
+                return;
+            }
 
             if (!testStates[currentAccountId]) {
                 testStates[currentAccountId] = {};
@@ -1405,7 +1499,6 @@
                     optionsDiv.className = 'test-options';
 
                     const isAnswered = state[qIndex] !== undefined && state[qIndex] === true;
-                    const userCorrect = isAnswered ? results[qIndex] : null;
 
                     qItem.options.forEach((opt, optIndex) => {
                         const label = document.createElement('label');
@@ -1443,6 +1536,7 @@
                                     account.testsResults[test.title] = newResults;
                                     state[qIndex] = true;
                                     updateStats(account);
+                                    saveAccountsToCookie();
                                     showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Правильный ответ подсвечен.');
                                     renderTests('testsContainer', account);
                                     updateStatsDisplay(account);
@@ -1469,9 +1563,17 @@
             }
             account.stats.tests = testsPassed;
             updateStatsDisplay(account);
+            saveAccountsToCookie();
         }
 
         function updateStatsDisplay(account) {
+            if (!account) {
+                document.getElementById('statCourses').textContent = '0';
+                document.getElementById('statCompleted').textContent = '0';
+                document.getElementById('statCertificates').textContent = '0';
+                document.getElementById('statTests').textContent = '0';
+                return;
+            }
             document.getElementById('statCourses').textContent = account.stats.courses || 0;
             document.getElementById('statCompleted').textContent = account.stats.completed || 0;
             document.getElementById('statCertificates').textContent = account.stats.certificates || 0;
@@ -1482,15 +1584,25 @@
         function switchAccount(accountId) {
             currentAccountId = accountId;
             const account = getCurrentAccount();
-            if (!account) return;
+            if (!account) {
+                logout();
+                return;
+            }
+            
+            saveCurrentAccount();
             document.getElementById('userNameDisplay').textContent = account.firstName;
+            document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
+            document.getElementById('subGreeting').textContent = 'Продолжай учиться — сегодня отличный день для новых знаний.';
 
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
             updateStatsDisplay(account);
-
-            document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
+            
+            // Обновляем селект
+            populateAccountSelect();
+            document.getElementById('accountSelect').value = account.id;
+            
             showToast(`👤 Переключено на аккаунт: ${account.firstName} ${account.lastName}`);
         }
 
@@ -1498,6 +1610,15 @@
         function populateAccountSelect() {
             const select = document.getElementById('accountSelect');
             select.innerHTML = '';
+            
+            if (accounts.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'Нет аккаунтов';
+                select.appendChild(option);
+                return;
+            }
+            
             accounts.forEach(acc => {
                 const option = document.createElement('option');
                 option.value = acc.id;
@@ -1560,14 +1681,24 @@
 
         // ----- ИНИЦИАЛИЗАЦИЯ -----
         function init() {
-            populateAccountSelect();
-            const account = getCurrentAccount();
-            if (account) {
+            loadAccountsFromCookie();
+            
+            if (currentAccountId && getCurrentAccount()) {
+                const account = getCurrentAccount();
                 document.getElementById('userNameDisplay').textContent = account.firstName;
+                document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
+                document.getElementById('subGreeting').textContent = 'Продолжай учиться — сегодня отличный день для новых знаний.';
                 renderCourses('courseGrid', courseList, account);
                 renderRecommend('recommendGrid', recommendList);
                 renderTests('testsContainer', account);
                 updateStatsDisplay(account);
+            } else {
+                logout();
+            }
+            
+            populateAccountSelect();
+            if (currentAccountId) {
+                document.getElementById('accountSelect').value = currentAccountId;
             }
 
             // ВКЛАДКИ
@@ -1670,7 +1801,11 @@
             // АВАТАР, БЕЙДЖ, ЛОГО
             document.querySelector('.avatar').addEventListener('click', () => {
                 const acc = getCurrentAccount();
-                showToast(`👤 Профиль: ${acc.firstName} ${acc.lastName}`);
+                if (acc) {
+                    showToast(`👤 Профиль: ${acc.firstName} ${acc.lastName}`);
+                } else {
+                    showToast('👤 Войдите в аккаунт');
+                }
             });
             document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
             document.getElementById('logoArea').addEventListener('click', () => {
@@ -1680,14 +1815,19 @@
                 showTab('overview');
             });
 
+            // ВЫХОД
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+
+            // СМЕНА АККАУНТА
             document.getElementById('accountSelect').addEventListener('change', function() {
-                switchAccount(parseInt(this.value));
+                if (this.value) {
+                    switchAccount(parseInt(this.value));
+                }
             });
 
             showTab('overview');
             
-            // Убедимся, что всё отображается корректно
-            console.log('✅ Платформа загружена успешно');
+            console.log('✅ Платформа с персональными аккаунтами в cookies загружена');
         }
 
         // Запускаем, когда DOM полностью загружен
