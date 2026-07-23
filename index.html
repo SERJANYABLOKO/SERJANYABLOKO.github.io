@@ -23,7 +23,6 @@
             justify-content: center;
         }
 
-        /* ===== НЕОНОВЫЙ ДИЗАЙН ===== */
         .platform-wrapper {
             max-width: 1400px;
             width: 100%;
@@ -619,7 +618,6 @@
             box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
 
-        /* Модальное окно */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -899,10 +897,10 @@
                         firstName: 'Алексей',
                         lastName: 'Иванов',
                         coursesProgress: {
-                            'Веб-разработка 2026': 74,
-                            'Анализ данных с Python': 32,
-                            'Машинное обучение': 9,
-                            'UX/UI дизайн': 100,
+                            'Python с нуля': 74,
+                            'HTML & CSS мастер': 32,
+                            'Создание TG-ботов': 9,
+                            'Веб-разработка 2026': 100,
                             'Базы данных SQL': 45,
                             'Фронтенд с React': 60,
                             'DevOps основы': 15,
@@ -923,10 +921,10 @@
                         firstName: 'Мария',
                         lastName: 'Петрова',
                         coursesProgress: {
-                            'Веб-разработка 2026': 45,
-                            'Анализ данных с Python': 78,
-                            'Машинное обучение': 50,
-                            'UX/UI дизайн': 30,
+                            'Python с нуля': 78,
+                            'HTML & CSS мастер': 45,
+                            'Создание TG-ботов': 50,
+                            'Веб-разработка 2026': 30,
                             'Базы данных SQL': 90,
                             'Фронтенд с React': 20,
                             'DevOps основы': 60,
@@ -941,9 +939,33 @@
                             'React основы': [false, false, true]
                         },
                         stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
+                    },
+                    {
+                        id: 3,
+                        firstName: 'Иван',
+                        lastName: 'Смирнов',
+                        coursesProgress: {
+                            'Python с нуля': 90,
+                            'HTML & CSS мастер': 85,
+                            'Создание TG-ботов': 70,
+                            'Веб-разработка 2026': 10,
+                            'Базы данных SQL': 55,
+                            'Фронтенд с React': 15,
+                            'DevOps основы': 30,
+                            'Английский для IT': 20,
+                            'Кибербезопасность': 75,
+                            'Мобильная разработка': 40
+                        },
+                        testsResults: {
+                            'Основы JavaScript': [true, false, false],
+                            'Python для начинающих': [false, true, false],
+                            'SQL запросы': [true, true, true],
+                            'React основы': [true, true, false]
+                        },
+                        stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
                     }
                 ];
-                nextId = 3;
+                nextId = 4;
                 saveAccountsToCookie();
             }
             
@@ -964,12 +986,12 @@
             setCookie('edu_current_account_neon', currentAccountId);
         }
 
-        // ----- ДАННЫЕ КУРСОВ -----
+        // ----- АДАПТИРОВАННЫЕ КУРСЫ (Python, HTML+CSS, TG-боты) -----
         const courseList = [
-            { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', thumb: 'fa-code', thumbClass: '' },
-            { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', thumb: 'fa-chart-pie', thumbClass: 'green' },
-            { title: 'Машинное обучение', lessons: '32 урока', time: '15 ч', thumb: 'fa-brain', thumbClass: 'purple' },
-            { title: 'UX/UI дизайн', lessons: '15 уроков', time: '6 ч', thumb: 'fa-pen-fancy', thumbClass: 'orange' },
+            { title: 'Python с нуля', lessons: '32 урока', time: '12 ч', thumb: 'fa-python', thumbClass: 'teal' },
+            { title: 'HTML & CSS мастер', lessons: '28 уроков', time: '10 ч', thumb: 'fa-code', thumbClass: 'purple' },
+            { title: 'Создание TG-ботов', lessons: '24 урока', time: '9 ч', thumb: 'fa-telegram', thumbClass: 'cyan' },
+            { title: 'Веб-разработка 2026', lessons: '30 уроков', time: '11 ч', thumb: 'fa-globe', thumbClass: 'green' },
             { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', thumb: 'fa-database', thumbClass: 'rose' },
             { title: 'Фронтенд с React', lessons: '28 уроков', time: '12 ч', thumb: 'fa-react', thumbClass: 'teal' },
             { title: 'DevOps основы', lessons: '22 урока', time: '10 ч', thumb: 'fa-server', thumbClass: 'indigo' },
@@ -985,7 +1007,41 @@
             { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, rgba(52,211,153,0.15), rgba(16,185,129,0.08))', color: '#6ee7b7' }
         ];
 
+        // ----- ТЕСТЫ (обновлены под Python, HTML, TG-боты) -----
         const testList = [
+            {
+                id: 'python',
+                title: 'Python для начинающих',
+                questions: [
+                    { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
+                    { q: 'Что делает функция print()?', options: ['Выводит данные', 'Вводит данные', 'Создает переменную', 'Удаляет данные'], correct: 0 },
+                    { q: 'Как создать список в Python?', options: ['[]', '{}', '()', '<>'], correct: 0 },
+                    { q: 'Какая функция используется для получения длины списка?', options: ['len()', 'size()', 'length()', 'count()'], correct: 0 },
+                    { q: 'Что такое PEP 8?', options: ['Стандарт оформления кода', 'Библиотека', 'Фреймворк', 'Тип данных'], correct: 0 }
+                ]
+            },
+            {
+                id: 'htmlcss',
+                title: 'HTML & CSS основы',
+                questions: [
+                    { q: 'Какой тег используется для создания заголовка первого уровня?', options: ['<h1>', '<header>', '<head>', '<title>'], correct: 0 },
+                    { q: 'Что делает свойство display: flex?', options: ['Создает гибкий контейнер', 'Делает элемент невидимым', 'Добавляет тень', 'Меняет цвет'], correct: 0 },
+                    { q: 'Как подключить CSS файл?', options: ['<link rel="stylesheet" href="style.css">', '<style src="style.css">', '<css src="style.css">', '<script src="style.css">'], correct: 0 },
+                    { q: 'Что такое CSS Grid?', options: ['Система компоновки', 'Тип данных', 'Библиотека', 'Язык программирования'], correct: 0 },
+                    { q: 'Какое свойство отвечает за цвет текста?', options: ['color', 'text-color', 'font-color', 'background-color'], correct: 0 }
+                ]
+            },
+            {
+                id: 'tgbots',
+                title: 'Создание TG-ботов',
+                questions: [
+                    { q: 'Какая библиотека используется для создания TG-ботов на Python?', options: ['python-telegram-bot', 'telebot', 'pyTelegramBotAPI', 'Все варианты'], correct: 3 },
+                    { q: 'Как получить токен бота?', options: ['У @BotFather', 'В настройках Telegram', 'В Google', 'Создать самому'], correct: 0 },
+                    { q: 'Какая функция отправляет сообщение в Telegram?', options: ['send_message()', 'send()', 'message()', 'post()'], correct: 0 },
+                    { q: 'Как обработать команду /start?', options: ['@bot.message_handler(commands=["start"])', '@bot.start()', 'def start()', 'команда start'], correct: 0 },
+                    { q: 'Что такое webhook в Telegram ботах?', options: ['HTTP callback', 'База данных', 'Библиотека', 'Тип бота'], correct: 0 }
+                ]
+            },
             {
                 id: 'js',
                 title: 'Основы JavaScript',
@@ -993,33 +1049,6 @@
                     { q: 'Как объявить переменную в JavaScript?', options: ['let', 'var', 'const', 'Все варианты'], correct: 3 },
                     { q: 'Что выведет console.log(typeof null)?', options: ['null', 'object', 'undefined', 'number'], correct: 1 },
                     { q: 'Какой метод добавляет элемент в конец массива?', options: ['push()', 'pop()', 'shift()', 'unshift()'], correct: 0 }
-                ]
-            },
-            {
-                id: 'python',
-                title: 'Python для начинающих',
-                questions: [
-                    { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
-                    { q: 'Что делает функция print()?', options: ['Выводит данные', 'Вводит данные', 'Создает переменную', 'Удаляет данные'], correct: 0 },
-                    { q: 'Как создать список в Python?', options: ['[]', '{}', '()', '<>'], correct: 0 }
-                ]
-            },
-            {
-                id: 'sql',
-                title: 'SQL запросы',
-                questions: [
-                    { q: 'Какой оператор используется для выборки данных?', options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'], correct: 0 },
-                    { q: 'Что такое JOIN?', options: ['Объединение таблиц', 'Удаление данных', 'Создание таблицы', 'Изменение структуры'], correct: 0 },
-                    { q: 'Какой тип данных хранит текст?', options: ['VARCHAR', 'INT', 'DATE', 'BOOLEAN'], correct: 0 }
-                ]
-            },
-            {
-                id: 'react',
-                title: 'React основы',
-                questions: [
-                    { q: 'Что такое JSX?', options: ['Синтаксис JavaScript + XML', 'Библиотека', 'Фреймворк', 'База данных'], correct: 0 },
-                    { q: 'Как создать компонент в React?', options: ['Функция или класс', 'Только класс', 'Только функция', 'HTML тег'], correct: 0 },
-                    { q: 'Что такое state?', options: ['Состояние компонента', 'Свойства компонента', 'Метод компонента', 'Стиль компонента'], correct: 0 }
                 ]
             }
         ];
@@ -1123,7 +1152,7 @@
 
                 const thumb = document.createElement('div');
                 thumb.className = 'card-thumb' + (item.thumbClass ? ' ' + item.thumbClass : '');
-                thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
+                thumb.innerHTML = `<i class="fab ${item.thumb}"></i>`;
                 card.appendChild(thumb);
 
                 const body = document.createElement('div');
@@ -1549,11 +1578,9 @@
                 });
             });
 
-            // ТЕМА (только тёмная, кнопка для переключения на светлую не нужна, но оставим для прикола)
+            // ТЕМА (только тёмная)
             const themeToggle = document.getElementById('themeToggle');
-            let dark = true; // всегда тёмная
             themeToggle.addEventListener('click', function() {
-                // просто шоу-тост, потому что светлой темы нет
                 showToast('🌙 Тёмная тема — это стиль!');
             });
 
@@ -1610,7 +1637,7 @@
 
             showTab('overview');
             
-            console.log('🚀 EduCore Neon запущен!');
+            console.log('🚀 EduCore Neon с курсами по Python, HTML+CSS и TG-ботам запущен!');
         }
 
         if (document.readyState === 'loading') {
