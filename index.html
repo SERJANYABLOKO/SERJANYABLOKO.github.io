@@ -6,6 +6,7 @@
     <title>EduCore — обучение с неоном</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ===== БАЗА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -36,6 +37,7 @@
             border: 1px solid rgba(100, 0, 255, 0.2);
         }
 
+        /* ===== ХЕДЕР ===== */
         .header {
             background: rgba(13, 13, 26, 0.95);
             padding: 20px 30px;
@@ -66,13 +68,11 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .logo-text {
             font-weight: 800;
             font-size: 26px;
-            letter-spacing: -0.5px;
             background: linear-gradient(135deg, #a78bfa, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -96,7 +96,6 @@
             gap: 10px;
             border: 1px solid rgba(139, 92, 246, 0.25);
             transition: 0.3s;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.05);
         }
         .search-bar:focus-within {
             border-color: #8b5cf6;
@@ -190,6 +189,7 @@
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
         }
 
+        /* ===== НАВИГАЦИЯ ===== */
         .nav-bar {
             background: rgba(13, 13, 26, 0.9);
             padding: 0 30px;
@@ -232,6 +232,7 @@
             color: #c4b5fd;
         }
 
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
         .main-content {
             padding: 30px;
             background: #0a0a15;
@@ -285,6 +286,7 @@
             gap: 24px;
         }
 
+        /* ===== КАРТОЧКИ КУРСОВ ===== */
         .course-card {
             background: rgba(20, 20, 45, 0.8);
             border-radius: 20px;
@@ -421,17 +423,13 @@
             color: #fbbf24;
             border-color: rgba(251, 191, 36, 0.1);
         }
-        .badge-status.test {
-            background: rgba(139, 92, 246, 0.15);
-            color: #a78bfa;
-            border-color: rgba(139, 92, 246, 0.1);
-        }
         .badge-status.completed {
             background: rgba(52, 211, 153, 0.15);
             color: #6ee7b7;
             border-color: rgba(52, 211, 153, 0.1);
         }
 
+        /* ===== СТАТИСТИКА ===== */
         .stats-row {
             display: flex;
             flex-wrap: wrap;
@@ -479,6 +477,7 @@
             color: #8b5cf6;
         }
 
+        /* ===== TOAST ===== */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -500,6 +499,59 @@
         }
         .toast-message.show {
             opacity: 1;
+        }
+
+        /* ===== ТЕСТЫ: ВКЛАДКИ И ВОПРОСЫ ===== */
+        .test-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            padding-bottom: 16px;
+        }
+
+        .test-tab {
+            background: rgba(30, 30, 60, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #8b8bb8;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-tab i {
+            font-size: 16px;
+            color: #6b6b9e;
+        }
+        .test-tab:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+        .test-tab.active {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+            color: #a78bfa;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
+        }
+        .test-tab.active i {
+            color: #8b5cf6;
+        }
+        .test-tab .tab-progress {
+            font-size: 11px;
+            background: rgba(139, 92, 246, 0.15);
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: #a78bfa;
+        }
+
+        .test-content {
+            display: block;
         }
 
         .test-question {
@@ -550,6 +602,30 @@
             border-color: rgba(239, 68, 68, 0.2);
         }
 
+        .test-progress-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 13px;
+            color: #8b8bb8;
+        }
+        .test-progress-bar .bar-bg {
+            flex: 1;
+            height: 6px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            min-width: 60px;
+        }
+        .test-progress-bar .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        /* ===== АККАУНТЫ ===== */
         .account-selector {
             display: flex;
             gap: 8px;
@@ -595,29 +671,7 @@
             box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
         }
 
-        .test-progress-bar {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            font-size: 13px;
-            color: #8b8bb8;
-        }
-        .test-progress-bar .bar-bg {
-            flex: 1;
-            height: 6px;
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            min-width: 60px;
-        }
-        .test-progress-bar .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
-            border-radius: 10px;
-            width: 0%;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-        }
-
+        /* ===== МОДАЛКА ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -746,6 +800,8 @@
             .account-selector { width: 100%; justify-content: space-between; }
             .modal-content { padding: 30px 24px; }
             .account-selector select { max-width: 100px; }
+            .test-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; }
+            .test-tab { flex-shrink: 0; font-size: 12px; padding: 8px 16px; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
@@ -856,10 +912,10 @@
 
 <script>
     (function() {
-        // ----- РАБОТА С COOKIES -----
+        // ----- COOKIES -----
         function setCookie(name, value, days = 365) {
             const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            date.setTime(date.getTime() (days * 24 * 60 * 60 * 1000));
             document.cookie = name + "=" + JSON.stringify(value) + "; expires=" + date.toUTCString() + "; path=/";
         }
 
@@ -868,17 +924,13 @@
             for (let cookie of cookies) {
                 const [key, value] = cookie.split('=');
                 if (key === name) {
-                    try {
-                        return JSON.parse(decodeURIComponent(value));
-                    } catch {
-                        return null;
-                    }
+                    try { return JSON.parse(decodeURIComponent(value)); } catch { return null; }
                 }
             }
             return null;
         }
 
-        // ----- ДАННЫЕ АККАУНТОВ -----
+        // ----- АККАУНТЫ -----
         let accounts = [];
         let currentAccountId = null;
         let nextId = 1;
@@ -887,9 +939,7 @@
             const saved = getCookie('edu_accounts_neon');
             if (saved && Array.isArray(saved)) {
                 accounts = saved;
-                accounts.forEach(acc => {
-                    if (acc.id >= nextId) nextId = acc.id + 1;
-                });
+                accounts.forEach(acc => { if (acc.id >= nextId) nextId = acc.id + 1; });
             } else {
                 accounts = [
                     {
@@ -909,12 +959,16 @@
                             'Мобильная разработка': 100
                         },
                         testsResults: {
-                            'Python с нуля': [true, false, true, true, false],
-                            'HTML & CSS мастер': [true, true, false, true, true],
-                            'Создание TG-ботов': [false, true, true, false, true],
-                            'Веб-разработка 2026': [true, false, true],
-                            'Базы данных SQL': [false, true, true],
-                            'Фронтенд с React': [true, false, true]
+                            'python': [true, false, true, true, false],
+                            'htmlcss': [true, true, false, true, true],
+                            'tgbots': [false, true, true, false, true],
+                            'webdev': [true, false, true],
+                            'sql': [false, true, true],
+                            'react': [true, false, true],
+                            'devops': [true, true, false, true, false],
+                            'english': [true, false, true, true, true],
+                            'security': [false, true, true, false, true],
+                            'mobile': [true, true, false, true, false]
                         },
                         stats: { courses: 18, completed: 42, certificates: 9, tests: 15 }
                     },
@@ -935,12 +989,16 @@
                             'Мобильная разработка': 70
                         },
                         testsResults: {
-                            'Python с нуля': [true, true, true, false, true],
-                            'HTML & CSS мастер': [true, true, true, true, false],
-                            'Создание TG-ботов': [true, false, true, true, true],
-                            'Веб-разработка 2026': [true, true, true],
-                            'Базы данных SQL': [true, true, false],
-                            'Фронтенд с React': [false, false, true]
+                            'python': [true, true, true, false, true],
+                            'htmlcss': [true, true, true, true, false],
+                            'tgbots': [true, false, true, true, true],
+                            'webdev': [true, true, true],
+                            'sql': [true, true, false],
+                            'react': [false, false, true],
+                            'devops': [true, false, true, true, false],
+                            'english': [true, true, false, true, true],
+                            'security': [false, true, true, true, false],
+                            'mobile': [true, false, true, true, true]
                         },
                         stats: { courses: 22, completed: 38, certificates: 12, tests: 20 }
                     },
@@ -961,12 +1019,16 @@
                             'Мобильная разработка': 40
                         },
                         testsResults: {
-                            'Python с нуля': [true, false, false, true, true],
-                            'HTML & CSS мастер': [false, true, false, true, false],
-                            'Создание TG-ботов': [true, true, true, false, true],
-                            'Веб-разработка 2026': [true, false, false],
-                            'Базы данных SQL': [true, true, true],
-                            'Фронтенд с React': [true, true, false]
+                            'python': [true, false, false, true, true],
+                            'htmlcss': [false, true, false, true, false],
+                            'tgbots': [true, true, true, false, true],
+                            'webdev': [true, false, false],
+                            'sql': [true, true, true],
+                            'react': [true, true, false],
+                            'devops': [false, true, false, true, true],
+                            'english': [true, false, true, false, true],
+                            'security': [true, true, false, true, false],
+                            'mobile': [false, true, true, false, true]
                         },
                         stats: { courses: 15, completed: 29, certificates: 5, tests: 10 }
                     }
@@ -992,7 +1054,7 @@
             setCookie('edu_current_account_neon', currentAccountId);
         }
 
-        // ----- КУРСЫ (Python, HTML+CSS, TG-боты и другие) -----
+        // ----- КУРСЫ -----
         const courseList = [
             { title: 'Python с нуля', lessons: '32 урока', time: '12 ч', thumb: 'fa-python', thumbClass: 'teal' },
             { title: 'HTML & CSS мастер', lessons: '28 уроков', time: '10 ч', thumb: 'fa-code', thumbClass: 'purple' },
@@ -1013,12 +1075,12 @@
             { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, rgba(52,211,153,0.15), rgba(16,185,129,0.08))', color: '#6ee7b7' }
         ];
 
-        // ----- ТЕСТЫ ПО КАЖДОМУ КУРСУ -----
+        // ----- ТЕСТЫ (все темы с вопросами) -----
         const testList = [
             {
                 id: 'python',
                 title: 'Python с нуля',
-                courseIcon: 'fa-python',
+                icon: 'fa-python',
                 questions: [
                     { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
                     { q: 'Что делает функция print()?', options: ['Выводит данные', 'Вводит данные', 'Создает переменную', 'Удаляет данные'], correct: 0 },
@@ -1030,7 +1092,7 @@
             {
                 id: 'htmlcss',
                 title: 'HTML & CSS мастер',
-                courseIcon: 'fa-code',
+                icon: 'fa-code',
                 questions: [
                     { q: 'Какой тег используется для создания заголовка первого уровня?', options: ['<h1>', '<header>', '<head>', '<title>'], correct: 0 },
                     { q: 'Что делает свойство display: flex?', options: ['Создает гибкий контейнер', 'Делает элемент невидимым', 'Добавляет тень', 'Меняет цвет'], correct: 0 },
@@ -1042,7 +1104,7 @@
             {
                 id: 'tgbots',
                 title: 'Создание TG-ботов',
-                courseIcon: 'fa-telegram',
+                icon: 'fa-telegram',
                 questions: [
                     { q: 'Какая библиотека используется для создания TG-ботов на Python?', options: ['python-telegram-bot', 'telebot', 'pyTelegramBotAPI', 'Все варианты'], correct: 3 },
                     { q: 'Как получить токен бота?', options: ['У @BotFather', 'В настройках Telegram', 'В Google', 'Создать самому'], correct: 0 },
@@ -1054,43 +1116,37 @@
             {
                 id: 'webdev',
                 title: 'Веб-разработка 2026',
-                courseIcon: 'fa-globe',
+                icon: 'fa-globe',
                 questions: [
                     { q: 'Что такое HTML?', options: ['Язык разметки', 'Язык программирования', 'База данных', 'Фреймворк'], correct: 0 },
                     { q: 'Что такое CSS?', options: ['Стилизация', 'Серверный язык', 'База данных', 'Фреймворк'], correct: 0 },
-                    { q: 'Что такое JavaScript?', options: ['Язык программирования', 'Язык разметки', 'Стилизация', 'Фреймворк'], correct: 0 },
-                    { q: 'Что такое React?', options: ['Библиотека', 'Язык', 'База данных', 'Сервер'], correct: 0 },
-                    { q: 'Что такое Node.js?', options: ['Среда выполнения', 'Библиотека', 'База данных', 'Фреймворк'], correct: 0 }
+                    { q: 'Что такое JavaScript?', options: ['Язык программирования', 'Язык разметки', 'Стилизация', 'Фреймворк'], correct: 0 }
                 ]
             },
             {
                 id: 'sql',
                 title: 'Базы данных SQL',
-                courseIcon: 'fa-database',
+                icon: 'fa-database',
                 questions: [
                     { q: 'Какой оператор используется для выборки данных?', options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'], correct: 0 },
                     { q: 'Что такое JOIN?', options: ['Объединение таблиц', 'Удаление данных', 'Создание таблицы', 'Изменение структуры'], correct: 0 },
-                    { q: 'Какой тип данных хранит текст?', options: ['VARCHAR', 'INT', 'DATE', 'BOOLEAN'], correct: 0 },
-                    { q: 'Что такое PRIMARY KEY?', options: ['Уникальный идентификатор', 'Внешний ключ', 'Индекс', 'Тип данных'], correct: 0 },
-                    { q: 'Какой оператор используется для сортировки?', options: ['ORDER BY', 'GROUP BY', 'WHERE', 'HAVING'], correct: 0 }
+                    { q: 'Какой тип данных хранит текст?', options: ['VARCHAR', 'INT', 'DATE', 'BOOLEAN'], correct: 0 }
                 ]
             },
             {
                 id: 'react',
                 title: 'Фронтенд с React',
-                courseIcon: 'fa-react',
+                icon: 'fa-react',
                 questions: [
                     { q: 'Что такое JSX?', options: ['Синтаксис JavaScript + XML', 'Библиотека', 'Фреймворк', 'База данных'], correct: 0 },
                     { q: 'Как создать компонент в React?', options: ['Функция или класс', 'Только класс', 'Только функция', 'HTML тег'], correct: 0 },
-                    { q: 'Что такое state?', options: ['Состояние компонента', 'Свойства компонента', 'Метод компонента', 'Стиль компонента'], correct: 0 },
-                    { q: 'Что такое props?', options: ['Свойства компонента', 'Состояние', 'Метод', 'Стиль'], correct: 0 },
-                    { q: 'Что такое хук useState?', options: ['Управление состоянием', 'Управление стилями', 'Управление данными', 'Управление сервером'], correct: 0 }
+                    { q: 'Что такое state?', options: ['Состояние компонента', 'Свойства компонента', 'Метод компонента', 'Стиль компонента'], correct: 0 }
                 ]
             },
             {
                 id: 'devops',
                 title: 'DevOps основы',
-                courseIcon: 'fa-server',
+                icon: 'fa-server',
                 questions: [
                     { q: 'Что такое CI/CD?', options: ['Непрерывная интеграция/доставка', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
                     { q: 'Что такое Docker?', options: ['Контейнеризация', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
@@ -1102,7 +1158,7 @@
             {
                 id: 'english',
                 title: 'Английский для IT',
-                courseIcon: 'fa-language',
+                icon: 'fa-language',
                 questions: [
                     { q: 'Как переводится "development"?', options: ['Разработка', 'Тестирование', 'Деплой', 'Дизайн'], correct: 0 },
                     { q: 'Как переводится "deployment"?', options: ['Развертывание', 'Разработка', 'Тестирование', 'Дизайн'], correct: 0 },
@@ -1114,7 +1170,7 @@
             {
                 id: 'security',
                 title: 'Кибербезопасность',
-                courseIcon: 'fa-shield-alt',
+                icon: 'fa-shield-alt',
                 questions: [
                     { q: 'Что такое SQL-инъекция?', options: ['Атака на базу данных', 'Атака на сервер', 'Атака на клиент', 'Атака на сеть'], correct: 0 },
                     { q: 'Что такое XSS?', options: ['Межсайтовый скриптинг', 'Межсайтовая подделка', 'Атака на сервер', 'Атака на сеть'], correct: 0 },
@@ -1126,7 +1182,7 @@
             {
                 id: 'mobile',
                 title: 'Мобильная разработка',
-                courseIcon: 'fa-mobile-alt',
+                icon: 'fa-mobile-alt',
                 questions: [
                     { q: 'Какая ОС используется в iPhone?', options: ['iOS', 'Android', 'Windows', 'Linux'], correct: 0 },
                     { q: 'Какая ОС используется в большинстве смартфонов?', options: ['Android', 'iOS', 'Windows', 'Linux'], correct: 0 },
@@ -1138,7 +1194,9 @@
         ];
 
         let testStates = {};
+        let activeTestTab = null;
 
+        // ----- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ -----
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg || '✨ Действие выполнено';
@@ -1157,13 +1215,11 @@
 
         function createDefaultAccount(firstName, lastName) {
             const defaultProgress = {};
-            courseList.forEach(c => {
-                defaultProgress[c.title] = Math.floor(Math.random() * 30);
-            });
+            courseList.forEach(c => { defaultProgress[c.title] = Math.floor(Math.random() * 30); });
             const defaultResults = {};
             testList.forEach(t => {
                 const arr = t.questions.map(() => Math.random() > 0.5);
-                defaultResults[t.title] = arr;
+                defaultResults[t.id] = arr;
             });
             return {
                 id: nextId++,
@@ -1171,12 +1227,7 @@
                 lastName: lastName,
                 coursesProgress: defaultProgress,
                 testsResults: defaultResults,
-                stats: {
-                    courses: Math.floor(Math.random() * 15) + 5,
-                    completed: Math.floor(Math.random() * 20) + 10,
-                    certificates: Math.floor(Math.random() * 6) + 2,
-                    tests: 0
-                }
+                stats: { courses: Math.floor(Math.random() * 15) + 5, completed: Math.floor(Math.random() * 20) + 10, certificates: Math.floor(Math.random() * 6) + 2, tests: 0 }
             };
         }
 
@@ -1186,15 +1237,13 @@
                 return false;
             }
             document.getElementById('regError').classList.remove('show');
-
             const newAccount = createDefaultAccount(firstName.trim(), lastName.trim());
             accounts.push(newAccount);
             saveAccountsToCookie();
-
             populateAccountSelect();
             document.getElementById('accountSelect').value = newAccount.id;
             switchAccount(newAccount.id);
-            showToast(`✅ Аккаунт ${firstName} создан! Добро пожаловать!`);
+            showToast(`✅ Аккаунт ${firstName} создан!`);
             return true;
         }
 
@@ -1204,26 +1253,24 @@
             document.getElementById('userNameDisplay').textContent = 'Гость';
             document.getElementById('greeting').innerHTML = '👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!';
             document.getElementById('subGreeting').textContent = 'Создай аккаунт или войди в существующий 🔥';
-            
             document.getElementById('courseGrid').innerHTML = '';
             document.getElementById('recommendGrid').innerHTML = '';
             document.getElementById('testsContainer').innerHTML = '';
-            
             document.getElementById('statCourses').textContent = '0';
             document.getElementById('statCompleted').textContent = '0';
             document.getElementById('statCertificates').textContent = '0';
             document.getElementById('statTests').textContent = '0';
-            
             populateAccountSelect();
             showToast('👋 Выход выполнен');
         }
 
+        // ----- РЕНДЕР КУРСОВ -----
         function renderCourses(containerId, data, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             if (!account) {
-                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы увидеть курсы</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт</p>';
                 return;
             }
             data.forEach((item) => {
@@ -1233,12 +1280,10 @@
 
                 const card = document.createElement('div');
                 card.className = 'course-card';
-
                 const thumb = document.createElement('div');
                 thumb.className = 'card-thumb' + (item.thumbClass ? ' ' + item.thumbClass : '');
                 thumb.innerHTML = `<i class="fab ${item.thumb}"></i>`;
                 card.appendChild(thumb);
-
                 const body = document.createElement('div');
                 body.className = 'card-body';
                 body.innerHTML = `
@@ -1250,14 +1295,12 @@
                     </div>
                 `;
                 card.appendChild(body);
-
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
                 const statusSpan = document.createElement('span');
                 statusSpan.className = 'badge-status' + (statusClass ? ' ' + statusClass : '');
                 statusSpan.textContent = status;
                 footer.appendChild(statusSpan);
-
                 const btn = document.createElement('button');
                 btn.className = 'btn-outline';
                 const icon = document.createElement('i');
@@ -1276,15 +1319,11 @@
                 }
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    showToast(`🚀 "${item.title}" — продолжение обучения (${progress}%)`);
+                    showToast(`🚀 "${item.title}" — продолжение (${progress}%)`);
                 });
                 footer.appendChild(btn);
                 card.appendChild(footer);
-
-                card.addEventListener('click', () => {
-                    showToast(`📖 Открыть курс: ${item.title}`);
-                });
-
+                card.addEventListener('click', () => showToast(`📖 Открыть курс: ${item.title}`));
                 container.appendChild(card);
             });
         }
@@ -1294,7 +1333,7 @@
             if (!container) return;
             container.innerHTML = '';
             if (!getCurrentAccount()) {
-                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы увидеть рекомендации</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт</p>';
                 return;
             }
             data.forEach((item) => {
@@ -1308,7 +1347,6 @@
                 }
                 thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
                 card.appendChild(thumb);
-
                 const body = document.createElement('div');
                 body.className = 'card-body';
                 body.innerHTML = `
@@ -1320,14 +1358,12 @@
                     </div>
                 `;
                 card.appendChild(body);
-
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
                 const statusSpan = document.createElement('span');
                 statusSpan.className = 'badge-status ongoing';
                 statusSpan.textContent = 'новый';
                 footer.appendChild(statusSpan);
-
                 const btn = document.createElement('button');
                 btn.className = 'btn-outline';
                 btn.innerHTML = '<i class="fas fa-plus"></i> Начать';
@@ -1337,20 +1373,18 @@
                 });
                 footer.appendChild(btn);
                 card.appendChild(footer);
-
-                card.addEventListener('click', () => {
-                    showToast(`📖 Открыть курс: ${item.title}`);
-                });
+                card.addEventListener('click', () => showToast(`📖 Открыть курс: ${item.title}`));
                 container.appendChild(card);
             });
         }
 
+        // ----- РЕНДЕР ТЕСТОВ (с вкладками) -----
         function renderTests(containerId, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             if (!account) {
-                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы пройти тесты</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт</p>';
                 return;
             }
 
@@ -1359,111 +1393,160 @@
             }
             const accTestState = testStates[currentAccountId];
 
-            testList.forEach((test) => {
-                const results = account.testsResults[test.title] || [];
-                const answered = accTestState[test.id] || results.map(() => false);
-                if (!accTestState[test.id]) {
-                    accTestState[test.id] = answered;
-                }
-                const state = accTestState[test.id];
+            // ---- ВКЛАДКИ ----
+            const tabsWrapper = document.createElement('div');
+            tabsWrapper.className = 'test-tabs';
 
+            testList.forEach((test) => {
+                const results = account.testsResults[test.id] || [];
                 const total = test.questions.length;
                 const correctCount = results.filter(r => r === true).length;
-
-                const wrapper = document.createElement('div');
-                wrapper.style.marginBottom = '32px';
-
-                const header = document.createElement('div');
-                header.style.display = 'flex';
-                header.style.justifyContent = 'space-between';
-                header.style.alignItems = 'center';
-                header.style.marginBottom = '12px';
-                header.style.flexWrap = 'wrap';
-                header.style.gap = '8px';
-
-                const title = document.createElement('h3');
-                title.style.fontWeight = '700';
-                title.style.color = '#a78bfa';
-                title.innerHTML = `<i class="fas ${test.courseIcon}" style="color: #8b5cf6; margin-right: 10px;"></i>${test.title}`;
-                header.appendChild(title);
-
-                const progressInfo = document.createElement('div');
-                progressInfo.className = 'test-progress-bar';
                 const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-                progressInfo.innerHTML = `
-                    <span>${correctCount}/${total}</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: ${pct}%;"></div></div>
-                    <span>${pct}%</span>
-                `;
-                header.appendChild(progressInfo);
-                wrapper.appendChild(header);
 
-                test.questions.forEach((qItem, qIndex) => {
-                    const questionDiv = document.createElement('div');
-                    questionDiv.className = 'test-question';
+                const tab = document.createElement('button');
+                tab.className = 'test-tab';
+                tab.dataset.testId = test.id;
+                tab.innerHTML = `<i class="fas ${test.icon}"></i> ${test.title} <span class="tab-progress">${correctCount}/${total}</span>`;
+                
+                if (!activeTestTab || activeTestTab === test.id) {
+                    tab.classList.add('active');
+                    activeTestTab = test.id;
+                }
 
-                    const qHeader = document.createElement('h4');
-                    qHeader.textContent = `${qIndex+1}. ${qItem.q}`;
-                    questionDiv.appendChild(qHeader);
-
-                    const optionsDiv = document.createElement('div');
-                    optionsDiv.className = 'test-options';
-
-                    const isAnswered = state[qIndex] !== undefined && state[qIndex] === true;
-
-                    qItem.options.forEach((opt, optIndex) => {
-                        const label = document.createElement('label');
-                        const radio = document.createElement('input');
-                        radio.type = 'radio';
-                        radio.name = `test_${test.id}_q${qIndex}`;
-                        radio.value = optIndex;
-                        radio.disabled = isAnswered;
-
-                        const span = document.createElement('span');
-                        span.textContent = opt;
-
-                        label.appendChild(radio);
-                        label.appendChild(span);
-
-                        if (isAnswered) {
-                            if (optIndex === qItem.correct) {
-                                label.classList.add('correct-answer');
-                            } else if (optIndex === results[qIndex] && optIndex !== qItem.correct) {
-                                label.classList.add('wrong-answer');
-                            }
-                            if (optIndex === results[qIndex]) {
-                                radio.checked = true;
-                            }
-                        }
-
-                        optionsDiv.appendChild(label);
-
-                        if (!isAnswered) {
-                            radio.addEventListener('change', function() {
-                                if (this.checked) {
-                                    const isCorrect = (optIndex === qItem.correct);
-                                    const newResults = [...results];
-                                    newResults[qIndex] = isCorrect;
-                                    account.testsResults[test.title] = newResults;
-                                    state[qIndex] = true;
-                                    updateStats(account);
-                                    saveAccountsToCookie();
-                                    showToast(isCorrect ? '✅ Правильно! Красава!' : '❌ Неправильно. Правильный ответ подсвечен.');
-                                    renderTests('testsContainer', account);
-                                    updateStatsDisplay(account);
-                                }
-                            });
-                        }
-                    });
-
-                    questionDiv.appendChild(optionsDiv);
-                    wrapper.appendChild(questionDiv);
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    activeTestTab = this.dataset.testId;
+                    renderTestContent(container, account, activeTestTab);
                 });
 
-                container.appendChild(wrapper);
+                tabsWrapper.appendChild(tab);
+            });
+
+            container.appendChild(tabsWrapper);
+
+            // ---- КОНТЕНТ АКТИВНОЙ ВКЛАДКИ ----
+            const contentWrapper = document.createElement('div');
+            contentWrapper.className = 'test-content';
+            contentWrapper.id = 'testContentWrapper';
+            container.appendChild(contentWrapper);
+
+            if (activeTestTab) {
+                renderTestContent(container, account, activeTestTab);
+            }
+        }
+
+        function renderTestContent(container, account, testId) {
+            const wrapper = document.getElementById('testContentWrapper');
+            if (!wrapper) return;
+
+            const test = testList.find(t => t.id === testId);
+            if (!test) return;
+
+            const results = account.testsResults[test.id] || [];
+            const answered = testStates[currentAccountId]?.[testId] || results.map(() => false);
+            if (!testStates[currentAccountId]) testStates[currentAccountId] = {};
+            if (!testStates[currentAccountId][testId]) {
+                testStates[currentAccountId][testId] = answered;
+            }
+            const state = testStates[currentAccountId][testId];
+
+            wrapper.innerHTML = '';
+
+            const total = test.questions.length;
+            const correctCount = results.filter(r => r === true).length;
+
+            // заголовок с прогрессом
+            const header = document.createElement('div');
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+            header.style.marginBottom = '16px';
+            header.style.flexWrap = 'wrap';
+            header.style.gap = '8px';
+
+            const title = document.createElement('h3');
+            title.style.fontWeight = '700';
+            title.style.color = '#a78bfa';
+            title.innerHTML = `<i class="fas ${test.icon}" style="color: #8b5cf6; margin-right: 10px;"></i>${test.title}`;
+            header.appendChild(title);
+
+            const progressInfo = document.createElement('div');
+            progressInfo.className = 'test-progress-bar';
+            const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+            progressInfo.innerHTML = `
+                <span>${correctCount}/${total}</span>
+                <div class="bar-bg"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+                <span>${pct}%</span>
+            `;
+            header.appendChild(progressInfo);
+            wrapper.appendChild(header);
+
+            // вопросы
+            test.questions.forEach((qItem, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+
+                const qHeader = document.createElement('h4');
+                qHeader.textContent = `${qIndex+1}. ${qItem.q}`;
+                questionDiv.appendChild(qHeader);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'test-options';
+
+                const isAnswered = state[qIndex] !== undefined && state[qIndex] === true;
+
+                qItem.options.forEach((opt, optIndex) => {
+                    const label = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `test_${testId}_q${qIndex}`;
+                    radio.value = optIndex;
+                    radio.disabled = isAnswered;
+
+                    const span = document.createElement('span');
+                    span.textContent = opt;
+
+                    label.appendChild(radio);
+                    label.appendChild(span);
+
+                    if (isAnswered) {
+                        if (optIndex === qItem.correct) {
+                            label.classList.add('correct-answer');
+                        } else if (optIndex === results[qIndex] && optIndex !== qItem.correct) {
+                            label.classList.add('wrong-answer');
+                        }
+                        if (optIndex === results[qIndex]) {
+                            radio.checked = true;
+                        }
+                    }
+
+                    optionsDiv.appendChild(label);
+
+                    if (!isAnswered) {
+                        radio.addEventListener('change', function() {
+                            if (this.checked) {
+                                const isCorrect = (optIndex === qItem.correct);
+                                const newResults = [...results];
+                                newResults[qIndex] = isCorrect;
+                                account.testsResults[test.id] = newResults;
+                                state[qIndex] = true;
+                                updateStats(account);
+                                saveAccountsToCookie();
+                                showToast(isCorrect ? '✅ Правильно! Красава!' : '❌ Неправильно. Правильный ответ подсвечен.');
+                                renderTests('testsContainer', account);
+                                updateStatsDisplay(account);
+                            }
+                        });
+                    }
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                wrapper.appendChild(questionDiv);
             });
         }
 
+        // ----- СТАТИСТИКА -----
         function updateStats(account) {
             let testsPassed = 0;
             for (const key in account.testsResults) {
@@ -1490,34 +1573,27 @@
             document.getElementById('statTests').textContent = account.stats.tests || 0;
         }
 
+        // ----- ПЕРЕКЛЮЧЕНИЕ АККАУНТА -----
         function switchAccount(accountId) {
             currentAccountId = accountId;
             const account = getCurrentAccount();
-            if (!account) {
-                logout();
-                return;
-            }
-            
+            if (!account) { logout(); return; }
             saveCurrentAccount();
             document.getElementById('userNameDisplay').textContent = account.firstName;
             document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
             document.getElementById('subGreeting').textContent = 'Продолжай учиться — ты крут! 🔥';
-
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
             updateStatsDisplay(account);
-            
             populateAccountSelect();
             document.getElementById('accountSelect').value = account.id;
-            
             showToast(`👤 Переключено на ${account.firstName}`);
         }
 
         function populateAccountSelect() {
             const select = document.getElementById('accountSelect');
             select.innerHTML = '';
-            
             if (accounts.length === 0) {
                 const option = document.createElement('option');
                 option.value = '';
@@ -1525,7 +1601,6 @@
                 select.appendChild(option);
                 return;
             }
-            
             accounts.forEach(acc => {
                 const option = document.createElement('option');
                 option.value = acc.id;
@@ -1535,7 +1610,7 @@
             });
         }
 
-        // ----- МОДАЛЬНОЕ ОКНО -----
+        // ----- МОДАЛКА -----
         const modal = document.getElementById('registerModal');
         const addBtn = document.getElementById('addAccountBtn');
         const cancelBtn = document.getElementById('regCancelBtn');
@@ -1544,24 +1619,15 @@
         const lastNameInput = document.getElementById('regLastName');
         const errorEl = document.getElementById('regError');
 
-        function openModal() {
+        addBtn.addEventListener('click', () => {
             modal.classList.add('active');
             firstNameInput.value = '';
             lastNameInput.value = '';
             errorEl.classList.remove('show');
             firstNameInput.focus();
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-        }
-
-        addBtn.addEventListener('click', openModal);
-        cancelBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
         });
-
+        cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
         submitBtn.addEventListener('click', () => {
             const firstName = firstNameInput.value.trim();
             const lastName = lastNameInput.value.trim();
@@ -1570,21 +1636,10 @@
                 return;
             }
             errorEl.classList.remove('show');
-            if (registerUser(firstName, lastName)) {
-                closeModal();
-            }
+            if (registerUser(firstName, lastName)) modal.classList.remove('active');
         });
-
-        firstNameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                lastNameInput.focus();
-            }
-        });
-        lastNameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                submitBtn.click();
-            }
-        });
+        firstNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lastNameInput.focus(); });
+        lastNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitBtn.click(); });
 
         // ----- ИНИЦИАЛИЗАЦИЯ -----
         function init() {
@@ -1604,11 +1659,9 @@
             }
             
             populateAccountSelect();
-            if (currentAccountId) {
-                document.getElementById('accountSelect').value = currentAccountId;
-            }
+            if (currentAccountId) document.getElementById('accountSelect').value = currentAccountId;
 
-            // ВКЛАДКИ
+            // ВКЛАДКИ НАВИГАЦИИ
             const navLinks = document.querySelectorAll('.nav-link');
             const greeting = document.getElementById('greeting');
             const subGreeting = document.getElementById('subGreeting');
@@ -1627,7 +1680,6 @@
                 recommendLink.style.display = isTests ? 'none' : 'inline';
                 testsContainer.style.display = isTests ? 'block' : 'none';
                 allTestsLink.style.display = isTests ? 'inline' : 'none';
-
                 if (tab === 'overview' || tab === 'mycourses' || tab === 'progress' || tab === 'schedule' || tab === 'community') {
                     courseGrid.style.display = 'grid';
                     recommendGrid.style.display = 'grid';
@@ -1636,12 +1688,11 @@
                     testsContainer.style.display = 'none';
                     allTestsLink.style.display = 'none';
                 }
-
                 let msg = '';
                 switch(tab) {
                     case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
                     case 'mycourses': msg = '📚 Мои курсы: список всех твоих курсов'; break;
-                    case 'tests': msg = '📝 Тесты по курсам: проверь свои знания'; break;
+                    case 'tests': msg = '📝 Тесты по курсам: выбирай тему и проверяй знания'; break;
                     case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
                     case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
                     case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
@@ -1662,50 +1713,35 @@
                 });
             });
 
-            // ТЕМА (только тёмная)
-            const themeToggle = document.getElementById('themeToggle');
-            themeToggle.addEventListener('click', function() {
-                showToast('🌙 Тёмная тема — это стиль!');
-            });
+            document.getElementById('themeToggle').addEventListener('click', () => showToast('🌙 Тёмная тема — это стиль!'));
 
-            // ССЫЛКИ
             document.getElementById('allCoursesLink').addEventListener('click', (e) => {
                 e.preventDefault();
-                showToast('📋 Все курсы: полный каталог из 10+ курсов');
+                showToast('📋 Все курсы: полный каталог');
             });
             document.getElementById('allTestsLink').addEventListener('click', (e) => {
                 e.preventDefault();
-                showToast('📝 Все тесты: по каждому курсу свои вопросы');
+                showToast('📝 Все тесты: 10 тем по 3-5 вопросов');
             });
             document.getElementById('recommendLink').addEventListener('click', (e) => {
                 e.preventDefault();
-                showToast('📚 Все рекомендации: подборка для тебя');
+                showToast('📚 Все рекомендации');
             });
 
-            // ПОИСК
             document.getElementById('searchInput').addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     const val = this.value.trim();
-                    if (val) {
-                        showToast(`🔍 Поиск: "${val}"`);
-                    } else {
-                        showToast('✏️ Введи запрос для поиска');
-                    }
+                    showToast(val ? `🔍 Поиск: "${val}"` : '✏️ Введи запрос');
                 }
             });
 
-            // АВАТАР, БЕЙДЖ, ЛОГО
             document.querySelector('.avatar').addEventListener('click', () => {
                 const acc = getCurrentAccount();
-                if (acc) {
-                    showToast(`👤 Профиль: ${acc.firstName} ${acc.lastName}`);
-                } else {
-                    showToast('👤 Войди в аккаунт');
-                }
+                showToast(acc ? `👤 Профиль: ${acc.firstName} ${acc.lastName}` : '👤 Войди в аккаунт');
             });
             document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
             document.getElementById('logoArea').addEventListener('click', () => {
-                showToast('🏠 EduCore — главная страница');
+                showToast('🏠 EduCore — главная');
                 navLinks.forEach(l => l.classList.remove('active'));
                 document.querySelector('.nav-link[data-tab="overview"]').classList.add('active');
                 showTab('overview');
@@ -1714,14 +1750,11 @@
             document.getElementById('logoutBtn').addEventListener('click', logout);
 
             document.getElementById('accountSelect').addEventListener('change', function() {
-                if (this.value) {
-                    switchAccount(parseInt(this.value));
-                }
+                if (this.value) switchAccount(parseInt(this.value));
             });
 
             showTab('overview');
-            
-            console.log('🚀 EduCore Neon с тестами по каждому курсу запущен!');
+            console.log('🚀 EduCore Neon с вкладками тестов запущен!');
         }
 
         if (document.readyState === 'loading') {
