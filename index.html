@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduCore — образовательная платформа</title>
+    <title>EduCore — обучение с неоном</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -11,12 +11,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         body {
-            background: #f4f7fc;
-            color: #1e293b;
+            background: #0a0a0f;
+            color: #e0e0ff;
             line-height: 1.5;
             padding: 20px;
             min-height: 100vh;
@@ -24,276 +23,88 @@
             justify-content: center;
         }
 
-        body.dark {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-
-        body.dark .platform-wrapper {
-            background: #1e293b;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-        }
-
-        body.dark .header {
-            background: #1e293b;
-            border-bottom-color: #334155;
-        }
-
-        body.dark .logo-text {
-            color: #f1f5f9;
-        }
-        body.dark .logo-text span {
-            color: #60a5fa;
-        }
-
-        body.dark .search-bar {
-            background: #334155;
-        }
-        body.dark .search-bar i {
-            color: #94a3b8;
-        }
-        body.dark .search-bar input {
-            color: #f1f5f9;
-        }
-        body.dark .search-bar input::placeholder {
-            color: #94a3b8;
-        }
-
-        body.dark .user-profile .badge {
-            background: #1e3a5f;
-            color: #93c5fd;
-        }
-        body.dark .user-profile .avatar {
-            background: #3b82f6;
-        }
-
-        body.dark .nav-bar {
-            background: #1e293b;
-            border-bottom-color: #334155;
-        }
-        body.dark .nav-link {
-            color: #94a3b8;
-        }
-        body.dark .nav-link i {
-            color: #64748b;
-        }
-        body.dark .nav-link.active {
-            color: #60a5fa;
-            border-bottom-color: #60a5fa;
-        }
-        body.dark .nav-link.active i {
-            color: #60a5fa;
-        }
-
-        body.dark .main-content {
-            background: #0f172a;
-        }
-
-        body.dark .welcome-section h1 {
-            color: #f1f5f9;
-        }
-        body.dark .welcome-section p {
-            color: #94a3b8;
-        }
-
-        body.dark .stats-row {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.dark .stat-item i {
-            background: #1e3a5f;
-            color: #60a5fa;
-        }
-        body.dark .stat-info .number {
-            color: #f1f5f9;
-        }
-        body.dark .stat-info .label {
-            color: #94a3b8;
-        }
-
-        body.dark .section-title h2 {
-            color: #f1f5f9;
-        }
-        body.dark .section-title a {
-            color: #60a5fa;
-        }
-
-        body.dark .course-card {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.dark .course-card:hover {
-            border-color: #64748b;
-            box-shadow: 0 20px 25px -8px rgba(0, 0, 0, 0.6);
-        }
-        body.dark .card-body h3 {
-            color: #f1f5f9;
-        }
-        body.dark .card-body .meta {
-            color: #94a3b8;
-        }
-        body.dark .progress-bar-bg {
-            background: #334155;
-        }
-        body.dark .progress-fill {
-            background: #3b82f6;
-        }
-        body.dark .progress-label {
-            color: #e2e8f0;
-        }
-
-        body.dark .card-footer {
-            background: #0f172a;
-            border-top-color: #334155;
-        }
-        body.dark .btn-outline {
-            border-color: #475569;
-            color: #e2e8f0;
-        }
-        body.dark .btn-outline:hover {
-            background: #334155;
-        }
-        body.dark .badge-status {
-            background: #1e3a5f;
-            color: #93c5fd;
-        }
-        body.dark .badge-status.ongoing {
-            background: #713f12;
-            color: #fcd34d;
-        }
-        body.dark .badge-status.test {
-            background: #4c1d95;
-            color: #c4b5fd;
-        }
-        body.dark .badge-status.completed {
-            background: #065f46;
-            color: #6ee7b7;
-        }
-
-        body.dark .footer-note {
-            background: #1e293b;
-            border-top-color: #334155;
-            color: #94a3b8;
-        }
-        body.dark .footer-note i {
-            color: #60a5fa;
-        }
-
-        body.dark .card-thumb {
-            opacity: 0.8;
-        }
-        body.dark .card-thumb.green { background: linear-gradient(145deg, #134e4a, #0f3d3a); color: #6ee7b7; }
-        body.dark .card-thumb.purple { background: linear-gradient(145deg, #2e1a47, #1e1035); color: #a78bfa; }
-        body.dark .card-thumb.orange { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fbbf24; }
-        body.dark .card-thumb.rose { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
-        body.dark .card-thumb.teal { background: linear-gradient(145deg, #134e4a, #0f3d3a); color: #5eead4; }
-        body.dark .card-thumb.indigo { background: linear-gradient(145deg, #1e1b4b, #13103a); color: #818cf8; }
-        body.dark .card-thumb.emerald { background: linear-gradient(145deg, #064e3b, #042f23); color: #6ee7b7; }
-        body.dark .card-thumb.cyan { background: linear-gradient(145deg, #164e63, #0e3a4a); color: #67e8f9; }
-        body.dark .card-thumb.pink { background: linear-gradient(145deg, #4c1d2b, #2d111b); color: #f472b6; }
-        body.dark .card-thumb.amber { background: linear-gradient(145deg, #5c3a1a, #3d260f); color: #fcd34d; }
-        body.dark .card-thumb { background: linear-gradient(145deg, #1a365d, #0f2a4a); color: #60a5fa; }
-
-        body.dark .test-question {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.dark .test-options label:hover {
-            background: #334155;
-        }
-        body.dark .test-options input[type="radio"] {
-            accent-color: #60a5fa;
-        }
-        body.dark .modal-content {
-            background: #1e293b;
-            color: #e2e8f0;
-        }
-        body.dark .modal-content input {
-            background: #334155;
-            color: #e2e8f0;
-            border-color: #475569;
-        }
-        body.dark .modal-content input::placeholder {
-            color: #94a3b8;
-        }
-        body.dark .modal-content .btn-primary {
-            background: #3b82f6;
-        }
-        body.dark .modal-content .btn-primary:hover {
-            background: #2563eb;
-        }
-        body.dark .modal-content .btn-secondary {
-            background: #334155;
-            color: #e2e8f0;
-        }
-        body.dark .modal-content .btn-secondary:hover {
-            background: #475569;
-        }
-
+        /* ===== НЕОНОВЫЙ ДИЗАЙН ===== */
         .platform-wrapper {
             max-width: 1400px;
             width: 100%;
-            background: white;
+            background: #0d0d1a;
             border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 60px rgba(100, 0, 255, 0.15), 0 0 120px rgba(0, 200, 255, 0.08);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: fit-content;
+            border: 1px solid rgba(100, 0, 255, 0.2);
         }
 
         .header {
-            background: white;
+            background: rgba(13, 13, 26, 0.95);
             padding: 20px 30px;
-            border-bottom: 1px solid #e9edf4;
+            border-bottom: 1px solid rgba(100, 0, 255, 0.25);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
+            backdrop-filter: blur(10px);
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
         }
 
         .logo-icon {
-            background: #2563eb;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .logo-text {
-            font-weight: 700;
-            font-size: 24px;
+            font-weight: 800;
+            font-size: 26px;
             letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
         }
         .logo-text span {
-            color: #2563eb;
+            background: linear-gradient(135deg, #f472b6, #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .search-bar {
             flex: 1;
             min-width: 200px;
             max-width: 420px;
-            background: #f1f5f9;
+            background: rgba(30, 30, 60, 0.6);
             border-radius: 40px;
             padding: 10px 18px;
             display: flex;
             align-items: center;
             gap: 10px;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.05);
+        }
+        .search-bar:focus-within {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
         }
         .search-bar i {
-            color: #64748b;
+            color: #8b5cf6;
             font-size: 16px;
         }
         .search-bar input {
@@ -302,17 +113,21 @@
             width: 100%;
             outline: none;
             font-size: 15px;
+            color: #e0e0ff;
+        }
+        .search-bar input::placeholder {
+            color: #6b6b9e;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .user-profile .avatar {
-            background: #2563eb;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
             width: 44px;
             height: 44px;
@@ -320,63 +135,82 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 18px;
             cursor: pointer;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
         .user-profile .badge {
-            background: #eef2ff;
-            padding: 6px 14px;
+            background: rgba(139, 92, 246, 0.15);
+            padding: 6px 16px;
             border-radius: 30px;
-            font-size: 14px;
-            color: #2563eb;
-            font-weight: 500;
+            font-size: 13px;
+            color: #a78bfa;
+            font-weight: 600;
             cursor: pointer;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        .user-profile .badge i {
+            color: #fbbf24;
         }
 
         .theme-toggle {
-            background: transparent;
-            border: none;
-            font-size: 22px;
-            color: #64748b;
-            cursor: pointer;
-            padding: 6px 10px;
+            background: rgba(30, 30, 60, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 40px;
-            transition: 0.2s;
+            padding: 8px 12px;
+            color: #a78bfa;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 18px;
+        }
+        .theme-toggle:hover {
+            background: rgba(139, 92, 246, 0.15);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: #f87171;
+            cursor: pointer;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-weight: 500;
         }
-        .theme-toggle:hover {
-            background: #e2e8f0;
-        }
-        body.dark .theme-toggle {
-            color: #f1f5f9;
-        }
-        body.dark .theme-toggle:hover {
-            background: #334155;
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
         }
 
         .nav-bar {
-            background: white;
+            background: rgba(13, 13, 26, 0.9);
             padding: 0 30px;
-            border-bottom: 1px solid #e9edf4;
+            border-bottom: 1px solid rgba(100, 0, 255, 0.15);
             display: flex;
             flex-wrap: wrap;
             gap: 8px 18px;
+            backdrop-filter: blur(10px);
         }
         .nav-link {
             padding: 16px 4px 12px 4px;
-            font-weight: 500;
-            color: #475569;
+            font-weight: 600;
+            color: #8b8bb8;
             border-bottom: 3px solid transparent;
-            transition: 0.2s;
+            transition: 0.3s;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 15px;
+            font-size: 14px;
             background: transparent;
             border-top: none;
             border-left: none;
@@ -385,25 +219,23 @@
         }
         .nav-link i {
             font-size: 16px;
-            color: #64748b;
+            color: #6b6b9e;
         }
         .nav-link.active {
-            color: #2563eb;
-            border-bottom-color: #2563eb;
+            color: #a78bfa;
+            border-bottom-color: #8b5cf6;
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
         .nav-link.active i {
-            color: #2563eb;
+            color: #8b5cf6;
         }
         .nav-link:hover {
-            color: #1e293b;
-        }
-        body.dark .nav-link:hover {
-            color: #e2e8f0;
+            color: #c4b5fd;
         }
 
         .main-content {
             padding: 30px;
-            background: #f8fafc;
+            background: #0a0a15;
         }
 
         .welcome-section {
@@ -411,11 +243,15 @@
         }
         .welcome-section h1 {
             font-size: 28px;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c4b5fd, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .welcome-section p {
-            color: #475569;
+            color: #8b8bb8;
             margin-top: 6px;
+            font-size: 16px;
         }
 
         .section-title {
@@ -425,78 +261,85 @@
             margin: 30px 0 18px 0;
         }
         .section-title h2 {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 22px;
+            background: linear-gradient(135deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .section-title a {
-            color: #2563eb;
+            color: #8b5cf6;
             font-weight: 500;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
+            transition: 0.3s;
         }
         .section-title a:hover {
-            text-decoration: underline;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            color: #a78bfa;
         }
 
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
         }
 
         .course-card {
-            background: white;
+            background: rgba(20, 20, 45, 0.8);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            transition: 0.25s ease;
-            border: 1px solid #edf2f7;
+            transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(139, 92, 246, 0.12);
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            backdrop-filter: blur(5px);
         }
         .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -8px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.15), 0 0 120px rgba(6, 182, 212, 0.05);
         }
 
         .card-thumb {
             height: 130px;
-            background: linear-gradient(145deg, #dbeafe, #bfdbfe);
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.1));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 42px;
-            color: #1e4f8a;
+            font-size: 44px;
+            color: #a78bfa;
             flex-shrink: 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
         }
-        .card-thumb.green { background: linear-gradient(145deg, #d1fae5, #a7f3d0); color: #0b5e42; }
-        .card-thumb.purple { background: linear-gradient(145deg, #ede9fe, #c4b5fd); color: #4f2d7a; }
-        .card-thumb.orange { background: linear-gradient(145deg, #fff3e0, #ffd7a5); color: #92400e; }
-        .card-thumb.rose { background: linear-gradient(145deg, #ffe4e6, #fecdd3); color: #881337; }
-        .card-thumb.teal { background: linear-gradient(145deg, #ccfbf1, #99f6e4); color: #115e59; }
-        .card-thumb.indigo { background: linear-gradient(145deg, #e0e7ff, #c7d2fe); color: #3730a3; }
-        .card-thumb.emerald { background: linear-gradient(145deg, #d1fae5, #a7f3d0); color: #065f46; }
-        .card-thumb.cyan { background: linear-gradient(145deg, #cffafe, #a5f3fc); color: #0e7490; }
-        .card-thumb.pink { background: linear-gradient(145deg, #fce7f3, #fbcfe8); color: #9d174d; }
-        .card-thumb.amber { background: linear-gradient(145deg, #fef3c7, #fde68a); color: #b45309; }
+        .card-thumb.green { background: linear-gradient(145deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.08)); color: #6ee7b7; }
+        .card-thumb.purple { background: linear-gradient(145deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.1)); color: #a78bfa; }
+        .card-thumb.orange { background: linear-gradient(145deg, rgba(251, 146, 60, 0.15), rgba(245, 158, 11, 0.08)); color: #fb923c; }
+        .card-thumb.rose { background: linear-gradient(145deg, rgba(244, 114, 182, 0.15), rgba(236, 72, 153, 0.08)); color: #f472b6; }
+        .card-thumb.teal { background: linear-gradient(145deg, rgba(45, 212, 191, 0.15), rgba(20, 184, 166, 0.08)); color: #5eead4; }
+        .card-thumb.indigo { background: linear-gradient(145deg, rgba(129, 140, 248, 0.15), rgba(99, 102, 241, 0.08)); color: #818cf8; }
+        .card-thumb.emerald { background: linear-gradient(145deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.08)); color: #6ee7b7; }
+        .card-thumb.cyan { background: linear-gradient(145deg, rgba(6, 182, 212, 0.15), rgba(8, 145, 178, 0.08)); color: #67e8f9; }
+        .card-thumb.pink { background: linear-gradient(145deg, rgba(244, 114, 182, 0.2), rgba(236, 72, 153, 0.1)); color: #f472b6; }
+        .card-thumb.amber { background: linear-gradient(145deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.08)); color: #fbbf24; }
 
         .card-body {
-            padding: 18px 16px 16px 16px;
+            padding: 18px 16px 14px 16px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
         .card-body h3 {
             font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 6px;
+            font-size: 17px;
+            color: #e0e0ff;
+            margin-bottom: 4px;
         }
         .card-body .meta {
-            font-size: 14px;
-            color: #64748b;
+            font-size: 13px;
+            color: #8b8bb8;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -506,6 +349,7 @@
         .card-body .meta i {
             margin-right: 4px;
             width: 16px;
+            color: #6b6b9e;
         }
         .card-body .progress-block {
             margin-top: auto;
@@ -516,72 +360,89 @@
         .progress-bar-bg {
             flex: 1;
             height: 6px;
-            background: #e2e8f0;
+            background: rgba(139, 92, 246, 0.15);
             border-radius: 10px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: #2563eb;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
             border-radius: 10px;
             width: 0%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
         .progress-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1e293b;
+            font-size: 13px;
+            font-weight: 600;
+            color: #a78bfa;
             min-width: 40px;
         }
 
         .card-footer {
             padding: 12px 16px 16px 16px;
-            border-top: 1px solid #f1f5f9;
+            border-top: 1px solid rgba(139, 92, 246, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fafcff;
+            background: rgba(10, 10, 21, 0.5);
             flex-wrap: wrap;
             gap: 8px;
         }
         .btn-outline {
-            background: transparent;
-            border: 1px solid #cbd5e1;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 40px;
-            padding: 6px 16px;
-            font-weight: 500;
-            font-size: 14px;
-            color: #1e293b;
-            transition: 0.15s;
+            padding: 6px 18px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #a78bfa;
+            transition: 0.3s;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
         .btn-outline:hover {
-            background: #f1f5f9;
+            background: rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.3);
         }
         .badge-status {
-            background: #dcfce7;
-            color: #166534;
-            padding: 4px 12px;
+            background: rgba(52, 211, 153, 0.12);
+            color: #6ee7b7;
+            padding: 4px 14px;
             border-radius: 40px;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
             cursor: default;
+            border: 1px solid rgba(52, 211, 153, 0.1);
         }
-        .badge-status.ongoing { background: #fef9c3; color: #854d0e; }
-        .badge-status.test { background: #ede9fe; color: #5b21b6; }
-        .badge-status.completed { background: #d1fae5; color: #065f46; }
+        .badge-status.ongoing {
+            background: rgba(251, 191, 36, 0.12);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.1);
+        }
+        .badge-status.test {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            border-color: rgba(139, 92, 246, 0.1);
+        }
+        .badge-status.completed {
+            background: rgba(52, 211, 153, 0.15);
+            color: #6ee7b7;
+            border-color: rgba(52, 211, 153, 0.1);
+        }
 
         .stats-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
             margin: 30px 0 10px 0;
-            background: white;
+            background: rgba(20, 20, 45, 0.6);
             padding: 20px 24px;
             border-radius: 24px;
-            border: 1px solid #edf2f7;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(5px);
         }
         .stat-item {
             display: flex;
@@ -589,32 +450,34 @@
             gap: 14px;
         }
         .stat-item i {
-            font-size: 24px;
-            color: #2563eb;
-            background: #eef2ff;
+            font-size: 22px;
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
             padding: 12px;
             border-radius: 16px;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.05);
         }
         .stat-info .number {
             font-weight: 700;
             font-size: 20px;
+            color: #e0e0ff;
         }
         .stat-info .label {
-            color: #64748b;
-            font-size: 14px;
+            color: #8b8bb8;
+            font-size: 13px;
         }
 
         .footer-note {
             margin-top: 0;
             padding: 20px 30px;
-            background: white;
-            border-top: 1px solid #e9edf4;
+            background: rgba(13, 13, 26, 0.9);
+            border-top: 1px solid rgba(100, 0, 255, 0.1);
             text-align: center;
-            font-size: 14px;
-            color: #64748b;
+            font-size: 13px;
+            color: #6b6b9e;
         }
         .footer-note i {
-            color: #2563eb;
+            color: #8b5cf6;
         }
 
         .toast-message {
@@ -622,43 +485,36 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1e293b;
-            color: #f1f5f9;
+            background: rgba(20, 20, 45, 0.95);
+            color: #e0e0ff;
             padding: 12px 28px;
             border-radius: 60px;
             font-weight: 500;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.2), 0 0 120px rgba(6, 182, 212, 0.05);
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
             z-index: 999;
-            font-size: 15px;
-            border: 1px solid #475569;
-            max-width: 90%;
-            text-align: center;
-        }
-        body.dark .toast-message {
-            background: #0f172a;
-            border-color: #475569;
+            font-size: 14px;
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            backdrop-filter: blur(10px);
         }
         .toast-message.show {
             opacity: 1;
         }
 
         .test-question {
-            background: white;
+            background: rgba(20, 20, 45, 0.6);
             border-radius: 16px;
             padding: 20px 24px;
             margin-bottom: 16px;
-            border: 1px solid #edf2f7;
-        }
-        body.dark .test-question {
-            background: #1e293b;
-            border-color: #334155;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(5px);
         }
         .test-question h4 {
             margin-bottom: 12px;
             font-weight: 600;
+            color: #e0e0ff;
         }
         .test-options {
             display: flex;
@@ -670,129 +526,100 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 10px;
-            transition: 0.15s;
-            border: 1px solid transparent;
+            padding: 10px 14px;
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 1px solid rgba(139, 92, 246, 0.06);
+            color: #c4c4f0;
         }
         .test-options label:hover {
-            background: #f1f5f9;
-        }
-        body.dark .test-options label:hover {
-            background: #334155;
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.15);
         }
         .test-options input[type="radio"] {
-            accent-color: #2563eb;
+            accent-color: #8b5cf6;
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
         .test-options label.correct-answer {
-            background: #dcfce7;
-            border-color: #86efac;
-        }
-        body.dark .test-options label.correct-answer {
-            background: #064e3b;
-            border-color: #34d399;
+            background: rgba(52, 211, 153, 0.12);
+            border-color: rgba(52, 211, 153, 0.2);
         }
         .test-options label.wrong-answer {
-            background: #fee2e2;
-            border-color: #fca5a5;
-        }
-        body.dark .test-options label.wrong-answer {
-            background: #450a0a;
-            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.2);
         }
 
         .account-selector {
             display: flex;
             gap: 8px;
             align-items: center;
-            background: #f1f5f9;
+            background: rgba(30, 30, 60, 0.5);
             padding: 4px 12px 4px 16px;
             border-radius: 30px;
-            border: 1px solid #e2e8f0;
-        }
-        body.dark .account-selector {
-            background: #334155;
-            border-color: #475569;
+            border: 1px solid rgba(139, 92, 246, 0.15);
         }
         .account-selector select {
             background: transparent;
             border: none;
             padding: 8px 4px;
-            font-weight: 500;
-            font-size: 14px;
-            color: #1e293b;
+            font-weight: 600;
+            font-size: 13px;
+            color: #e0e0ff;
             outline: none;
             cursor: pointer;
             max-width: 120px;
         }
-        body.dark .account-selector select {
-            color: #e2e8f0;
-        }
         .account-selector select option {
-            background: white;
-            color: #1e293b;
-        }
-        body.dark .account-selector select option {
-            background: #1e293b;
-            color: #e2e8f0;
+            background: #1a1a2e;
+            color: #e0e0ff;
         }
         .account-selector .add-account-btn {
-            background: #2563eb;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
             border: none;
             border-radius: 50%;
             width: 28px;
             height: 28px;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            transition: 0.3s;
             flex-shrink: 0;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
         }
         .account-selector .add-account-btn:hover {
-            background: #1d4ed8;
-            transform: scale(1.05);
-        }
-        body.dark .account-selector .add-account-btn {
-            background: #3b82f6;
-        }
-        body.dark .account-selector .add-account-btn:hover {
-            background: #2563eb;
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
         }
 
         .test-progress-bar {
             display: flex;
             gap: 8px;
             align-items: center;
-            font-size: 14px;
-            color: #64748b;
-        }
-        body.dark .test-progress-bar {
-            color: #94a3b8;
+            font-size: 13px;
+            color: #8b8bb8;
         }
         .test-progress-bar .bar-bg {
             flex: 1;
             height: 6px;
-            background: #e2e8f0;
+            background: rgba(139, 92, 246, 0.1);
             border-radius: 10px;
             overflow: hidden;
             min-width: 60px;
         }
-        body.dark .test-progress-bar .bar-bg {
-            background: #334155;
-        }
         .test-progress-bar .bar-fill {
             height: 100%;
-            background: #2563eb;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
             border-radius: 10px;
             width: 0%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
 
+        /* Модальное окно */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -800,22 +627,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
         }
         .modal-overlay.active {
             display: flex;
         }
         .modal-content {
-            background: white;
+            background: rgba(20, 20, 45, 0.95);
             border-radius: 24px;
             padding: 40px 48px;
             max-width: 460px;
             width: 90%;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 80px rgba(139, 92, 246, 0.15), 0 0 160px rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.1);
             animation: modalSlide 0.3s ease;
         }
         @keyframes modalSlide {
@@ -826,11 +654,14 @@
             font-size: 24px;
             margin-bottom: 8px;
             font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .modal-content .subtitle {
-            color: #64748b;
+            color: #8b8bb8;
             margin-bottom: 24px;
-            font-size: 15px;
+            font-size: 14px;
         }
         .modal-content .form-group {
             margin-bottom: 18px;
@@ -839,20 +670,26 @@
             display: block;
             font-weight: 500;
             margin-bottom: 6px;
-            font-size: 14px;
+            font-size: 13px;
+            color: #c4c4f0;
         }
         .modal-content input {
             width: 100%;
             padding: 12px 16px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(139, 92, 246, 0.15);
             border-radius: 12px;
             font-size: 15px;
             outline: none;
-            transition: 0.2s;
+            transition: 0.3s;
+            background: rgba(30, 30, 60, 0.5);
+            color: #e0e0ff;
         }
         .modal-content input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            border-color: #8b5cf6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
+        }
+        .modal-content input::placeholder {
+            color: #6b6b9e;
         }
         .modal-content .btn-row {
             display: flex;
@@ -861,67 +698,44 @@
         }
         .modal-content .btn-primary {
             flex: 1;
-            background: #2563eb;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
             border: none;
             padding: 12px 20px;
             border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
         }
         .modal-content .btn-primary:hover {
-            background: #1d4ed8;
+            transform: scale(1.02);
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.25);
         }
         .modal-content .btn-secondary {
             flex: 1;
-            background: #f1f5f9;
-            color: #1e293b;
-            border: none;
+            background: rgba(30, 30, 60, 0.5);
+            color: #c4c4f0;
+            border: 1px solid rgba(139, 92, 246, 0.1);
             padding: 12px 20px;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .modal-content .btn-secondary:hover {
-            background: #e2e8f0;
+            background: rgba(139, 92, 246, 0.1);
         }
         .modal-content .error-text {
-            color: #dc2626;
+            color: #f87171;
             font-size: 13px;
             margin-top: 4px;
             display: none;
         }
         .modal-content .error-text.show {
             display: block;
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            padding: 6px 16px;
-            font-size: 14px;
-            color: #64748b;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .logout-btn:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-        body.dark .logout-btn {
-            border-color: #475569;
-            color: #94a3b8;
-        }
-        body.dark .logout-btn:hover {
-            background: #334155;
         }
 
         @media (max-width: 700px) {
@@ -947,17 +761,17 @@
 
 <div class="modal-overlay" id="registerModal">
     <div class="modal-content">
-        <h2>📝 Создать аккаунт</h2>
-        <p class="subtitle">Введите имя и фамилию для регистрации</p>
+        <h2>🚀 Создать аккаунт</h2>
+        <p class="subtitle">Введи имя и фамилию, чтобы начать обучение</p>
         <div class="form-group">
             <label for="regFirstName">Имя</label>
-            <input type="text" id="regFirstName" placeholder="Введите имя" maxlength="30">
+            <input type="text" id="regFirstName" placeholder="Твоё имя" maxlength="30">
         </div>
         <div class="form-group">
             <label for="regLastName">Фамилия</label>
-            <input type="text" id="regLastName" placeholder="Введите фамилию" maxlength="30">
+            <input type="text" id="regLastName" placeholder="Твоя фамилия" maxlength="30">
         </div>
-        <div class="error-text" id="regError">Пожалуйста, заполните имя и фамилию</div>
+        <div class="error-text" id="regError">Заполни имя и фамилию, братан!</div>
         <div class="btn-row">
             <button class="btn-secondary" id="regCancelBtn">Отмена</button>
             <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
@@ -974,11 +788,11 @@
         </div>
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Поиск курсов, лекций..." id="searchInput">
+            <input type="text" placeholder="Ищи курсы, тесты..." id="searchInput">
         </div>
         <div class="user-profile">
             <div class="account-selector">
-                <i class="fas fa-user-circle" style="color: #2563eb;"></i>
+                <i class="fas fa-user-circle" style="color: #8b5cf6;"></i>
                 <select id="accountSelect"></select>
                 <button class="add-account-btn" id="addAccountBtn" title="Создать новый аккаунт">
                     <i class="fas fa-plus"></i>
@@ -1006,7 +820,7 @@
 
         <div class="welcome-section">
             <h1 id="greeting">👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!</h1>
-            <p id="subGreeting">Создайте аккаунт или войдите в существующий</p>
+            <p id="subGreeting">Создай аккаунт или войди в существующий 🔥</p>
         </div>
 
         <div class="stats-row" id="statsRow">
@@ -1038,7 +852,7 @@
     </div>
 
     <div class="footer-note">
-        <i class="fas fa-graduation-cap"></i> EduCore · Образовательная платформа · Сделано с ❤️ для студентов
+        <i class="fas fa-graduation-cap"></i> EduCore · Учись по-крутому · Сделано с ❤️ для будущих звёзд
     </div>
 </div>
 
@@ -1066,22 +880,19 @@
             return null;
         }
 
-        // ----- ДАННЫЕ АККАУНТОВ (хранятся в cookie) -----
+        // ----- ДАННЫЕ АККАУНТОВ -----
         let accounts = [];
         let currentAccountId = null;
         let nextId = 1;
 
-        // ----- ЗАГРУЗКА ДАННЫХ ИЗ COOKIE -----
         function loadAccountsFromCookie() {
-            const saved = getCookie('edu_accounts');
+            const saved = getCookie('edu_accounts_neon');
             if (saved && Array.isArray(saved)) {
                 accounts = saved;
-                // Находим максимальный id
                 accounts.forEach(acc => {
                     if (acc.id >= nextId) nextId = acc.id + 1;
                 });
             } else {
-                // Создаём демо-аккаунты только если нет сохранённых
                 accounts = [
                     {
                         id: 1,
@@ -1136,25 +947,24 @@
                 saveAccountsToCookie();
             }
             
-            // Загружаем текущий аккаунт
-            const savedCurrent = getCookie('edu_current_account');
+            const savedCurrent = getCookie('edu_current_account_neon');
             if (savedCurrent && accounts.some(a => a.id === savedCurrent)) {
                 currentAccountId = savedCurrent;
             } else if (accounts.length > 0) {
                 currentAccountId = accounts[0].id;
-                setCookie('edu_current_account', currentAccountId);
+                setCookie('edu_current_account_neon', currentAccountId);
             }
         }
 
         function saveAccountsToCookie() {
-            setCookie('edu_accounts', accounts);
+            setCookie('edu_accounts_neon', accounts);
         }
 
         function saveCurrentAccount() {
-            setCookie('edu_current_account', currentAccountId);
+            setCookie('edu_current_account_neon', currentAccountId);
         }
 
-        // ----- ДАННЫЕ КУРСОВ (общие) -----
+        // ----- ДАННЫЕ КУРСОВ -----
         const courseList = [
             { title: 'Веб-разработка 2026', lessons: '24 урока', time: '8 ч', thumb: 'fa-code', thumbClass: '' },
             { title: 'Анализ данных с Python', lessons: '18 уроков', time: '11 ч', thumb: 'fa-chart-pie', thumbClass: 'green' },
@@ -1169,13 +979,12 @@
         ];
 
         const recommendList = [
-            { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, #fce7f3, #fbcfe8)', color: '#86198f' },
-            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, #ccfbf1, #99f6e4)', color: '#115e59' },
-            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, #ede9fe, #c4b5fd)', color: '#4f2d7a' },
-            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, #d1fae5, #a7f3d0)', color: '#0b5e42' }
+            { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, rgba(139,92,246,0.15), rgba(99,102,241,0.08))', color: '#a78bfa' },
+            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, rgba(45,212,191,0.15), rgba(20,184,166,0.08))', color: '#5eead4' },
+            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, rgba(139,92,246,0.15), rgba(99,102,241,0.08))', color: '#a78bfa' },
+            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, rgba(52,211,153,0.15), rgba(16,185,129,0.08))', color: '#6ee7b7' }
         ];
 
-        // ----- ДАННЫЕ ТЕСТОВ (общие) -----
         const testList = [
             {
                 id: 'js',
@@ -1215,10 +1024,8 @@
             }
         ];
 
-        // ----- СОСТОЯНИЕ ТЕСТОВ -----
         let testStates = {};
 
-        // ----- TOAST -----
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg || '✨ Действие выполнено';
@@ -1227,7 +1034,6 @@
             toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ----- ПОЛУЧИТЬ АККАУНТ -----
         function getAccount(id) {
             return accounts.find(a => a.id === id);
         }
@@ -1236,7 +1042,6 @@
             return getAccount(currentAccountId);
         }
 
-        // ----- ГЕНЕРАЦИЯ ДЕФОЛТНЫХ ДАННЫХ ДЛЯ НОВОГО АККАУНТА -----
         function createDefaultAccount(firstName, lastName) {
             const defaultProgress = {};
             courseList.forEach(c => {
@@ -1262,7 +1067,6 @@
             };
         }
 
-        // ----- РЕГИСТРАЦИЯ -----
         function registerUser(firstName, lastName) {
             if (!firstName.trim() || !lastName.trim()) {
                 document.getElementById('regError').classList.add('show');
@@ -1277,47 +1081,42 @@
             populateAccountSelect();
             document.getElementById('accountSelect').value = newAccount.id;
             switchAccount(newAccount.id);
-            showToast(`✅ Аккаунт ${firstName} ${lastName} создан!`);
+            showToast(`✅ Аккаунт ${firstName} создан! Добро пожаловать!`);
             return true;
         }
 
-        // ----- ВЫХОД -----
         function logout() {
             currentAccountId = null;
-            setCookie('edu_current_account', null, -1);
+            setCookie('edu_current_account_neon', null, -1);
             document.getElementById('userNameDisplay').textContent = 'Гость';
             document.getElementById('greeting').innerHTML = '👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!';
-            document.getElementById('subGreeting').textContent = 'Создайте аккаунт или войдите в существующий';
+            document.getElementById('subGreeting').textContent = 'Создай аккаунт или войди в существующий 🔥';
             
-            // Очищаем контент
             document.getElementById('courseGrid').innerHTML = '';
             document.getElementById('recommendGrid').innerHTML = '';
             document.getElementById('testsContainer').innerHTML = '';
             
-            // Обнуляем статистику
             document.getElementById('statCourses').textContent = '0';
             document.getElementById('statCompleted').textContent = '0';
             document.getElementById('statCertificates').textContent = '0';
             document.getElementById('statTests').textContent = '0';
             
-            // Обновляем селект
             populateAccountSelect();
-            showToast('👋 Вы вышли из аккаунта');
+            showToast('👋 Выход выполнен');
         }
 
-        // ----- РЕНДЕР КУРСОВ -----
         function renderCourses(containerId, data, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             if (!account) {
-                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы увидеть курсы</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы увидеть курсы</p>';
                 return;
             }
             data.forEach((item) => {
                 const progress = account.coursesProgress[item.title] || 0;
                 const status = progress === 100 ? 'завершён' : (progress > 0 ? 'в процессе' : 'начат');
-                const statusClass = progress === 100 ? '' : (progress > 0 ? 'ongoing' : 'ongoing');
+                const statusClass = progress === 100 ? 'completed' : (progress > 0 ? 'ongoing' : 'ongoing');
 
                 const card = document.createElement('div');
                 card.className = 'course-card';
@@ -1377,13 +1176,12 @@
             });
         }
 
-        // ----- РЕНДЕР РЕКОМЕНДАЦИЙ -----
         function renderRecommend(containerId, data) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             if (!getCurrentAccount()) {
-                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы увидеть рекомендации</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы увидеть рекомендации</p>';
                 return;
             }
             data.forEach((item) => {
@@ -1434,13 +1232,12 @@
             });
         }
 
-        // ----- РЕНДЕР ТЕСТОВ -----
         function renderTests(containerId, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
             if (!account) {
-                container.innerHTML = '<p style="color: #64748b; padding: 20px; text-align: center;">Войдите в аккаунт, чтобы пройти тесты</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт, чтобы пройти тесты</p>';
                 return;
             }
 
@@ -1472,8 +1269,9 @@
                 header.style.gap = '8px';
 
                 const title = document.createElement('h3');
-                title.style.fontWeight = '600';
-                title.innerHTML = `<i class="fas fa-pencil-alt" style="color: #2563eb; margin-right: 10px;"></i>${test.title}`;
+                title.style.fontWeight = '700';
+                title.style.color = '#a78bfa';
+                title.innerHTML = `<i class="fas fa-pencil-alt" style="color: #8b5cf6; margin-right: 10px;"></i>${test.title}`;
                 header.appendChild(title);
 
                 const progressInfo = document.createElement('div');
@@ -1537,7 +1335,7 @@
                                     state[qIndex] = true;
                                     updateStats(account);
                                     saveAccountsToCookie();
-                                    showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно. Правильный ответ подсвечен.');
+                                    showToast(isCorrect ? '✅ Правильно! Красава!' : '❌ Неправильно. Правильный ответ подсвечен.');
                                     renderTests('testsContainer', account);
                                     updateStatsDisplay(account);
                                 }
@@ -1553,7 +1351,6 @@
             });
         }
 
-        // ----- ОБНОВЛЕНИЕ СТАТИСТИКИ -----
         function updateStats(account) {
             let testsPassed = 0;
             for (const key in account.testsResults) {
@@ -1580,7 +1377,6 @@
             document.getElementById('statTests').textContent = account.stats.tests || 0;
         }
 
-        // ----- ПЕРЕКЛЮЧЕНИЕ АККАУНТА -----
         function switchAccount(accountId) {
             currentAccountId = accountId;
             const account = getCurrentAccount();
@@ -1592,21 +1388,19 @@
             saveCurrentAccount();
             document.getElementById('userNameDisplay').textContent = account.firstName;
             document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
-            document.getElementById('subGreeting').textContent = 'Продолжай учиться — сегодня отличный день для новых знаний.';
+            document.getElementById('subGreeting').textContent = 'Продолжай учиться — ты крут! 🔥';
 
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
             updateStatsDisplay(account);
             
-            // Обновляем селект
             populateAccountSelect();
             document.getElementById('accountSelect').value = account.id;
             
-            showToast(`👤 Переключено на аккаунт: ${account.firstName} ${account.lastName}`);
+            showToast(`👤 Переключено на ${account.firstName}`);
         }
 
-        // ----- ЗАПОЛНЕНИЕ СПИСКА АККАУНТОВ -----
         function populateAccountSelect() {
             const select = document.getElementById('accountSelect');
             select.innerHTML = '';
@@ -1687,7 +1481,7 @@
                 const account = getCurrentAccount();
                 document.getElementById('userNameDisplay').textContent = account.firstName;
                 document.getElementById('greeting').innerHTML = `👋 Добро пожаловать, <span id="userNameDisplay">${account.firstName}</span>!`;
-                document.getElementById('subGreeting').textContent = 'Продолжай учиться — сегодня отличный день для новых знаний.';
+                document.getElementById('subGreeting').textContent = 'Продолжай учиться — ты крут! 🔥';
                 renderCourses('courseGrid', courseList, account);
                 renderRecommend('recommendGrid', recommendList);
                 renderTests('testsContainer', account);
@@ -1741,7 +1535,6 @@
                     default: msg = '✨ Раздел открыт';
                 }
                 const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
-                const account = getCurrentAccount();
                 greeting.innerHTML = `👋 Раздел: ${tabName}`;
                 subGreeting.textContent = msg;
             }
@@ -1756,20 +1549,12 @@
                 });
             });
 
-            // ТЕМА
+            // ТЕМА (только тёмная, кнопка для переключения на светлую не нужна, но оставим для прикола)
             const themeToggle = document.getElementById('themeToggle');
-            let dark = false;
+            let dark = true; // всегда тёмная
             themeToggle.addEventListener('click', function() {
-                dark = !dark;
-                document.body.classList.toggle('dark', dark);
-                const icon = this.querySelector('i');
-                if (dark) {
-                    icon.className = 'fas fa-sun';
-                    showToast('🌙 Тёмная тема включена');
-                } else {
-                    icon.className = 'fas fa-moon';
-                    showToast('☀️ Светлая тема включена');
-                }
+                // просто шоу-тост, потому что светлой темы нет
+                showToast('🌙 Тёмная тема — это стиль!');
             });
 
             // ССЫЛКИ
@@ -1793,7 +1578,7 @@
                     if (val) {
                         showToast(`🔍 Поиск: "${val}"`);
                     } else {
-                        showToast('✏️ Введите запрос для поиска');
+                        showToast('✏️ Введи запрос для поиска');
                     }
                 }
             });
@@ -1804,7 +1589,7 @@
                 if (acc) {
                     showToast(`👤 Профиль: ${acc.firstName} ${acc.lastName}`);
                 } else {
-                    showToast('👤 Войдите в аккаунт');
+                    showToast('👤 Войди в аккаунт');
                 }
             });
             document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
@@ -1815,10 +1600,8 @@
                 showTab('overview');
             });
 
-            // ВЫХОД
             document.getElementById('logoutBtn').addEventListener('click', logout);
 
-            // СМЕНА АККАУНТА
             document.getElementById('accountSelect').addEventListener('change', function() {
                 if (this.value) {
                     switchAccount(parseInt(this.value));
@@ -1827,10 +1610,9 @@
 
             showTab('overview');
             
-            console.log('✅ Платформа с персональными аккаунтами в cookies загружена');
+            console.log('🚀 EduCore Neon запущен!');
         }
 
-        // Запускаем, когда DOM полностью загружен
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
