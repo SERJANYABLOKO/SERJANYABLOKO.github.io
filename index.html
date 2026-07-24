@@ -138,21 +138,6 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .user-profile .badge {
-            background: rgba(139, 92, 246, 0.15);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            color: #a78bfa;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            backdrop-filter: blur(5px);
-        }
-        .user-profile .badge i {
-            color: #fbbf24;
-        }
-
         .currency-display {
             background: rgba(251, 191, 36, 0.08);
             border: 1px solid rgba(251, 191, 36, 0.15);
@@ -169,21 +154,6 @@
         .currency-display i {
             color: #fbbf24;
             font-size: 16px;
-        }
-
-        .theme-toggle {
-            background: rgba(30, 30, 60, 0.5);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 40px;
-            padding: 8px 12px;
-            color: #a78bfa;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 18px;
-        }
-        .theme-toggle:hover {
-            background: rgba(139, 92, 246, 0.15);
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
         }
 
         .logout-btn {
@@ -1035,60 +1005,54 @@
             box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
         }
 
-        .modal-overlay {
+        /* ===== РЕГИСТРАЦИЯ ===== */
+        .register-section {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
         }
-        .modal-overlay.active {
-            display: flex;
+        .register-section.active {
+            display: block;
         }
-        .modal-content {
-            background: rgba(20, 20, 45, 0.95);
+
+        .register-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(20, 20, 45, 0.6);
             border-radius: 24px;
             padding: 40px 48px;
-            max-width: 460px;
-            width: 90%;
-            box-shadow: 0 0 80px rgba(139, 92, 246, 0.15), 0 0 160px rgba(6, 182, 212, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            animation: modalSlide 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(5px);
         }
-        @keyframes modalSlide {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-content h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
+
+        .register-container h2 {
+            font-size: 28px;
             font-weight: 700;
             background: linear-gradient(135deg, #a78bfa, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 8px;
         }
-        .modal-content .subtitle {
+
+        .register-container .subtitle {
             color: #8b8bb8;
-            margin-bottom: 24px;
-            font-size: 14px;
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 15px;
         }
-        .modal-content .form-group {
+
+        .register-container .form-group {
             margin-bottom: 18px;
         }
-        .modal-content label {
+
+        .register-container label {
             display: block;
             font-weight: 500;
             margin-bottom: 6px;
-            font-size: 13px;
+            font-size: 14px;
             color: #c4c4f0;
         }
-        .modal-content input {
+
+        .register-container input {
             width: 100%;
             padding: 12px 16px;
             border: 1px solid rgba(139, 92, 246, 0.15);
@@ -1099,19 +1063,23 @@
             background: rgba(30, 30, 60, 0.5);
             color: #e0e0ff;
         }
-        .modal-content input:focus {
+
+        .register-container input:focus {
             border-color: #8b5cf6;
             box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
         }
-        .modal-content input::placeholder {
+
+        .register-container input::placeholder {
             color: #6b6b9e;
         }
-        .modal-content .btn-row {
+
+        .register-container .btn-row {
             display: flex;
             gap: 12px;
             margin-top: 24px;
         }
-        .modal-content .btn-primary {
+
+        .register-container .btn-primary {
             flex: 1;
             background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
@@ -1119,37 +1087,37 @@
             padding: 12px 20px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
         }
-        .modal-content .btn-primary:hover {
+
+        .register-container .btn-primary:hover {
             transform: scale(1.02);
             box-shadow: 0 0 60px rgba(139, 92, 246, 0.25);
         }
-        .modal-content .btn-secondary {
-            flex: 1;
-            background: rgba(30, 30, 60, 0.5);
-            color: #c4c4f0;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .modal-content .btn-secondary:hover {
-            background: rgba(139, 92, 246, 0.1);
-        }
-        .modal-content .error-text {
+
+        .register-container .error-text {
             color: #f87171;
             font-size: 13px;
             margin-top: 4px;
             display: none;
         }
-        .modal-content .error-text.show {
+
+        .register-container .error-text.show {
+            display: block;
+        }
+
+        .register-container .success-text {
+            color: #6ee7b7;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .register-container .success-text.show {
             display: block;
         }
 
@@ -1161,7 +1129,7 @@
             .main-content { padding: 20px; }
             .stats-row { flex-direction: column; }
             .account-selector { width: 100%; justify-content: space-between; }
-            .modal-content { padding: 30px 24px; }
+            .register-container { padding: 30px 24px; margin: 20px auto; }
             .account-selector select { max-width: 100px; }
             .test-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; }
             .test-tab { flex-shrink: 0; font-size: 12px; padding: 8px 16px; }
@@ -1176,32 +1144,13 @@
             .logo-text { font-size: 20px; }
             .course-grid { grid-template-columns: 1fr; }
             .subject-grid { grid-template-columns: 1fr 1fr; }
+            .register-container { padding: 20px 16px; }
         }
     </style>
 </head>
 <body>
 
 <div id="toast" class="toast-message">✨ Действие выполнено</div>
-
-<div class="modal-overlay" id="registerModal">
-    <div class="modal-content">
-        <h2>🚀 Создать аккаунт</h2>
-        <p class="subtitle">Введи имя и фамилию, чтобы начать обучение</p>
-        <div class="form-group">
-            <label for="regFirstName">Имя</label>
-            <input type="text" id="regFirstName" placeholder="Твоё имя" maxlength="30">
-        </div>
-        <div class="form-group">
-            <label for="regLastName">Фамилия</label>
-            <input type="text" id="regLastName" placeholder="Твоя фамилия" maxlength="30">
-        </div>
-        <div class="error-text" id="regError">Заполни имя и фамилию, братан!</div>
-        <div class="btn-row">
-            <button class="btn-secondary" id="regCancelBtn">Отмена</button>
-            <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
-        </div>
-    </div>
-</div>
 
 <div class="platform-wrapper">
 
@@ -1226,10 +1175,6 @@
                 <i class="fas fa-coins"></i>
                 <span id="currencyAmount">0</span> SERJ
             </div>
-            <span class="badge" id="premiumBadge"><i class="fas fa-crown"></i> Премиум</span>
-            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                <i class="fas fa-moon"></i>
-            </button>
             <div class="avatar" id="avatarBtn">А</div>
             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
         </div>
@@ -1237,11 +1182,10 @@
 
     <nav class="nav-bar" id="navBar">
         <button class="nav-link active" data-tab="overview"><i class="fas fa-compass"></i> Обзор</button>
+        <button class="nav-link" data-tab="register"><i class="fas fa-user-plus"></i> Регистрация</button>
         <button class="nav-link" data-tab="lessons"><i class="fas fa-graduation-cap"></i> Уроки</button>
         <button class="nav-link" data-tab="tests"><i class="fas fa-pencil-alt"></i> Тесты</button>
         <button class="nav-link" data-tab="progress"><i class="fas fa-chart-line"></i> Прогресс</button>
-        <button class="nav-link" data-tab="schedule"><i class="fas fa-calendar-alt"></i> Расписание</button>
-        <button class="nav-link" data-tab="community"><i class="fas fa-users"></i> Сообщество</button>
     </nav>
 
     <div class="main-content" id="mainContent">
@@ -1251,6 +1195,7 @@
             <p id="subGreeting">Создай аккаунт или войди в существующий 🔥</p>
         </div>
 
+        <!-- СТАТИСТИКА -->
         <div class="stats-row" id="statsRow">
             <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">0</div><div class="label">Курсов в процессе</div></div></div>
             <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">0</div><div class="label">Завершено</div></div></div>
@@ -1258,6 +1203,27 @@
             <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">0</div><div class="label">Сертификатов</div></div></div>
             <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">0</div><div class="label">Пройдено тестов</div></div></div>
             <div class="stat-item"><i class="fas fa-coins"></i><div class="stat-info"><div class="number" id="statSerj">0</div><div class="label">Заработано SERJ</div></div></div>
+        </div>
+
+        <!-- РЕГИСТРАЦИЯ -->
+        <div id="registerSection" class="register-section">
+            <div class="register-container" id="registerContainer">
+                <h2>🚀 Создать аккаунт</h2>
+                <p class="subtitle">Зарегистрируйся и начни зарабатывать SERJ</p>
+                <div class="form-group">
+                    <label for="regFirstName">Имя</label>
+                    <input type="text" id="regFirstName" placeholder="Введи своё имя" maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label for="regLastName">Фамилия</label>
+                    <input type="text" id="regLastName" placeholder="Введи свою фамилию" maxlength="30">
+                </div>
+                <div class="error-text" id="regError">Заполни имя и фамилию, братан!</div>
+                <div class="success-text" id="regSuccess">✅ Аккаунт создан! Добро пожаловать в SerjCore! 🎉</div>
+                <div class="btn-row">
+                    <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
+                </div>
+            </div>
         </div>
 
         <!-- УРОКИ -->
@@ -1336,7 +1302,6 @@
         let currentAccountId = null;
         let nextId = 1;
 
-        // Функция для начисления SERJ
         function earnSerj(account, amount, reason = '') {
             if (!account) return;
             if (!account.serj) account.serj = 0;
@@ -2251,7 +2216,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 id: nextId++,
                 firstName: firstName,
                 lastName: lastName,
-                serj: 0,
+                serj: 50,
                 coursesProgress: defaultProgress,
                 testsResults: defaultResults,
                 lessonProgress: defaultLessons,
@@ -2262,12 +2227,31 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
         function registerUser(firstName, lastName) {
             if (!firstName.trim() || !lastName.trim()) {
                 document.getElementById('regError').classList.add('show');
+                document.getElementById('regSuccess').classList.remove('show');
                 return false;
             }
             document.getElementById('regError').classList.remove('show');
+            
+            // Проверка, существует ли уже такой пользователь
+            const exists = accounts.some(a => 
+                a.firstName.toLowerCase() === firstName.trim().toLowerCase() && 
+                a.lastName.toLowerCase() === lastName.trim().toLowerCase()
+            );
+            if (exists) {
+                document.getElementById('regError').textContent = '❌ Такой пользователь уже существует!';
+                document.getElementById('regError').classList.add('show');
+                document.getElementById('regSuccess').classList.remove('show');
+                return false;
+            }
+
             const newAccount = createDefaultAccount(firstName.trim(), lastName.trim());
             accounts.push(newAccount);
             saveAccountsToCookie();
+            
+            document.getElementById('regSuccess').textContent = `✅ Аккаунт ${firstName} создан! Добро пожаловать в SerjCore! 🎉`;
+            document.getElementById('regSuccess').classList.add('show');
+            document.getElementById('regError').classList.remove('show');
+            
             populateAccountSelect();
             document.getElementById('accountSelect').value = newAccount.id;
             switchAccount(newAccount.id);
@@ -2473,23 +2457,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
 
             const activeCourses = courseList.filter(c => account.coursesProgress[c.title] > 0 && account.coursesProgress[c.title] < 100);
             const completedCourses = courseList.filter(c => account.coursesProgress[c.title] === 100);
-
-            // Подсчёт заработанных SERJ
-            let totalSerjEarned = 0;
-            subjects.forEach(s => {
-                s.lessons.forEach(l => {
-                    if (account.lessonProgress && account.lessonProgress[l.id]) {
-                        totalSerjEarned += l.serjReward || 0;
-                    }
-                });
-            });
-            testList.forEach(t => {
-                const results = account.testsResults[t.id] || [];
-                const correct = results.filter(r => r === true).length;
-                if (correct === results.length && results.length > 0) {
-                    totalSerjEarned += t.serjReward || 0;
-                }
-            });
 
             container.innerHTML = `
                 <div class="progress-card">
@@ -2830,7 +2797,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                                 updateStats(account);
                                 saveAccountsToCookie();
                                 
-                                // Проверяем, полностью ли пройден тест
                                 const newCorrectCount = newResults.filter(r => r === true).length;
                                 if (newCorrectCount === total && total > 0) {
                                     earnSerj(account, test.serjReward, 'тест: ' + test.title);
@@ -2850,7 +2816,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 wrapper.appendChild(questionDiv);
             });
 
-            // Если тест пройден полностью, показываем это
             if (isTestCompleted) {
                 const completedMsg = document.createElement('div');
                 completedMsg.style.cssText = `
@@ -2938,37 +2903,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             });
         }
 
-        // ----- МОДАЛКА -----
-        const modal = document.getElementById('registerModal');
-        const addBtn = document.getElementById('addAccountBtn');
-        const cancelBtn = document.getElementById('regCancelBtn');
-        const submitBtn = document.getElementById('regSubmitBtn');
-        const firstNameInput = document.getElementById('regFirstName');
-        const lastNameInput = document.getElementById('regLastName');
-        const errorEl = document.getElementById('regError');
-
-        addBtn.addEventListener('click', () => {
-            modal.classList.add('active');
-            firstNameInput.value = '';
-            lastNameInput.value = '';
-            errorEl.classList.remove('show');
-            firstNameInput.focus();
-        });
-        cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-        submitBtn.addEventListener('click', () => {
-            const firstName = firstNameInput.value.trim();
-            const lastName = lastNameInput.value.trim();
-            if (!firstName || !lastName) {
-                errorEl.classList.add('show');
-                return;
-            }
-            errorEl.classList.remove('show');
-            if (registerUser(firstName, lastName)) modal.classList.remove('active');
-        });
-        firstNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lastNameInput.focus(); });
-        lastNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitBtn.click(); });
-
         // ----- ИНИЦИАЛИЗАЦИЯ -----
         function init() {
             loadAccountsFromCookie();
@@ -3009,20 +2943,23 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             const coursesSection = document.getElementById('coursesSection');
             const testsSection = document.getElementById('testsSection');
             const recommendSection = document.getElementById('recommendSection');
+            const registerSection = document.getElementById('registerSection');
             const allCoursesLink = document.getElementById('allCoursesLink');
             const allTestsLink = document.getElementById('allTestsLink');
             const recommendLink = document.getElementById('recommendLink');
 
             function showTab(tab) {
+                const isRegister = (tab === 'register');
                 const isLessons = (tab === 'lessons');
                 const isProgress = (tab === 'progress');
                 const isTests = (tab === 'tests');
                 
+                registerSection.classList.toggle('active', isRegister);
                 lessonsSection.classList.toggle('active', isLessons);
                 progressSection.style.display = isProgress ? 'block' : 'none';
-                coursesSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
-                testsSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
-                recommendSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
+                coursesSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
+                testsSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
+                recommendSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
                 
                 if (isTests) {
                     testsSection.style.display = 'block';
@@ -3031,11 +2968,10 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 let msg = '';
                 switch(tab) {
                     case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
+                    case 'register': msg = '📝 Регистрация: создай свой аккаунт в SerjCore'; break;
                     case 'lessons': msg = '📖 Уроки: выбирай предмет и зарабатывай SERJ'; break;
                     case 'tests': msg = '📝 Тесты: проверяй знания и получай SERJ'; break;
                     case 'progress': msg = '📈 Прогресс: детальная статистика твоего обучения'; break;
-                    case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
-                    case 'community': msg = '👥 Сообщество: обсуждения и чаты'; break;
                     default: msg = '✨ Раздел открыт';
                 }
                 const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
@@ -3057,12 +2993,10 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     showTab(this.dataset.tab);
-                    const names = { overview: 'Обзор', lessons: 'Уроки', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
+                    const names = { overview: 'Обзор', register: 'Регистрация', lessons: 'Уроки', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
                     showToast(`📂 Переход в раздел: ${names[this.dataset.tab] || this.dataset.tab}`);
                 });
             });
-
-            document.getElementById('themeToggle').addEventListener('click', () => showToast('🌙 Тёмная тема — это стиль!'));
 
             document.getElementById('allCoursesLink').addEventListener('click', (e) => {
                 e.preventDefault();
@@ -3088,7 +3022,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 const acc = getCurrentAccount();
                 showToast(acc ? `👤 Профиль: ${acc.firstName} ${acc.lastName}` : '👤 Войди в аккаунт');
             });
-            document.getElementById('premiumBadge').addEventListener('click', () => showToast('⭐ Премиум-статус: доступны все курсы и тесты'));
             document.getElementById('logoArea').addEventListener('click', () => {
                 showToast('🏠 SerjCore — главная');
                 navLinks.forEach(l => l.classList.remove('active'));
@@ -3102,8 +3035,27 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 if (this.value) switchAccount(parseInt(this.value));
             });
 
+            // Регистрация
+            document.getElementById('regSubmitBtn').addEventListener('click', function() {
+                const firstName = document.getElementById('regFirstName').value.trim();
+                const lastName = document.getElementById('regLastName').value.trim();
+                registerUser(firstName, lastName);
+            });
+
+            // Enter для регистрации
+            document.getElementById('regFirstName').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('regLastName').focus();
+                }
+            });
+            document.getElementById('regLastName').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('regSubmitBtn').click();
+                }
+            });
+
             showTab('overview');
-            console.log('🚀 SerjCore с валютой SERJ запущен!');
+            console.log('🚀 SerjCore с регистрацией запущен!');
         }
 
         if (document.readyState === 'loading') {
