@@ -494,7 +494,7 @@
             opacity: 1;
         }
 
-        /* ===== ТЕСТЫ: ВКЛАДКИ ===== */
+        /* ===== ТЕСТЫ ===== */
         .test-tabs {
             display: flex;
             flex-wrap: wrap;
@@ -626,6 +626,63 @@
             display: block;
         }
 
+        /* Карточки предметов */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .subject-card {
+            background: rgba(20, 20, 45, 0.6);
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            cursor: pointer;
+            transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+        }
+        .subject-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.08);
+        }
+        .subject-card.active {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.08);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.1);
+        }
+        .subject-card .subject-icon {
+            font-size: 38px;
+            color: #8b5cf6;
+            margin-bottom: 10px;
+        }
+        .subject-card .subject-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #e0e0ff;
+        }
+        .subject-card .subject-count {
+            font-size: 12px;
+            color: #8b8bb8;
+            margin-top: 4px;
+        }
+        .subject-card .subject-progress {
+            margin-top: 10px;
+            height: 4px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .subject-card .subject-progress .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            border-radius: 10px;
+            transition: 0.5s;
+        }
+
         .lesson-card {
             background: rgba(20, 20, 45, 0.6);
             border-radius: 20px;
@@ -648,20 +705,20 @@
             padding: 4px 0;
         }
         .lesson-header .lesson-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             background: rgba(139, 92, 246, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             color: #8b5cf6;
             flex-shrink: 0;
         }
         .lesson-header .lesson-title {
             flex: 1;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #e0e0ff;
         }
@@ -713,21 +770,11 @@
             word-break: break-word;
         }
 
-        .lesson-body .code-block .comment {
-            color: #6b6b9e;
-        }
-        .lesson-body .code-block .keyword {
-            color: #f472b6;
-        }
-        .lesson-body .code-block .string {
-            color: #6ee7b7;
-        }
-        .lesson-body .code-block .function {
-            color: #67e8f9;
-        }
-        .lesson-body .code-block .variable {
-            color: #fbbf24;
-        }
+        .lesson-body .code-block .comment { color: #6b6b9e; }
+        .lesson-body .code-block .keyword { color: #f472b6; }
+        .lesson-body .code-block .string { color: #6ee7b7; }
+        .lesson-body .code-block .function { color: #67e8f9; }
+        .lesson-body .code-block .variable { color: #fbbf24; }
 
         .lesson-body ul, .lesson-body ol {
             color: #c4c4f0;
@@ -785,6 +832,146 @@
             border-color: rgba(52, 211, 153, 0.3);
             color: #6ee7b7;
         }
+
+        /* Прогресс */
+        .progress-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .progress-card {
+            background: rgba(20, 20, 45, 0.6);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(139, 92, 246, 0.08);
+            backdrop-filter: blur(5px);
+        }
+
+        .progress-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .progress-card h3 i {
+            color: #8b5cf6;
+        }
+
+        .progress-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.06);
+        }
+        .progress-stat:last-child {
+            border-bottom: none;
+        }
+        .progress-stat .label {
+            color: #8b8bb8;
+            font-size: 14px;
+        }
+        .progress-stat .value {
+            font-weight: 700;
+            font-size: 18px;
+            color: #e0e0ff;
+        }
+        .progress-stat .value.green { color: #6ee7b7; }
+        .progress-stat .value.purple { color: #a78bfa; }
+        .progress-stat .value.cyan { color: #67e8f9; }
+        .progress-stat .value.orange { color: #fb923c; }
+        .progress-stat .value.pink { color: #f472b6; }
+
+        .course-progress-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.05);
+        }
+        .course-progress-item:last-child {
+            border-bottom: none;
+        }
+        .course-progress-item .course-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #8b5cf6;
+            flex-shrink: 0;
+        }
+        .course-progress-item .course-info {
+            flex: 1;
+        }
+        .course-progress-item .course-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0ff;
+        }
+        .course-progress-item .course-bar {
+            margin-top: 4px;
+            height: 4px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .course-progress-item .course-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .course-progress-item .course-pct {
+            font-size: 13px;
+            font-weight: 600;
+            color: #a78bfa;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .progress-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .test-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.05);
+        }
+        .test-result-item:last-child {
+            border-bottom: none;
+        }
+        .test-result-item .test-name {
+            font-size: 13px;
+            color: #c4c4f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-result-item .test-name i {
+            color: #8b5cf6;
+            font-size: 14px;
+        }
+        .test-result-item .test-score {
+            font-size: 13px;
+            font-weight: 600;
+            color: #a78bfa;
+        }
+        .test-result-item .test-score.green { color: #6ee7b7; }
+        .test-result-item .test-score.orange { color: #fb923c; }
+        .test-result-item .test-score.red { color: #f87171; }
 
         .account-selector {
             display: flex;
@@ -964,10 +1151,14 @@
             .lesson-card { padding: 20px; }
             .lesson-header .lesson-title { font-size: 16px; }
             .lesson-body .code-block { font-size: 12px; padding: 12px 14px; }
+            .progress-container { grid-template-columns: 1fr; }
+            .progress-grid-2 { grid-template-columns: 1fr; }
+            .subject-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
             .course-grid { grid-template-columns: 1fr; }
+            .subject-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -1039,7 +1230,6 @@
             <p id="subGreeting">Создай аккаунт или войди в существующий 🔥</p>
         </div>
 
-        <!-- Статистика -->
         <div class="stats-row" id="statsRow">
             <div class="stat-item"><i class="fas fa-book"></i><div class="stat-info"><div class="number" id="statCourses">0</div><div class="label">Курсов в процессе</div></div></div>
             <div class="stat-item"><i class="fas fa-check-circle"></i><div class="stat-info"><div class="number" id="statCompleted">0</div><div class="label">Завершено</div></div></div>
@@ -1053,10 +1243,11 @@
             <div class="section-title">
                 <h2>📖 Уроки по темам</h2>
             </div>
+            <div id="subjectGrid" class="subject-grid"></div>
             <div id="lessonsContainer"></div>
         </div>
 
-        <!-- Прогресс (скрыт по умолчанию) -->
+        <!-- ПРОГРЕСС -->
         <div id="progressSection" style="display: none;">
             <div class="section-title">
                 <h2>📊 Моя статистика</h2>
@@ -1064,7 +1255,7 @@
             <div class="progress-container" id="progressContainer"></div>
         </div>
 
-        <!-- Активные курсы -->
+        <!-- КУРСЫ -->
         <div id="coursesSection">
             <div class="section-title">
                 <h2>🔥 Активные курсы</h2>
@@ -1073,7 +1264,7 @@
             <div class="course-grid" id="courseGrid"></div>
         </div>
 
-        <!-- Тесты -->
+        <!-- ТЕСТЫ -->
         <div id="testsSection" style="margin-top: 40px;">
             <div class="section-title">
                 <h2>📝 Тесты по курсам</h2>
@@ -1082,7 +1273,7 @@
             <div id="testsContainer"></div>
         </div>
 
-        <!-- Рекомендации -->
+        <!-- РЕКОМЕНДАЦИИ -->
         <div id="recommendSection" style="margin-top: 40px;">
             <div class="section-title">
                 <h2>📚 Рекомендуем к изучению</h2>
@@ -1158,15 +1349,7 @@
                             'security': [false, true, true, false, true],
                             'mobile': [true, true, false, true, false]
                         },
-                        lessonProgress: {
-                            'python_intro': true,
-                            'python_variables': true,
-                            'python_lists': false,
-                            'html_intro': false,
-                            'css_intro': false,
-                            'tgbot_intro': false,
-                            'tgbot_handlers': false
-                        },
+                        lessonProgress: {},
                         stats: { courses: 18, completed: 42, certificates: 9, tests: 15, hours: 24 }
                     },
                     {
@@ -1197,15 +1380,7 @@
                             'security': [false, true, true, true, false],
                             'mobile': [true, false, true, true, true]
                         },
-                        lessonProgress: {
-                            'python_intro': true,
-                            'python_variables': true,
-                            'python_lists': true,
-                            'html_intro': true,
-                            'css_intro': false,
-                            'tgbot_intro': false,
-                            'tgbot_handlers': false
-                        },
+                        lessonProgress: {},
                         stats: { courses: 22, completed: 38, certificates: 12, tests: 20, hours: 32 }
                     },
                     {
@@ -1236,15 +1411,7 @@
                             'security': [true, true, false, true, false],
                             'mobile': [false, true, true, false, true]
                         },
-                        lessonProgress: {
-                            'python_intro': true,
-                            'python_variables': false,
-                            'python_lists': false,
-                            'html_intro': false,
-                            'css_intro': false,
-                            'tgbot_intro': false,
-                            'tgbot_handlers': false
-                        },
+                        lessonProgress: {},
                         stats: { courses: 15, completed: 29, certificates: 5, tests: 10, hours: 18 }
                     }
                 ];
@@ -1269,265 +1436,626 @@
             setCookie('edu_current_account_neon', currentAccountId);
         }
 
-        // ----- ДАННЫЕ УРОКОВ -----
-        const lessonData = [
+        // ----- ДАННЫЕ ПРЕДМЕТОВ И УРОКОВ -----
+        const subjects = [
             {
-                id: 'python_intro',
-                course: 'Python с нуля',
+                id: 'python',
+                name: 'Python с нуля',
                 icon: 'fa-python',
-                title: 'Введение в Python',
-                description: 'Python — это простой и мощный язык программирования. Он широко используется в веб-разработке, анализе данных, машинном обучении и автоматизации.',
-                content: `
-                    <p><span class="highlight">Python</span> — это интерпретируемый язык программирования, который был создан Гвидо ван Россумом в 1991 году.</p>
-                    <p>Особенности Python:</p>
-                    <ul>
-                        <li>Простой и читаемый синтаксис</li>
-                        <li>Динамическая типизация</li>
-                        <li>Огромное количество библиотек</li>
-                        <li>Кроссплатформенность</li>
-                    </ul>
-                    <p>Пример первой программы:</p>
-                    <div class="code-block">
+                color: '#5eead4',
+                lessons: [
+                    {
+                        id: 'python_intro',
+                        title: 'Введение в Python',
+                        description: 'Что такое Python и его особенности',
+                        content: `
+                            <p><span class="highlight">Python</span> — это интерпретируемый язык программирования, созданный Гвидо ван Россумом в 1991 году.</p>
+                            <p>Особенности Python:</p>
+                            <ul>
+                                <li>Простой и читаемый синтаксис</li>
+                                <li>Динамическая типизация</li>
+                                <li>Огромное количество библиотек</li>
+                                <li>Кроссплатформенность</li>
+                            </ul>
+                            <p>Пример первой программы:</p>
+                            <div class="code-block">
 <span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)
-                    </div>
-                    <p>Эта команда выводит текст "Hello, World!" в консоль.</p>
-                `
-            },
-            {
-                id: 'python_variables',
-                course: 'Python с нуля',
-                icon: 'fa-python',
-                title: 'Переменные и типы данных',
-                description: 'В Python переменные создаются автоматически при присваивании значения. Основные типы данных: числа, строки, списки, словари.',
-                content: `
-                    <p>В Python не нужно объявлять тип переменной — он определяется автоматически.</p>
-                    <div class="code-block">
+                            </div>
+                            <p>Эта команда выводит текст "Hello, World!" в консоль.</p>
+                        `
+                    },
+                    {
+                        id: 'python_variables',
+                        title: 'Переменные и типы данных',
+                        description: 'Основные типы данных в Python',
+                        content: `
+                            <p>В Python не нужно объявлять тип переменной — он определяется автоматически.</p>
+                            <div class="code-block">
 <span class="comment"># Числа</span>
 age = <span class="variable">25</span>
 price = <span class="variable">19.99</span>
 
 <span class="comment"># Строки</span>
 name = <span class="string">"Алексей"</span>
-message = <span class="string">'Привет, мир!'</span>
 
 <span class="comment"># Логический тип</span>
 is_student = <span class="keyword">True</span>
-is_teacher = <span class="keyword">False</span>
-                    </div>
-                    <p>Основные типы данных:</p>
-                    <ul>
-                        <li><span class="highlight">int</span> — целые числа (1, 42, -5)</li>
-                        <li><span class="highlight">float</span> — числа с плавающей точкой (3.14, 2.5)</li>
-                        <li><span class="highlight">str</span> — строки ("Привет", 'Python')</li>
-                        <li><span class="highlight">bool</span> — логический тип (True, False)</li>
-                        <li><span class="highlight">list</span> — списки ([1, 2, 3])</li>
-                        <li><span class="highlight">dict</span> — словари ({"name": "Alex", "age": 25})</li>
-                    </ul>
-                    <p>Чтобы узнать тип переменной, используйте функцию <span class="highlight">type()</span>.</p>
-                `
-            },
-            {
-                id: 'python_lists',
-                course: 'Python с нуля',
-                icon: 'fa-python',
-                title: 'Списки и циклы',
-                description: 'Списки — это упорядоченные коллекции элементов. Циклы позволяют перебирать элементы и выполнять повторяющиеся действия.',
-                content: `
-                    <p><span class="highlight">Список</span> (list) — это изменяемая последовательность элементов.</p>
-                    <div class="code-block">
-<span class="comment"># Создание списка</span>
+                            </div>
+                            <p>Основные типы данных:</p>
+                            <ul>
+                                <li><span class="highlight">int</span> — целые числа</li>
+                                <li><span class="highlight">float</span> — числа с плавающей точкой</li>
+                                <li><span class="highlight">str</span> — строки</li>
+                                <li><span class="highlight">bool</span> — логический тип</li>
+                                <li><span class="highlight">list</span> — списки</li>
+                                <li><span class="highlight">dict</span> — словари</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'python_lists',
+                        title: 'Списки и циклы',
+                        description: 'Работа со списками и циклы for/while',
+                        content: `
+                            <p><span class="highlight">Список</span> — изменяемая последовательность элементов.</p>
+                            <div class="code-block">
 fruits = [<span class="string">"яблоко"</span>, <span class="string">"банан"</span>, <span class="string">"апельсин"</span>]
-
-<span class="comment"># Доступ к элементам</span>
-<span class="keyword">print</span>(fruits[<span class="variable">0</span>])  <span class="comment"># яблоко</span>
-
-<span class="comment"># Добавление элемента</span>
-fruits.append(<span class="string">"киви"</span>)
-
-<span class="comment"># Цикл for для перебора</span>
 <span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:
     <span class="keyword">print</span>(fruit)
-                    </div>
-                    <p>Цикл <span class="highlight">for</span> перебирает каждый элемент списка и выполняет блок кода для каждого из них.</p>
-                    <p>Основные методы списков:</p>
-                    <ul>
-                        <li><span class="highlight">append()</span> — добавляет элемент в конец</li>
-                        <li><span class="highlight">insert()</span> — вставляет элемент по индексу</li>
-                        <li><span class="highlight">remove()</span> — удаляет первый найденный элемент</li>
-                        <li><span class="highlight">pop()</span> — удаляет и возвращает последний элемент</li>
-                        <li><span class="highlight">len()</span> — возвращает длину списка</li>
-                    </ul>
-                `
+                            </div>
+                            <p>Основные методы списков:</p>
+                            <ul>
+                                <li><span class="highlight">append()</span> — добавляет элемент</li>
+                                <li><span class="highlight">insert()</span> — вставляет по индексу</li>
+                                <li><span class="highlight">remove()</span> — удаляет элемент</li>
+                                <li><span class="highlight">len()</span> — длина списка</li>
+                            </ul>
+                        `
+                    }
+                ]
             },
             {
-                id: 'html_intro',
-                course: 'HTML & CSS мастер',
+                id: 'htmlcss',
+                name: 'HTML & CSS мастер',
                 icon: 'fa-code',
-                title: 'Введение в HTML',
-                description: 'HTML (HyperText Markup Language) — язык разметки для создания веб-страниц. Он определяет структуру и содержание страницы.',
-                content: `
-                    <p><span class="highlight">HTML</span> — это основа любой веб-страницы. Он состоит из тегов, которые описывают элементы.</p>
-                    <p>Базовая структура HTML-документа:</p>
-                    <div class="code-block">
-&lt;<span class="keyword">!DOCTYPE</span> html&gt;
-&lt;<span class="keyword">html</span>&gt;
-  &lt;<span class="keyword">head</span>&gt;
-    &lt;<span class="keyword">title</span>&gt;Моя страница&lt;<span class="keyword">/title</span>&gt;
-  &lt;<span class="keyword">/head</span>&gt;
-  &lt;<span class="keyword">body</span>&gt;
-    &lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;
-    &lt;<span class="keyword">p</span>&gt;Это моя первая веб-страница.&lt;<span class="keyword">/p</span>&gt;
-  &lt;<span class="keyword">/body</span>&gt;
-&lt;<span class="keyword">/html</span>&gt;
-                    </div>
-                    <p>Основные теги:</p>
-                    <ul>
-                        <li><span class="highlight">&lt;h1&gt;-&lt;h6&gt;</span> — заголовки разных уровней</li>
-                        <li><span class="highlight">&lt;p&gt;</span> — абзац текста</li>
-                        <li><span class="highlight">&lt;a&gt;</span> — ссылка</li>
-                        <li><span class="highlight">&lt;img&gt;</span> — изображение</li>
-                        <li><span class="highlight">&lt;ul&gt;</span>, <span class="highlight">&lt;ol&gt;</span> — списки</li>
-                        <li><span class="highlight">&lt;div&gt;</span> — блочный контейнер</li>
-                        <li><span class="highlight">&lt;span&gt;</span> — строчный контейнер</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'css_intro',
-                course: 'HTML & CSS мастер',
-                icon: 'fa-code',
-                title: 'Введение в CSS',
-                description: 'CSS (Cascading Style Sheets) — язык для стилизации веб-страниц. Он управляет внешним видом элементов HTML.',
-                content: `
-                    <p><span class="highlight">CSS</span> позволяет задавать цвета, шрифты, размеры, расположение и многое другое.</p>
-                    <p>Способы подключения CSS:</p>
-                    <ul>
-                        <li><span class="highlight">Внутренний</span> — внутри тега &lt;style&gt; в &lt;head&gt;</li>
-                        <li><span class="highlight">Внешний</span> — через &lt;link&gt; к .css файлу</li>
-                        <li><span class="highlight">Инлайн</span> — прямо в теге через атрибут style</li>
-                    </ul>
-                    <p>Пример CSS:</p>
-                    <div class="code-block">
-<span class="comment">/* Селектор по тегу */</span>
+                color: '#a78bfa',
+                lessons: [
+                    {
+                        id: 'html_intro',
+                        title: 'Введение в HTML',
+                        description: 'Основы языка разметки HTML',
+                        content: `
+                            <p><span class="highlight">HTML</span> — основа любой веб-страницы.</p>
+                            <div class="code-block">
+&lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;
+&lt;<span class="keyword">p</span>&gt;Это моя первая страница.&lt;<span class="keyword">/p</span>&gt;
+                            </div>
+                            <p>Основные теги:</p>
+                            <ul>
+                                <li><span class="highlight">&lt;h1&gt;-&lt;h6&gt;</span> — заголовки</li>
+                                <li><span class="highlight">&lt;p&gt;</span> — абзац</li>
+                                <li><span class="highlight">&lt;a&gt;</span> — ссылка</li>
+                                <li><span class="highlight">&lt;div&gt;</span> — блок</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'css_intro',
+                        title: 'Введение в CSS',
+                        description: 'Основы стилизации веб-страниц',
+                        content: `
+                            <p><span class="highlight">CSS</span> управляет внешним видом элементов.</p>
+                            <div class="code-block">
 <span class="variable">h1</span> {
     <span class="keyword">color</span>: <span class="string">#a78bfa</span>;
     <span class="keyword">font-size</span>: <span class="variable">28px</span>;
 }
-
-<span class="comment">/* Селектор по классу */</span>
-.<span class="variable">highlight</span> {
-    <span class="keyword">background</span>: <span class="string">rgba(139, 92, 246, 0.1)</span>;
-    <span class="keyword">padding</span>: <span class="variable">10px</span>;
-    <span class="keyword">border-radius</span>: <span class="variable">8px</span>;
-}
-
-<span class="comment">/* Селектор по ID */</span>
-#<span class="variable">header</span> {
+                            </div>
+                            <p>Основные свойства:</p>
+                            <ul>
+                                <li><span class="highlight">color</span> — цвет текста</li>
+                                <li><span class="highlight">background</span> — фон</li>
+                                <li><span class="highlight">font-size</span> — размер шрифта</li>
+                                <li><span class="highlight">display</span> — тип отображения</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'css_flex',
+                        title: 'Flexbox и Grid',
+                        description: 'Современные системы компоновки',
+                        content: `
+                            <p><span class="highlight">Flexbox</span> — одномерная система компоновки.</p>
+                            <div class="code-block">
+.container {
     <span class="keyword">display</span>: <span class="variable">flex</span>;
-    <span class="keyword">justify-content</span>: <span class="variable">space-between</span>;
+    <span class="keyword">justify-content</span>: <span class="variable">center</span>;
+    <span class="keyword">align-items</span>: <span class="variable">center</span>;
 }
-                    </div>
-                    <p>Основные CSS свойства:</p>
-                    <ul>
-                        <li><span class="highlight">color</span> — цвет текста</li>
-                        <li><span class="highlight">background</span> — фон</li>
-                        <li><span class="highlight">font-size</span> — размер шрифта</li>
-                        <li><span class="highlight">margin</span> — внешний отступ</li>
-                        <li><span class="highlight">padding</span> — внутренний отступ</li>
-                        <li><span class="highlight">display</span> — тип отображения (block, flex, grid)</li>
-                    </ul>
-                `
+                            </div>
+                            <p><span class="highlight">Grid</span> — двумерная система компоновки.</p>
+                            <div class="code-block">
+.container {
+    <span class="keyword">display</span>: <span class="variable">grid</span>;
+    <span class="keyword">grid-template-columns</span>: <span class="variable">1fr 1fr 1fr</span>;
+}
+                            </div>
+                        `
+                    }
+                ]
             },
             {
-                id: 'tgbot_intro',
-                course: 'Создание TG-ботов',
+                id: 'tgbots',
+                name: 'Создание TG-ботов',
                 icon: 'fa-telegram',
-                title: 'Введение в Telegram ботов',
-                description: 'Telegram боты — это программы, которые взаимодействуют с пользователями через Telegram. Они могут отвечать на сообщения, выполнять команды и многое другое.',
-                content: `
-                    <p><span class="highlight">Telegram бот</span> — это аккаунт, управляемый программой. Он может принимать сообщения и отвечать на них.</p>
-                    <p>Для создания бота нужно:</p>
-                    <ul>
-                        <li>Написать <span class="highlight">@BotFather</span> в Telegram</li>
-                        <li>Отправить команду <span class="highlight">/newbot</span></li>
-                        <li>Придумать имя и username для бота</li>
-                        <li>Получить <span class="highlight">токен</span> — ключ для управления ботом</li>
-                    </ul>
-                    <p>Библиотеки для Python:</p>
-                    <ul>
-                        <li><span class="highlight">python-telegram-bot</span> — мощная и гибкая библиотека</li>
-                        <li><span class="highlight">pyTelegramBotAPI</span> — простая и удобная</li>
-                        <li><span class="highlight">aiogram</span> — асинхронная библиотека</li>
-                    </ul>
-                    <p>Пример простого бота на pyTelegramBotAPI:</p>
-                    <div class="code-block">
-<span class="keyword">import</span> telebot
-
-bot = telebot.TeleBot(<span class="string">"ВАШ_ТОКЕН"</span>)
-
+                color: '#67e8f9',
+                lessons: [
+                    {
+                        id: 'tgbot_intro',
+                        title: 'Введение в Telegram ботов',
+                        description: 'Что такое боты и как их создавать',
+                        content: `
+                            <p><span class="highlight">Telegram бот</span> — программа, которая взаимодействует с пользователями.</p>
+                            <p>Для создания бота нужно:</p>
+                            <ul>
+                                <li>Написать <span class="highlight">@BotFather</span></li>
+                                <li>Отправить <span class="highlight">/newbot</span></li>
+                                <li>Получить <span class="highlight">токен</span></li>
+                            </ul>
+                            <p>Библиотеки для Python:</p>
+                            <ul>
+                                <li><span class="highlight">python-telegram-bot</span></li>
+                                <li><span class="highlight">pyTelegramBotAPI</span></li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'tgbot_handlers',
+                        title: 'Обработчики сообщений',
+                        description: 'Как реагировать на команды и сообщения',
+                        content: `
+                            <p><span class="highlight">Обработчики</span> — функции, вызываемые при получении сообщений.</p>
+                            <div class="code-block">
 <span class="keyword">@bot.message_handler</span>(commands=[<span class="string">"start"</span>])
 <span class="keyword">def</span> <span class="function">start</span>(message):
-    bot.send_message(message.chat.id, <span class="string">"Привет! Я бот!"</span>)
-
-bot.polling()
-                    </div>
-                `
-            },
-            {
-                id: 'tgbot_handlers',
-                course: 'Создание TG-ботов',
-                icon: 'fa-telegram',
-                title: 'Обработчики сообщений и команд',
-                description: 'Обработчики позволяют боту реагировать на различные типы сообщений: команды, текст, фото, callback-запросы и другое.',
-                content: `
-                    <p><span class="highlight">Обработчики</span> — это функции, которые вызываются при получении определенного типа сообщения.</p>
-                    <p>Основные типы обработчиков:</p>
-                    <ul>
-                        <li><span class="highlight">commands</span> — команды типа /start, /help</li>
-                        <li><span class="highlight">message_handler</span> — текстовые сообщения</li>
-                        <li><span class="highlight">callback_query_handler</span> — нажатия на inline-кнопки</li>
-                        <li><span class="highlight">photo_handler</span> — обработка изображений</li>
-                    </ul>
-                    <p>Пример с разными обработчиками:</p>
-                    <div class="code-block">
-<span class="keyword">import</span> telebot
+    bot.send_message(message.chat.id, <span class="string">"Привет!"</span>)
+                            </div>
+                            <p>Типы обработчиков:</p>
+                            <ul>
+                                <li><span class="highlight">commands</span> — команды</li>
+                                <li><span class="highlight">message_handler</span> — текст</li>
+                                <li><span class="highlight">callback_query_handler</span> — кнопки</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'tgbot_keyboards',
+                        title: 'Клавиатуры и кнопки',
+                        description: 'Создание интерактивных кнопок',
+                        content: `
+                            <p><span class="highlight">Inline-кнопки</span> — кнопки под сообщениями.</p>
+                            <div class="code-block">
 <span class="keyword">from</span> telebot.types <span class="keyword">import</span> InlineKeyboardMarkup, InlineKeyboardButton
 
-bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
+keyboard = InlineKeyboardMarkup()
+btn = InlineKeyboardButton(<span class="string">"Нажми меня"</span>, callback_data=<span class="string">"click"</span>)
+keyboard.add(btn)
+bot.send_message(chat_id, <span class="string">"Выбери действие:"</span>, reply_markup=keyboard)
+                            </div>
+                            <p><span class="highlight">Reply-кнопки</span> — кнопки в поле ввода.</p>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'webdev',
+                name: 'Веб-разработка 2026',
+                icon: 'fa-globe',
+                color: '#6ee7b7',
+                lessons: [
+                    {
+                        id: 'webdev_intro',
+                        title: 'Основы веб-разработки',
+                        description: 'Как устроен веб',
+                        content: `
+                            <p><span class="highlight">Веб-разработка</span> включает создание сайтов и веб-приложений.</p>
+                            <p>Основные технологии:</p>
+                            <ul>
+                                <li><span class="highlight">HTML</span> — структура</li>
+                                <li><span class="highlight">CSS</span> — стили</li>
+                                <li><span class="highlight">JavaScript</span> — интерактивность</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'webdev_js',
+                        title: 'JavaScript основы',
+                        description: 'Введение в язык программирования для веба',
+                        content: `
+                            <p><span class="highlight">JavaScript</span> — язык для создания интерактивных страниц.</p>
+                            <div class="code-block">
+<span class="keyword">let</span> name = <span class="string">"Алексей"</span>;
+<span class="keyword">function</span> <span class="function">greet</span>() {
+    <span class="keyword">alert</span>(<span class="string">"Привет, "</span> + name);
+}
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'webdev_react',
+                        title: 'Введение в React',
+                        description: 'Библиотека для создания интерфейсов',
+                        content: `
+                            <p><span class="highlight">React</span> — библиотека от Facebook для создания UI.</p>
+                            <div class="code-block">
+<span class="keyword">function</span> <span class="function">App</span>() {
+    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;;
+}
+                            </div>
+                            <p>Ключевые понятия:</p>
+                            <ul>
+                                <li><span class="highlight">Компоненты</span> — строительные блоки</li>
+                                <li><span class="highlight">JSX</span> — синтаксис HTML в JS</li>
+                                <li><span class="highlight">State</span> — состояние компонента</li>
+                                <li><span class="highlight">Props</span> — передача данных</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'sql',
+                name: 'Базы данных SQL',
+                icon: 'fa-database',
+                color: '#f472b6',
+                lessons: [
+                    {
+                        id: 'sql_intro',
+                        title: 'Введение в SQL',
+                        description: 'Основы работы с базами данных',
+                        content: `
+                            <p><span class="highlight">SQL</span> — язык для работы с реляционными базами данных.</p>
+                            <p>Основные команды:</p>
+                            <ul>
+                                <li><span class="highlight">SELECT</span> — выборка данных</li>
+                                <li><span class="highlight">INSERT</span> — добавление данных</li>
+                                <li><span class="highlight">UPDATE</span> — обновление данных</li>
+                                <li><span class="highlight">DELETE</span> — удаление данных</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'sql_select',
+                        title: 'Запросы SELECT',
+                        description: 'Выборка данных из таблиц',
+                        content: `
+                            <div class="code-block">
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> users;
+<span class="keyword">SELECT</span> name, age <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> age > <span class="variable">18</span>;
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> users <span class="keyword">ORDER BY</span> age <span class="keyword">DESC</span>;
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'sql_join',
+                        title: 'Объединение таблиц (JOIN)',
+                        description: 'Соединение данных из разных таблиц',
+                        content: `
+                            <p><span class="highlight">JOIN</span> — объединение таблиц по ключам.</p>
+                            <div class="code-block">
+<span class="keyword">SELECT</span> users.name, orders.total
+<span class="keyword">FROM</span> users
+<span class="keyword">JOIN</span> orders <span class="keyword">ON</span> users.id = orders.user_id;
+                            </div>
+                            <p>Типы JOIN:</p>
+                            <ul>
+                                <li><span class="highlight">INNER JOIN</span> — только совпадения</li>
+                                <li><span class="highlight">LEFT JOIN</span> — все из левой таблицы</li>
+                                <li><span class="highlight">RIGHT JOIN</span> — все из правой таблицы</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'react',
+                name: 'Фронтенд с React',
+                icon: 'fa-react',
+                color: '#67e8f9',
+                lessons: [
+                    {
+                        id: 'react_intro',
+                        title: 'Введение в React',
+                        description: 'Основы библиотеки React',
+                        content: `
+                            <p><span class="highlight">React</span> — библиотека для создания пользовательских интерфейсов.</p>
+                            <div class="code-block">
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom/client'</span>;
 
-<span class="comment"># Обработчик команды /start</span>
-<span class="keyword">@bot.message_handler</span>(commands=[<span class="string">"start"</span>])
-<span class="keyword">def</span> <span class="function">start</span>(message):
-    bot.send_message(message.chat.id, <span class="string">"Привет! Выбери действие:"</span>,
-                     reply_markup=inline_keyboard())
+<span class="keyword">function</span> <span class="function">App</span>() {
+    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;;
+}
 
-<span class="comment"># Обработчик текстовых сообщений</span>
-<span class="keyword">@bot.message_handler</span>(func=<span class="keyword">lambda</span> msg: <span class="keyword">True</span>)
-<span class="keyword">def</span> <span class="function">echo</span>(message):
-    bot.send_message(message.chat.id, <span class="string">"Ты написал: "</span> + message.text)
+ReactDOM.createRoot(document.getElementById(<span class="string">'root'</span>)).render(&lt;App /&gt;);
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'react_components',
+                        title: 'Компоненты и Props',
+                        description: 'Создание компонентов и передача данных',
+                        content: `
+                            <p><span class="highlight">Компоненты</span> — функции, возвращающие JSX.</p>
+                            <div class="code-block">
+<span class="keyword">function</span> <span class="function">Greeting</span>({ name }) {
+    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, {name}!&lt;<span class="keyword">/h1</span>&gt;;
+}
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'react_state',
+                        title: 'Управление состоянием (State)',
+                        description: 'Хук useState для управления данными',
+                        content: `
+                            <p><span class="highlight">useState</span> — хук для управления состоянием.</p>
+                            <div class="code-block">
+<span class="keyword">import</span> { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
 
-<span class="comment"># Обработчик callback-запросов</span>
-<span class="keyword">@bot.callback_query_handler</span>(func=<span class="keyword">lambda</span> call: <span class="keyword">True</span>)
-<span class="keyword">def</span> <span class="function">callback</span>(call):
-    bot.send_message(call.message.chat.id, <span class="string">"Ты нажал: "</span> + call.data)
-                    </div>
-                `
+<span class="keyword">function</span> <span class="function">Counter</span>() {
+    <span class="keyword">const</span> [count, setCount] = useState(<span class="variable">0</span>);
+    <span class="keyword">return</span> (
+        &lt;<span class="keyword">div</span>&gt;
+            &lt;<span class="keyword">p</span>&gt;Счёт: {count}&lt;<span class="keyword">/p</span>&gt;
+            &lt;<span class="keyword">button</span> onClick={() => setCount(count + <span class="variable">1</span>)}&gt;
+                Нажми меня
+            &lt;<span class="keyword">/button</span>&gt;
+        &lt;<span class="keyword">/div</span>&gt;
+    );
+}
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'devops',
+                name: 'DevOps основы',
+                icon: 'fa-server',
+                color: '#818cf8',
+                lessons: [
+                    {
+                        id: 'devops_intro',
+                        title: 'Введение в DevOps',
+                        description: 'Что такое DevOps и зачем он нужен',
+                        content: `
+                            <p><span class="highlight">DevOps</span> — подход к разработке, объединяющий разработку и эксплуатацию.</p>
+                            <p>Ключевые понятия:</p>
+                            <ul>
+                                <li><span class="highlight">CI/CD</span> — непрерывная интеграция и доставка</li>
+                                <li><span class="highlight">Docker</span> — контейнеризация</li>
+                                <li><span class="highlight">Kubernetes</span> — оркестрация контейнеров</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'devops_docker',
+                        title: 'Docker контейнеризация',
+                        description: 'Основы работы с Docker',
+                        content: `
+                            <p><span class="highlight">Docker</span> — платформа для контейнеризации приложений.</p>
+                            <div class="code-block">
+<span class="comment"># Dockerfile</span>
+FROM python:<span class="variable">3.9</span>
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
+                            </div>
+                            <p>Основные команды:</p>
+                            <ul>
+                                <li><span class="highlight">docker build</span> — сборка образа</li>
+                                <li><span class="highlight">docker run</span> — запуск контейнера</li>
+                                <li><span class="highlight">docker ps</span> — список контейнеров</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'devops_cicd',
+                        title: 'CI/CD пайплайны',
+                        description: 'Автоматизация сборки и развертывания',
+                        content: `
+                            <p><span class="highlight">CI/CD</span> — автоматизация процессов разработки.</p>
+                            <p>Этапы CI/CD:</p>
+                            <ul>
+                                <li><span class="highlight">CI</span> — сборка и тестирование</li>
+                                <li><span class="highlight">CD</span> — развертывание на серверах</li>
+                                <li><span class="highlight">Мониторинг</span> — отслеживание работы</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'english',
+                name: 'Английский для IT',
+                icon: 'fa-language',
+                color: '#6ee7b7',
+                lessons: [
+                    {
+                        id: 'english_intro',
+                        title: 'Базовые термины IT',
+                        description: 'Основные слова для разработчиков',
+                        content: `
+                            <p>Важные термины:</p>
+                            <ul>
+                                <li><span class="highlight">Development</span> — разработка</li>
+                                <li><span class="highlight">Deployment</span> — развертывание</li>
+                                <li><span class="highlight">Debugging</span> — отладка</li>
+                                <li><span class="highlight">Algorithm</span> — алгоритм</li>
+                                <li><span class="highlight">Framework</span> — фреймворк</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'english_code',
+                        title: 'Английский в коде',
+                        description: 'Как называть переменные и функции',
+                        content: `
+                            <p>Правила именования:</p>
+                            <ul>
+                                <li>Имена переменных — <span class="highlight">camelCase</span></li>
+                                <li>Имена функций — <span class="highlight">getUserData</span></li>
+                                <li>Имена классов — <span class="highlight">UserService</span></li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'english_communication',
+                        title: 'Общение в IT-команде',
+                        description: 'Как общаться с коллегами на английском',
+                        content: `
+                            <p>Полезные фразы:</p>
+                            <ul>
+                                <li>"I'm working on..." — я работаю над...</li>
+                                <li>"Could you review my code?" — можешь проверить мой код?</li>
+                                <li>"I've fixed the bug" — я исправил баг</li>
+                                <li>"Let's deploy to production" — давайте развернём на проде</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'security',
+                name: 'Кибербезопасность',
+                icon: 'fa-shield-alt',
+                color: '#f87171',
+                lessons: [
+                    {
+                        id: 'security_intro',
+                        title: 'Основы кибербезопасности',
+                        description: 'Что нужно знать о безопасности',
+                        content: `
+                            <p><span class="highlight">Кибербезопасность</span> — защита систем от атак.</p>
+                            <p>Основные угрозы:</p>
+                            <ul>
+                                <li><span class="highlight">SQL-инъекции</span> — атаки на базы данных</li>
+                                <li><span class="highlight">XSS</span> — межсайтовый скриптинг</li>
+                                <li><span class="highlight">DDoS</span> — распределенные атаки</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'security_password',
+                        title: 'Безопасность паролей',
+                        description: 'Как создавать надёжные пароли',
+                        content: `
+                            <p>Советы по паролям:</p>
+                            <ul>
+                                <li>Длина не менее <span class="highlight">12 символов</span></li>
+                                <li>Используйте <span class="highlight">буквы, цифры и символы</span></li>
+                                <li>Не используйте <span class="highlight">личную информацию</span></li>
+                                <li>Используйте <span class="highlight">менеджеры паролей</span></li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'security_network',
+                        title: 'Сетевая безопасность',
+                        description: 'Защита сетей и данных',
+                        content: `
+                            <p>Основные методы защиты:</p>
+                            <ul>
+                                <li><span class="highlight">VPN</span> — виртуальная частная сеть</li>
+                                <li><span class="highlight">Firewall</span> — межсетевой экран</li>
+                                <li><span class="highlight">HTTPS</span> — шифрование соединений</li>
+                                <li><span class="highlight">2FA</span> — двухфакторная аутентификация</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'mobile',
+                name: 'Мобильная разработка',
+                icon: 'fa-mobile-alt',
+                color: '#f472b6',
+                lessons: [
+                    {
+                        id: 'mobile_intro',
+                        title: 'Основы мобильной разработки',
+                        description: 'Что нужно знать о мобильных приложениях',
+                        content: `
+                            <p><span class="highlight">Мобильная разработка</span> — создание приложений для iOS и Android.</p>
+                            <p>Основные платформы:</p>
+                            <ul>
+                                <li><span class="highlight">iOS</span> — приложения для iPhone</li>
+                                <li><span class="highlight">Android</span> — приложения для Android</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'mobile_flutter',
+                        title: 'Flutter фреймворк',
+                        description: 'Кроссплатформенная разработка',
+                        content: `
+                            <p><span class="highlight">Flutter</span> — фреймворк от Google для кроссплатформенной разработки.</p>
+                            <div class="code-block">
+<span class="keyword">import</span> 'package:flutter/material.dart';
+
+<span class="keyword">void</span> <span class="function">main</span>() {
+    runApp(<span class="function">MyApp</span>());
+}
+
+<span class="keyword">class</span> <span class="variable">MyApp</span> <span class="keyword">extends</span> <span class="variable">StatelessWidget</span> {
+    <span class="keyword">@override</span>
+    <span class="variable">Widget</span> <span class="function">build</span>(<span class="variable">BuildContext</span> context) {
+        <span class="keyword">return</span> <span class="variable">MaterialApp</span>(
+            home: <span class="variable">Scaffold</span>(
+                body: <span class="variable">Center</span>(
+                    child: <span class="variable">Text</span>(<span class="string">'Привет, мир!'</span>),
+                ),
+            ),
+        );
+    }
+}
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'mobile_reactnative',
+                        title: 'React Native основы',
+                        description: 'Разработка с использованием React',
+                        content: `
+                            <p><span class="highlight">React Native</span> — фреймворк для создания мобильных приложений.</p>
+                            <div class="code-block">
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { View, Text, StyleSheet } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">function</span> <span class="function">App</span>() {
+    <span class="keyword">return</span> (
+        &lt;<span class="keyword">View</span> style={styles.container}&gt;
+            &lt;<span class="keyword">Text</span>&gt;Привет, мир!&lt;<span class="keyword">/Text</span>&gt;
+        &lt;<span class="keyword">/View</span>&gt;
+    );
+}
+                            </div>
+                        `
+                    }
+                ]
             }
         ];
 
-        // ----- КУРСЫ -----
-        const courseList = [
-            { title: 'Python с нуля', lessons: '32 урока', time: '12 ч', thumb: 'fa-python', thumbClass: 'teal' },
-            { title: 'HTML & CSS мастер', lessons: '28 уроков', time: '10 ч', thumb: 'fa-code', thumbClass: 'purple' },
-            { title: 'Создание TG-ботов', lessons: '24 урока', time: '9 ч', thumb: 'fa-telegram', thumbClass: 'cyan' },
-            { title: 'Веб-разработка 2026', lessons: '30 уроков', time: '11 ч', thumb: 'fa-globe', thumbClass: 'green' },
-            { title: 'Базы данных SQL', lessons: '20 уроков', time: '9 ч', thumb: 'fa-database', thumbClass: 'rose' },
-            { title: 'Фронтенд с React', lessons: '28 уроков', time: '12 ч', thumb: 'fa-react', thumbClass: 'teal' },
-            { title: 'DevOps основы', lessons: '22 урока', time: '10 ч', thumb: 'fa-server', thumbClass: 'indigo' },
-            { title: 'Английский для IT', lessons: '30 уроков', time: '14 ч', thumb: 'fa-language', thumbClass: 'emerald' },
-            { title: 'Кибербезопасность', lessons: '26 уроков', time: '13 ч', thumb: 'fa-shield-alt', thumbClass: 'cyan' },
-            { title: 'Мобильная разработка', lessons: '20 уроков', time: '10 ч', thumb: 'fa-mobile-alt', thumbClass: 'pink' }
-        ];
+        // ----- КУРСЫ (для обзора) -----
+        const courseList = subjects.map(s => ({
+            title: s.name,
+            lessons: s.lessons.length + ' уроков',
+            time: Math.round(s.lessons.length * 0.5) + ' ч',
+            thumb: s.icon,
+            thumbClass: 'teal'
+        }));
 
         const recommendList = [
             { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, rgba(139,92,246,0.15), rgba(99,102,241,0.08))', color: '#a78bfa' },
@@ -1573,89 +2101,12 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                     { q: 'Как обработать команду /start?', options: ['@bot.message_handler(commands=["start"])', '@bot.start()', 'def start()', 'команда start'], correct: 0 },
                     { q: 'Что такое webhook в Telegram ботах?', options: ['HTTP callback', 'База данных', 'Библиотека', 'Тип бота'], correct: 0 }
                 ]
-            },
-            {
-                id: 'webdev',
-                title: 'Веб-разработка 2026',
-                icon: 'fa-globe',
-                questions: [
-                    { q: 'Что такое HTML?', options: ['Язык разметки', 'Язык программирования', 'База данных', 'Фреймворк'], correct: 0 },
-                    { q: 'Что такое CSS?', options: ['Стилизация', 'Серверный язык', 'База данных', 'Фреймворк'], correct: 0 },
-                    { q: 'Что такое JavaScript?', options: ['Язык программирования', 'Язык разметки', 'Стилизация', 'Фреймворк'], correct: 0 }
-                ]
-            },
-            {
-                id: 'sql',
-                title: 'Базы данных SQL',
-                icon: 'fa-database',
-                questions: [
-                    { q: 'Какой оператор используется для выборки данных?', options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'], correct: 0 },
-                    { q: 'Что такое JOIN?', options: ['Объединение таблиц', 'Удаление данных', 'Создание таблицы', 'Изменение структуры'], correct: 0 },
-                    { q: 'Какой тип данных хранит текст?', options: ['VARCHAR', 'INT', 'DATE', 'BOOLEAN'], correct: 0 }
-                ]
-            },
-            {
-                id: 'react',
-                title: 'Фронтенд с React',
-                icon: 'fa-react',
-                questions: [
-                    { q: 'Что такое JSX?', options: ['Синтаксис JavaScript + XML', 'Библиотека', 'Фреймворк', 'База данных'], correct: 0 },
-                    { q: 'Как создать компонент в React?', options: ['Функция или класс', 'Только класс', 'Только функция', 'HTML тег'], correct: 0 },
-                    { q: 'Что такое state?', options: ['Состояние компонента', 'Свойства компонента', 'Метод компонента', 'Стиль компонента'], correct: 0 }
-                ]
-            },
-            {
-                id: 'devops',
-                title: 'DevOps основы',
-                icon: 'fa-server',
-                questions: [
-                    { q: 'Что такое CI/CD?', options: ['Непрерывная интеграция/доставка', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
-                    { q: 'Что такое Docker?', options: ['Контейнеризация', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
-                    { q: 'Что такое Git?', options: ['Система контроля версий', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
-                    { q: 'Что такое Kubernetes?', options: ['Оркестрация контейнеров', 'База данных', 'Фреймворк', 'Язык'], correct: 0 },
-                    { q: 'Что такое AWS?', options: ['Облачная платформа', 'База данных', 'Фреймворк', 'Язык'], correct: 0 }
-                ]
-            },
-            {
-                id: 'english',
-                title: 'Английский для IT',
-                icon: 'fa-language',
-                questions: [
-                    { q: 'Как переводится "development"?', options: ['Разработка', 'Тестирование', 'Деплой', 'Дизайн'], correct: 0 },
-                    { q: 'Как переводится "deployment"?', options: ['Развертывание', 'Разработка', 'Тестирование', 'Дизайн'], correct: 0 },
-                    { q: 'Как переводится "debugging"?', options: ['Отладка', 'Разработка', 'Тестирование', 'Дизайн'], correct: 0 },
-                    { q: 'Как переводится "algorithm"?', options: ['Алгоритм', 'Архитектура', 'База данных', 'Фреймворк'], correct: 0 },
-                    { q: 'Как переводится "framework"?', options: ['Фреймворк', 'Алгоритм', 'Архитектура', 'База данных'], correct: 0 }
-                ]
-            },
-            {
-                id: 'security',
-                title: 'Кибербезопасность',
-                icon: 'fa-shield-alt',
-                questions: [
-                    { q: 'Что такое SQL-инъекция?', options: ['Атака на базу данных', 'Атака на сервер', 'Атака на клиент', 'Атака на сеть'], correct: 0 },
-                    { q: 'Что такое XSS?', options: ['Межсайтовый скриптинг', 'Межсайтовая подделка', 'Атака на сервер', 'Атака на сеть'], correct: 0 },
-                    { q: 'Что такое DDoS?', options: ['Распределенная атака отказа в обслуживании', 'Атака на базу данных', 'Атака на клиент', 'Атака на сеть'], correct: 0 },
-                    { q: 'Что такое шифрование?', options: ['Преобразование данных', 'Удаление данных', 'Копирование данных', 'Перемещение данных'], correct: 0 },
-                    { q: 'Что такое VPN?', options: ['Виртуальная частная сеть', 'Виртуальная публичная сеть', 'База данных', 'Фреймворк'], correct: 0 }
-                ]
-            },
-            {
-                id: 'mobile',
-                title: 'Мобильная разработка',
-                icon: 'fa-mobile-alt',
-                questions: [
-                    { q: 'Какая ОС используется в iPhone?', options: ['iOS', 'Android', 'Windows', 'Linux'], correct: 0 },
-                    { q: 'Какая ОС используется в большинстве смартфонов?', options: ['Android', 'iOS', 'Windows', 'Linux'], correct: 0 },
-                    { q: 'Что такое Flutter?', options: ['Фреймворк для мобильной разработки', 'База данных', 'Язык', 'ОС'], correct: 0 },
-                    { q: 'Что такое React Native?', options: ['Фреймворк для мобильной разработки', 'База данных', 'Язык', 'ОС'], correct: 0 },
-                    { q: 'Что такое Android Studio?', options: ['Среда разработки', 'База данных', 'Язык', 'ОС'], correct: 0 }
-                ]
             }
         ];
 
         let testStates = {};
         let activeTestTab = null;
+        let activeSubject = null;
 
         // ----- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ -----
         function showToast(msg) {
@@ -1683,7 +2134,9 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 defaultResults[t.id] = arr;
             });
             const defaultLessons = {};
-            lessonData.forEach(l => { defaultLessons[l.id] = Math.random() > 0.5; });
+            subjects.forEach(s => {
+                s.lessons.forEach(l => { defaultLessons[l.id] = false; });
+            });
             return {
                 id: nextId++,
                 firstName: firstName,
@@ -1722,6 +2175,7 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
             document.getElementById('testsContainer').innerHTML = '';
             document.getElementById('progressContainer').innerHTML = '';
             document.getElementById('lessonsContainer').innerHTML = '';
+            document.getElementById('subjectGrid').innerHTML = '';
             document.getElementById('statCourses').textContent = '0';
             document.getElementById('statCompleted').textContent = '0';
             document.getElementById('statCertificates').textContent = '0';
@@ -1731,8 +2185,52 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
             showToast('👋 Выход выполнен');
         }
 
-        // ----- РЕНДЕР УРОКОВ -----
-        function renderLessons(account) {
+        // ----- РЕНДЕР ПРЕДМЕТОВ (КАРТОЧКИ) -----
+        function renderSubjects(account) {
+            const grid = document.getElementById('subjectGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            if (!account) {
+                grid.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 20px;">✨ Войди в аккаунт, чтобы учиться</p>';
+                return;
+            }
+
+            // Считаем прогресс по каждому предмету
+            subjects.forEach(subject => {
+                const lessons = subject.lessons;
+                let completed = 0;
+                lessons.forEach(l => {
+                    if (account.lessonProgress && account.lessonProgress[l.id]) completed++;
+                });
+                const pct = lessons.length > 0 ? Math.round((completed / lessons.length) * 100) : 0;
+
+                const card = document.createElement('div');
+                card.className = 'subject-card' + (activeSubject === subject.id ? ' active' : '');
+                card.innerHTML = `
+                    <div class="subject-icon"><i class="fas ${subject.icon}"></i></div>
+                    <div class="subject-name">${subject.name}</div>
+                    <div class="subject-count">${completed}/${lessons.length} уроков</div>
+                    <div class="subject-progress"><div class="fill" style="width: ${pct}%;"></div></div>
+                `;
+                card.addEventListener('click', () => {
+                    activeSubject = subject.id;
+                    renderSubjects(account);
+                    renderLessons(account, subject.id);
+                });
+                grid.appendChild(card);
+            });
+
+            // Если нет активного предмета, выбираем первый
+            if (!activeSubject && subjects.length > 0) {
+                activeSubject = subjects[0].id;
+                renderSubjects(account);
+                renderLessons(account, activeSubject);
+            }
+        }
+
+        // ----- РЕНДЕР УРОКОВ ДЛЯ ПРЕДМЕТА -----
+        function renderLessons(account, subjectId) {
             const container = document.getElementById('lessonsContainer');
             if (!container) return;
             container.innerHTML = '';
@@ -1742,127 +2240,84 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 return;
             }
 
-            // Группируем уроки по курсам
-            const grouped = {};
-            lessonData.forEach(lesson => {
-                if (!grouped[lesson.course]) grouped[lesson.course] = [];
-                grouped[lesson.course].push(lesson);
-            });
+            const subject = subjects.find(s => s.id === subjectId);
+            if (!subject) {
+                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">Выбери предмет</p>';
+                return;
+            }
 
-            let totalLessons = 0;
-            let completedLessons = 0;
-            lessonData.forEach(l => {
-                totalLessons++;
-                if (account.lessonProgress && account.lessonProgress[l.id]) completedLessons++;
-            });
-
-            // Общий прогресс
-            const overallPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-
+            // Заголовок предмета
             const header = document.createElement('div');
             header.style.cssText = `
-                display: flex; justify-content: space-between; align-items: center;
-                background: rgba(20,20,45,0.4); padding: 16px 24px; border-radius: 16px;
-                margin-bottom: 24px; border: 1px solid rgba(139,92,246,0.08);
-                flex-wrap: wrap; gap: 12px;
+                display: flex; align-items: center; gap: 14px;
+                margin-bottom: 20px; padding-bottom: 16px;
+                border-bottom: 1px solid rgba(139,92,246,0.08);
             `;
             header.innerHTML = `
-                <span style="color: #c4c4f0; font-size: 15px;">
-                    <i class="fas fa-graduation-cap" style="color: #8b5cf6; margin-right: 10px;"></i>
-                    Всего уроков: <strong style="color: #e0e0ff;">${totalLessons}</strong>
-                </span>
-                <span style="color: #c4c4f0; font-size: 15px;">
-                    Пройдено: <strong style="color: #6ee7b7;">${completedLessons}</strong>
-                </span>
-                <span style="color: #c4c4f0; font-size: 15px;">
-                    Прогресс: <strong style="color: #a78bfa;">${overallPct}%</strong>
-                </span>
-                <div style="flex:1; max-width:200px; min-width:100px;">
-                    <div style="height:4px; background:rgba(139,92,246,0.1); border-radius:10px; overflow:hidden;">
-                        <div style="height:100%; width:${overallPct}%; background:linear-gradient(90deg,#8b5cf6,#06b6d4); border-radius:10px;"></div>
-                    </div>
+                <i class="fas ${subject.icon}" style="font-size: 32px; color: ${subject.color};"></i>
+                <div>
+                    <h3 style="font-size: 22px; font-weight: 700; color: #e0e0ff;">${subject.name}</h3>
+                    <span style="color: #8b8bb8; font-size: 14px;">${subject.lessons.length} уроков</span>
                 </div>
             `;
             container.appendChild(header);
 
-            for (const [course, lessons] of Object.entries(grouped)) {
-                const courseDiv = document.createElement('div');
-                courseDiv.style.cssText = 'margin-bottom: 24px;';
+            subject.lessons.forEach((lesson, index) => {
+                const isCompleted = account.lessonProgress && account.lessonProgress[lesson.id] || false;
+                const card = document.createElement('div');
+                card.className = 'lesson-card';
 
-                const courseTitle = document.createElement('h3');
-                courseTitle.style.cssText = `
-                    font-size: 18px; font-weight: 700; color: #a78bfa;
-                    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'lesson-header';
+                headerDiv.innerHTML = `
+                    <div class="lesson-icon"><i class="fas ${subject.icon}"></i></div>
+                    <div class="lesson-title">
+                        ${index+1}. ${lesson.title}
+                        <small>${lesson.description}</small>
+                    </div>
+                    <div class="lesson-toggle ${isCompleted ? 'open' : ''}">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
                 `;
-                const iconMap = {
-                    'Python с нуля': 'fa-python',
-                    'HTML & CSS мастер': 'fa-code',
-                    'Создание TG-ботов': 'fa-telegram'
-                };
-                courseTitle.innerHTML = `<i class="fab ${iconMap[course] || 'fa-book'}" style="color: #8b5cf6;"></i> ${course}`;
-                courseDiv.appendChild(courseTitle);
 
-                lessons.forEach((lesson, index) => {
-                    const isCompleted = account.lessonProgress && account.lessonProgress[lesson.id] || false;
-                    const card = document.createElement('div');
-                    card.className = 'lesson-card';
+                const bodyDiv = document.createElement('div');
+                bodyDiv.className = 'lesson-body' + (isCompleted ? ' open' : '');
+                bodyDiv.innerHTML = lesson.content;
 
-                    const headerDiv = document.createElement('div');
-                    headerDiv.className = 'lesson-header';
-                    headerDiv.innerHTML = `
-                        <div class="lesson-icon"><i class="fas ${lesson.icon}"></i></div>
-                        <div class="lesson-title">
-                            ${index+1}. ${lesson.title}
-                            <small>${lesson.description}</small>
-                        </div>
-                        <div class="lesson-toggle ${isCompleted ? 'open' : ''}">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    `;
+                const btnDiv = document.createElement('div');
+                btnDiv.style.cssText = 'display: flex; justify-content: flex-end; margin-top: 12px;';
+                const completeBtn = document.createElement('button');
+                completeBtn.className = 'lesson-complete-btn' + (isCompleted ? ' completed' : '');
+                completeBtn.innerHTML = isCompleted ? '<i class="fas fa-check-circle"></i> Пройдено' : '<i class="fas fa-check"></i> Отметить как пройденное';
+                completeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (!account.lessonProgress) account.lessonProgress = {};
+                    const newState = !account.lessonProgress[lesson.id];
+                    account.lessonProgress[lesson.id] = newState;
+                    saveAccountsToCookie();
+                    showToast(newState ? '✅ Урок пройден!' : '🔄 Урок отмечен как непройденный');
+                    renderSubjects(account);
+                    renderLessons(account, subjectId);
+                    renderProgress(account);
+                });
+                btnDiv.appendChild(completeBtn);
+                bodyDiv.appendChild(btnDiv);
 
-                    const bodyDiv = document.createElement('div');
-                    bodyDiv.className = 'lesson-body' + (isCompleted ? ' open' : '');
-                    bodyDiv.innerHTML = lesson.content;
+                const progressBar = document.createElement('div');
+                progressBar.className = 'lesson-progress-bar';
+                progressBar.innerHTML = `<div class="fill" style="width: ${isCompleted ? 100 : 0}%;"></div>`;
+                bodyDiv.appendChild(progressBar);
 
-                    // Кнопка завершения
-                    const btnDiv = document.createElement('div');
-                    btnDiv.style.cssText = 'display: flex; justify-content: flex-end; margin-top: 12px;';
-                    const completeBtn = document.createElement('button');
-                    completeBtn.className = 'lesson-complete-btn' + (isCompleted ? ' completed' : '');
-                    completeBtn.innerHTML = isCompleted ? '<i class="fas fa-check-circle"></i> Пройдено' : '<i class="fas fa-check"></i> Отметить как пройденное';
-                    completeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (!account.lessonProgress) account.lessonProgress = {};
-                        const newState = !account.lessonProgress[lesson.id];
-                        account.lessonProgress[lesson.id] = newState;
-                        saveAccountsToCookie();
-                        showToast(newState ? '✅ Урок пройден!' : '🔄 Урок отмечен как непройденный');
-                        renderLessons(account);
-                        renderProgress(account);
-                    });
-                    btnDiv.appendChild(completeBtn);
-                    bodyDiv.appendChild(btnDiv);
-
-                    // Прогресс-бар для урока
-                    const progressBar = document.createElement('div');
-                    progressBar.className = 'lesson-progress-bar';
-                    progressBar.innerHTML = `<div class="fill" style="width: ${isCompleted ? 100 : 0}%;"></div>`;
-                    bodyDiv.appendChild(progressBar);
-
-                    // Клик по заголовку для открытия/закрытия
-                    headerDiv.addEventListener('click', () => {
-                        const isOpen = bodyDiv.classList.toggle('open');
-                        const toggle = headerDiv.querySelector('.lesson-toggle');
-                        if (toggle) toggle.classList.toggle('open');
-                    });
-
-                    card.appendChild(headerDiv);
-                    card.appendChild(bodyDiv);
-                    courseDiv.appendChild(card);
+                headerDiv.addEventListener('click', () => {
+                    const isOpen = bodyDiv.classList.toggle('open');
+                    const toggle = headerDiv.querySelector('.lesson-toggle');
+                    if (toggle) toggle.classList.toggle('open');
                 });
 
-                container.appendChild(courseDiv);
-            }
+                card.appendChild(headerDiv);
+                card.appendChild(bodyDiv);
+                container.appendChild(card);
+            });
         }
 
         // ----- РЕНДЕР ПРОГРЕССА -----
@@ -1876,11 +2331,21 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 return;
             }
 
+            // Подсчёт уроков
+            let totalLessons = 0;
+            let completedLessons = 0;
+            subjects.forEach(s => {
+                s.lessons.forEach(l => {
+                    totalLessons++;
+                    if (account.lessonProgress && account.lessonProgress[l.id]) completedLessons++;
+                });
+            });
+
+            // Тесты
             let totalTests = 0;
             let passedTests = 0;
             let totalQuestions = 0;
             let correctQuestions = 0;
-
             testList.forEach(test => {
                 const results = account.testsResults[test.id] || [];
                 if (results.length > 0) {
@@ -1891,19 +2356,11 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                     correctQuestions += correct;
                 }
             });
-
             const overallPct = totalQuestions > 0 ? Math.round((correctQuestions / totalQuestions) * 100) : 0;
 
+            // Курсы
             const activeCourses = courseList.filter(c => account.coursesProgress[c.title] > 0 && account.coursesProgress[c.title] < 100);
             const completedCourses = courseList.filter(c => account.coursesProgress[c.title] === 100);
-
-            // Подсчёт уроков
-            let totalLessons = 0;
-            let completedLessons = 0;
-            lessonData.forEach(l => {
-                totalLessons++;
-                if (account.lessonProgress && account.lessonProgress[l.id]) completedLessons++;
-            });
 
             container.innerHTML = `
                 <div class="progress-card">
@@ -1969,27 +2426,6 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                             </div>
                         `;
                     }).join('')}
-                </div>
-
-                <div class="progress-card" style="grid-column: 1 / -1;">
-                    <h3><i class="fas fa-tasks"></i> Результаты тестов</h3>
-                    <div class="progress-grid-2">
-                        ${testList.map(test => {
-                            const results = account.testsResults[test.id] || [];
-                            const correct = results.filter(r => r === true).length;
-                            const total = results.length;
-                            const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-                            let scoreColor = 'green';
-                            if (pct < 50) scoreColor = 'red';
-                            else if (pct < 80) scoreColor = 'orange';
-                            return `
-                                <div class="test-result-item">
-                                    <span class="test-name"><i class="fas ${test.icon}"></i> ${test.title}</span>
-                                    <span class="test-score ${scoreColor}">${correct}/${total} (${pct}%)</span>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
                 </div>
             `;
         }
@@ -2313,7 +2749,13 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
             renderCourses('courseGrid', courseList, account);
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
-            renderLessons(account);
+            renderSubjects(account);
+            if (activeSubject) {
+                renderLessons(account, activeSubject);
+            } else if (subjects.length > 0) {
+                activeSubject = subjects[0].id;
+                renderLessons(account, activeSubject);
+            }
             renderProgress(account);
             updateStatsDisplay(account);
             populateAccountSelect();
@@ -2383,7 +2825,13 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 renderCourses('courseGrid', courseList, account);
                 renderRecommend('recommendGrid', recommendList);
                 renderTests('testsContainer', account);
-                renderLessons(account);
+                renderSubjects(account);
+                if (activeSubject) {
+                    renderLessons(account, activeSubject);
+                } else if (subjects.length > 0) {
+                    activeSubject = subjects[0].id;
+                    renderLessons(account, activeSubject);
+                }
                 renderProgress(account);
                 updateStatsDisplay(account);
             } else {
@@ -2420,7 +2868,6 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 testsSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
                 recommendSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
                 
-                // Для тестов всегда показываем на вкладке tests
                 if (isTests) {
                     testsSection.style.display = 'block';
                 }
@@ -2428,7 +2875,7 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 let msg = '';
                 switch(tab) {
                     case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
-                    case 'lessons': msg = '📖 Уроки: изучай теорию по темам'; break;
+                    case 'lessons': msg = '📖 Уроки: выбирай предмет и изучай теорию'; break;
                     case 'tests': msg = '📝 Тесты: проверяй знания после уроков'; break;
                     case 'progress': msg = '📈 Прогресс: детальная статистика твоего обучения'; break;
                     case 'schedule': msg = '📅 Расписание: ближайшие занятия'; break;
@@ -2439,12 +2886,13 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 greeting.innerHTML = `👋 Раздел: ${tabName}`;
                 subGreeting.textContent = msg;
                 
-                if (isLessons || isProgress) {
-                    const account = getCurrentAccount();
-                    if (account) {
-                        if (isLessons) renderLessons(account);
-                        if (isProgress) renderProgress(account);
+                const account = getCurrentAccount();
+                if (account) {
+                    if (isLessons) {
+                        renderSubjects(account);
+                        if (activeSubject) renderLessons(account, activeSubject);
                     }
+                    if (isProgress) renderProgress(account);
                 }
             }
 
@@ -2498,9 +2946,8 @@ bot = telebot.TeleBot(<span class="string">"ТОКЕН"</span>)
                 if (this.value) switchAccount(parseInt(this.value));
             });
 
-            // По умолчанию показываем обзор
             showTab('overview');
-            console.log('🚀 EduCore Neon с уроками запущен!');
+            console.log('🚀 EduCore Neon с предметами и уроками запущен!');
         }
 
         if (document.readyState === 'loading') {
