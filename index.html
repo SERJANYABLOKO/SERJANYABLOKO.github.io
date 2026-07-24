@@ -156,6 +156,26 @@
             font-size: 16px;
         }
 
+        .register-btn {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .register-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
+        }
+
         .logout-btn {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -960,99 +980,61 @@
         .test-result-item .test-score.orange { color: #fb923c; }
         .test-result-item .test-score.red { color: #f87171; }
 
-        .account-selector {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            background: rgba(30, 30, 60, 0.5);
-            padding: 4px 12px 4px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(139, 92, 246, 0.15);
-        }
-        .account-selector select {
-            background: transparent;
-            border: none;
-            padding: 8px 4px;
-            font-weight: 600;
-            font-size: 13px;
-            color: #e0e0ff;
-            outline: none;
-            cursor: pointer;
-            max-width: 120px;
-        }
-        .account-selector select option {
-            background: #1a1a2e;
-            color: #e0e0ff;
-        }
-        .account-selector .add-account-btn {
-            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            flex-shrink: 0;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-        }
-        .account-selector .add-account-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
-        }
-
-        /* ===== РЕГИСТРАЦИЯ ===== */
-        .register-section {
+        /* ===== РЕГИСТРАЦИЯ (МОДАЛКА) ===== */
+        .modal-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
         }
-        .register-section.active {
-            display: block;
+        .modal-overlay.active {
+            display: flex;
         }
-
-        .register-container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: rgba(20, 20, 45, 0.6);
+        .modal-content {
+            background: rgba(20, 20, 45, 0.95);
             border-radius: 24px;
             padding: 40px 48px;
-            border: 1px solid rgba(139, 92, 246, 0.08);
-            backdrop-filter: blur(5px);
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 0 80px rgba(139, 92, 246, 0.15), 0 0 160px rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            animation: modalSlide 0.3s ease;
         }
-
-        .register-container h2 {
-            font-size: 28px;
+        @keyframes modalSlide {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
             font-weight: 700;
             background: linear-gradient(135deg, #a78bfa, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-align: center;
-            margin-bottom: 8px;
         }
-
-        .register-container .subtitle {
+        .modal-content .subtitle {
             color: #8b8bb8;
-            text-align: center;
-            margin-bottom: 28px;
-            font-size: 15px;
+            margin-bottom: 24px;
+            font-size: 14px;
         }
-
-        .register-container .form-group {
+        .modal-content .form-group {
             margin-bottom: 18px;
         }
-
-        .register-container label {
+        .modal-content label {
             display: block;
             font-weight: 500;
             margin-bottom: 6px;
             font-size: 14px;
             color: #c4c4f0;
         }
-
-        .register-container input {
+        .modal-content input {
             width: 100%;
             padding: 12px 16px;
             border: 1px solid rgba(139, 92, 246, 0.15);
@@ -1063,23 +1045,19 @@
             background: rgba(30, 30, 60, 0.5);
             color: #e0e0ff;
         }
-
-        .register-container input:focus {
+        .modal-content input:focus {
             border-color: #8b5cf6;
             box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
         }
-
-        .register-container input::placeholder {
+        .modal-content input::placeholder {
             color: #6b6b9e;
         }
-
-        .register-container .btn-row {
+        .modal-content .btn-row {
             display: flex;
             gap: 12px;
             margin-top: 24px;
         }
-
-        .register-container .btn-primary {
+        .modal-content .btn-primary {
             flex: 1;
             background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             color: white;
@@ -1092,32 +1070,42 @@
             transition: 0.3s;
             box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
         }
-
-        .register-container .btn-primary:hover {
+        .modal-content .btn-primary:hover {
             transform: scale(1.02);
             box-shadow: 0 0 60px rgba(139, 92, 246, 0.25);
         }
-
-        .register-container .error-text {
+        .modal-content .btn-secondary {
+            flex: 1;
+            background: rgba(30, 30, 60, 0.5);
+            color: #c4c4f0;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-content .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .modal-content .error-text {
             color: #f87171;
             font-size: 13px;
             margin-top: 4px;
             display: none;
         }
-
-        .register-container .error-text.show {
+        .modal-content .error-text.show {
             display: block;
         }
-
-        .register-container .success-text {
+        .modal-content .success-text {
             color: #6ee7b7;
             font-size: 14px;
             margin-top: 12px;
             text-align: center;
             display: none;
         }
-
-        .register-container .success-text.show {
+        .modal-content .success-text.show {
             display: block;
         }
 
@@ -1128,9 +1116,7 @@
             .nav-bar { overflow-x: auto; flex-wrap: nowrap; padding: 0 16px; }
             .main-content { padding: 20px; }
             .stats-row { flex-direction: column; }
-            .account-selector { width: 100%; justify-content: space-between; }
-            .register-container { padding: 30px 24px; margin: 20px auto; }
-            .account-selector select { max-width: 100px; }
+            .modal-content { padding: 30px 24px; }
             .test-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; }
             .test-tab { flex-shrink: 0; font-size: 12px; padding: 8px 16px; }
             .lesson-card { padding: 20px; }
@@ -1139,18 +1125,40 @@
             .progress-container { grid-template-columns: 1fr; }
             .progress-grid-2 { grid-template-columns: 1fr; }
             .subject-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .register-btn { font-size: 12px; padding: 6px 14px; }
         }
         @media (max-width: 480px) {
             .logo-text { font-size: 20px; }
             .course-grid { grid-template-columns: 1fr; }
             .subject-grid { grid-template-columns: 1fr 1fr; }
-            .register-container { padding: 20px 16px; }
         }
     </style>
 </head>
 <body>
 
 <div id="toast" class="toast-message">✨ Действие выполнено</div>
+
+<!-- Модалка регистрации -->
+<div class="modal-overlay" id="registerModal">
+    <div class="modal-content">
+        <h2>🚀 Создать аккаунт</h2>
+        <p class="subtitle">Зарегистрируйся и начни зарабатывать SERJ</p>
+        <div class="form-group">
+            <label for="regFirstName">Имя</label>
+            <input type="text" id="regFirstName" placeholder="Введи своё имя" maxlength="30">
+        </div>
+        <div class="form-group">
+            <label for="regLastName">Фамилия</label>
+            <input type="text" id="regLastName" placeholder="Введи свою фамилию" maxlength="30">
+        </div>
+        <div class="error-text" id="regError">Заполни имя и фамилию, братан!</div>
+        <div class="success-text" id="regSuccess">✅ Аккаунт создан! Добро пожаловать в SerjCore! 🎉</div>
+        <div class="btn-row">
+            <button class="btn-secondary" id="regCancelBtn">Отмена</button>
+            <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
+        </div>
+    </div>
+</div>
 
 <div class="platform-wrapper">
 
@@ -1164,17 +1172,11 @@
             <input type="text" placeholder="Ищи курсы, уроки..." id="searchInput">
         </div>
         <div class="user-profile">
-            <div class="account-selector">
-                <i class="fas fa-user-circle" style="color: #8b5cf6;"></i>
-                <select id="accountSelect"></select>
-                <button class="add-account-btn" id="addAccountBtn" title="Создать новый аккаунт">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
             <div class="currency-display" id="currencyDisplay">
                 <i class="fas fa-coins"></i>
                 <span id="currencyAmount">0</span> SERJ
             </div>
+            <button class="register-btn" id="registerBtn"><i class="fas fa-user-plus"></i> Регистрация</button>
             <div class="avatar" id="avatarBtn">А</div>
             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
         </div>
@@ -1182,7 +1184,6 @@
 
     <nav class="nav-bar" id="navBar">
         <button class="nav-link active" data-tab="overview"><i class="fas fa-compass"></i> Обзор</button>
-        <button class="nav-link" data-tab="register"><i class="fas fa-user-plus"></i> Регистрация</button>
         <button class="nav-link" data-tab="lessons"><i class="fas fa-graduation-cap"></i> Уроки</button>
         <button class="nav-link" data-tab="tests"><i class="fas fa-pencil-alt"></i> Тесты</button>
         <button class="nav-link" data-tab="progress"><i class="fas fa-chart-line"></i> Прогресс</button>
@@ -1192,7 +1193,7 @@
 
         <div class="welcome-section">
             <h1 id="greeting">👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!</h1>
-            <p id="subGreeting">Создай аккаунт или войди в существующий 🔥</p>
+            <p id="subGreeting">Создай аккаунт и начни зарабатывать SERJ 🔥</p>
         </div>
 
         <!-- СТАТИСТИКА -->
@@ -1203,27 +1204,6 @@
             <div class="stat-item"><i class="fas fa-award"></i><div class="stat-info"><div class="number" id="statCertificates">0</div><div class="label">Сертификатов</div></div></div>
             <div class="stat-item"><i class="fas fa-tasks"></i><div class="stat-info"><div class="number" id="statTests">0</div><div class="label">Пройдено тестов</div></div></div>
             <div class="stat-item"><i class="fas fa-coins"></i><div class="stat-info"><div class="number" id="statSerj">0</div><div class="label">Заработано SERJ</div></div></div>
-        </div>
-
-        <!-- РЕГИСТРАЦИЯ -->
-        <div id="registerSection" class="register-section">
-            <div class="register-container" id="registerContainer">
-                <h2>🚀 Создать аккаунт</h2>
-                <p class="subtitle">Зарегистрируйся и начни зарабатывать SERJ</p>
-                <div class="form-group">
-                    <label for="regFirstName">Имя</label>
-                    <input type="text" id="regFirstName" placeholder="Введи своё имя" maxlength="30">
-                </div>
-                <div class="form-group">
-                    <label for="regLastName">Фамилия</label>
-                    <input type="text" id="regLastName" placeholder="Введи свою фамилию" maxlength="30">
-                </div>
-                <div class="error-text" id="regError">Заполни имя и фамилию, братан!</div>
-                <div class="success-text" id="regSuccess">✅ Аккаунт создан! Добро пожаловать в SerjCore! 🎉</div>
-                <div class="btn-row">
-                    <button class="btn-primary" id="regSubmitBtn">Создать аккаунт</button>
-                </div>
-            </div>
         </div>
 
         <!-- УРОКИ -->
@@ -1454,74 +1434,21 @@
                         title: 'Введение в Python',
                         description: 'Что такое Python и его особенности',
                         serjReward: 10,
-                        content: `
-                            <p><span class="highlight">Python</span> — это интерпретируемый язык программирования, созданный Гвидо ван Россумом в 1991 году.</p>
-                            <p>Особенности Python:</p>
-                            <ul>
-                                <li>Простой и читаемый синтаксис</li>
-                                <li>Динамическая типизация</li>
-                                <li>Огромное количество библиотек</li>
-                                <li>Кроссплатформенность</li>
-                            </ul>
-                            <p>Пример первой программы:</p>
-                            <div class="code-block">
-<span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)
-                            </div>
-                            <p>Эта команда выводит текст "Hello, World!" в консоль.</p>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
+                        content: `<p><span class="highlight">Python</span> — интерпретируемый язык, созданный в 1991 году.</p><p>Особенности: простой синтаксис, динамическая типизация, много библиотек.</p><div class="code-block"><span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ</p>`
                     },
                     {
                         id: 'python_variables',
                         title: 'Переменные и типы данных',
                         description: 'Основные типы данных в Python',
                         serjReward: 15,
-                        content: `
-                            <p>В Python не нужно объявлять тип переменной — он определяется автоматически.</p>
-                            <div class="code-block">
-<span class="comment"># Числа</span>
-age = <span class="variable">25</span>
-price = <span class="variable">19.99</span>
-
-<span class="comment"># Строки</span>
-name = <span class="string">"Алексей"</span>
-
-<span class="comment"># Логический тип</span>
-is_student = <span class="keyword">True</span>
-                            </div>
-                            <p>Основные типы данных:</p>
-                            <ul>
-                                <li><span class="highlight">int</span> — целые числа</li>
-                                <li><span class="highlight">float</span> — числа с плавающей точкой</li>
-                                <li><span class="highlight">str</span> — строки</li>
-                                <li><span class="highlight">bool</span> — логический тип</li>
-                                <li><span class="highlight">list</span> — списки</li>
-                                <li><span class="highlight">dict</span> — словари</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Типы данных: int, float, str, bool, list, dict.</p><div class="code-block">age = <span class="variable">25</span>\nname = <span class="string">"Алексей"</span>\nis_student = <span class="keyword">True</span></div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ</p>`
                     },
                     {
                         id: 'python_lists',
                         title: 'Списки и циклы',
                         description: 'Работа со списками и циклы for/while',
                         serjReward: 20,
-                        content: `
-                            <p><span class="highlight">Список</span> — изменяемая последовательность элементов.</p>
-                            <div class="code-block">
-fruits = [<span class="string">"яблоко"</span>, <span class="string">"банан"</span>, <span class="string">"апельсин"</span>]
-<span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:
-    <span class="keyword">print</span>(fruit)
-                            </div>
-                            <p>Основные методы списков:</p>
-                            <ul>
-                                <li><span class="highlight">append()</span> — добавляет элемент</li>
-                                <li><span class="highlight">insert()</span> — вставляет по индексу</li>
-                                <li><span class="highlight">remove()</span> — удаляет элемент</li>
-                                <li><span class="highlight">len()</span> — длина списка</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Список — изменяемая последовательность.</p><div class="code-block">fruits = [<span class="string">"яблоко"</span>, <span class="string">"банан"</span>]\n<span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:\n    <span class="keyword">print</span>(fruit)</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ</p>`
                     }
                 ]
             },
@@ -1536,68 +1463,21 @@ fruits = [<span class="string">"яблоко"</span>, <span class="string">"ба
                         title: 'Введение в HTML',
                         description: 'Основы языка разметки HTML',
                         serjReward: 10,
-                        content: `
-                            <p><span class="highlight">HTML</span> — основа любой веб-страницы.</p>
-                            <div class="code-block">
-&lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;
-&lt;<span class="keyword">p</span>&gt;Это моя первая страница.&lt;<span class="keyword">/p</span>&gt;
-                            </div>
-                            <p>Основные теги:</p>
-                            <ul>
-                                <li><span class="highlight">&lt;h1&gt;-&lt;h6&gt;</span> — заголовки</li>
-                                <li><span class="highlight">&lt;p&gt;</span> — абзац</li>
-                                <li><span class="highlight">&lt;a&gt;</span> — ссылка</li>
-                                <li><span class="highlight">&lt;div&gt;</span> — блок</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>HTML — основа веб-страниц.</p><div class="code-block">&lt;<span class="keyword">h1</span>&gt;Привет!&lt;<span class="keyword">/h1</span>&gt;</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ</p>`
                     },
                     {
                         id: 'css_intro',
                         title: 'Введение в CSS',
                         description: 'Основы стилизации веб-страниц',
                         serjReward: 15,
-                        content: `
-                            <p><span class="highlight">CSS</span> управляет внешним видом элементов.</p>
-                            <div class="code-block">
-<span class="variable">h1</span> {
-    <span class="keyword">color</span>: <span class="string">#a78bfa</span>;
-    <span class="keyword">font-size</span>: <span class="variable">28px</span>;
-}
-                            </div>
-                            <p>Основные свойства:</p>
-                            <ul>
-                                <li><span class="highlight">color</span> — цвет текста</li>
-                                <li><span class="highlight">background</span> — фон</li>
-                                <li><span class="highlight">font-size</span> — размер шрифта</li>
-                                <li><span class="highlight">display</span> — тип отображения</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>CSS управляет внешним видом.</p><div class="code-block"><span class="variable">h1</span> { <span class="keyword">color</span>: <span class="string">#a78bfa</span>; }</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ</p>`
                     },
                     {
                         id: 'css_flex',
                         title: 'Flexbox и Grid',
                         description: 'Современные системы компоновки',
                         serjReward: 20,
-                        content: `
-                            <p><span class="highlight">Flexbox</span> — одномерная система компоновки.</p>
-                            <div class="code-block">
-.container {
-    <span class="keyword">display</span>: <span class="variable">flex</span>;
-    <span class="keyword">justify-content</span>: <span class="variable">center</span>;
-    <span class="keyword">align-items</span>: <span class="variable">center</span>;
-}
-                            </div>
-                            <p><span class="highlight">Grid</span> — двумерная система компоновки.</p>
-                            <div class="code-block">
-.container {
-    <span class="keyword">display</span>: <span class="variable">grid</span>;
-    <span class="keyword">grid-template-columns</span>: <span class="variable">1fr 1fr 1fr</span>;
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Flexbox — одномерная, Grid — двумерная компоновка.</p><div class="code-block">.container { <span class="keyword">display</span>: <span class="variable">flex</span>; }</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ</p>`
                     }
                 ]
             },
@@ -1612,61 +1492,21 @@ fruits = [<span class="string">"яблоко"</span>, <span class="string">"ба
                         title: 'Введение в Telegram ботов',
                         description: 'Что такое боты и как их создавать',
                         serjReward: 10,
-                        content: `
-                            <p><span class="highlight">Telegram бот</span> — программа, которая взаимодействует с пользователями.</p>
-                            <p>Для создания бота нужно:</p>
-                            <ul>
-                                <li>Написать <span class="highlight">@BotFather</span></li>
-                                <li>Отправить <span class="highlight">/newbot</span></li>
-                                <li>Получить <span class="highlight">токен</span></li>
-                            </ul>
-                            <p>Библиотеки для Python:</p>
-                            <ul>
-                                <li><span class="highlight">python-telegram-bot</span></li>
-                                <li><span class="highlight">pyTelegramBotAPI</span></li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Telegram бот — программа для общения с пользователями.</p><p>Создаётся через @BotFather.</p><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ</p>`
                     },
                     {
                         id: 'tgbot_handlers',
                         title: 'Обработчики сообщений',
                         description: 'Как реагировать на команды и сообщения',
                         serjReward: 15,
-                        content: `
-                            <p><span class="highlight">Обработчики</span> — функции, вызываемые при получении сообщений.</p>
-                            <div class="code-block">
-<span class="keyword">@bot.message_handler</span>(commands=[<span class="string">"start"</span>])
-<span class="keyword">def</span> <span class="function">start</span>(message):
-    bot.send_message(message.chat.id, <span class="string">"Привет!"</span>)
-                            </div>
-                            <p>Типы обработчиков:</p>
-                            <ul>
-                                <li><span class="highlight">commands</span> — команды</li>
-                                <li><span class="highlight">message_handler</span> — текст</li>
-                                <li><span class="highlight">callback_query_handler</span> — кнопки</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Обработчики — функции, вызываемые при получении сообщений.</p><div class="code-block"><span class="keyword">@bot.message_handler</span>(commands=[<span class="string">"start"</span>])</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ</p>`
                     },
                     {
                         id: 'tgbot_keyboards',
                         title: 'Клавиатуры и кнопки',
                         description: 'Создание интерактивных кнопок',
                         serjReward: 20,
-                        content: `
-                            <p><span class="highlight">Inline-кнопки</span> — кнопки под сообщениями.</p>
-                            <div class="code-block">
-<span class="keyword">from</span> telebot.types <span class="keyword">import</span> InlineKeyboardMarkup, InlineKeyboardButton
-
-keyboard = InlineKeyboardMarkup()
-btn = InlineKeyboardButton(<span class="string">"Нажми меня"</span>, callback_data=<span class="string">"click"</span>)
-keyboard.add(btn)
-bot.send_message(chat_id, <span class="string">"Выбери действие:"</span>, reply_markup=keyboard)
-                            </div>
-                            <p><span class="highlight">Reply-кнопки</span> — кнопки в поле ввода.</p>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Inline-кнопки — под сообщениями.</p><div class="code-block">keyboard = InlineKeyboardMarkup()</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ</p>`
                     }
                 ]
             },
@@ -1681,54 +1521,21 @@ bot.send_message(chat_id, <span class="string">"Выбери действие:"<
                         title: 'Основы веб-разработки',
                         description: 'Как устроен веб',
                         serjReward: 10,
-                        content: `
-                            <p><span class="highlight">Веб-разработка</span> включает создание сайтов и веб-приложений.</p>
-                            <p>Основные технологии:</p>
-                            <ul>
-                                <li><span class="highlight">HTML</span> — структура</li>
-                                <li><span class="highlight">CSS</span> — стили</li>
-                                <li><span class="highlight">JavaScript</span> — интерактивность</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>Веб-разработка: создание сайтов и приложений.</p><p>Технологии: HTML, CSS, JavaScript.</p><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ</p>`
                     },
                     {
                         id: 'webdev_js',
                         title: 'JavaScript основы',
                         description: 'Введение в язык программирования для веба',
                         serjReward: 15,
-                        content: `
-                            <p><span class="highlight">JavaScript</span> — язык для создания интерактивных страниц.</p>
-                            <div class="code-block">
-<span class="keyword">let</span> name = <span class="string">"Алексей"</span>;
-<span class="keyword">function</span> <span class="function">greet</span>() {
-    <span class="keyword">alert</span>(<span class="string">"Привет, "</span> + name);
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>JavaScript — язык для интерактивных страниц.</p><div class="code-block"><span class="keyword">let</span> name = <span class="string">"Алексей"</span>;</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ</p>`
                     },
                     {
                         id: 'webdev_react',
                         title: 'Введение в React',
                         description: 'Библиотека для создания интерфейсов',
                         serjReward: 20,
-                        content: `
-                            <p><span class="highlight">React</span> — библиотека от Facebook для создания UI.</p>
-                            <div class="code-block">
-<span class="keyword">function</span> <span class="function">App</span>() {
-    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;;
-}
-                            </div>
-                            <p>Ключевые понятия:</p>
-                            <ul>
-                                <li><span class="highlight">Компоненты</span> — строительные блоки</li>
-                                <li><span class="highlight">JSX</span> — синтаксис HTML в JS</li>
-                                <li><span class="highlight">State</span> — состояние компонента</li>
-                                <li><span class="highlight">Props</span> — передача данных</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>React — библиотека от Facebook для UI.</p><div class="code-block"><span class="keyword">function</span> <span class="function">App</span>() { <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет!&lt;<span class="keyword">/h1</span>&gt;; }</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ</p>`
                     }
                 ]
             },
@@ -1743,371 +1550,21 @@ bot.send_message(chat_id, <span class="string">"Выбери действие:"<
                         title: 'Введение в SQL',
                         description: 'Основы работы с базами данных',
                         serjReward: 10,
-                        content: `
-                            <p><span class="highlight">SQL</span> — язык для работы с реляционными базами данных.</p>
-                            <p>Основные команды:</p>
-                            <ul>
-                                <li><span class="highlight">SELECT</span> — выборка данных</li>
-                                <li><span class="highlight">INSERT</span> — добавление данных</li>
-                                <li><span class="highlight">UPDATE</span> — обновление данных</li>
-                                <li><span class="highlight">DELETE</span> — удаление данных</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>SQL — язык для работы с реляционными БД.</p><p>Команды: SELECT, INSERT, UPDATE, DELETE.</p><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ</p>`
                     },
                     {
                         id: 'sql_select',
                         title: 'Запросы SELECT',
                         description: 'Выборка данных из таблиц',
                         serjReward: 15,
-                        content: `
-                            <div class="code-block">
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> users;
-<span class="keyword">SELECT</span> name, age <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> age > <span class="variable">18</span>;
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> users <span class="keyword">ORDER BY</span> age <span class="keyword">DESC</span>;
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
+                        content: `<div class="code-block"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> users;</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ</p>`
                     },
                     {
                         id: 'sql_join',
                         title: 'Объединение таблиц (JOIN)',
                         description: 'Соединение данных из разных таблиц',
                         serjReward: 20,
-                        content: `
-                            <p><span class="highlight">JOIN</span> — объединение таблиц по ключам.</p>
-                            <div class="code-block">
-<span class="keyword">SELECT</span> users.name, orders.total
-<span class="keyword">FROM</span> users
-<span class="keyword">JOIN</span> orders <span class="keyword">ON</span> users.id = orders.user_id;
-                            </div>
-                            <p>Типы JOIN:</p>
-                            <ul>
-                                <li><span class="highlight">INNER JOIN</span> — только совпадения</li>
-                                <li><span class="highlight">LEFT JOIN</span> — все из левой таблицы</li>
-                                <li><span class="highlight">RIGHT JOIN</span> — все из правой таблицы</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 'react',
-                name: 'Фронтенд с React',
-                icon: 'fa-react',
-                color: '#67e8f9',
-                lessons: [
-                    {
-                        id: 'react_intro',
-                        title: 'Введение в React',
-                        description: 'Основы библиотеки React',
-                        serjReward: 10,
-                        content: `
-                            <p><span class="highlight">React</span> — библиотека для создания пользовательских интерфейсов.</p>
-                            <div class="code-block">
-<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
-<span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom/client'</span>;
-
-<span class="keyword">function</span> <span class="function">App</span>() {
-    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, мир!&lt;<span class="keyword">/h1</span>&gt;;
-}
-
-ReactDOM.createRoot(document.getElementById(<span class="string">'root'</span>)).render(&lt;App /&gt;);
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'react_components',
-                        title: 'Компоненты и Props',
-                        description: 'Создание компонентов и передача данных',
-                        serjReward: 15,
-                        content: `
-                            <p><span class="highlight">Компоненты</span> — функции, возвращающие JSX.</p>
-                            <div class="code-block">
-<span class="keyword">function</span> <span class="function">Greeting</span>({ name }) {
-    <span class="keyword">return</span> &lt;<span class="keyword">h1</span>&gt;Привет, {name}!&lt;<span class="keyword">/h1</span>&gt;;
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'react_state',
-                        title: 'Управление состоянием (State)',
-                        description: 'Хук useState для управления данными',
-                        serjReward: 20,
-                        content: `
-                            <p><span class="highlight">useState</span> — хук для управления состоянием.</p>
-                            <div class="code-block">
-<span class="keyword">import</span> { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
-
-<span class="keyword">function</span> <span class="function">Counter</span>() {
-    <span class="keyword">const</span> [count, setCount] = useState(<span class="variable">0</span>);
-    <span class="keyword">return</span> (
-        &lt;<span class="keyword">div</span>&gt;
-            &lt;<span class="keyword">p</span>&gt;Счёт: {count}&lt;<span class="keyword">/p</span>&gt;
-            &lt;<span class="keyword">button</span> onClick={() => setCount(count + <span class="variable">1</span>)}&gt;
-                Нажми меня
-            &lt;<span class="keyword">/button</span>&gt;
-        &lt;<span class="keyword">/div</span>&gt;
-    );
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 'devops',
-                name: 'DevOps основы',
-                icon: 'fa-server',
-                color: '#818cf8',
-                lessons: [
-                    {
-                        id: 'devops_intro',
-                        title: 'Введение в DevOps',
-                        description: 'Что такое DevOps и зачем он нужен',
-                        serjReward: 10,
-                        content: `
-                            <p><span class="highlight">DevOps</span> — подход к разработке, объединяющий разработку и эксплуатацию.</p>
-                            <p>Ключевые понятия:</p>
-                            <ul>
-                                <li><span class="highlight">CI/CD</span> — непрерывная интеграция и доставка</li>
-                                <li><span class="highlight">Docker</span> — контейнеризация</li>
-                                <li><span class="highlight">Kubernetes</span> — оркестрация контейнеров</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'devops_docker',
-                        title: 'Docker контейнеризация',
-                        description: 'Основы работы с Docker',
-                        serjReward: 15,
-                        content: `
-                            <p><span class="highlight">Docker</span> — платформа для контейнеризации приложений.</p>
-                            <div class="code-block">
-<span class="comment"># Dockerfile</span>
-FROM python:<span class="variable">3.9</span>
-WORKDIR /app
-COPY . .
-RUN pip install -r requirements.txt
-CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
-                            </div>
-                            <p>Основные команды:</p>
-                            <ul>
-                                <li><span class="highlight">docker build</span> — сборка образа</li>
-                                <li><span class="highlight">docker run</span> — запуск контейнера</li>
-                                <li><span class="highlight">docker ps</span> — список контейнеров</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'devops_cicd',
-                        title: 'CI/CD пайплайны',
-                        description: 'Автоматизация сборки и развертывания',
-                        serjReward: 20,
-                        content: `
-                            <p><span class="highlight">CI/CD</span> — автоматизация процессов разработки.</p>
-                            <p>Этапы CI/CD:</p>
-                            <ul>
-                                <li><span class="highlight">CI</span> — сборка и тестирование</li>
-                                <li><span class="highlight">CD</span> — развертывание на серверах</li>
-                                <li><span class="highlight">Мониторинг</span> — отслеживание работы</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 'english',
-                name: 'Английский для IT',
-                icon: 'fa-language',
-                color: '#6ee7b7',
-                lessons: [
-                    {
-                        id: 'english_intro',
-                        title: 'Базовые термины IT',
-                        description: 'Основные слова для разработчиков',
-                        serjReward: 10,
-                        content: `
-                            <p>Важные термины:</p>
-                            <ul>
-                                <li><span class="highlight">Development</span> — разработка</li>
-                                <li><span class="highlight">Deployment</span> — развертывание</li>
-                                <li><span class="highlight">Debugging</span> — отладка</li>
-                                <li><span class="highlight">Algorithm</span> — алгоритм</li>
-                                <li><span class="highlight">Framework</span> — фреймворк</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'english_code',
-                        title: 'Английский в коде',
-                        description: 'Как называть переменные и функции',
-                        serjReward: 15,
-                        content: `
-                            <p>Правила именования:</p>
-                            <ul>
-                                <li>Имена переменных — <span class="highlight">camelCase</span></li>
-                                <li>Имена функций — <span class="highlight">getUserData</span></li>
-                                <li>Имена классов — <span class="highlight">UserService</span></li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'english_communication',
-                        title: 'Общение в IT-команде',
-                        description: 'Как общаться с коллегами на английском',
-                        serjReward: 20,
-                        content: `
-                            <p>Полезные фразы:</p>
-                            <ul>
-                                <li>"I'm working on..." — я работаю над...</li>
-                                <li>"Could you review my code?" — можешь проверить мой код?</li>
-                                <li>"I've fixed the bug" — я исправил баг</li>
-                                <li>"Let's deploy to production" — давайте развернём на проде</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 'security',
-                name: 'Кибербезопасность',
-                icon: 'fa-shield-alt',
-                color: '#f87171',
-                lessons: [
-                    {
-                        id: 'security_intro',
-                        title: 'Основы кибербезопасности',
-                        description: 'Что нужно знать о безопасности',
-                        serjReward: 10,
-                        content: `
-                            <p><span class="highlight">Кибербезопасность</span> — защита систем от атак.</p>
-                            <p>Основные угрозы:</p>
-                            <ul>
-                                <li><span class="highlight">SQL-инъекции</span> — атаки на базы данных</li>
-                                <li><span class="highlight">XSS</span> — межсайтовый скриптинг</li>
-                                <li><span class="highlight">DDoS</span> — распределенные атаки</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'security_password',
-                        title: 'Безопасность паролей',
-                        description: 'Как создавать надёжные пароли',
-                        serjReward: 15,
-                        content: `
-                            <p>Советы по паролям:</p>
-                            <ul>
-                                <li>Длина не менее <span class="highlight">12 символов</span></li>
-                                <li>Используйте <span class="highlight">буквы, цифры и символы</span></li>
-                                <li>Не используйте <span class="highlight">личную информацию</span></li>
-                                <li>Используйте <span class="highlight">менеджеры паролей</span></li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'security_network',
-                        title: 'Сетевая безопасность',
-                        description: 'Защита сетей и данных',
-                        serjReward: 20,
-                        content: `
-                            <p>Основные методы защиты:</p>
-                            <ul>
-                                <li><span class="highlight">VPN</span> — виртуальная частная сеть</li>
-                                <li><span class="highlight">Firewall</span> — межсетевой экран</li>
-                                <li><span class="highlight">HTTPS</span> — шифрование соединений</li>
-                                <li><span class="highlight">2FA</span> — двухфакторная аутентификация</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 'mobile',
-                name: 'Мобильная разработка',
-                icon: 'fa-mobile-alt',
-                color: '#f472b6',
-                lessons: [
-                    {
-                        id: 'mobile_intro',
-                        title: 'Основы мобильной разработки',
-                        description: 'Что нужно знать о мобильных приложениях',
-                        serjReward: 10,
-                        content: `
-                            <p><span class="highlight">Мобильная разработка</span> — создание приложений для iOS и Android.</p>
-                            <p>Основные платформы:</p>
-                            <ul>
-                                <li><span class="highlight">iOS</span> — приложения для iPhone</li>
-                                <li><span class="highlight">Android</span> — приложения для Android</li>
-                            </ul>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 10 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'mobile_flutter',
-                        title: 'Flutter фреймворк',
-                        description: 'Кроссплатформенная разработка',
-                        serjReward: 15,
-                        content: `
-                            <p><span class="highlight">Flutter</span> — фреймворк от Google для кроссплатформенной разработки.</p>
-                            <div class="code-block">
-<span class="keyword">import</span> 'package:flutter/material.dart';
-
-<span class="keyword">void</span> <span class="function">main</span>() {
-    runApp(<span class="function">MyApp</span>());
-}
-
-<span class="keyword">class</span> <span class="variable">MyApp</span> <span class="keyword">extends</span> <span class="variable">StatelessWidget</span> {
-    <span class="keyword">@override</span>
-    <span class="variable">Widget</span> <span class="function">build</span>(<span class="variable">BuildContext</span> context) {
-        <span class="keyword">return</span> <span class="variable">MaterialApp</span>(
-            home: <span class="variable">Scaffold</span>(
-                body: <span class="variable">Center</span>(
-                    child: <span class="variable">Text</span>(<span class="string">'Привет, мир!'</span>),
-                ),
-            ),
-        );
-    }
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 15 SERJ за прохождение урока</p>
-                        `
-                    },
-                    {
-                        id: 'mobile_reactnative',
-                        title: 'React Native основы',
-                        description: 'Разработка с использованием React',
-                        serjReward: 20,
-                        content: `
-                            <p><span class="highlight">React Native</span> — фреймворк для создания мобильных приложений.</p>
-                            <div class="code-block">
-<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
-<span class="keyword">import</span> { View, Text, StyleSheet } <span class="keyword">from</span> <span class="string">'react-native'</span>;
-
-<span class="keyword">function</span> <span class="function">App</span>() {
-    <span class="keyword">return</span> (
-        &lt;<span class="keyword">View</span> style={styles.container}&gt;
-            &lt;<span class="keyword">Text</span>&gt;Привет, мир!&lt;<span class="keyword">/Text</span>&gt;
-        &lt;<span class="keyword">/View</span>&gt;
-    );
-}
-                            </div>
-                            <p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ за прохождение урока</p>
-                        `
+                        content: `<p>JOIN — объединение таблиц по ключам.</p><div class="code-block"><span class="keyword">SELECT</span> users.name, orders.total\n<span class="keyword">FROM</span> users <span class="keyword">JOIN</span> orders</div><p style="color: #fbbf24; font-weight: 600; margin-top: 12px;">💰 Награда: 20 SERJ</p>`
                     }
                 ]
             }
@@ -2124,9 +1581,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
 
         const recommendList = [
             { title: 'AI для начинающих', lessons: '12 уроков', time: '4 ч', thumb: 'fa-robot', thumbClass: '', bg: 'linear-gradient(145deg, rgba(139,92,246,0.15), rgba(99,102,241,0.08))', color: '#a78bfa' },
-            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, rgba(45,212,191,0.15), rgba(20,184,166,0.08))', color: '#5eead4' },
-            { title: 'Блокчейн основы', lessons: '14 уроков', time: '6 ч', thumb: 'fa-link', thumbClass: '', bg: 'linear-gradient(145deg, rgba(139,92,246,0.15), rgba(99,102,241,0.08))', color: '#a78bfa' },
-            { title: 'Data Science', lessons: '20 уроков', time: '9 ч', thumb: 'fa-chart-bar', thumbClass: '', bg: 'linear-gradient(145deg, rgba(52,211,153,0.15), rgba(16,185,129,0.08))', color: '#6ee7b7' }
+            { title: 'Облачные технологии', lessons: '10 уроков', time: '5 ч', thumb: 'fa-cloud', thumbClass: '', bg: 'linear-gradient(145deg, rgba(45,212,191,0.15), rgba(20,184,166,0.08))', color: '#5eead4' }
         ];
 
         // ----- ТЕСТЫ -----
@@ -2140,8 +1595,8 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                     { q: 'Какой тип данных используется для хранения целых чисел?', options: ['int', 'float', 'str', 'bool'], correct: 0 },
                     { q: 'Что делает функция print()?', options: ['Выводит данные', 'Вводит данные', 'Создает переменную', 'Удаляет данные'], correct: 0 },
                     { q: 'Как создать список в Python?', options: ['[]', '{}', '()', '<>'], correct: 0 },
-                    { q: 'Какая функция используется для получения длины списка?', options: ['len()', 'size()', 'length()', 'count()'], correct: 0 },
-                    { q: 'Что такое PEP 8?', options: ['Стандарт оформления кода', 'Библиотека', 'Фреймворк', 'Тип данных'], correct: 0 }
+                    { q: 'Какая функция для длины списка?', options: ['len()', 'size()', 'length()', 'count()'], correct: 0 },
+                    { q: 'Что такое PEP 8?', options: ['Стандарт оформления', 'Библиотека', 'Фреймворк', 'Тип данных'], correct: 0 }
                 ]
             },
             {
@@ -2150,11 +1605,11 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 icon: 'fa-code',
                 serjReward: 25,
                 questions: [
-                    { q: 'Какой тег используется для создания заголовка первого уровня?', options: ['<h1>', '<header>', '<head>', '<title>'], correct: 0 },
-                    { q: 'Что делает свойство display: flex?', options: ['Создает гибкий контейнер', 'Делает элемент невидимым', 'Добавляет тень', 'Меняет цвет'], correct: 0 },
-                    { q: 'Как подключить CSS файл?', options: ['<link rel="stylesheet" href="style.css">', '<style src="style.css">', '<css src="style.css">', '<script src="style.css">'], correct: 0 },
-                    { q: 'Что такое CSS Grid?', options: ['Система компоновки', 'Тип данных', 'Библиотека', 'Язык программирования'], correct: 0 },
-                    { q: 'Какое свойство отвечает за цвет текста?', options: ['color', 'text-color', 'font-color', 'background-color'], correct: 0 }
+                    { q: 'Какой тег для заголовка первого уровня?', options: ['<h1>', '<header>', '<head>', '<title>'], correct: 0 },
+                    { q: 'Что делает display: flex?', options: ['Гибкий контейнер', 'Невидимость', 'Тень', 'Цвет'], correct: 0 },
+                    { q: 'Как подключить CSS?', options: ['<link rel="stylesheet">', '<style src>', '<css src>', '<script src>'], correct: 0 },
+                    { q: 'Что такое CSS Grid?', options: ['Система компоновки', 'Тип данных', 'Библиотека', 'Язык'], correct: 0 },
+                    { q: 'Свойство для цвета текста?', options: ['color', 'text-color', 'font-color', 'background-color'], correct: 0 }
                 ]
             },
             {
@@ -2163,11 +1618,11 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 icon: 'fa-telegram',
                 serjReward: 25,
                 questions: [
-                    { q: 'Какая библиотека используется для создания TG-ботов на Python?', options: ['python-telegram-bot', 'telebot', 'pyTelegramBotAPI', 'Все варианты'], correct: 3 },
-                    { q: 'Как получить токен бота?', options: ['У @BotFather', 'В настройках Telegram', 'В Google', 'Создать самому'], correct: 0 },
-                    { q: 'Какая функция отправляет сообщение в Telegram?', options: ['send_message()', 'send()', 'message()', 'post()'], correct: 0 },
-                    { q: 'Как обработать команду /start?', options: ['@bot.message_handler(commands=["start"])', '@bot.start()', 'def start()', 'команда start'], correct: 0 },
-                    { q: 'Что такое webhook в Telegram ботах?', options: ['HTTP callback', 'База данных', 'Библиотека', 'Тип бота'], correct: 0 }
+                    { q: 'Библиотека для TG-ботов на Python?', options: ['python-telegram-bot', 'telebot', 'pyTelegramBotAPI', 'Все'], correct: 3 },
+                    { q: 'Где получить токен бота?', options: ['@BotFather', 'Настройки Telegram', 'Google', 'Создать самому'], correct: 0 },
+                    { q: 'Функция отправки сообщения?', options: ['send_message()', 'send()', 'message()', 'post()'], correct: 0 },
+                    { q: 'Обработка команды /start?', options: ['@bot.message_handler(commands=["start"])', '@bot.start()', 'def start()', 'команда start'], correct: 0 },
+                    { q: 'Что такое webhook?', options: ['HTTP callback', 'База данных', 'Библиотека', 'Тип бота'], correct: 0 }
                 ]
             }
         ];
@@ -2232,7 +1687,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             }
             document.getElementById('regError').classList.remove('show');
             
-            // Проверка, существует ли уже такой пользователь
             const exists = accounts.some(a => 
                 a.firstName.toLowerCase() === firstName.trim().toLowerCase() && 
                 a.lastName.toLowerCase() === lastName.trim().toLowerCase()
@@ -2252,10 +1706,11 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             document.getElementById('regSuccess').classList.add('show');
             document.getElementById('regError').classList.remove('show');
             
-            populateAccountSelect();
-            document.getElementById('accountSelect').value = newAccount.id;
+            // Переключаемся на новый аккаунт
+            currentAccountId = newAccount.id;
+            saveCurrentAccount();
             switchAccount(newAccount.id);
-            showToast(`✅ Аккаунт ${firstName} создан! Получи 50 SERJ за регистрацию!`);
+            showToast(`✅ Аккаунт ${firstName} создан! +50 SERJ за регистрацию!`);
             earnSerj(newAccount, 50, 'регистрацию');
             return true;
         }
@@ -2265,7 +1720,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             setCookie('serj_current_account', null, -1);
             document.getElementById('userNameDisplay').textContent = 'Гость';
             document.getElementById('greeting').innerHTML = '👋 Добро пожаловать, <span id="userNameDisplay">Гость</span>!';
-            document.getElementById('subGreeting').textContent = 'Создай аккаунт или войди в существующий 🔥';
+            document.getElementById('subGreeting').textContent = 'Создай аккаунт и начни зарабатывать SERJ 🔥';
             document.getElementById('courseGrid').innerHTML = '';
             document.getElementById('recommendGrid').innerHTML = '';
             document.getElementById('testsContainer').innerHTML = '';
@@ -2278,29 +1733,23 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             document.getElementById('statTests').textContent = '0';
             document.getElementById('statHours').textContent = '0';
             updateCurrencyDisplay(null);
-            populateAccountSelect();
             showToast('👋 Выход выполнен');
         }
 
-        // ----- РЕНДЕР ПРЕДМЕТОВ -----
+        // ----- РЕНДЕР -----
         function renderSubjects(account) {
             const grid = document.getElementById('subjectGrid');
             if (!grid) return;
             grid.innerHTML = '';
-
             if (!account) {
-                grid.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 20px;">✨ Войди в аккаунт, чтобы учиться</p>';
+                grid.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 20px;">✨ Войди в аккаунт</p>';
                 return;
             }
-
             subjects.forEach(subject => {
                 const lessons = subject.lessons;
                 let completed = 0;
-                lessons.forEach(l => {
-                    if (account.lessonProgress && account.lessonProgress[l.id]) completed++;
-                });
+                lessons.forEach(l => { if (account.lessonProgress && account.lessonProgress[l.id]) completed++; });
                 const pct = lessons.length > 0 ? Math.round((completed / lessons.length) * 100) : 0;
-
                 const card = document.createElement('div');
                 card.className = 'subject-card' + (activeSubject === subject.id ? ' active' : '');
                 card.innerHTML = `
@@ -2316,7 +1765,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 });
                 grid.appendChild(card);
             });
-
             if (!activeSubject && subjects.length > 0) {
                 activeSubject = subjects[0].id;
                 renderSubjects(account);
@@ -2324,74 +1772,46 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             }
         }
 
-        // ----- РЕНДЕР УРОКОВ -----
         function renderLessons(account, subjectId) {
             const container = document.getElementById('lessonsContainer');
             if (!container) return;
             container.innerHTML = '';
-
             if (!account) {
-                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">✨ Войди в аккаунт, чтобы начать обучение</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">✨ Войди в аккаунт</p>';
                 return;
             }
-
             const subject = subjects.find(s => s.id === subjectId);
-            if (!subject) {
-                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">Выбери предмет</p>';
-                return;
-            }
-
+            if (!subject) return;
             const header = document.createElement('div');
-            header.style.cssText = `
-                display: flex; align-items: center; gap: 14px;
-                margin-bottom: 20px; padding-bottom: 16px;
-                border-bottom: 1px solid rgba(139,92,246,0.08);
-            `;
-            header.innerHTML = `
-                <i class="fas ${subject.icon}" style="font-size: 32px; color: ${subject.color};"></i>
-                <div>
-                    <h3 style="font-size: 22px; font-weight: 700; color: #e0e0ff;">${subject.name}</h3>
-                    <span style="color: #8b8bb8; font-size: 14px;">${subject.lessons.length} уроков</span>
-                </div>
-            `;
+            header.style.cssText = `display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(139,92,246,0.08);`;
+            header.innerHTML = `<i class="fas ${subject.icon}" style="font-size:32px;color:${subject.color};"></i><div><h3 style="font-size:22px;font-weight:700;color:#e0e0ff;">${subject.name}</h3><span style="color:#8b8bb8;font-size:14px;">${subject.lessons.length} уроков</span></div>`;
             container.appendChild(header);
 
             subject.lessons.forEach((lesson, index) => {
                 const isCompleted = account.lessonProgress && account.lessonProgress[lesson.id] || false;
                 const card = document.createElement('div');
                 card.className = 'lesson-card';
-
                 const headerDiv = document.createElement('div');
                 headerDiv.className = 'lesson-header';
                 headerDiv.innerHTML = `
                     <div class="lesson-icon"><i class="fas ${subject.icon}"></i></div>
-                    <div class="lesson-title">
-                        ${index+1}. ${lesson.title}
-                        <small>${lesson.description} • <span style="color: #fbbf24;">${lesson.serjReward} SERJ</span></small>
-                    </div>
-                    <div class="lesson-toggle ${isCompleted ? 'open' : ''}">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
+                    <div class="lesson-title">${index+1}. ${lesson.title}<small>${lesson.description} • <span style="color:#fbbf24;">${lesson.serjReward} SERJ</span></small></div>
+                    <div class="lesson-toggle ${isCompleted ? 'open' : ''}"><i class="fas fa-chevron-down"></i></div>
                 `;
-
                 const bodyDiv = document.createElement('div');
                 bodyDiv.className = 'lesson-body' + (isCompleted ? ' open' : '');
                 bodyDiv.innerHTML = lesson.content;
-
                 const btnDiv = document.createElement('div');
-                btnDiv.style.cssText = 'display: flex; justify-content: flex-end; margin-top: 12px; gap: 12px; flex-wrap: wrap;';
-                
+                btnDiv.style.cssText = 'display:flex;justify-content:flex-end;margin-top:12px;';
                 const completeBtn = document.createElement('button');
                 completeBtn.className = 'lesson-complete-btn' + (isCompleted ? ' completed' : '');
-                completeBtn.innerHTML = isCompleted ? '<i class="fas fa-check-circle"></i> Пройдено (+' + lesson.serjReward + ' SERJ)' : '<i class="fas fa-check"></i> Отметить как пройденное (+' + lesson.serjReward + ' SERJ)';
+                completeBtn.innerHTML = isCompleted ? '<i class="fas fa-check-circle"></i> Пройдено (+' + lesson.serjReward + ' SERJ)' : '<i class="fas fa-check"></i> Отметить (+' + lesson.serjReward + ' SERJ)';
                 completeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (!account.lessonProgress) account.lessonProgress = {};
                     const newState = !account.lessonProgress[lesson.id];
                     account.lessonProgress[lesson.id] = newState;
-                    if (newState) {
-                        earnSerj(account, lesson.serjReward, 'урок: ' + lesson.title);
-                    }
+                    if (newState) earnSerj(account, lesson.serjReward, 'урок: ' + lesson.title);
                     saveAccountsToCookie();
                     showToast(newState ? '✅ Урок пройден! +' + lesson.serjReward + ' SERJ' : '🔄 Урок отмечен как непройденный');
                     renderSubjects(account);
@@ -2401,48 +1821,32 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 });
                 btnDiv.appendChild(completeBtn);
                 bodyDiv.appendChild(btnDiv);
-
                 const progressBar = document.createElement('div');
                 progressBar.className = 'lesson-progress-bar';
                 progressBar.innerHTML = `<div class="fill" style="width: ${isCompleted ? 100 : 0}%;"></div>`;
                 bodyDiv.appendChild(progressBar);
-
                 headerDiv.addEventListener('click', () => {
                     const isOpen = bodyDiv.classList.toggle('open');
                     const toggle = headerDiv.querySelector('.lesson-toggle');
                     if (toggle) toggle.classList.toggle('open');
                 });
-
                 card.appendChild(headerDiv);
                 card.appendChild(bodyDiv);
                 container.appendChild(card);
             });
         }
 
-        // ----- РЕНДЕР ПРОГРЕССА -----
         function renderProgress(account) {
             const container = document.getElementById('progressContainer');
             if (!container) return;
             container.innerHTML = '';
-
             if (!account) {
-                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">✨ Войди в аккаунт, чтобы увидеть прогресс</p>';
+                container.innerHTML = '<p style="color: #8b8bb8; text-align: center; padding: 40px;">✨ Войди в аккаунт</p>';
                 return;
             }
-
-            let totalLessons = 0;
-            let completedLessons = 0;
-            subjects.forEach(s => {
-                s.lessons.forEach(l => {
-                    totalLessons++;
-                    if (account.lessonProgress && account.lessonProgress[l.id]) completedLessons++;
-                });
-            });
-
-            let totalTests = 0;
-            let passedTests = 0;
-            let totalQuestions = 0;
-            let correctQuestions = 0;
+            let totalLessons = 0, completedLessons = 0;
+            subjects.forEach(s => s.lessons.forEach(l => { totalLessons++; if (account.lessonProgress && account.lessonProgress[l.id]) completedLessons++; }));
+            let totalTests = 0, passedTests = 0, totalQuestions = 0, correctQuestions = 0;
             testList.forEach(test => {
                 const results = account.testsResults[test.id] || [];
                 if (results.length > 0) {
@@ -2454,83 +1858,35 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 }
             });
             const overallPct = totalQuestions > 0 ? Math.round((correctQuestions / totalQuestions) * 100) : 0;
-
             const activeCourses = courseList.filter(c => account.coursesProgress[c.title] > 0 && account.coursesProgress[c.title] < 100);
             const completedCourses = courseList.filter(c => account.coursesProgress[c.title] === 100);
-
             container.innerHTML = `
                 <div class="progress-card">
                     <h3><i class="fas fa-user-graduate"></i> Общая статистика</h3>
-                    <div class="progress-stat">
-                        <span class="label">Всего курсов</span>
-                        <span class="value">${courseList.length}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Активных курсов</span>
-                        <span class="value cyan">${activeCourses.length}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Завершено курсов</span>
-                        <span class="value green">${completedCourses.length}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Всего уроков</span>
-                        <span class="value">${totalLessons}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Пройдено уроков</span>
-                        <span class="value green">${completedLessons}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Пройдено тестов</span>
-                        <span class="value purple">${passedTests}/${totalTests}</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Правильных ответов</span>
-                        <span class="value ${overallPct >= 70 ? 'green' : 'orange'}">${correctQuestions}/${totalQuestions} (${overallPct}%)</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span class="label">Сертификатов</span>
-                        <span class="value pink">${account.stats.certificates || 0}</span>
-                    </div>
-                    <div class="progress-stat" style="border-bottom: none; padding-bottom: 0;">
-                        <span class="label">💰 Заработано SERJ</span>
-                        <span class="value" style="color: #fbbf24;">${account.serj || 0} SERJ</span>
-                    </div>
+                    <div class="progress-stat"><span class="label">Всего курсов</span><span class="value">${courseList.length}</span></div>
+                    <div class="progress-stat"><span class="label">Активных курсов</span><span class="value cyan">${activeCourses.length}</span></div>
+                    <div class="progress-stat"><span class="label">Завершено курсов</span><span class="value green">${completedCourses.length}</span></div>
+                    <div class="progress-stat"><span class="label">Всего уроков</span><span class="value">${totalLessons}</span></div>
+                    <div class="progress-stat"><span class="label">Пройдено уроков</span><span class="value green">${completedLessons}</span></div>
+                    <div class="progress-stat"><span class="label">Пройдено тестов</span><span class="value purple">${passedTests}/${totalTests}</span></div>
+                    <div class="progress-stat"><span class="label">Правильных ответов</span><span class="value ${overallPct >= 70 ? 'green' : 'orange'}">${correctQuestions}/${totalQuestions} (${overallPct}%)</span></div>
+                    <div class="progress-stat"><span class="label">Сертификатов</span><span class="value pink">${account.stats.certificates || 0}</span></div>
+                    <div class="progress-stat" style="border-bottom:none;padding-bottom:0;"><span class="label">💰 Заработано SERJ</span><span class="value" style="color:#fbbf24;">${account.serj || 0} SERJ</span></div>
                 </div>
-
                 <div class="progress-card">
                     <h3><i class="fas fa-book"></i> Прогресс по курсам</h3>
                     ${courseList.map(c => {
                         const pct = account.coursesProgress[c.title] || 0;
                         const iconMap = {
-                            'Python с нуля': 'fa-python',
-                            'HTML & CSS мастер': 'fa-code',
-                            'Создание TG-ботов': 'fa-telegram',
-                            'Веб-разработка 2026': 'fa-globe',
-                            'Базы данных SQL': 'fa-database',
-                            'Фронтенд с React': 'fa-react',
-                            'DevOps основы': 'fa-server',
-                            'Английский для IT': 'fa-language',
-                            'Кибербезопасность': 'fa-shield-alt',
-                            'Мобильная разработка': 'fa-mobile-alt'
+                            'Python с нуля': 'fa-python','HTML & CSS мастер': 'fa-code','Создание TG-ботов': 'fa-telegram',
+                            'Веб-разработка 2026': 'fa-globe','Базы данных SQL': 'fa-database'
                         };
-                        return `
-                            <div class="course-progress-item">
-                                <div class="course-icon"><i class="fab ${iconMap[c.title] || 'fa-book'}"></i></div>
-                                <div class="course-info">
-                                    <div class="course-name">${c.title}</div>
-                                    <div class="course-bar"><div class="fill" style="width: ${pct}%;"></div></div>
-                                </div>
-                                <div class="course-pct">${pct}%</div>
-                            </div>
-                        `;
+                        return `<div class="course-progress-item"><div class="course-icon"><i class="fab ${iconMap[c.title] || 'fa-book'}"></i></div><div class="course-info"><div class="course-name">${c.title}</div><div class="course-bar"><div class="fill" style="width:${pct}%;"></div></div></div><div class="course-pct">${pct}%</div></div>`;
                     }).join('')}
                 </div>
             `;
         }
 
-        // ----- РЕНДЕР КУРСОВ -----
         function renderCourses(containerId, data, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -2543,7 +1899,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 const progress = account.coursesProgress[item.title] || 0;
                 const status = progress === 100 ? 'завершён' : (progress > 0 ? 'в процессе' : 'начат');
                 const statusClass = progress === 100 ? 'completed' : (progress > 0 ? 'ongoing' : 'ongoing');
-
                 const card = document.createElement('div');
                 card.className = 'course-card';
                 const thumb = document.createElement('div');
@@ -2552,14 +1907,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 card.appendChild(thumb);
                 const body = document.createElement('div');
                 body.className = 'card-body';
-                body.innerHTML = `
-                    <h3>${item.title}</h3>
-                    <div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: ${progress}%;"></div></div>
-                        <span class="progress-label">${progress}%</span>
-                    </div>
-                `;
+                body.innerHTML = `<h3>${item.title}</h3><div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div><div class="progress-block"><div class="progress-bar-bg"><div class="progress-fill" style="width:${progress}%;"></div></div><span class="progress-label">${progress}%</span></div>`;
                 card.appendChild(body);
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
@@ -2570,23 +1918,10 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 const btn = document.createElement('button');
                 btn.className = 'btn-outline';
                 const icon = document.createElement('i');
-                if (progress === 100) {
-                    icon.className = 'fas fa-redo';
-                    btn.appendChild(icon);
-                    btn.appendChild(document.createTextNode(' Повторить'));
-                } else if (progress === 0) {
-                    icon.className = 'fas fa-plus';
-                    btn.appendChild(icon);
-                    btn.appendChild(document.createTextNode(' Начать'));
-                } else {
-                    icon.className = 'fas fa-play';
-                    btn.appendChild(icon);
-                    btn.appendChild(document.createTextNode(' Продолжить'));
-                }
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showToast(`🚀 "${item.title}" — продолжение (${progress}%)`);
-                });
+                if (progress === 100) { icon.className = 'fas fa-redo'; btn.appendChild(icon); btn.appendChild(document.createTextNode(' Повторить')); }
+                else if (progress === 0) { icon.className = 'fas fa-plus'; btn.appendChild(icon); btn.appendChild(document.createTextNode(' Начать')); }
+                else { icon.className = 'fas fa-play'; btn.appendChild(icon); btn.appendChild(document.createTextNode(' Продолжить')); }
+                btn.addEventListener('click', (e) => { e.stopPropagation(); showToast(`🚀 "${item.title}" — продолжение (${progress}%)`); });
                 footer.appendChild(btn);
                 card.appendChild(footer);
                 card.addEventListener('click', () => showToast(`📖 Открыть курс: ${item.title}`));
@@ -2607,22 +1942,12 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 card.className = 'course-card';
                 const thumb = document.createElement('div');
                 thumb.className = 'card-thumb';
-                if (item.bg) {
-                    thumb.style.background = item.bg;
-                    thumb.style.color = item.color;
-                }
+                if (item.bg) { thumb.style.background = item.bg; thumb.style.color = item.color; }
                 thumb.innerHTML = `<i class="fas ${item.thumb}"></i>`;
                 card.appendChild(thumb);
                 const body = document.createElement('div');
                 body.className = 'card-body';
-                body.innerHTML = `
-                    <h3>${item.title}</h3>
-                    <div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div>
-                    <div class="progress-block">
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div>
-                        <span class="progress-label">0%</span>
-                    </div>
-                `;
+                body.innerHTML = `<h3>${item.title}</h3><div class="meta"><i class="fas fa-user"></i> ${item.lessons} • <i class="fas fa-clock"></i> ${item.time}</div><div class="progress-block"><div class="progress-bar-bg"><div class="progress-fill" style="width:0%;"></div></div><span class="progress-label">0%</span></div>`;
                 card.appendChild(body);
                 const footer = document.createElement('div');
                 footer.className = 'card-footer';
@@ -2633,10 +1958,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 const btn = document.createElement('button');
                 btn.className = 'btn-outline';
                 btn.innerHTML = '<i class="fas fa-plus"></i> Начать';
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showToast(`📚 Начать курс: ${item.title}`);
-                });
+                btn.addEventListener('click', (e) => { e.stopPropagation(); showToast(`📚 Начать курс: ${item.title}`); });
                 footer.appendChild(btn);
                 card.appendChild(footer);
                 card.addEventListener('click', () => showToast(`📖 Открыть курс: ${item.title}`));
@@ -2644,81 +1966,53 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             });
         }
 
-        // ----- РЕНДЕР ТЕСТОВ -----
         function renderTests(containerId, account) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
-            if (!account) {
-                container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт</p>';
-                return;
-            }
-
-            if (!testStates[currentAccountId]) {
-                testStates[currentAccountId] = {};
-            }
+            if (!account) { container.innerHTML = '<p style="color: #8b8bb8; padding: 20px; text-align: center;">✨ Войди в аккаунт</p>'; return; }
+            if (!testStates[currentAccountId]) testStates[currentAccountId] = {};
             const accTestState = testStates[currentAccountId];
-
             const tabsWrapper = document.createElement('div');
             tabsWrapper.className = 'test-tabs';
-
             testList.forEach((test) => {
                 const results = account.testsResults[test.id] || [];
                 const total = test.questions.length;
                 const correctCount = results.filter(r => r === true).length;
-
                 const tab = document.createElement('button');
                 tab.className = 'test-tab';
                 tab.dataset.testId = test.id;
                 tab.innerHTML = `<i class="fas ${test.icon}"></i> ${test.title} <span class="tab-progress">${correctCount}/${total}</span>`;
-                
-                if (!activeTestTab || activeTestTab === test.id) {
-                    tab.classList.add('active');
-                    activeTestTab = test.id;
-                }
-
+                if (!activeTestTab || activeTestTab === test.id) { tab.classList.add('active'); activeTestTab = test.id; }
                 tab.addEventListener('click', function() {
                     document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     activeTestTab = this.dataset.testId;
                     renderTestContent(container, account, activeTestTab);
                 });
-
                 tabsWrapper.appendChild(tab);
             });
-
             container.appendChild(tabsWrapper);
-
             const contentWrapper = document.createElement('div');
             contentWrapper.className = 'test-content';
             contentWrapper.id = 'testContentWrapper';
             container.appendChild(contentWrapper);
-
-            if (activeTestTab) {
-                renderTestContent(container, account, activeTestTab);
-            }
+            if (activeTestTab) renderTestContent(container, account, activeTestTab);
         }
 
         function renderTestContent(container, account, testId) {
             const wrapper = document.getElementById('testContentWrapper');
             if (!wrapper) return;
-
             const test = testList.find(t => t.id === testId);
             if (!test) return;
-
             const results = account.testsResults[test.id] || [];
             const answered = testStates[currentAccountId]?.[testId] || results.map(() => false);
             if (!testStates[currentAccountId]) testStates[currentAccountId] = {};
-            if (!testStates[currentAccountId][testId]) {
-                testStates[currentAccountId][testId] = answered;
-            }
+            if (!testStates[currentAccountId][testId]) testStates[currentAccountId][testId] = answered;
             const state = testStates[currentAccountId][testId];
-
             wrapper.innerHTML = '';
-
             const total = test.questions.length;
             const correctCount = results.filter(r => r === true).length;
-
             const header = document.createElement('div');
             header.style.display = 'flex';
             header.style.justifyContent = 'space-between';
@@ -2726,39 +2020,23 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             header.style.marginBottom = '16px';
             header.style.flexWrap = 'wrap';
             header.style.gap = '8px';
-
-            const title = document.createElement('h3');
-            title.style.fontWeight = '700';
-            title.style.color = '#a78bfa';
-            title.innerHTML = `<i class="fas ${test.icon}" style="color: #8b5cf6; margin-right: 10px;"></i>${test.title} <span style="color: #fbbf24; font-size: 14px;">(${test.serjReward} SERJ за прохождение)</span>`;
-            header.appendChild(title);
-
+            header.innerHTML = `<h3 style="font-weight:700;color:#a78bfa;"><i class="fas ${test.icon}" style="color:#8b5cf6;margin-right:10px;"></i>${test.title} <span style="color:#fbbf24;font-size:14px;">(${test.serjReward} SERJ)</span></h3>`;
             const progressInfo = document.createElement('div');
             progressInfo.className = 'test-progress-bar';
             const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-            progressInfo.innerHTML = `
-                <span>${correctCount}/${total}</span>
-                <div class="bar-bg"><div class="bar-fill" style="width: ${pct}%;"></div></div>
-                <span>${pct}%</span>
-            `;
+            progressInfo.innerHTML = `<span>${correctCount}/${total}</span><div class="bar-bg"><div class="bar-fill" style="width:${pct}%;"></div></div><span>${pct}%</span>`;
             header.appendChild(progressInfo);
             wrapper.appendChild(header);
-
             const isTestCompleted = correctCount === total && total > 0;
-
             test.questions.forEach((qItem, qIndex) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'test-question';
-
                 const qHeader = document.createElement('h4');
                 qHeader.textContent = `${qIndex+1}. ${qItem.q}`;
                 questionDiv.appendChild(qHeader);
-
                 const optionsDiv = document.createElement('div');
                 optionsDiv.className = 'test-options';
-
                 const isAnswered = state[qIndex] !== undefined && state[qIndex] === true;
-
                 qItem.options.forEach((opt, optIndex) => {
                     const label = document.createElement('label');
                     const radio = document.createElement('input');
@@ -2766,26 +2044,16 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                     radio.name = `test_${testId}_q${qIndex}`;
                     radio.value = optIndex;
                     radio.disabled = isAnswered;
-
                     const span = document.createElement('span');
                     span.textContent = opt;
-
                     label.appendChild(radio);
                     label.appendChild(span);
-
                     if (isAnswered) {
-                        if (optIndex === qItem.correct) {
-                            label.classList.add('correct-answer');
-                        } else if (optIndex === results[qIndex] && optIndex !== qItem.correct) {
-                            label.classList.add('wrong-answer');
-                        }
-                        if (optIndex === results[qIndex]) {
-                            radio.checked = true;
-                        }
+                        if (optIndex === qItem.correct) label.classList.add('correct-answer');
+                        else if (optIndex === results[qIndex] && optIndex !== qItem.correct) label.classList.add('wrong-answer');
+                        if (optIndex === results[qIndex]) radio.checked = true;
                     }
-
                     optionsDiv.appendChild(label);
-
                     if (!isAnswered) {
                         radio.addEventListener('change', function() {
                             if (this.checked) {
@@ -2796,13 +2064,9 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                                 state[qIndex] = true;
                                 updateStats(account);
                                 saveAccountsToCookie();
-                                
                                 const newCorrectCount = newResults.filter(r => r === true).length;
-                                if (newCorrectCount === total && total > 0) {
-                                    earnSerj(account, test.serjReward, 'тест: ' + test.title);
-                                }
-                                
-                                showToast(isCorrect ? '✅ Правильно! Красава!' : '❌ Неправильно. Правильный ответ подсвечен.');
+                                if (newCorrectCount === total && total > 0) earnSerj(account, test.serjReward, 'тест: ' + test.title);
+                                showToast(isCorrect ? '✅ Правильно!' : '❌ Неправильно.');
                                 renderTests('testsContainer', account);
                                 updateStatsDisplay(account);
                                 renderProgress(account);
@@ -2811,24 +2075,17 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                         });
                     }
                 });
-
                 questionDiv.appendChild(optionsDiv);
                 wrapper.appendChild(questionDiv);
             });
-
             if (isTestCompleted) {
                 const completedMsg = document.createElement('div');
-                completedMsg.style.cssText = `
-                    background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2);
-                    border-radius: 12px; padding: 12px 20px; margin-top: 12px;
-                    color: #6ee7b7; font-weight: 600; text-align: center;
-                `;
+                completedMsg.style.cssText = `background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);border-radius:12px;padding:12px 20px;margin-top:12px;color:#6ee7b7;font-weight:600;text-align:center;`;
                 completedMsg.innerHTML = `✅ Тест пройден! +${test.serjReward} SERJ получено! 🎉`;
                 wrapper.appendChild(completedMsg);
             }
         }
 
-        // ----- СТАТИСТИКА -----
         function updateStats(account) {
             let testsPassed = 0;
             for (const key in account.testsResults) {
@@ -2858,7 +2115,6 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             updateCurrencyDisplay(account);
         }
 
-        // ----- ПЕРЕКЛЮЧЕНИЕ АККАУНТА -----
         function switchAccount(accountId) {
             currentAccountId = accountId;
             const account = getCurrentAccount();
@@ -2871,36 +2127,11 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             renderRecommend('recommendGrid', recommendList);
             renderTests('testsContainer', account);
             renderSubjects(account);
-            if (activeSubject) {
-                renderLessons(account, activeSubject);
-            } else if (subjects.length > 0) {
-                activeSubject = subjects[0].id;
-                renderLessons(account, activeSubject);
-            }
+            if (activeSubject) renderLessons(account, activeSubject);
+            else if (subjects.length > 0) { activeSubject = subjects[0].id; renderLessons(account, activeSubject); }
             renderProgress(account);
             updateStatsDisplay(account);
-            populateAccountSelect();
-            document.getElementById('accountSelect').value = account.id;
             showToast(`👤 Переключено на ${account.firstName}`);
-        }
-
-        function populateAccountSelect() {
-            const select = document.getElementById('accountSelect');
-            select.innerHTML = '';
-            if (accounts.length === 0) {
-                const option = document.createElement('option');
-                option.value = '';
-                option.textContent = 'Нет аккаунтов';
-                select.appendChild(option);
-                return;
-            }
-            accounts.forEach(acc => {
-                const option = document.createElement('option');
-                option.value = acc.id;
-                option.textContent = `${acc.firstName} ${acc.lastName}`;
-                if (acc.id === currentAccountId) option.selected = true;
-                select.appendChild(option);
-            });
         }
 
         // ----- ИНИЦИАЛИЗАЦИЯ -----
@@ -2916,22 +2147,15 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 renderRecommend('recommendGrid', recommendList);
                 renderTests('testsContainer', account);
                 renderSubjects(account);
-                if (activeSubject) {
-                    renderLessons(account, activeSubject);
-                } else if (subjects.length > 0) {
-                    activeSubject = subjects[0].id;
-                    renderLessons(account, activeSubject);
-                }
+                if (activeSubject) renderLessons(account, activeSubject);
+                else if (subjects.length > 0) { activeSubject = subjects[0].id; renderLessons(account, activeSubject); }
                 renderProgress(account);
                 updateStatsDisplay(account);
             } else {
                 logout();
             }
-            
-            populateAccountSelect();
-            if (currentAccountId) document.getElementById('accountSelect').value = currentAccountId;
 
-            // ВКЛАДКИ НАВИГАЦИИ
+            // ВКЛАДКИ
             const navLinks = document.querySelectorAll('.nav-link');
             const greeting = document.getElementById('greeting');
             const subGreeting = document.getElementById('subGreeting');
@@ -2943,35 +2167,25 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
             const coursesSection = document.getElementById('coursesSection');
             const testsSection = document.getElementById('testsSection');
             const recommendSection = document.getElementById('recommendSection');
-            const registerSection = document.getElementById('registerSection');
-            const allCoursesLink = document.getElementById('allCoursesLink');
-            const allTestsLink = document.getElementById('allTestsLink');
-            const recommendLink = document.getElementById('recommendLink');
 
             function showTab(tab) {
-                const isRegister = (tab === 'register');
                 const isLessons = (tab === 'lessons');
                 const isProgress = (tab === 'progress');
                 const isTests = (tab === 'tests');
                 
-                registerSection.classList.toggle('active', isRegister);
                 lessonsSection.classList.toggle('active', isLessons);
                 progressSection.style.display = isProgress ? 'block' : 'none';
-                coursesSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
-                testsSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
-                recommendSection.style.display = (isRegister || isLessons || isProgress) ? 'none' : 'block';
-                
-                if (isTests) {
-                    testsSection.style.display = 'block';
-                }
+                coursesSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
+                testsSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
+                recommendSection.style.display = (isLessons || isProgress) ? 'none' : 'block';
+                if (isTests) testsSection.style.display = 'block';
 
                 let msg = '';
                 switch(tab) {
                     case 'overview': msg = '📊 Обзор: все твои курсы и прогресс'; break;
-                    case 'register': msg = '📝 Регистрация: создай свой аккаунт в SerjCore'; break;
                     case 'lessons': msg = '📖 Уроки: выбирай предмет и зарабатывай SERJ'; break;
                     case 'tests': msg = '📝 Тесты: проверяй знания и получай SERJ'; break;
-                    case 'progress': msg = '📈 Прогресс: детальная статистика твоего обучения'; break;
+                    case 'progress': msg = '📈 Прогресс: детальная статистика'; break;
                     default: msg = '✨ Раздел открыт';
                 }
                 const tabName = document.querySelector(`.nav-link[data-tab="${tab}"]`)?.textContent?.trim() || tab;
@@ -2980,10 +2194,7 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                 
                 const account = getCurrentAccount();
                 if (account) {
-                    if (isLessons) {
-                        renderSubjects(account);
-                        if (activeSubject) renderLessons(account, activeSubject);
-                    }
+                    if (isLessons) { renderSubjects(account); if (activeSubject) renderLessons(account, activeSubject); }
                     if (isProgress) renderProgress(account);
                 }
             }
@@ -2993,29 +2204,17 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     showTab(this.dataset.tab);
-                    const names = { overview: 'Обзор', register: 'Регистрация', lessons: 'Уроки', mycourses: 'Мои курсы', tests: 'Тесты', progress: 'Прогресс', schedule: 'Расписание', community: 'Сообщество' };
+                    const names = { overview: 'Обзор', lessons: 'Уроки', tests: 'Тесты', progress: 'Прогресс' };
                     showToast(`📂 Переход в раздел: ${names[this.dataset.tab] || this.dataset.tab}`);
                 });
             });
 
-            document.getElementById('allCoursesLink').addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('📋 Все курсы: полный каталог');
-            });
-            document.getElementById('allTestsLink').addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('📝 Все тесты: 10 тем по 3-5 вопросов');
-            });
-            document.getElementById('recommendLink').addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('📚 Все рекомендации');
-            });
+            document.getElementById('allCoursesLink').addEventListener('click', (e) => { e.preventDefault(); showToast('📋 Все курсы: полный каталог'); });
+            document.getElementById('allTestsLink').addEventListener('click', (e) => { e.preventDefault(); showToast('📝 Все тесты: 3 тема по 5 вопросов'); });
+            document.getElementById('recommendLink').addEventListener('click', (e) => { e.preventDefault(); showToast('📚 Все рекомендации'); });
 
             document.getElementById('searchInput').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    const val = this.value.trim();
-                    showToast(val ? `🔍 Поиск: "${val}"` : '✏️ Введи запрос');
-                }
+                if (e.key === 'Enter') { const val = this.value.trim(); showToast(val ? `🔍 Поиск: "${val}"` : '✏️ Введи запрос'); }
             });
 
             document.querySelector('.avatar').addEventListener('click', () => {
@@ -3031,31 +2230,41 @@ CMD [<span class="string">"python"</span>, <span class="string">"app.py"</span>]
 
             document.getElementById('logoutBtn').addEventListener('click', logout);
 
-            document.getElementById('accountSelect').addEventListener('change', function() {
-                if (this.value) switchAccount(parseInt(this.value));
+            // ----- РЕГИСТРАЦИЯ (МОДАЛКА) -----
+            const modal = document.getElementById('registerModal');
+            const registerBtn = document.getElementById('registerBtn');
+            const cancelBtn = document.getElementById('regCancelBtn');
+            const submitBtn = document.getElementById('regSubmitBtn');
+            const firstNameInput = document.getElementById('regFirstName');
+            const lastNameInput = document.getElementById('regLastName');
+            const errorEl = document.getElementById('regError');
+            const successEl = document.getElementById('regSuccess');
+
+            registerBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                firstNameInput.value = '';
+                lastNameInput.value = '';
+                errorEl.classList.remove('show');
+                successEl.classList.remove('show');
+                firstNameInput.focus();
             });
 
-            // Регистрация
-            document.getElementById('regSubmitBtn').addEventListener('click', function() {
-                const firstName = document.getElementById('regFirstName').value.trim();
-                const lastName = document.getElementById('regLastName').value.trim();
-                registerUser(firstName, lastName);
+            cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+
+            submitBtn.addEventListener('click', () => {
+                const firstName = firstNameInput.value.trim();
+                const lastName = lastNameInput.value.trim();
+                if (registerUser(firstName, lastName)) {
+                    modal.classList.remove('active');
+                }
             });
 
-            // Enter для регистрации
-            document.getElementById('regFirstName').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('regLastName').focus();
-                }
-            });
-            document.getElementById('regLastName').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('regSubmitBtn').click();
-                }
-            });
+            firstNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') lastNameInput.focus(); });
+            lastNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitBtn.click(); });
 
             showTab('overview');
-            console.log('🚀 SerjCore с регистрацией запущен!');
+            console.log('🚀 SerjCore запущен!');
         }
 
         if (document.readyState === 'loading') {
