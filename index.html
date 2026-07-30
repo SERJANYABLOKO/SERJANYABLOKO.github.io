@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Гурме · премиум рецепты</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fbf7f2;
+      font-family: 'Inter', sans-serif;
+      color: #2c2c2c;
+      padding: 2rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* премиум заголовок */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding-bottom: 1.5rem;
+    }
+
+    .logo h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      color: #1e1e1e;
+    }
+    .logo span {
+      color: #b48b6b;
+      font-weight: 400;
+      font-style: italic;
+    }
+    .logo .sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      color: #7a6a5c;
+      margin-top: 0.2rem;
+    }
+
+    .admin-toggle {
+      background: #ffffffcc;
+      backdrop-filter: blur(4px);
+      border: 1px solid #e5d9d0;
+      padding: 0.65rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #2c2c2c;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+      transition: all 0.25s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-toggle i {
+      color: #b48b6b;
+      font-size: 1.1rem;
+    }
+    .admin-toggle:hover {
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(180, 139, 107, 0.12);
+      border-color: #c9b3a1;
+      transform: scale(1.01);
+    }
+
+    /* админ-панель */
+    .admin-panel {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 2rem 2rem 1.8rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08), 0 4px 18px rgba(0,0,0,0.02);
+      border: 1px solid #f0e8e0;
+      transition: all 0.3s;
+      display: none;
+    }
+    .admin-panel.open {
+      display: block;
+      animation: fadeSlide 0.3s ease;
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .admin-panel h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #1e1e1e;
+      letter-spacing: -0.01em;
+    }
+    .admin-panel h3 i {
+      color: #b48b6b;
+      margin-right: 10px;
+    }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 2rem;
+    }
+    .admin-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .admin-item label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: #7a6a5c;
+    }
+    .admin-item input, .admin-item textarea {
+      padding: 0.7rem 1rem;
+      border: 1px solid #e5d9d0;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      background: #fcf9f6;
+      transition: 0.2s;
+      width: 100%;
+    }
+    .admin-item input:focus, .admin-item textarea:focus {
+      outline: none;
+      border-color: #b48b6b;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(180, 139, 107, 0.15);
+    }
+    .admin-item textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    .admin-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 1.8rem;
+      border-top: 1px solid #f0e8e0;
+      padding-top: 1.8rem;
+    }
+    .btn {
+      border: none;
+      background: transparent;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: #1e1e1e;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .btn-primary:hover {
+      background: #b48b6b;
+      transform: scale(1.01);
+      box-shadow: 0 8px 18px rgba(180, 139, 107, 0.25);
+    }
+    .btn-outline {
+      border: 1px solid #d6c9bd;
+      color: #3d3d3d;
+    }
+    .btn-outline:hover {
+      background: #f5efe9;
+      border-color: #b48b6b;
+    }
+
+    /* сетка рецептов */
+    .recipes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .recipe-card {
+      background: white;
+      border-radius: 32px;
+      padding: 1.8rem 1.8rem 2rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.02);
+      border: 1px solid #f0e8e0;
+      transition: all 0.25s;
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+    }
+    .recipe-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.12);
+      border-color: #dfd0c2;
+    }
+
+    .recipe-card .emoji-badge {
+      font-size: 2.2rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .recipe-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.7rem;
+      letter-spacing: -0.02em;
+      color: #1e1e1e;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .recipe-card .meta {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.8rem;
+      color: #7a6a5c;
+      border-bottom: 1px dashed #e5d9d0;
+      padding-bottom: 0.9rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .recipe-card .meta i {
+      margin-right: 5px;
+      color: #b48b6b;
+    }
+    .recipe-card .description {
+      font-weight: 400;
+      color: #3d3d3d;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .recipe-card .ingredients {
+      background: #faf6f1;
+      padding: 0.8rem 1.2rem;
+      border-radius: 40px;
+      margin: 1.2rem 0 0.6rem;
+      font-size: 0.85rem;
+      color: #3d3d3d;
+      border-left: 4px solid #b48b6b;
+    }
+    .recipe-card .ingredients i {
+      color: #b48b6b;
+      margin-right: 8px;
+    }
+
+    .footer-note {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #a39282;
+      border-top: 1px solid #e5d9d0;
+      padding-top: 2rem;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 700px) {
+      .admin-grid { grid-template-columns: 1fr; }
+      .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ШАПКА -->
+  <header class="header">
+    <div class="logo">
+      <h1>gourmet<span>·</span>lab</h1>
+      <div class="sub"><i class="fas fa-utensils" style="margin-right: 6px;"></i> премиум рецепты</div>
+    </div>
+    <button class="admin-toggle" id="adminToggleBtn">
+      <i class="fas fa-pen-fancy"></i> Админ-панель
+    </button>
+  </header>
+
+  <!-- АДМИН-ПАНЕЛЬ (редактирование) -->
+  <div class="admin-panel" id="adminPanel">
+    <h3><i class="fas fa-sliders-h"></i> Редактор рецептов</h3>
+    <div class="admin-grid" id="adminFormContainer">
+      <!-- динамически заполняется из JS -->
+    </div>
+    <div class="admin-actions">
+      <button class="btn btn-outline" id="resetDefaultsBtn"><i class="fas fa-undo-alt"></i> Сбросить</button>
+      <button class="btn btn-primary" id="saveChangesBtn"><i class="fas fa-check"></i> Сохранить</button>
+    </div>
+    <p style="font-size:0.8rem; color:#9a8a7a; margin-top: 1rem; opacity:0.8;"><i class="fas fa-info-circle"></i> Изменения сохраняются локально (в памяти).</p>
+  </div>
+
+  <!-- СЕТКА РЕЦЕПТОВ -->
+  <div class="recipes-grid" id="recipesGrid"></div>
+
+  <div class="footer-note">
+    <i class="fas fa-kitchen-set"></i>  изысканная кулинария · редактируй в реальном времени
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---- ДАННЫЕ ПО УМОЛЧАНИЮ (премиум рецепты) ----
+    const DEFAULT_RECIPES = [
+      {
+        id: 1,
+        emoji: '🍣',
+        title: 'Лосось с цитрусовым соусом',
+        time: '25 мин',
+        difficulty: 'средний',
+        description: 'Нежный филе лосося с апельсиново-имбирным соусом. Подавайте с запеченным фенхелем.',
+        ingredients: 'лосось, апельсин, имбирь, мед, соевый соус, фенхель'
+      },
+      {
+        id: 2,
+        emoji: '🥑',
+        title: 'Тартар из авокадо с креветками',
+        time: '15 мин',
+        difficulty: 'легкий',
+        description: 'Освежающий тартар с тигровыми креветками, лаймом и кинзой. Идеальный старт ужина.',
+        ingredients: 'авокадо, креветки, лайм, кинза, чили, оливковое масло'
+      },
+      {
+        id: 3,
+        emoji: '🍄',
+        title: 'Ризотто с трюфелем и пармезаном',
+        time: '40 мин',
+        difficulty: 'средний',
+        description: 'Кремовое ризотто с ароматом белого трюфеля и выдержанным пармезаном.',
+        ingredients: 'рис арборио, трюфельное масло, пармезан, белое вино, лук-шалот'
+      },
+      {
+        id: 4,
+        emoji: '🍫',
+        title: 'Фондан с жидкой сердцевиной',
+        time: '20 мин',
+        difficulty: 'сложный',
+        description: 'Шоколадный фондан с текучим центром. Подавать с ванильным мороженым.',
+        ingredients: 'темный шоколад, сливочное масло, яйца, сахар, мука'
+      }
+    ];
+
+    // текущие рецепты (копия)
+    let recipes = JSON.parse(JSON.stringify(DEFAULT_RECIPES));
+
+    // DOM элементы
+    const grid = document.getElementById('recipesGrid');
+    const adminPanel = document.getElementById('adminPanel');
+    const adminToggleBtn = document.getElementById('adminToggleBtn');
+    const adminFormContainer = document.getElementById('adminFormContainer');
+    const saveBtn = document.getElementById('saveChangesBtn');
+    const resetBtn = document.getElementById('resetDefaultsBtn');
+
+    // ------ РЕНДЕР РЕЦЕПТОВ ------
+    function renderRecipes() {
+      if (!grid) return;
+      grid.innerHTML = recipes.map(r => `
+        <div class="recipe-card" data-id="${r.id}">
+          <div class="emoji-badge">${r.emoji || '🍽️'}</div>
+          <h2>${r.title}</h2>
+          <div class="meta">
+            <span><i class="far fa-clock"></i> ${r.time}</span>
+            <span><i class="fas fa-signal"></i> ${r.difficulty}</span>
+          </div>
+          <div class="description">${r.description}</div>
+          <div class="ingredients"><i class="fas fa-leaf"></i> ${r.ingredients}</div>
+        </div>
+      `).join('');
+    }
+
+    // ------ ЗАПОЛНИТЬ АДМИН-ФОРМУ (по текущим рецептам) ------
+    function renderAdminForm() {
+      if (!adminFormContainer) return;
+      adminFormContainer.innerHTML = recipes.map((r, index) => `
+        <div class="admin-item" style="grid-column: ${index % 2 === 0 ? '1' : '2'};">
+          <label><i class="fas fa-utensil-spoon"></i> Рецепт #${r.id}</label>
+          <input type="text" class="admin-title" value="${r.title}" placeholder="Название" data-id="${r.id}" />
+          <input type="text" class="admin-emoji" value="${r.emoji || '🍽️'}" placeholder="Эмодзи" data-id="${r.id}" style="max-width:70px;" />
+          <input type="text" class="admin-time" value="${r.time}" placeholder="Время" data-id="${r.id}" />
+          <input type="text" class="admin-difficulty" value="${r.difficulty}" placeholder="Сложность" data-id="${r.id}" />
+          <textarea class="admin-desc" placeholder="Описание" data-id="${r.id}">${r.description}</textarea>
+          <textarea class="admin-ingredients" placeholder="Ингредиенты" data-id="${r.id}">${r.ingredients}</textarea>
+        </div>
+      `).join('');
+    }
+
+    // ------ СОХРАНИТЬ ИЗ ФОРМЫ В recipes ------
+    function saveFromAdminForm() {
+      const titleInputs = document.querySelectorAll('.admin-title');
+      const emojiInputs = document.querySelectorAll('.admin-emoji');
+      const timeInputs = document.querySelectorAll('.admin-time');
+      const diffInputs = document.querySelectorAll('.admin-difficulty');
+      const descInputs = document.querySelectorAll('.admin-desc');
+      const ingrInputs = document.querySelectorAll('.admin-ingredients');
+
+      // собираем по id
+      const updated = [];
+      titleInputs.forEach((input, idx) => {
+        const id = parseInt(input.dataset.id, 10);
+        const emoji = emojiInputs[idx] ? emojiInputs[idx].value.trim() : '🍽️';
+        const time = timeInputs[idx] ? timeInputs[idx].value.trim() : '30 мин';
+        const difficulty = diffInputs[idx] ? diffInputs[idx].value.trim() : 'средний';
+        const description = descInputs[idx] ? descInputs[idx].value.trim() : '';
+        const ingredients = ingrInputs[idx] ? ingrInputs[idx].value.trim() : '';
+
+        updated.push({
+          id: id,
+          title: input.value.trim() || 'Блюдо',
+          emoji: emoji || '🍽️',
+          time: time || '30 мин',
+          difficulty: difficulty || 'средний',
+          description: description || 'Описание отсутствует',
+          ingredients: ingredients || 'Ингредиенты не указаны'
+        });
+      });
+
+      // перезаписываем recipes (сохраняем порядок)
+      recipes = updated;
+      renderRecipes();
+      renderAdminForm(); // обновить форму (чтобы data-id и значения совпадали)
+    }
+
+    // ------ СБРОС К ДЕФОЛТУ ------
+    function resetToDefaults() {
+      recipes = JSON.parse(JSON.stringify(DEFAULT_RECIPES));
+      renderRecipes();
+      renderAdminForm();
+      // если админка открыта, оставляем открытой
+    }
+
+    // ------ ОТКРЫТЬ/ЗАКРЫТЬ АДМИНКУ ------
+    function toggleAdminPanel() {
+      const isOpen = adminPanel.classList.toggle('open');
+      if (isOpen) {
+        renderAdminForm(); // всегда свежая форма из текущих recipes
+      }
+    }
+
+    // ------ ИНИЦИАЛИЗАЦИЯ ------
+    function init() {
+      renderRecipes();
+
+      // события
+      adminToggleBtn.addEventListener('click', toggleAdminPanel);
+
+      saveBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        saveFromAdminForm();
+        // небольшой фидбек
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fas fa-check-circle"></i> Готово!';
+        setTimeout(() => { saveBtn.innerHTML = originalText; }, 1200);
+      });
+
+      resetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Сбросить все рецепты к исходным?')) {
+          resetToDefaults();
+          // если админка открыта — перерендерить форму
+          if (adminPanel.classList.contains('open')) {
+            renderAdminForm();
+          }
+        }
+      });
+
+      // опционально: если клик вне админки — не закрываем, оставим как есть.
+      // но можно добавить эстетики: при открытии форма подгружается.
+      console.log('🍽️ gourmet·lab — премиум кулинария');
+    }
+
+    // запуск
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+  })();
+</script>
+</body>
+</html>
