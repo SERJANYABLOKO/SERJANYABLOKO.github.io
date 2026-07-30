@@ -136,6 +136,10 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      background: rgba(0,0,0,0.2);
+      padding: 1rem 1rem 1.2rem;
+      border-radius: 24px;
+      border: 1px solid #b48b6b22;
     }
     .admin-item label {
       font-size: 0.7rem;
@@ -144,6 +148,7 @@
       font-weight: 600;
       color: #b8a392;
       text-shadow: 0 0 6px #b48b6b22;
+      margin-top: 4px;
     }
     .admin-item input, .admin-item textarea {
       padding: 0.7rem 1.2rem;
@@ -167,6 +172,58 @@
       min-height: 60px;
       resize: vertical;
     }
+    .admin-item .image-upload-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-item .image-upload-wrapper input[type="file"] {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.5rem 0.8rem;
+      border: 1px dashed #b48b6b66;
+      border-radius: 30px;
+      background: rgba(0,0,0,0.3);
+      color: #b8a392;
+      font-size: 0.85rem;
+    }
+    .admin-item .image-upload-wrapper input[type="file"]::-webkit-file-upload-button {
+      background: #b48b6b44;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      color: #f0eae4;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .admin-item .image-upload-wrapper input[type="file"]::-webkit-file-upload-button:hover {
+      background: #d9b89b66;
+    }
+    .admin-item .image-preview {
+      max-width: 80px;
+      max-height: 80px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid #b48b6b44;
+      box-shadow: 0 0 16px #b48b6b22;
+      background: #1a161c;
+    }
+    .admin-item .image-url-input {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: #7a6a5c;
+    }
+    .admin-item .image-url-input input {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #b48b6b33;
+      color: #d6cdc4;
+      width: 100%;
+    }
+
     .admin-actions {
       display: flex;
       justify-content: flex-end;
@@ -174,6 +231,7 @@
       margin-top: 2rem;
       border-top: 1px solid #b48b6b33;
       padding-top: 1.8rem;
+      flex-wrap: wrap;
     }
     .btn {
       border: none;
@@ -239,11 +297,22 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      overflow: hidden;
     }
     .recipe-card:hover {
       transform: translateY(-8px);
       border-color: #d9b89b88;
       box-shadow: 0 20px 40px #000000aa, 0 0 40px #b48b6b22;
+    }
+    .recipe-card .recipe-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 1rem;
+      border: 1px solid #b48b6b44;
+      box-shadow: 0 0 20px #b48b6b11;
+      background: #1a161c;
     }
     .recipe-card .emoji-badge {
       font-size: 2.5rem;
@@ -370,7 +439,7 @@
       <button class="btn btn-primary" id="saveChangesBtn"><i class="fas fa-check"></i> Сохранить</button>
     </div>
     <p style="font-size:0.75rem; color:#7a6a5c; margin-top: 1rem; opacity:0.7; letter-spacing: 0.5px;">
-      <i class="fas fa-save"></i> изменения сохраняются в памяти · все рецепты удалены по умолчанию
+      <i class="fas fa-image"></i> загрузите изображение или введите URL · изменения в памяти
     </p>
   </div>
 
@@ -396,7 +465,7 @@
     const resetBtn = document.getElementById('resetDefaultsBtn');
     const addBtn = document.getElementById('addRecipeBtn');
 
-    // ------ РЕНДЕР РЕЦЕПТОВ (с поддержкой пустого состояния) ------
+    // ------ РЕНДЕР РЕЦЕПТОВ (с картинками) ------
     function renderRecipes() {
       if (!grid) return;
       if (recipes.length === 0) {
@@ -409,8 +478,13 @@
         `;
         return;
       }
-      grid.innerHTML = recipes.map((r, index) => `
+      grid.innerHTML = recipes.map((r, index) => {
+        const imageHtml = r.image && r.image.trim() !== '' 
+          ? `<img src="${r.image}" alt="${r.title || 'блюдо'}" class="recipe-image" onerror="this.style.display='none'" />` 
+          : '';
+        return `
         <div class="recipe-card" data-id="${r.id || index}">
+          ${imageHtml}
           <div class="emoji-badge">${r.emoji || '🍽️'}</div>
           <h2>${r.title || 'Блюдо'}</h2>
           <div class="meta">
@@ -420,10 +494,10 @@
           <div class="description">${r.description || 'Описание отсутствует'}</div>
           <div class="ingredients"><i class="fas fa-leaf"></i> ${r.ingredients || 'Ингредиенты не указаны'}</div>
         </div>
-      `).join('');
+      `}).join('');
     }
 
-    // ------ ЗАПОЛНИТЬ АДМИН-ФОРМУ (по текущим рецептам) ------
+    // ------ ЗАПОЛНИТЬ АДМИН-ФОРМУ (с полем для картинки) ------
     function renderAdminForm() {
       if (!adminFormContainer) return;
       if (recipes.length === 0) {
@@ -444,11 +518,76 @@
           <input type="text" class="admin-difficulty" value="${r.difficulty || ''}" placeholder="Сложность" data-index="${index}" />
           <textarea class="admin-desc" placeholder="Описание" data-index="${index}">${r.description || ''}</textarea>
           <textarea class="admin-ingredients" placeholder="Ингредиенты" data-index="${index}">${r.ingredients || ''}</textarea>
+          
+          <label><i class="fas fa-image"></i> Изображение</label>
+          <div class="image-upload-wrapper">
+            <input type="file" class="admin-image-file" accept="image/*" data-index="${index}" />
+            <input type="text" class="admin-image-url" value="${r.image || ''}" placeholder="или URL картинки" data-index="${index}" />
+          </div>
+          ${r.image && r.image.trim() !== '' ? `<img src="${r.image}" class="image-preview" alt="превью" onerror="this.style.display='none'" />` : ''}
+          <div class="image-url-input">
+            <input type="text" class="admin-image-final" value="${r.image || ''}" placeholder="финальный URL (можно скопировать)" data-index="${index}" readonly style="background:rgba(0,0,0,0.4); color:#7a6a5c; font-size:0.7rem;" />
+          </div>
         </div>
       `).join('');
+
+      // Обработчики для загрузки файлов и преобразования в base64
+      document.querySelectorAll('.admin-image-file').forEach((fileInput) => {
+        fileInput.addEventListener('change', function(e) {
+          const index = parseInt(this.dataset.index, 10);
+          const file = this.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function(ev) {
+            const base64 = ev.target.result;
+            // обновляем поле URL и финальное поле
+            const urlInput = document.querySelector(`.admin-image-url[data-index="${index}"]`);
+            const finalInput = document.querySelector(`.admin-image-final[data-index="${index}"]`);
+            if (urlInput) urlInput.value = base64;
+            if (finalInput) finalInput.value = base64;
+            // обновляем превью
+            const preview = document.querySelector(`.admin-item .image-preview`);
+            if (preview) {
+              preview.src = base64;
+              preview.style.display = 'block';
+            } else {
+              // если превью нет — создадим
+              const wrapper = fileInput.closest('.admin-item');
+              const existingPreview = wrapper.querySelector('.image-preview');
+              if (!existingPreview) {
+                const img = document.createElement('img');
+                img.className = 'image-preview';
+                img.src = base64;
+                img.alt = 'превью';
+                wrapper.appendChild(img);
+              } else {
+                existingPreview.src = base64;
+                existingPreview.style.display = 'block';
+              }
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      // При ручном вводе URL — обновляем финальное поле и превью
+      document.querySelectorAll('.admin-image-url').forEach((urlInput) => {
+        urlInput.addEventListener('input', function() {
+          const index = parseInt(this.dataset.index, 10);
+          const finalInput = document.querySelector(`.admin-image-final[data-index="${index}"]`);
+          if (finalInput) finalInput.value = this.value;
+          // обновляем превью
+          const item = this.closest('.admin-item');
+          const preview = item.querySelector('.image-preview');
+          if (preview) {
+            preview.src = this.value;
+            preview.style.display = this.value.trim() !== '' ? 'block' : 'none';
+          }
+        });
+      });
     }
 
-    // ------ СОХРАНИТЬ ИЗ ФОРМЫ В recipes (с учетом индексов) ------
+    // ------ СОХРАНИТЬ ИЗ ФОРМЫ (с картинками) ------
     function saveFromAdminForm() {
       const titleInputs = document.querySelectorAll('.admin-title');
       const emojiInputs = document.querySelectorAll('.admin-emoji');
@@ -456,24 +595,21 @@
       const diffInputs = document.querySelectorAll('.admin-difficulty');
       const descInputs = document.querySelectorAll('.admin-desc');
       const ingrInputs = document.querySelectorAll('.admin-ingredients');
+      const imageInputs = document.querySelectorAll('.admin-image-url'); // берем из URL поля (оно обновляется и из файла)
 
       const updated = [];
       titleInputs.forEach((input, idx) => {
         const index = parseInt(input.dataset.index, 10);
-        const emoji = emojiInputs[idx] ? emojiInputs[idx].value.trim() : '🍽️';
-        const time = timeInputs[idx] ? timeInputs[idx].value.trim() : '30 мин';
-        const difficulty = diffInputs[idx] ? diffInputs[idx].value.trim() : 'средний';
-        const description = descInputs[idx] ? descInputs[idx].value.trim() : '';
-        const ingredients = ingrInputs[idx] ? ingrInputs[idx].value.trim() : '';
-
+        const image = imageInputs[idx] ? imageInputs[idx].value.trim() : '';
         updated.push({
-          id: index + 1, // условный id
+          id: index + 1,
           title: input.value.trim() || 'Блюдо',
-          emoji: emoji || '🍽️',
-          time: time || '30 мин',
-          difficulty: difficulty || 'средний',
-          description: description || 'Описание отсутствует',
-          ingredients: ingredients || 'Ингредиенты не указаны'
+          emoji: emojiInputs[idx] ? emojiInputs[idx].value.trim() : '🍽️',
+          time: timeInputs[idx] ? timeInputs[idx].value.trim() : '30 мин',
+          difficulty: diffInputs[idx] ? diffInputs[idx].value.trim() : 'средний',
+          description: descInputs[idx] ? descInputs[idx].value.trim() : 'Описание отсутствует',
+          ingredients: ingrInputs[idx] ? ingrInputs[idx].value.trim() : 'Ингредиенты не указаны',
+          image: image
         });
       });
 
@@ -491,17 +627,17 @@
         time: '30 мин',
         difficulty: 'средний',
         description: 'Введите описание',
-        ingredients: 'ингредиенты...'
+        ingredients: 'ингредиенты...',
+        image: ''
       });
       renderRecipes();
       renderAdminForm();
-      // если админка закрыта — открываем
       if (!adminPanel.classList.contains('open')) {
         adminPanel.classList.add('open');
       }
     }
 
-    // ------ СБРОС К ПУСТОМУ СОСТОЯНИЮ (удалить все) ------
+    // ------ СБРОС К ПУСТОМУ СОСТОЯНИЮ ------
     function resetToEmpty() {
       if (recipes.length > 0 && !confirm('Удалить все рецепты?')) return;
       recipes = [];
@@ -517,11 +653,10 @@
       }
     }
 
-    // ------ ИНИЦИАЛИЗАЦИЯ (рецепты уже пустые) ------
+    // ------ ИНИЦИАЛИЗАЦИЯ ------
     function init() {
-      renderRecipes(); // покажет empty-state
+      renderRecipes();
 
-      // события
       adminToggleBtn.addEventListener('click', toggleAdminPanel);
 
       saveBtn.addEventListener('click', function(e) {
@@ -545,7 +680,7 @@
         addEmptyRecipe();
       });
 
-      console.log('🌙 neo·gourmet — тёмная неоновая кулинария (рецептов нет)');
+      console.log('🌙 neo·gourmet — тёмная неоновая кулинария с картинками');
     }
 
     if (document.readyState === 'loading') {
