@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Гурме · премиум рецепты</title>
-  <!-- Google Fonts & Font Awesome -->
+  <title>NEO · GOURMET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
@@ -17,11 +16,13 @@
     }
 
     body {
-      background: #fbf7f2;
+      background: #0b0a0c;
       font-family: 'Inter', sans-serif;
-      color: #2c2c2c;
+      color: #e6e0d8;
       padding: 2rem 1.5rem;
       line-height: 1.5;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at 20% 30%, #1f1822 0%, #0b0a0c 80%);
     }
 
     .container {
@@ -29,99 +30,107 @@
       margin: 0 auto;
     }
 
-    /* премиум заголовок */
+    /* премиум неон заголовок */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 3rem;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
       padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(180, 139, 107, 0.25);
+      box-shadow: 0 8px 20px -8px rgba(180, 139, 107, 0.08);
     }
 
     .logo h1 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       letter-spacing: -0.02em;
-      color: #1e1e1e;
+      color: #f0eae4;
+      text-shadow: 0 0 8px #b48b6b55, 0 0 20px #b48b6b22;
     }
     .logo span {
-      color: #b48b6b;
+      color: #d9b89b;
       font-weight: 400;
       font-style: italic;
+      text-shadow: 0 0 12px #d9b89b66;
     }
     .logo .sub {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 300;
-      letter-spacing: 3px;
-      color: #7a6a5c;
+      letter-spacing: 4px;
+      color: #b8a392;
+      text-shadow: 0 0 6px #b48b6b33;
       margin-top: 0.2rem;
     }
 
     .admin-toggle {
-      background: #ffffffcc;
-      backdrop-filter: blur(4px);
-      border: 1px solid #e5d9d0;
-      padding: 0.65rem 1.8rem;
+      background: rgba(20, 18, 22, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid #b48b6b66;
+      padding: 0.7rem 2rem;
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.95rem;
-      color: #2c2c2c;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-      transition: all 0.25s;
+      color: #f0eae4;
+      box-shadow: 0 0 16px #b48b6b22, inset 0 0 16px #b48b6b11;
+      transition: all 0.3s;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .admin-toggle i {
-      color: #b48b6b;
+      color: #d9b89b;
       font-size: 1.1rem;
+      filter: drop-shadow(0 0 6px #d9b89b88);
     }
     .admin-toggle:hover {
-      background: #ffffff;
-      box-shadow: 0 12px 28px rgba(180, 139, 107, 0.12);
-      border-color: #c9b3a1;
-      transform: scale(1.01);
+      background: #1f1822;
+      border-color: #d9b89b;
+      box-shadow: 0 0 28px #b48b6b44, inset 0 0 20px #b48b6b22;
+      transform: scale(1.02);
     }
 
-    /* админ-панель */
+    /* админ-панель — тёмная неон */
     .admin-panel {
-      background: #ffffff;
-      border-radius: 32px;
+      background: rgba(14, 12, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 36px;
       padding: 2rem 2rem 1.8rem;
       margin-bottom: 3.5rem;
-      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08), 0 4px 18px rgba(0,0,0,0.02);
-      border: 1px solid #f0e8e0;
+      border: 1px solid #b48b6b55;
+      box-shadow: 0 20px 40px -12px #000000aa, 0 0 30px #b48b6b11, inset 0 0 30px #b48b6b08;
       transition: all 0.3s;
       display: none;
     }
     .admin-panel.open {
       display: block;
-      animation: fadeSlide 0.3s ease;
+      animation: neonFade 0.35s ease;
     }
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(-8px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes neonFade {
+      0% { opacity: 0; transform: translateY(-10px) scale(0.98); filter: blur(2px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
     }
     .admin-panel h3 {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      color: #1e1e1e;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      color: #f0eae4;
       letter-spacing: -0.01em;
+      text-shadow: 0 0 18px #d9b89b55;
     }
     .admin-panel h3 i {
-      color: #b48b6b;
-      margin-right: 10px;
+      color: #d9b89b;
+      margin-right: 12px;
+      filter: drop-shadow(0 0 8px #d9b89b77);
     }
     .admin-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem 2rem;
+      gap: 1.2rem 1.8rem;
     }
     .admin-item {
       display: flex;
@@ -129,73 +138,90 @@
       gap: 4px;
     }
     .admin-item label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       font-weight: 600;
-      color: #7a6a5c;
+      color: #b8a392;
+      text-shadow: 0 0 6px #b48b6b22;
     }
     .admin-item input, .admin-item textarea {
-      padding: 0.7rem 1rem;
-      border: 1px solid #e5d9d0;
-      border-radius: 20px;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid #b48b6b44;
+      border-radius: 30px;
       font-family: 'Inter', sans-serif;
       font-size: 0.95rem;
-      background: #fcf9f6;
-      transition: 0.2s;
+      background: rgba(10, 8, 12, 0.7);
+      color: #f0eae4;
+      transition: 0.25s;
       width: 100%;
+      box-shadow: inset 0 0 20px #00000055, 0 0 8px #b48b6b08;
     }
     .admin-item input:focus, .admin-item textarea:focus {
       outline: none;
-      border-color: #b48b6b;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(180, 139, 107, 0.15);
+      border-color: #d9b89b;
+      background: rgba(20, 16, 22, 0.8);
+      box-shadow: 0 0 20px #b48b6b44, inset 0 0 20px #b48b6b08;
     }
     .admin-item textarea {
-      min-height: 70px;
+      min-height: 60px;
       resize: vertical;
     }
     .admin-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 16px;
-      margin-top: 1.8rem;
-      border-top: 1px solid #f0e8e0;
+      gap: 18px;
+      margin-top: 2rem;
+      border-top: 1px solid #b48b6b33;
       padding-top: 1.8rem;
     }
     .btn {
       border: none;
       background: transparent;
-      padding: 0.7rem 2rem;
-      border-radius: 40px;
+      padding: 0.7rem 2.2rem;
+      border-radius: 60px;
       font-weight: 500;
       font-size: 0.95rem;
-      transition: 0.2s;
+      transition: 0.3s;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .btn-primary {
-      background: #1e1e1e;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #d9b89b;
+      color: #0b0a0c;
+      font-weight: 600;
+      box-shadow: 0 0 24px #d9b89b44, 0 4px 12px #00000066;
     }
     .btn-primary:hover {
-      background: #b48b6b;
-      transform: scale(1.01);
-      box-shadow: 0 8px 18px rgba(180, 139, 107, 0.25);
+      background: #f0d6c0;
+      box-shadow: 0 0 40px #d9b89b88, 0 8px 20px #00000088;
+      transform: scale(1.02);
     }
     .btn-outline {
-      border: 1px solid #d6c9bd;
-      color: #3d3d3d;
+      border: 1px solid #b48b6b66;
+      color: #d6cdc4;
+      background: rgba(0,0,0,0.2);
     }
     .btn-outline:hover {
-      background: #f5efe9;
-      border-color: #b48b6b;
+      background: #b48b6b22;
+      border-color: #d9b89b;
+      box-shadow: 0 0 20px #b48b6b33;
+    }
+    .btn-add {
+      background: #2a2228;
+      color: #f0eae4;
+      border: 1px solid #b48b6b66;
+      box-shadow: 0 0 12px #b48b6b11;
+    }
+    .btn-add:hover {
+      background: #3d313a;
+      border-color: #d9b89b;
+      box-shadow: 0 0 28px #b48b6b44;
     }
 
-    /* сетка рецептов */
+    /* сетка рецептов — тёмная неон */
     .recipes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -203,165 +229,163 @@
     }
 
     .recipe-card {
-      background: white;
-      border-radius: 32px;
+      background: rgba(16, 14, 18, 0.75);
+      backdrop-filter: blur(6px);
+      border-radius: 36px;
       padding: 1.8rem 1.8rem 2rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.02);
-      border: 1px solid #f0e8e0;
-      transition: all 0.25s;
-      backdrop-filter: blur(2px);
+      border: 1px solid #b48b6b44;
+      box-shadow: 0 8px 30px #00000066, 0 0 20px #b48b6b08;
+      transition: all 0.3s;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     .recipe-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.12);
-      border-color: #dfd0c2;
+      transform: translateY(-8px);
+      border-color: #d9b89b88;
+      box-shadow: 0 20px 40px #000000aa, 0 0 40px #b48b6b22;
     }
-
     .recipe-card .emoji-badge {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       line-height: 1;
       margin-bottom: 0.3rem;
+      filter: drop-shadow(0 0 12px #d9b89b66);
     }
     .recipe-card h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       letter-spacing: -0.02em;
-      color: #1e1e1e;
+      color: #f0eae4;
       margin: 0.3rem 0 0.2rem;
+      text-shadow: 0 0 12px #d9b89b33;
     }
     .recipe-card .meta {
       display: flex;
       gap: 1.2rem;
       font-size: 0.8rem;
-      color: #7a6a5c;
-      border-bottom: 1px dashed #e5d9d0;
-      padding-bottom: 0.9rem;
+      color: #b8a392;
+      border-bottom: 1px dashed #b48b6b44;
+      padding-bottom: 0.8rem;
       margin-bottom: 1rem;
       flex-wrap: wrap;
     }
     .recipe-card .meta i {
-      margin-right: 5px;
-      color: #b48b6b;
+      margin-right: 6px;
+      color: #d9b89b;
+      filter: drop-shadow(0 0 6px #d9b89b55);
     }
     .recipe-card .description {
       font-weight: 400;
-      color: #3d3d3d;
+      color: #d6cdc4;
       font-size: 0.95rem;
       line-height: 1.6;
       flex: 1;
     }
     .recipe-card .ingredients {
-      background: #faf6f1;
-      padding: 0.8rem 1.2rem;
+      background: rgba(0,0,0,0.35);
+      padding: 0.7rem 1.2rem;
       border-radius: 40px;
-      margin: 1.2rem 0 0.6rem;
+      margin: 1.2rem 0 0.2rem;
       font-size: 0.85rem;
-      color: #3d3d3d;
-      border-left: 4px solid #b48b6b;
+      color: #d6cdc4;
+      border-left: 4px solid #d9b89b;
+      box-shadow: inset 0 0 20px #00000044;
     }
     .recipe-card .ingredients i {
-      color: #b48b6b;
+      color: #d9b89b;
       margin-right: 8px;
+      filter: drop-shadow(0 0 6px #d9b89b66);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(16, 14, 18, 0.5);
+      border-radius: 60px;
+      border: 1px dashed #b48b6b55;
+      backdrop-filter: blur(6px);
+    }
+    .empty-state i {
+      font-size: 3.5rem;
+      color: #b48b6b;
+      filter: drop-shadow(0 0 24px #d9b89b55);
+      margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #f0eae4;
+      text-shadow: 0 0 18px #d9b89b33;
+    }
+    .empty-state p {
+      color: #b8a392;
+      max-width: 400px;
+      margin: 0.5rem auto 0;
     }
 
     .footer-note {
       margin-top: 4rem;
       text-align: center;
       font-size: 0.8rem;
-      color: #a39282;
-      border-top: 1px solid #e5d9d0;
+      color: #7a6a5c;
+      border-top: 1px solid #b48b6b33;
       padding-top: 2rem;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 8px #b48b6b11;
     }
 
     @media (max-width: 700px) {
       .admin-grid { grid-template-columns: 1fr; }
-      .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .header { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
     }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- ШАПКА -->
+  <!-- ШАПКА НЕОН -->
   <header class="header">
     <div class="logo">
-      <h1>gourmet<span>·</span>lab</h1>
-      <div class="sub"><i class="fas fa-utensils" style="margin-right: 6px;"></i> премиум рецепты</div>
+      <h1>neo<span>·</span>gourmet</h1>
+      <div class="sub"><i class="fas fa-bolt" style="margin-right: 6px;"></i> премиум · тёмная кухня</div>
     </div>
     <button class="admin-toggle" id="adminToggleBtn">
       <i class="fas fa-pen-fancy"></i> Админ-панель
     </button>
   </header>
 
-  <!-- АДМИН-ПАНЕЛЬ (редактирование) -->
+  <!-- АДМИН-ПАНЕЛЬ (редактирование / добавление) -->
   <div class="admin-panel" id="adminPanel">
     <h3><i class="fas fa-sliders-h"></i> Редактор рецептов</h3>
     <div class="admin-grid" id="adminFormContainer">
       <!-- динамически заполняется из JS -->
     </div>
+    <div style="display: flex; justify-content: flex-start; margin: 1rem 0 0.5rem;">
+      <button class="btn btn-add" id="addRecipeBtn"><i class="fas fa-plus-circle"></i> Добавить рецепт</button>
+    </div>
     <div class="admin-actions">
       <button class="btn btn-outline" id="resetDefaultsBtn"><i class="fas fa-undo-alt"></i> Сбросить</button>
       <button class="btn btn-primary" id="saveChangesBtn"><i class="fas fa-check"></i> Сохранить</button>
     </div>
-    <p style="font-size:0.8rem; color:#9a8a7a; margin-top: 1rem; opacity:0.8;"><i class="fas fa-info-circle"></i> Изменения сохраняются локально (в памяти).</p>
+    <p style="font-size:0.75rem; color:#7a6a5c; margin-top: 1rem; opacity:0.7; letter-spacing: 0.5px;">
+      <i class="fas fa-save"></i> изменения сохраняются в памяти · все рецепты удалены по умолчанию
+    </p>
   </div>
 
   <!-- СЕТКА РЕЦЕПТОВ -->
   <div class="recipes-grid" id="recipesGrid"></div>
 
   <div class="footer-note">
-    <i class="fas fa-kitchen-set"></i>  изысканная кулинария · редактируй в реальном времени
+    <i class="fas fa-moon"></i>  неоновая кулинария · добавляй свои шедевры
   </div>
 </div>
 
 <script>
   (function() {
-    // ---- ДАННЫЕ ПО УМОЛЧАНИЮ (премиум рецепты) ----
-    const DEFAULT_RECIPES = [
-      {
-        id: 1,
-        emoji: '🍣',
-        title: 'Лосось с цитрусовым соусом',
-        time: '25 мин',
-        difficulty: 'средний',
-        description: 'Нежный филе лосося с апельсиново-имбирным соусом. Подавайте с запеченным фенхелем.',
-        ingredients: 'лосось, апельсин, имбирь, мед, соевый соус, фенхель'
-      },
-      {
-        id: 2,
-        emoji: '🥑',
-        title: 'Тартар из авокадо с креветками',
-        time: '15 мин',
-        difficulty: 'легкий',
-        description: 'Освежающий тартар с тигровыми креветками, лаймом и кинзой. Идеальный старт ужина.',
-        ingredients: 'авокадо, креветки, лайм, кинза, чили, оливковое масло'
-      },
-      {
-        id: 3,
-        emoji: '🍄',
-        title: 'Ризотто с трюфелем и пармезаном',
-        time: '40 мин',
-        difficulty: 'средний',
-        description: 'Кремовое ризотто с ароматом белого трюфеля и выдержанным пармезаном.',
-        ingredients: 'рис арборио, трюфельное масло, пармезан, белое вино, лук-шалот'
-      },
-      {
-        id: 4,
-        emoji: '🍫',
-        title: 'Фондан с жидкой сердцевиной',
-        time: '20 мин',
-        difficulty: 'сложный',
-        description: 'Шоколадный фондан с текучим центром. Подавать с ванильным мороженым.',
-        ingredients: 'темный шоколад, сливочное масло, яйца, сахар, мука'
-      }
-    ];
-
-    // текущие рецепты (копия)
-    let recipes = JSON.parse(JSON.stringify(DEFAULT_RECIPES));
+    // ---- ПУСТОЙ МАССИВ (все рецепты удалены) ----
+    let recipes = [];
 
     // DOM элементы
     const grid = document.getElementById('recipesGrid');
@@ -370,20 +394,31 @@
     const adminFormContainer = document.getElementById('adminFormContainer');
     const saveBtn = document.getElementById('saveChangesBtn');
     const resetBtn = document.getElementById('resetDefaultsBtn');
+    const addBtn = document.getElementById('addRecipeBtn');
 
-    // ------ РЕНДЕР РЕЦЕПТОВ ------
+    // ------ РЕНДЕР РЕЦЕПТОВ (с поддержкой пустого состояния) ------
     function renderRecipes() {
       if (!grid) return;
-      grid.innerHTML = recipes.map(r => `
-        <div class="recipe-card" data-id="${r.id}">
-          <div class="emoji-badge">${r.emoji || '🍽️'}</div>
-          <h2>${r.title}</h2>
-          <div class="meta">
-            <span><i class="far fa-clock"></i> ${r.time}</span>
-            <span><i class="fas fa-signal"></i> ${r.difficulty}</span>
+      if (recipes.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-utensils"></i>
+            <h3>Нет рецептов</h3>
+            <p>Откройте админ-панель и добавьте свои кулинарные шедевры.</p>
           </div>
-          <div class="description">${r.description}</div>
-          <div class="ingredients"><i class="fas fa-leaf"></i> ${r.ingredients}</div>
+        `;
+        return;
+      }
+      grid.innerHTML = recipes.map((r, index) => `
+        <div class="recipe-card" data-id="${r.id || index}">
+          <div class="emoji-badge">${r.emoji || '🍽️'}</div>
+          <h2>${r.title || 'Блюдо'}</h2>
+          <div class="meta">
+            <span><i class="far fa-clock"></i> ${r.time || '30 мин'}</span>
+            <span><i class="fas fa-signal"></i> ${r.difficulty || 'средний'}</span>
+          </div>
+          <div class="description">${r.description || 'Описание отсутствует'}</div>
+          <div class="ingredients"><i class="fas fa-leaf"></i> ${r.ingredients || 'Ингредиенты не указаны'}</div>
         </div>
       `).join('');
     }
@@ -391,20 +426,29 @@
     // ------ ЗАПОЛНИТЬ АДМИН-ФОРМУ (по текущим рецептам) ------
     function renderAdminForm() {
       if (!adminFormContainer) return;
+      if (recipes.length === 0) {
+        adminFormContainer.innerHTML = `
+          <div class="admin-item" style="grid-column: 1 / -1; text-align: center; padding: 1.5rem 0; opacity:0.7;">
+            <i class="fas fa-plus-circle" style="font-size: 2rem; color: #b48b6b; margin-bottom: 0.5rem;"></i>
+            <p style="color: #b8a392;">Нет рецептов. Нажмите «Добавить рецепт».</p>
+          </div>
+        `;
+        return;
+      }
       adminFormContainer.innerHTML = recipes.map((r, index) => `
         <div class="admin-item" style="grid-column: ${index % 2 === 0 ? '1' : '2'};">
-          <label><i class="fas fa-utensil-spoon"></i> Рецепт #${r.id}</label>
-          <input type="text" class="admin-title" value="${r.title}" placeholder="Название" data-id="${r.id}" />
-          <input type="text" class="admin-emoji" value="${r.emoji || '🍽️'}" placeholder="Эмодзи" data-id="${r.id}" style="max-width:70px;" />
-          <input type="text" class="admin-time" value="${r.time}" placeholder="Время" data-id="${r.id}" />
-          <input type="text" class="admin-difficulty" value="${r.difficulty}" placeholder="Сложность" data-id="${r.id}" />
-          <textarea class="admin-desc" placeholder="Описание" data-id="${r.id}">${r.description}</textarea>
-          <textarea class="admin-ingredients" placeholder="Ингредиенты" data-id="${r.id}">${r.ingredients}</textarea>
+          <label><i class="fas fa-utensil-spoon"></i> Рецепт #${index + 1}</label>
+          <input type="text" class="admin-title" value="${r.title || ''}" placeholder="Название" data-index="${index}" />
+          <input type="text" class="admin-emoji" value="${r.emoji || '🍽️'}" placeholder="Эмодзи" data-index="${index}" style="max-width:80px;" />
+          <input type="text" class="admin-time" value="${r.time || ''}" placeholder="Время" data-index="${index}" />
+          <input type="text" class="admin-difficulty" value="${r.difficulty || ''}" placeholder="Сложность" data-index="${index}" />
+          <textarea class="admin-desc" placeholder="Описание" data-index="${index}">${r.description || ''}</textarea>
+          <textarea class="admin-ingredients" placeholder="Ингредиенты" data-index="${index}">${r.ingredients || ''}</textarea>
         </div>
       `).join('');
     }
 
-    // ------ СОХРАНИТЬ ИЗ ФОРМЫ В recipes ------
+    // ------ СОХРАНИТЬ ИЗ ФОРМЫ В recipes (с учетом индексов) ------
     function saveFromAdminForm() {
       const titleInputs = document.querySelectorAll('.admin-title');
       const emojiInputs = document.querySelectorAll('.admin-emoji');
@@ -413,10 +457,9 @@
       const descInputs = document.querySelectorAll('.admin-desc');
       const ingrInputs = document.querySelectorAll('.admin-ingredients');
 
-      // собираем по id
       const updated = [];
       titleInputs.forEach((input, idx) => {
-        const id = parseInt(input.dataset.id, 10);
+        const index = parseInt(input.dataset.index, 10);
         const emoji = emojiInputs[idx] ? emojiInputs[idx].value.trim() : '🍽️';
         const time = timeInputs[idx] ? timeInputs[idx].value.trim() : '30 мин';
         const difficulty = diffInputs[idx] ? diffInputs[idx].value.trim() : 'средний';
@@ -424,7 +467,7 @@
         const ingredients = ingrInputs[idx] ? ingrInputs[idx].value.trim() : '';
 
         updated.push({
-          id: id,
+          id: index + 1, // условный id
           title: input.value.trim() || 'Блюдо',
           emoji: emoji || '🍽️',
           time: time || '30 мин',
@@ -434,31 +477,49 @@
         });
       });
 
-      // перезаписываем recipes (сохраняем порядок)
       recipes = updated;
       renderRecipes();
-      renderAdminForm(); // обновить форму (чтобы data-id и значения совпадали)
+      renderAdminForm();
     }
 
-    // ------ СБРОС К ДЕФОЛТУ ------
-    function resetToDefaults() {
-      recipes = JSON.parse(JSON.stringify(DEFAULT_RECIPES));
+    // ------ ДОБАВИТЬ ПУСТОЙ РЕЦЕПТ ------
+    function addEmptyRecipe() {
+      recipes.push({
+        id: Date.now(),
+        title: 'Новый рецепт',
+        emoji: '🍽️',
+        time: '30 мин',
+        difficulty: 'средний',
+        description: 'Введите описание',
+        ingredients: 'ингредиенты...'
+      });
       renderRecipes();
       renderAdminForm();
-      // если админка открыта, оставляем открытой
+      // если админка закрыта — открываем
+      if (!adminPanel.classList.contains('open')) {
+        adminPanel.classList.add('open');
+      }
+    }
+
+    // ------ СБРОС К ПУСТОМУ СОСТОЯНИЮ (удалить все) ------
+    function resetToEmpty() {
+      if (recipes.length > 0 && !confirm('Удалить все рецепты?')) return;
+      recipes = [];
+      renderRecipes();
+      renderAdminForm();
     }
 
     // ------ ОТКРЫТЬ/ЗАКРЫТЬ АДМИНКУ ------
     function toggleAdminPanel() {
       const isOpen = adminPanel.classList.toggle('open');
       if (isOpen) {
-        renderAdminForm(); // всегда свежая форма из текущих recipes
+        renderAdminForm();
       }
     }
 
-    // ------ ИНИЦИАЛИЗАЦИЯ ------
+    // ------ ИНИЦИАЛИЗАЦИЯ (рецепты уже пустые) ------
     function init() {
-      renderRecipes();
+      renderRecipes(); // покажет empty-state
 
       // события
       adminToggleBtn.addEventListener('click', toggleAdminPanel);
@@ -466,7 +527,6 @@
       saveBtn.addEventListener('click', function(e) {
         e.preventDefault();
         saveFromAdminForm();
-        // небольшой фидбек
         const originalText = saveBtn.innerHTML;
         saveBtn.innerHTML = '<i class="fas fa-check-circle"></i> Готово!';
         setTimeout(() => { saveBtn.innerHTML = originalText; }, 1200);
@@ -474,21 +534,20 @@
 
       resetBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (confirm('Сбросить все рецепты к исходным?')) {
-          resetToDefaults();
-          // если админка открыта — перерендерить форму
-          if (adminPanel.classList.contains('open')) {
-            renderAdminForm();
-          }
+        resetToEmpty();
+        if (adminPanel.classList.contains('open')) {
+          renderAdminForm();
         }
       });
 
-      // опционально: если клик вне админки — не закрываем, оставим как есть.
-      // но можно добавить эстетики: при открытии форма подгружается.
-      console.log('🍽️ gourmet·lab — премиум кулинария');
+      addBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        addEmptyRecipe();
+      });
+
+      console.log('🌙 neo·gourmet — тёмная неоновая кулинария (рецептов нет)');
     }
 
-    // запуск
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
