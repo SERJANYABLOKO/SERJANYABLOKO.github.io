@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Football Boots, Collection & Locker</title>
+  <title>Football Boots Case & Stars</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   
   <style>
@@ -28,11 +28,11 @@
 
     body {
       margin: 0;
-      padding: 16px 16px 80px 16px; /* Отступ снизу под навигацию */
+      padding: 16px 16px 80px 16px;
       background-color: var(--bg-main);
       background-image: 
-        radial-gradient(circle at 50% 10%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 50% 90%, rgba(0, 136, 255, 0.05) 0%, transparent 60%);
+        radial-gradient(circle at 50% 10%, rgba(255, 204, 0, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(0, 255, 102, 0.05) 0%, transparent 60%);
       color: var(--text);
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       display: flex;
@@ -64,7 +64,7 @@
     }
 
     .brand span {
-      color: var(--accent-green);
+      color: var(--accent-gold);
     }
 
     .balance-box {
@@ -74,8 +74,8 @@
       border-radius: 20px;
       font-weight: 800;
       font-size: 15px;
-      border: 1px solid rgba(0, 255, 102, 0.2);
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -119,7 +119,7 @@
     }
 
     .nav-tab.active {
-      color: var(--accent-green);
+      color: var(--accent-gold);
     }
 
     /* Контейнеры вкладок */
@@ -135,7 +135,7 @@
       display: flex;
     }
 
-    /* === Вкладка 1: КЕЙСЫ И КЛИКЕР === */
+    /* === ВКЛАДКА 1: КЕЙСЫ === */
     .clicker-section {
       text-align: center;
       margin-bottom: 20px;
@@ -149,7 +149,7 @@
       border: none;
       font-size: 48px;
       cursor: pointer;
-      box-shadow: 0 0 25px rgba(0, 255, 102, 0.2), inset -5px -5px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.2), inset -5px -5px 15px rgba(0, 0, 0, 0.4);
       transition: transform 0.05s ease;
       display: flex;
       align-items: center;
@@ -188,9 +188,9 @@
       transform: translateX(-50%);
       width: 3px;
       height: 100%;
-      background: var(--accent-green);
+      background: var(--accent-gold);
       z-index: 10;
-      box-shadow: 0 0 12px var(--accent-green);
+      box-shadow: 0 0 12px var(--accent-gold);
     }
 
     .roulette-viewport {
@@ -272,7 +272,7 @@
       margin-top: 16px;
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, #00ff66 0%, #009933 100%);
+      background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
       border: none;
       border-radius: 14px;
       color: #000;
@@ -281,7 +281,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 255, 102, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 204, 0, 0.3);
       transition: all 0.2s;
     }
 
@@ -299,11 +299,11 @@
       font-weight: 800;
       min-height: 20px;
       text-align: center;
-      color: var(--accent-green);
+      color: var(--accent-gold);
       text-transform: uppercase;
     }
 
-    /* === ВКЛАДКА 2: ПЕРСОНАЖ И РАЗДЕВАЛКА === */
+    /* === ВКЛАДКА 2: ПЕРСОНАЖ И ИМЯ === */
     .character-stage {
       width: 100%;
       background: var(--bg-card);
@@ -317,34 +317,49 @@
       overflow: hidden;
     }
 
-    /* Персонаж и экипировка */
+    /* Имя игрока */
+    .player-name-badge {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 16px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .avatar-wrapper {
       position: relative;
       width: 180px;
-      height: 220px;
+      height: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle, rgba(0,255,102,0.05) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,204,0,0.05) 0%, transparent 70%);
     }
 
     .player-body {
-      font-size: 100px;
+      font-size: 90px;
       line-height: 1;
       filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));
       z-index: 1;
     }
 
-    /* Слот под бутсы у ног */
     .equipped-boots-slot {
       position: absolute;
-      bottom: 5px;
+      bottom: 0px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(8px);
       padding: 4px 12px;
       border-radius: 12px;
@@ -353,7 +368,7 @@
     }
 
     .equipped-boots-icon {
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .equipped-boots-info {
@@ -362,7 +377,6 @@
       text-transform: uppercase;
     }
 
-    /* Сетка слотов предметов (Бутсы / Джерси / Украшения) */
     .slots-grid {
       width: 100%;
       display: grid;
@@ -386,8 +400,8 @@
     }
 
     .equip-slot.active-slot {
-      border: 1px solid var(--accent-green);
-      background: rgba(0, 255, 102, 0.05);
+      border: 1px solid var(--accent-gold);
+      background: rgba(255, 204, 0, 0.05);
       color: #fff;
     }
 
@@ -397,7 +411,6 @@
       opacity: 0.6;
     }
 
-    /* Выбор экипировки из инвентаря */
     .locker-inventory {
       width: 100%;
       margin-top: 20px;
@@ -432,34 +445,20 @@
     }
 
     .locker-item.equipped {
-      border: 2px solid var(--accent-green);
-      box-shadow: 0 0 12px rgba(0, 255, 102, 0.3);
-      background: rgba(0, 255, 102, 0.05);
+      border: 2px solid var(--accent-gold);
+      box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
+      background: rgba(255, 204, 0, 0.05);
     }
 
-    .locker-item .l-icon {
-      font-size: 28px;
-      margin: 4px 0;
-    }
-
-    .locker-item .l-name {
-      font-size: 10px;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-    }
-
-    .locker-item .l-color {
-      font-size: 8px;
-      color: #9ca3af;
-      margin-top: 2px;
-    }
+    .locker-item .l-icon { font-size: 28px; margin: 4px 0; }
+    .locker-item .l-name { font-size: 10px; font-weight: 800; color: #fff; text-align: center; }
+    .locker-item .l-color { font-size: 8px; color: #9ca3af; margin-top: 2px; }
 
     .equipped-badge {
       position: absolute;
       top: 4px;
       right: 4px;
-      background: var(--accent-green);
+      background: var(--accent-gold);
       color: #000;
       font-size: 8px;
       font-weight: 900;
@@ -488,8 +487,8 @@
     }
 
     .collection-count {
-      color: var(--accent-green);
-      background: rgba(0, 255, 102, 0.1);
+      color: var(--accent-gold);
+      background: rgba(255, 204, 0, 0.1);
       padding: 4px 10px;
       border-radius: 12px;
       font-size: 12px;
@@ -538,14 +537,14 @@
   <!-- Шапка -->
   <div class="header">
     <div class="brand">BOOTS <span>CASE</span> ⚽</div>
-    <div class="balance-box">🪙 <span id="balance">100</span></div>
+    <div class="balance-box">⭐ <span id="balance">10</span></div>
   </div>
 
   <!-- ВКЛАДКА 1: КЕЙСЫ -->
   <div class="tab-content active" id="tab-cases">
     <div class="clicker-section">
       <button class="ball-btn" id="clickBtn">⚽</button>
-      <div class="hint">Чекань мяч, чтобы зарабатывать монеты</div>
+      <div class="hint">Чекань мяч, чтобы фармить Stars</div>
     </div>
 
     <div class="case-wrapper">
@@ -555,13 +554,18 @@
       </div>
     </div>
 
-    <button class="open-btn" id="openBtn">Открыть кейс (50 🪙)</button>
+    <button class="open-btn" id="openBtn">Открыть кейс (5 ⭐)</button>
     <div class="result-banner" id="resultText"></div>
   </div>
 
   <!-- ВКЛАДКА 2: ПЕРСОНАЖ / РАЗДЕВАЛКА -->
   <div class="tab-content" id="tab-character">
     <div class="character-stage">
+      <!-- Имя игрока -->
+      <div class="player-name-badge">
+        <span>⚽</span> <span id="playerName">Player</span>
+      </div>
+
       <div class="avatar-wrapper">
         <div class="player-body">🏃‍♂️</div>
         <div class="equipped-boots-slot">
@@ -588,9 +592,7 @@
 
     <div class="locker-inventory">
       <div class="section-title">Выбрать бутсы из гардероба</div>
-      <div class="boots-selector-grid" id="lockerGrid">
-        <!-- Заполняется из JS -->
-      </div>
+      <div class="boots-selector-grid" id="lockerGrid"></div>
     </div>
   </div>
 
@@ -605,7 +607,7 @@
     </div>
   </div>
 
-  <!-- Нижнее навигационное меню -->
+  <!-- Навигация -->
   <div class="nav-bar">
     <div class="nav-tab active" onclick="switchTab('cases')">
       <span class="tab-icon">🎰</span>
@@ -625,31 +627,36 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
+    // Загрузка имени из Telegram
+    const telegramUser = tg.initDataUnsafe?.user;
+    const playerName = telegramUser?.first_name || "Player";
+    document.getElementById('playerName').textContent = playerName;
+
     // База бутс
     const BOOTS = [
-      { id: "az_common", brand: "Nike", name: "Air Zoom", colorName: "Серый", colorHex: "#718096", rarity: "common", price: 20, icon: "👟" },
-      { id: "az_rare", brand: "Nike", name: "Air Zoom", colorName: "Синий", colorHex: "#0088ff", rarity: "rare", price: 60, icon: "👟" },
-      { id: "az_epic", brand: "Nike", name: "Air Zoom", colorName: "Неон", colorHex: "#00ffcc", rarity: "epic", price: 200, icon: "👟" },
-      { id: "az_legendary", brand: "Nike", name: "Air Zoom", colorName: "Золотой", colorHex: "#ffaa00", rarity: "legendary", price: 750, icon: "👑" },
+      { id: "az_common", brand: "Nike", name: "Air Zoom", colorName: "Серый", colorHex: "#718096", rarity: "common", price: 2, icon: "👟" },
+      { id: "az_rare", brand: "Nike", name: "Air Zoom", colorName: "Синий", colorHex: "#0088ff", rarity: "rare", price: 6, icon: "👟" },
+      { id: "az_epic", brand: "Nike", name: "Air Zoom", colorName: "Неон", colorHex: "#00ffcc", rarity: "epic", price: 20, icon: "👟" },
+      { id: "az_legendary", brand: "Nike", name: "Air Zoom", colorName: "Золотой", colorHex: "#ffaa00", rarity: "legendary", price: 75, icon: "👑" },
 
-      { id: "f50_common", brand: "Adidas", name: "F50", colorName: "Белый", colorHex: "#e2e8f0", rarity: "common", price: 20, icon: "👟" },
-      { id: "f50_rare", brand: "Adidas", name: "F50", colorName: "Красный", colorHex: "#e53e3e", rarity: "rare", price: 60, icon: "👟" },
-      { id: "f50_epic", brand: "Adidas", name: "F50", colorName: "Фиолет", colorHex: "#a300ff", rarity: "epic", price: 250, icon: "👟" },
-      { id: "f50_legendary", brand: "Adidas", name: "F50", colorName: "Изумруд", colorHex: "#00ff66", rarity: "legendary", price: 1000, icon: "👑" },
+      { id: "f50_common", brand: "Adidas", name: "F50", colorName: "Белый", colorHex: "#e2e8f0", rarity: "common", price: 2, icon: "👟" },
+      { id: "f50_rare", brand: "Adidas", name: "F50", colorName: "Красный", colorHex: "#e53e3e", rarity: "rare", price: 6, icon: "👟" },
+      { id: "f50_epic", brand: "Adidas", name: "F50", colorName: "Фиолет", colorHex: "#a300ff", rarity: "epic", price: 25, icon: "👟" },
+      { id: "f50_legendary", brand: "Adidas", name: "F50", colorName: "Изумруд", colorHex: "#00ff66", rarity: "legendary", price: 100, icon: "👑" },
 
-      { id: "pred_common", brand: "Adidas", name: "Predator", colorName: "Черный", colorHex: "#222222", rarity: "common", price: 25, icon: "👟" },
-      { id: "pred_rare", brand: "Adidas", name: "Predator", colorName: "Желтый", colorHex: "#ffcc00", rarity: "rare", price: 75, icon: "👟" },
-      { id: "pred_epic", brand: "Adidas", name: "Predator", colorName: "Платина", colorHex: "#cbd5e1", rarity: "epic", price: 300, icon: "👟" },
-      { id: "pred_legendary", brand: "Adidas", name: "Predator", colorName: "Рубин", colorHex: "#dc2626", rarity: "legendary", price: 1200, icon: "👑" },
+      { id: "pred_common", brand: "Adidas", name: "Predator", colorName: "Черный", colorHex: "#222222", rarity: "common", price: 3, icon: "👟" },
+      { id: "pred_rare", brand: "Adidas", name: "Predator", colorName: "Желтый", colorHex: "#ffcc00", rarity: "rare", price: 8, icon: "👟" },
+      { id: "pred_epic", brand: "Adidas", name: "Predator", colorName: "Платина", colorHex: "#cbd5e1", rarity: "epic", price: 30, icon: "👟" },
+      { id: "pred_legendary", brand: "Adidas", name: "Predator", colorName: "Рубин", colorHex: "#dc2626", rarity: "legendary", price: 120, icon: "👑" },
 
-      { id: "merc_common", brand: "Nike", name: "Mercurial", colorName: "Зеленый", colorHex: "#16a34a", rarity: "common", price: 30, icon: "👟" },
-      { id: "merc_rare", brand: "Nike", name: "Mercurial", colorName: "Оранж", colorHex: "#ea580c", rarity: "rare", price: 90, icon: "👟" },
-      { id: "merc_epic", brand: "Nike", name: "Mercurial", colorName: "Розовый", colorHex: "#ec4899", rarity: "epic", price: 400, icon: "👟" },
-      { id: "merc_legendary", brand: "Nike", name: "Mercurial", colorName: "Алмаз", colorHex: "#00ffff", rarity: "legendary", price: 2000, icon: "⚡" }
+      { id: "merc_common", brand: "Nike", name: "Mercurial", colorName: "Зеленый", colorHex: "#16a34a", rarity: "common", price: 3, icon: "👟" },
+      { id: "merc_rare", brand: "Nike", name: "Mercurial", colorName: "Оранж", colorHex: "#ea580c", rarity: "rare", price: 9, icon: "👟" },
+      { id: "merc_epic", brand: "Nike", name: "Mercurial", colorName: "Розовый", colorHex: "#ec4899", rarity: "epic", price: 40, icon: "👟" },
+      { id: "merc_legendary", brand: "Nike", name: "Mercurial", colorName: "Алмаз", colorHex: "#00ffff", rarity: "legendary", price: 200, icon: "⚡" }
     ];
 
-    const CASE_COST = 50;
-    let balance = parseInt(localStorage.getItem('fb_balance')) || 100;
+    const CASE_COST = 5; // Цена кейса = 5 Stars
+    let balance = parseInt(localStorage.getItem('fb_stars_balance')) || 10;
     let collection = JSON.parse(localStorage.getItem('fb_collection')) || [];
     let equippedBootId = localStorage.getItem('fb_equipped') || null;
     let isSpinning = false;
@@ -667,7 +674,6 @@
     const charBootIcon = document.getElementById('charBootIcon');
     const charBootName = document.getElementById('charBootName');
 
-    // Переключение вкладок
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -684,7 +690,7 @@
       openBtn.disabled = isSpinning || balance < CASE_COST;
       ownedCountEl.textContent = collection.length;
       
-      localStorage.setItem('fb_balance', balance);
+      localStorage.setItem('fb_stars_balance', balance);
       localStorage.setItem('fb_collection', JSON.stringify(collection));
       if (equippedBootId) localStorage.setItem('fb_equipped', equippedBootId);
 
@@ -693,13 +699,12 @@
       updateCharacterDisplay();
     }
 
-    // Чеканка мяча
+    // Фарм Stars
     clickBtn.addEventListener('click', () => {
       balance += 1;
       updateUI();
     });
 
-    // Отрисовка персонажа
     function updateCharacterDisplay() {
       if (equippedBootId) {
         const boot = BOOTS.find(b => b.id === equippedBootId);
@@ -715,11 +720,10 @@
       charBootName.style.color = "#fff";
     }
 
-    // Отрисовка разблокированных бутс в гардеробе
     function renderLocker() {
       lockerGrid.innerHTML = '';
       if (collection.length === 0) {
-        lockerGrid.innerHTML = `<div style="grid-column: span 3; color: #6b7280; font-size: 12px; text-align: center; padding: 20px;">У вас пока нет бутс. Открывайте кейсы!</div>`;
+        lockerGrid.innerHTML = `<div style="grid-column: span 3; color: #6b7280; font-size: 12px; text-align: center; padding: 20px;">Гардероб пуст. Открывайте кейсы!</div>`;
         return;
       }
 
@@ -742,17 +746,15 @@
       });
     }
 
-    // Надевание бутс
     function equipBoot(id) {
       if (equippedBootId === id) {
-        equippedBootId = null; // Снять
+        equippedBootId = null;
       } else {
-        equippedBootId = id; // Надеть
+        equippedBootId = id;
       }
       updateUI();
     }
 
-    // Отрисовка коллекции
     function renderCollection() {
       collectionGrid.innerHTML = '';
       BOOTS.forEach(boot => {
@@ -809,7 +811,7 @@
     let currentItems = generateTrack();
     updateUI();
 
-    // Вращение кейса
+    // Открытие кейса
     openBtn.addEventListener('click', () => {
       if (balance < CASE_COST || isSpinning) return;
 
@@ -842,10 +844,9 @@
         if (collection.includes(winningBoot.id)) {
           balance += winningBoot.price;
           resultText.style.color = '#ffcc00';
-          resultText.textContent = `Повторка ${winningBoot.name}! +${winningBoot.price} 🪙`;
+          resultText.textContent = `Повторка ${winningBoot.name}! +${winningBoot.price} ⭐`;
         } else {
           collection.push(winningBoot.id);
-          // Автоматически надеваем первые выбитые бутсы
           if (!equippedBootId) equippedBootId = winningBoot.id;
           
           resultText.style.color = '#00ff66';
