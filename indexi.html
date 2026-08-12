@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>TikTok Case Simulator</title>
+  <!-- Подключение Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
+  <style>
+    :root {
+      --bg-color: #0f1015;
+      --card-bg: #181a24;
+      --accent: #ff0055;
+      --gold: #ffb800;
+      --text: #ffffff;
+      --common: #b0c3d9;
+      --rare: #4b69ff;
+      --epic: #8847ff;
+      --legendary: #d32ce6;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      background-color: var(--bg-color);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+
+    /* Шапка с балансом */
+    .header {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-weight: 900;
+      font-size: 18px;
+      background: linear-gradient(45deg, #ff0055, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .balance-box {
+      background: var(--card-bg);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Кликер монет */
+    .clicker-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .coin-btn {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe57f 0%, #ffb800 100%);
+      border: 4px solid #fff;
+      font-size: 48px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 184, 0, 0.4);
+      transition: transform 0.05s, box-shadow 0.1s;
+      outline: none;
+    }
+
+    .coin-btn:active {
+      transform: scale(0.90);
+      box-shadow: 0 0 10px rgba(255, 184, 0, 0.2);
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    /* Рулетка */
+    .case-container {
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 12px 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .pointer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+      z-index: 10;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .roulette-viewport {
+      overflow: hidden;
+      width: 100%;
+      height: 100px;
+      position: relative;
+    }
+
+    .roulette-track {
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: transform 5s cubic-bezier(0.1, 0.9, 0.1, 1);
+    }
+
+    .item-card {
+      width: 90px;
+      height: 90px;
+      background: #10111a;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-bottom: 4px solid var(--common);
+      font-size: 11px;
+      font-weight: bold;
+      text-align: center;
+      padding: 4px;
+    }
+
+    .item-card.common { border-color: var(--common); }
+    .item-card.rare { border-color: var(--rare); }
+    .item-card.epic { border-color: var(--epic); }
+    .item-card.legendary { border-color: var(--legendary); }
+
+    .item-icon {
+      font-size: 32px;
+      margin-bottom: 4px;
+    }
+
+    /* Кнопка открытия */
+    .open-btn {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+      padding: 16px;
+      background: linear-gradient(45deg, #ff0055, #ff5500);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
+      transition: opacity 0.2s;
+    }
+
+    .open-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .result-banner {
+      margin-top: 16px;
+      font-size: 15px;
+      font-weight: bold;
+      min-height: 24px;
+      text-align: center;
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <div class="header">
+    <div class="title">TIKTOK CASE 🎰</div>
+    <div class="balance-box">🪙 <span id="balance">100</span></div>
+  </div>
+
+  <!-- Кликер -->
+  <div class="clicker-section">
+    <button class="coin-btn" id="clickBtn">🪙</button>
+    <div class="hint">Тапай, чтобы фармить монеты</div>
+  </div>
+
+  <!-- Рулетка -->
+  <div class="case-container">
+    <div class="pointer"></div>
+    <div class="roulette-viewport">
+      <div class="roulette-track" id="track"></div>
+    </div>
+  </div>
+
+  <!-- Кнопка -->
+  <button class="open-btn" id="openBtn">Кейс (50 🪙)</button>
+  <div class="result-banner" id="resultText"></div>
+
+  <script>
+    // Инициализация Telegram WebApp
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // Предметы и шансы
+    const ITEMS = [
+      { name: "Мусор", icon: "🗑️", rarity: "common", price: 5 },
+      { name: "Носок", icon: "🧦", rarity: "common", price: 15 },
+      { name: "Кепка", icon: "🧢", rarity: "rare", price: 40 },
+      { name: "Очки", icon: "🕶️", rarity: "rare", price: 60 },
+      { name: "Худи", icon: "🧥", rarity: "epic", price: 120 },
+      { name: "Айфон", icon: "📱", rarity: "epic", price: 250 },
+      { name: "ПК", icon: "🖥️", rarity: "legendary", price: 600 },
+      { name: "Авто", icon: "🏎️", rarity: "legendary", price: 2000 }
+    ];
+
+    const CASE_COST = 50;
+    let balance = parseInt(localStorage.getItem('user_balance')) || 100;
+    let isSpinning = false;
+
+    const balanceEl = document.getElementById('balance');
+    const clickBtn = document.getElementById('clickBtn');
+    const openBtn = document.getElementById('openBtn');
+    const track = document.getElementById('track');
+    const resultText = document.getElementById('resultText');
+
+    // Обновление UI и сохранение
+    function updateUI() {
+      balanceEl.textContent = balance;
+      openBtn.disabled = isSpinning || balance < CASE_COST;
+      localStorage.setItem('user_balance', balance);
+    }
+
+    // Фарм монет кликом
+    clickBtn.addEventListener('click', () => {
+      balance += 1;
+      updateUI();
+    });
+
+    // Генерация карточки предмета
+    function createCard(item) {
+      const card = document.createElement('div');
+      card.className = `item-card ${item.rarity}`;
+      card.innerHTML = `<div class="item-icon">${item.icon}</div><div>${item.name}</div>`;
+      return card;
+    }
+
+    // Выбор случайного предмета с учетом редких шансов
+    function getRandomItem() {
+      const rand = Math.random() * 100;
+      if (rand < 50) return ITEMS[Math.floor(Math.random() * 2)];       // Common (50%)
+      if (rand < 80) return ITEMS[2 + Math.floor(Math.random() * 2)];   // Rare (30%)
+      if (rand < 95) return ITEMS[4 + Math.floor(Math.random() * 2)];   // Epic (15%)
+      return ITEMS[6 + Math.floor(Math.random() * 2)];                  // Legendary (5%)
+    }
+
+    // Заполнение рулетки
+    function generateTrack(count = 60) {
+      track.innerHTML = '';
+      const items = [];
+      for (let i = 0; i < count; i++) {
+        const item = getRandomItem();
+        items.push(item);
+        track.appendChild(createCard(item));
+      }
+      return items;
+    }
+
+    let currentItems = generateTrack();
+    updateUI();
+
+    // Запуск прокрутки
+    openBtn.addEventListener('click', () => {
+      if (balance < CASE_COST || isSpinning) return;
+
+      balance -= CASE_COST;
+      isSpinning = true;
+      resultText.textContent = '';
+      updateUI();
+
+      // Сброс рулетки
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0px)';
+
+      currentItems = generateTrack(60);
+
+      const targetIndex = 45; // Выигрышный элемент
+      const winningItem = currentItems[targetIndex];
+      const cardWidth = 100; // 90px + 10px gap
+      const viewportWidth = track.parentElement.clientWidth;
+      
+      // Вычисление точки остановки по центру
+      const randomOffset = Math.floor(Math.random() * 50) - 25;
+      const targetPos = (targetIndex * cardWidth) - (viewportWidth / 2) + (cardWidth / 2) + randomOffset;
+
+      // Анимация вращения
+      setTimeout(() => {
+        track.style.transition = 'transform 5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+        track.style.transform = `translateX(-${targetPos}px)`;
+      }, 50);
+
+      // Завершение и выдача награды
+      setTimeout(() => {
+        isSpinning = false;
+        balance += winningItem.price;
+        resultText.textContent = `Выпало: ${winningItem.icon} ${winningItem.name} (+${winningItem.price} 🪙)`;
+        updateUI();
+      }, 5100);
+    });
+  </script>
+</body>
+</html>
