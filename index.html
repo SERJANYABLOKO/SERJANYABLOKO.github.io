@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>TikTok Case Simulator</title>
-  <!-- Подключение Telegram WebApp SDK -->
+  <title>Football Boots Case Simulator</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   
   <style>
     :root {
-      --bg-color: #0f1015;
-      --card-bg: #181a24;
-      --accent: #ff0055;
-      --gold: #ffb800;
+      --bg-main: #0a0c10;
+      --bg-card: #121620;
+      --accent-green: #00ff66;
+      --accent-gold: #ffcc00;
       --text: #ffffff;
-      --common: #b0c3d9;
-      --rare: #4b69ff;
-      --epic: #8847ff;
-      --legendary: #d32ce6;
+      
+      /* Рарности */
+      --common: #8a9bb0;
+      --rare: #0088ff;
+      --epic: #a300ff;
+      --legendary: #ffaa00;
     }
 
     * {
@@ -28,9 +29,12 @@
     body {
       margin: 0;
       padding: 16px;
-      background-color: var(--bg-color);
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(0, 136, 255, 0.05) 0%, transparent 60%);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -38,7 +42,7 @@
       user-select: none;
     }
 
-    /* Шапка с балансом */
+    /* Шапка */
     .header {
       width: 100%;
       max-width: 400px;
@@ -48,67 +52,82 @@
       margin-bottom: 20px;
     }
 
-    .title {
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-weight: 900;
       font-size: 18px;
-      background: linear-gradient(45deg, #ff0055, #00f2fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      font-style: italic;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      color: var(--accent-green);
     }
 
     .balance-box {
-      background: var(--card-bg);
+      background: rgba(18, 22, 32, 0.8);
+      backdrop-filter: blur(10px);
       padding: 8px 16px;
       border-radius: 20px;
-      font-weight: bold;
-      font-size: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 800;
+      font-size: 15px;
+      border: 1px solid rgba(0, 255, 102, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* Кликер монет */
+    /* Тапалка-мяч */
     .clicker-section {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
-    .coin-btn {
-      width: 110px;
-      height: 110px;
+    .ball-btn {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffe57f 0%, #ffb800 100%);
-      border: 4px solid #fff;
-      font-size: 48px;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d1d5db 60%, #9ca3af 100%);
+      border: none;
+      font-size: 55px;
       cursor: pointer;
-      box-shadow: 0 0 25px rgba(255, 184, 0, 0.4);
-      transition: transform 0.05s, box-shadow 0.1s;
+      box-shadow: 0 0 30px rgba(0, 255, 102, 0.2), inset -5px -5px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.05s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       outline: none;
+      margin: 0 auto;
     }
 
-    .coin-btn:active {
-      transform: scale(0.90);
-      box-shadow: 0 0 10px rgba(255, 184, 0, 0.2);
+    .ball-btn:active {
+      transform: scale(0.92) rotate(15deg);
     }
 
     .hint {
-      font-size: 12px;
-      color: #888;
+      font-size: 11px;
+      color: #6b7280;
       margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    /* Рулетка */
-    .case-container {
+    /* Кейс и рулетка */
+    .case-wrapper {
       width: 100%;
       max-width: 400px;
       position: relative;
-      background: var(--card-bg);
+      background: var(--bg-card);
       border-radius: 16px;
-      padding: 12px 6px;
+      padding: 14px 6px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     }
 
     .pointer {
@@ -116,54 +135,85 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 4px;
+      width: 3px;
       height: 100%;
-      background: var(--accent);
+      background: var(--accent-green);
       z-index: 10;
-      box-shadow: 0 0 10px var(--accent);
+      box-shadow: 0 0 12px var(--accent-green);
     }
 
     .roulette-viewport {
       overflow: hidden;
       width: 100%;
-      height: 100px;
+      height: 110px;
       position: relative;
     }
 
     .roulette-track {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       position: absolute;
       left: 0;
       top: 0;
-      transition: transform 5s cubic-bezier(0.1, 0.9, 0.1, 1);
+      transition: transform 5s cubic-bezier(0.08, 0.82, 0.17, 0.99);
     }
 
-    .item-card {
-      width: 90px;
-      height: 90px;
-      background: #10111a;
+    /* Карточка бутс */
+    .boot-card {
+      width: 100px;
+      height: 105px;
+      background: #0d0e15;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-bottom: 4px solid var(--common);
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 10px;
+      font-weight: 700;
       text-align: center;
-      padding: 4px;
+      padding: 8px 4px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .item-card.common { border-color: var(--common); }
-    .item-card.rare { border-color: var(--rare); }
-    .item-card.epic { border-color: var(--epic); }
-    .item-card.legendary { border-color: var(--legendary); }
+    .boot-card.common { border-bottom-color: var(--common); }
+    .boot-card.rare { border-bottom-color: var(--rare); }
+    .boot-card.epic { border-bottom-color: var(--epic); }
+    .boot-card.legendary { 
+      border-bottom-color: var(--legendary); 
+      box-shadow: inset 0 0 15px rgba(255, 170, 0, 0.15);
+    }
 
-    .item-icon {
-      font-size: 32px;
-      margin-bottom: 4px;
+    .brand-tag {
+      font-size: 9px;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .boot-icon {
+      font-size: 34px;
+      margin: 2px 0;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+
+    .boot-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      color: #e5e7eb;
+    }
+
+    .boot-color-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
     }
 
     /* Кнопка открытия */
@@ -172,30 +222,36 @@
       width: 100%;
       max-width: 400px;
       padding: 16px;
-      background: linear-gradient(45deg, #ff0055, #ff5500);
+      background: linear-gradient(135deg, #00ff66 0%, #009933 100%);
       border: none;
       border-radius: 14px;
-      color: white;
-      font-size: 18px;
-      font-weight: 800;
+      color: #000;
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
-      transition: opacity 0.2s;
+      box-shadow: 0 4px 20px rgba(0, 255, 102, 0.3);
+      transition: all 0.2s;
     }
 
     .open-btn:disabled {
-      opacity: 0.4;
+      opacity: 0.3;
       cursor: not-allowed;
       box-shadow: none;
+      background: #2a303c;
+      color: #6b7280;
     }
 
+    /* Результат */
     .result-banner {
       margin-top: 16px;
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 800;
       min-height: 24px;
       text-align: center;
-      color: var(--gold);
+      color: var(--accent-green);
+      text-transform: uppercase;
     }
   </style>
 </head>
@@ -203,18 +259,18 @@
 
   <!-- Шапка -->
   <div class="header">
-    <div class="title">TIKTOK CASE 🎰</div>
+    <div class="brand">BOOTS <span>CASE</span> ⚽</div>
     <div class="balance-box">🪙 <span id="balance">100</span></div>
   </div>
 
-  <!-- Кликер -->
+  <!-- Набивание мяча -->
   <div class="clicker-section">
-    <button class="coin-btn" id="clickBtn">🪙</button>
-    <div class="hint">Тапай, чтобы фармить монеты</div>
+    <button class="ball-btn" id="clickBtn">⚽</button>
+    <div class="hint">Чекань мяч, чтобы зарабатывать монеты</div>
   </div>
 
-  <!-- Рулетка -->
-  <div class="case-container">
+  <!-- Рулетка бутс -->
+  <div class="case-wrapper">
     <div class="pointer"></div>
     <div class="roulette-viewport">
       <div class="roulette-track" id="track"></div>
@@ -222,28 +278,27 @@
   </div>
 
   <!-- Кнопка -->
-  <button class="open-btn" id="openBtn">Кейс (50 🪙)</button>
+  <button class="open-btn" id="openBtn">Открыть кейс (50 🪙)</button>
   <div class="result-banner" id="resultText"></div>
 
   <script>
-    // Инициализация Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Предметы и шансы
-    const ITEMS = [
-      { name: "Мусор", icon: "🗑️", rarity: "common", price: 5 },
-      { name: "Носок", icon: "🧦", rarity: "common", price: 15 },
-      { name: "Кепка", icon: "🧢", rarity: "rare", price: 40 },
-      { name: "Очки", icon: "🕶️", rarity: "rare", price: 60 },
-      { name: "Худи", icon: "🧥", rarity: "epic", price: 120 },
-      { name: "Айфон", icon: "📱", rarity: "epic", price: 250 },
-      { name: "ПК", icon: "🖥️", rarity: "legendary", price: 600 },
-      { name: "Авто", icon: "🏎️", rarity: "legendary", price: 2000 }
+    // База бутс Nike и Adidas с разным цветом и рарностью
+    const BOOTS = [
+      { brand: "Adidas", name: "Copa Pure", colorName: "Черный", colorHex: "#222", rarity: "common", price: 10, icon: "👟" },
+      { brand: "Nike", name: "Tiempo Legend", colorName: "Белый", colorHex: "#fff", rarity: "common", price: 15, icon: "👟" },
+      { brand: "Adidas", name: "Predator Accuracy", colorName: "Синий", colorHex: "#0088ff", rarity: "rare", price: 45, icon: "👟" },
+      { brand: "Nike", name: "Mercurial Vapor", colorName: "Салатовый", colorHex: "#00ff66", rarity: "rare", price: 70, icon: "👟" },
+      { brand: "Adidas", name: "X Crazyfast", colorName: "Розовый", colorHex: "#ff007f", rarity: "epic", price: 160, icon: "👟" },
+      { brand: "Nike", name: "Phantom GX", colorName: "Фиолетовый", colorHex: "#a300ff", rarity: "epic", price: 300, icon: "👟" },
+      { brand: "Adidas", name: "Predator Gold", colorName: "Золотой", colorHex: "#ffcc00", rarity: "legendary", price: 750, icon: "👑" },
+      { brand: "Nike", name: "Mercurial CR7", colorName: "Платиновый", colorHex: "#00ffff", rarity: "legendary", price: 2000, icon: "⚡" }
     ];
 
     const CASE_COST = 50;
-    let balance = parseInt(localStorage.getItem('user_balance')) || 100;
+    let balance = parseInt(localStorage.getItem('fb_balance')) || 100;
     let isSpinning = false;
 
     const balanceEl = document.getElementById('balance');
@@ -252,44 +307,49 @@
     const track = document.getElementById('track');
     const resultText = document.getElementById('resultText');
 
-    // Обновление UI и сохранение
     function updateUI() {
       balanceEl.textContent = balance;
       openBtn.disabled = isSpinning || balance < CASE_COST;
-      localStorage.setItem('user_balance', balance);
+      localStorage.setItem('fb_balance', balance);
     }
 
-    // Фарм монет кликом
+    // Чеканка мяча
     clickBtn.addEventListener('click', () => {
       balance += 1;
       updateUI();
     });
 
-    // Генерация карточки предмета
-    function createCard(item) {
+    // Создание элемента карточки бутс
+    function createBootCard(boot) {
       const card = document.createElement('div');
-      card.className = `item-card ${item.rarity}`;
-      card.innerHTML = `<div class="item-icon">${item.icon}</div><div>${item.name}</div>`;
+      card.className = `boot-card ${boot.rarity}`;
+      card.innerHTML = `
+        <div class="brand-tag">${boot.brand}</div>
+        <div class="boot-icon">${boot.icon}</div>
+        <div class="boot-name">
+          <span class="boot-color-dot" style="background:${boot.colorHex}"></span>${boot.name}
+        </div>
+      `;
       return card;
     }
 
-    // Выбор случайного предмета с учетом редких шансов
-    function getRandomItem() {
+    // Выбор случайной бутсы по шансам
+    function getRandomBoot() {
       const rand = Math.random() * 100;
-      if (rand < 50) return ITEMS[Math.floor(Math.random() * 2)];       // Common (50%)
-      if (rand < 80) return ITEMS[2 + Math.floor(Math.random() * 2)];   // Rare (30%)
-      if (rand < 95) return ITEMS[4 + Math.floor(Math.random() * 2)];   // Epic (15%)
-      return ITEMS[6 + Math.floor(Math.random() * 2)];                  // Legendary (5%)
+      if (rand < 50) return BOOTS[Math.floor(Math.random() * 2)];       // Common (50%)
+      if (rand < 80) return BOOTS[2 + Math.floor(Math.random() * 2)];   // Rare (30%)
+      if (rand < 95) return BOOTS[4 + Math.floor(Math.random() * 2)];   // Epic (15%)
+      return BOOTS[6 + Math.floor(Math.random() * 2)];                  // Legendary (5%)
     }
 
-    // Заполнение рулетки
+    // Генерация ленты рулетки
     function generateTrack(count = 60) {
       track.innerHTML = '';
       const items = [];
       for (let i = 0; i < count; i++) {
-        const item = getRandomItem();
-        items.push(item);
-        track.appendChild(createCard(item));
+        const boot = getRandomBoot();
+        items.push(boot);
+        track.appendChild(createBootCard(boot));
       }
       return items;
     }
@@ -297,7 +357,7 @@
     let currentItems = generateTrack();
     updateUI();
 
-    // Запуск прокрутки
+    // Вращение кейса
     openBtn.addEventListener('click', () => {
       if (balance < CASE_COST || isSpinning) return;
 
@@ -306,32 +366,32 @@
       resultText.textContent = '';
       updateUI();
 
-      // Сброс рулетки
+      // Мгновенный сброс трека
       track.style.transition = 'none';
       track.style.transform = 'translateX(0px)';
 
       currentItems = generateTrack(60);
 
-      const targetIndex = 45; // Выигрышный элемент
-      const winningItem = currentItems[targetIndex];
-      const cardWidth = 100; // 90px + 10px gap
+      const targetIndex = 45; // Выигравшая бутса
+      const winningBoot = currentItems[targetIndex];
+      const cardWidth = 112; // 100px ширина + 12px gap
       const viewportWidth = track.parentElement.clientWidth;
       
-      // Вычисление точки остановки по центру
-      const randomOffset = Math.floor(Math.random() * 50) - 25;
+      // Смещение для реалистичной остановки
+      const randomOffset = Math.floor(Math.random() * 60) - 30;
       const targetPos = (targetIndex * cardWidth) - (viewportWidth / 2) + (cardWidth / 2) + randomOffset;
 
-      // Анимация вращения
+      // Старт анимации
       setTimeout(() => {
-        track.style.transition = 'transform 5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+        track.style.transition = 'transform 5s cubic-bezier(0.08, 0.82, 0.17, 0.99)';
         track.style.transform = `translateX(-${targetPos}px)`;
       }, 50);
 
-      // Завершение и выдача награды
+      // Завершение
       setTimeout(() => {
         isSpinning = false;
-        balance += winningItem.price;
-        resultText.textContent = `Выпало: ${winningItem.icon} ${winningItem.name} (+${winningItem.price} 🪙)`;
+        balance += winningBoot.price;
+        resultText.textContent = `Выпали: ${winningBoot.brand} ${winningBoot.name} (+${winningBoot.price} 🪙)`;
         updateUI();
       }, 5100);
     });
