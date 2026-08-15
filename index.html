@@ -469,6 +469,9 @@
 </head>
 <body>
 
+  <!-- Скрытый глобальный аудиоплеер -->
+  <audio id="realAudioPlayer" preload="auto"></audio>
+
   <!-- Загрузка файлов -->
   <input type="file" id="userAvatarFile" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
   <input type="file" id="bannerImgFile" accept="image/*" style="display:none;" onchange="handleBannerUpload(event)">
@@ -551,9 +554,7 @@
                 <span style="font-size: 11px; color: var(--accent-gold); cursor: pointer;" onclick="openNewArtistModal()">+ Добавить</span>
               </div>
             </div>
-            <div class="artists-row" id="artistsList">
-              <!-- Карточки артистов через JS -->
-            </div>
+            <div class="artists-row" id="artistsList"></div>
           </div>
 
           <!-- Список треков -->
@@ -592,9 +593,7 @@
             <input type="text" id="tgSearch" class="input-field" placeholder="Поиск чатов..." oninput="searchDialogs(this.value)">
             <button class="btn btn-gold" style="padding: 8px;" onclick="openNewChatModal()">+</button>
           </div>
-          <div style="flex: 1; overflow-y: auto;" id="dialogsList">
-            <!-- Диалоги -->
-          </div>
+          <div style="flex: 1; overflow-y: auto;" id="dialogsList"></div>
         </aside>
 
         <main class="glass-panel tg-chat-area">
@@ -680,9 +679,7 @@
 
           <div class="glass-panel" style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
             <div style="font-size: 13px; font-weight: 700;">Статусы каталога S U A</div>
-            <div id="distroLogs" style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; overflow-y: auto;">
-              <!-- Логи из localStorage -->
-            </div>
+            <div id="distroLogs" style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; overflow-y: auto;"></div>
           </div>
         </div>
 
@@ -707,12 +704,12 @@
       <button class="btn btn-dark" style="border-radius: 50%; width: 32px; height: 32px; padding: 0;" onclick="nextTrack()">⏭</button>
       
       <div class="wave-bars" id="waveBars" onclick="seekWave(event)"></div>
-      <span style="font-size: 11px; color: var(--text-muted);" id="trackTimeDisplay">0:45</span>
+      <span style="font-size: 11px; color: var(--text-muted);" id="trackTimeDisplay">0:00</span>
     </div>
 
     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
       <span style="font-size: 12px;">🔊</span>
-      <input type="range" min="0" max="100" value="80" style="accent-color: var(--accent-gold); width: 70px;" oninput="setGain(this.value)">
+      <input type="range" min="0" max="100" value="80" style="accent-color: var(--accent-gold); width: 70px;" oninput="setVolume(this.value)">
     </div>
   </footer>
 
@@ -802,36 +799,91 @@
   </div>
 
   <script>
-    /* ================= 1. СИСТЕМА СОХРАНЕНИЯ (LOCALSTORAGE) ================= */
-    const DEFAULT_TRACKS = [
-      { id: 1, title: 'World Anthem', artist: 'S U A Records', category: 'charts', cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150', freq: 440, isFav: false, lyrics: 'S U A World Music Records...\nGlobal rhythm in your soul.' },
-      { id: 2, title: 'Midnight Horizon', artist: 'S U A x Neon Wave', category: 'radio', cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=150', freq: 350, isFav: false, lyrics: 'Night drive with pure sound quality.' },
-      { id: 3, title: '808 Genesis', artist: 'S U A Beat Division', category: 'charts', cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150', freq: 220, isFav: false, lyrics: 'Deep bassline powered by S U A.' }
+    /* ================= 1. ГОТОВЫЙ КАТАЛОГ ТРЕКОВ ================= */
+    const REAL_EXISTING_TRACKS = [
+      {
+        id: 101,
+        title: 'Snowfall (Ambient Dream)',
+        artist: 'Oneheart x reidenshi',
+        category: 'charts',
+        duration: '02:04',
+        cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300',
+        url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3',
+        isFav: true,
+        lyrics: "Intro ambient melody...\nSnow falling through city lights.\nCold electronic heartbeat."
+      },
+      {
+        id: 102,
+        title: 'Cyber City (Phonk Drive)',
+        artist: 'S U A Beat Division',
+        category: 'charts',
+        duration: '03:12',
+        cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300',
+        url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3',
+        isFav: false,
+        lyrics: "808 Cowbell rhythm.\nNight race across neon highway.\nBass distortion peak."
+      },
+      {
+        id: 103,
+        title: 'Midnight Symphony',
+        artist: 'S U A x Neon Wave',
+        category: 'radio',
+        duration: '02:48',
+        cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300',
+        url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3',
+        isFav: false,
+        lyrics: "Synthesizer arpeggio in A Minor.\nPure analog warmth from S U A Studio."
+      },
+      {
+        id: 104,
+        title: 'Lofi Chill Hop Beats',
+        artist: 'Aura Studio Beats',
+        category: 'radio',
+        duration: '03:30',
+        cover: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300',
+        url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3',
+        isFav: true,
+        lyrics: "Vinyl crackle and piano chords.\nPerfect mood for coding and designing."
+      },
+      {
+        id: 105,
+        title: 'Deep Bass Experience',
+        artist: 'Metro Producer Lab',
+        category: 'charts',
+        duration: '02:25',
+        cover: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300',
+        url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3',
+        isFav: false,
+        lyrics: "Heavy trap rhythm and sub-bass drop."
+      }
     ];
 
     const DEFAULT_ARTISTS = [
-      { name: 'S U A Records', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
+      { name: 'Oneheart x reidenshi', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120' },
+      { name: 'S U A Beat Division', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
       { name: 'S U A x Neon Wave', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120' },
-      { name: 'S U A Beat Division', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120' }
+      { name: 'Aura Studio Beats', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120' }
     ];
 
     const DEFAULT_CHATS = [
-      { id: 1, name: 'S U A A&R Team', lastMsg: 'Релиз принят в ротацию.', msgs: ['Добро пожаловать в S U A World Music Records!', 'Присылайте новые демо на мастеринг.'] },
-      { id: 2, name: 'S U A Sound Lab', lastMsg: 'WAV проверен на 24 bit.', msgs: ['Студия звукозаписи S U A готова к сведению.'] }
+      { id: 1, name: 'S U A A&R Team', lastMsg: 'Релизы Oneheart и Cyber City в ротации!', msgs: ['Добро пожаловать в S U A World Music Records!', 'Каталог уже загружен в стриминг.'] },
+      { id: 2, name: 'S U A Sound Lab', lastMsg: 'WAV проверен на 24 bit.', msgs: ['Все треки подключены к аудиоплееру в высоком качестве.'] }
     ];
 
-    const DEFAULT_PLAYLISTS = ['Избранное S U A', 'Студийный чилл', 'Bass Boosted'];
+    const DEFAULT_PLAYLISTS = ['Избранное S U A', 'Phonk & Drive', 'Chill & Ambient'];
 
-    // Загрузка состояния из localStorage
-    let tracks = JSON.parse(localStorage.getItem('sua_tracks')) || DEFAULT_TRACKS;
-    let artists = JSON.parse(localStorage.getItem('sua_artists')) || DEFAULT_ARTISTS;
-    let chats = JSON.parse(localStorage.getItem('sua_chats')) || DEFAULT_CHATS;
-    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists')) || DEFAULT_PLAYLISTS;
-    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs')) || [
-      '<b>S U A — World Anthem</b> — В ротации (4/4 витрин)'
+    // Загрузка или инициализация из localStorage
+    let savedTracks = localStorage.getItem('sua_tracks_v2');
+    let tracks = savedTracks ? JSON.parse(savedTracks) : REAL_EXISTING_TRACKS;
+    let artists = JSON.parse(localStorage.getItem('sua_artists_v2')) || DEFAULT_ARTISTS;
+    let chats = JSON.parse(localStorage.getItem('sua_chats_v2')) || DEFAULT_CHATS;
+    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists_v2')) || DEFAULT_PLAYLISTS;
+    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs_v2')) || [
+      '<b>Oneheart — Snowfall</b> — Доставлен (4/4 витрин)',
+      '<b>S U A — Cyber City</b> — Доставлен (4/4 витрин)'
     ];
 
-    let userProfile = JSON.parse(localStorage.getItem('sua_profile')) || {
+    let userProfile = JSON.parse(localStorage.getItem('sua_profile_v2')) || {
       name: 'S U A Studio',
       avatar: null,
       banner: null,
@@ -840,14 +892,14 @@
 
     function saveAllState() {
       try {
-        localStorage.setItem('sua_tracks', JSON.stringify(tracks));
-        localStorage.setItem('sua_artists', JSON.stringify(artists));
-        localStorage.setItem('sua_chats', JSON.stringify(chats));
-        localStorage.setItem('sua_playlists', JSON.stringify(userPlaylists));
-        localStorage.setItem('sua_distro_logs', JSON.stringify(distroLogs));
-        localStorage.setItem('sua_profile', JSON.stringify(userProfile));
+        localStorage.setItem('sua_tracks_v2', JSON.stringify(tracks));
+        localStorage.setItem('sua_artists_v2', JSON.stringify(artists));
+        localStorage.setItem('sua_chats_v2', JSON.stringify(chats));
+        localStorage.setItem('sua_playlists_v2', JSON.stringify(userPlaylists));
+        localStorage.setItem('sua_distro_logs_v2', JSON.stringify(distroLogs));
+        localStorage.setItem('sua_profile_v2', JSON.stringify(userProfile));
       } catch (err) {
-        console.warn('Storage limit reached or blocked', err);
+        console.warn('Storage quota', err);
       }
     }
 
@@ -858,8 +910,9 @@
       }
     }
 
-    /* ================= 2. ПЕРЕМЕННЫЕ ПЛЕЕРА И ИНТЕРФЕЙСА ================= */
+    /* ================= 2. ПЕРЕМЕННЫЕ ПЛЕЕРА ================= */
     let uploadedCoverBase64 = null;
+    let uploadedAudioBlobUrl = null;
     let selectedTrackForPlaylist = 0;
     let currentFilterMode = 'all';
     let selectedArtistName = null;
@@ -867,9 +920,7 @@
     let activeChatIdx = 0;
     let currentTrackIdx = 0;
     let isPlaying = false;
-    let progressTimer = null;
-
-    let audioCtx = null, osc = null, masterGain = null;
+    const audioElement = document.getElementById('realAudioPlayer');
 
     /* ================= 3. НАВИГАЦИЯ ================= */
     function switchModule(mod) {
@@ -879,7 +930,7 @@
       document.getElementById(`btn-${mod}`).classList.add('active');
     }
 
-    /* ================= 4. МЕДИАТЕКА И СПИСКИ ================= */
+    /* ================= 4. МЕДИАТЕКА ================= */
     function filterMusic(mode, el) {
       currentFilterMode = mode;
       selectedArtistName = null;
@@ -918,13 +969,13 @@
         return list.filter(t => t.isFav);
       }
       if (currentFilterMode === 'radio') {
-        return list.filter(t => t.category === 'radio' || t.id % 2 === 0);
+        return list.filter(t => t.category === 'radio');
       }
       if (currentFilterMode === 'charts') {
         return list.filter(t => t.category === 'charts');
       }
       if (currentFilterMode === 'distro') {
-        return list.filter(t => t.id > 3 || t.artist.includes('Studio') || t.artist.includes('S U A'));
+        return list.filter(t => t.id > 105 || t.artist.includes('Studio') || t.artist.includes('S U A'));
       }
       if (currentFilterMode === 'local') {
         return list.filter(t => t.isLocal);
@@ -966,7 +1017,7 @@
             <button class="btn btn-dark" style="padding: 4px 8px; font-size: 11px;" onclick="event.stopPropagation(); openPlaylistPicker(${realIdx})">
               +
             </button>
-            <span style="font-size: 11px; color: var(--text-muted);">03:20</span>
+            <span style="font-size: 11px; color: var(--text-muted);">${t.duration || '03:00'}</span>
           </div>
         `;
         list.appendChild(row);
@@ -1013,7 +1064,7 @@
       }
     }
 
-    /* ================= 5. ПЛЕЕР ================= */
+    /* ================= 5. АУДИОПЛЕЕР ================= */
     function initWaveform() {
       const bars = document.getElementById('waveBars');
       bars.innerHTML = '';
@@ -1025,46 +1076,30 @@
       }
     }
 
-    function seekWave(e) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const pct = Math.max(0, Math.min(1, clickX / rect.width));
-      const secs = Math.floor(pct * 200);
-      const m = Math.floor(secs / 60);
-      const s = secs % 60;
+    function updateWaveProgress() {
+      if (!audioElement.duration) return;
+      const pct = audioElement.currentTime / audioElement.duration;
+      const allBars = document.querySelectorAll('.wave-bar');
+      const activeCount = Math.floor(pct * allBars.length);
+      allBars.forEach((bar, idx) => {
+        bar.classList.toggle('active', idx <= activeCount);
+      });
+
+      const m = Math.floor(audioElement.currentTime / 60);
+      const s = Math.floor(audioElement.currentTime % 60);
       document.getElementById('trackTimeDisplay').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
-    function initAudioEngine() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        masterGain.connect(audioCtx.destination);
-      }
+    function seekWave(e) {
+      if (!audioElement.duration) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      audioElement.currentTime = pct * audioElement.duration;
     }
 
-    function startSynth(freq) {
-      initAudioEngine();
-      stopSynth();
-      osc = audioCtx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      osc.connect(masterGain);
-      osc.start();
-    }
-
-    function stopSynth() {
-      if (osc) {
-        try { osc.stop(); osc.disconnect(); } catch (e) {}
-        osc = null;
-      }
-    }
-
-    function setGain(val) {
-      if (masterGain && audioCtx) {
-        masterGain.gain.setValueAtTime((val / 100) * 0.1, audioCtx.currentTime);
-      }
+    function setVolume(val) {
+      audioElement.volume = val / 100;
     }
 
     function updatePlayerUI() {
@@ -1083,29 +1118,36 @@
 
     function playCurrentTrack(i) {
       currentTrackIdx = i;
-      isPlaying = true;
-      startSynth(tracks[i].freq || 440);
-      updatePlayerUI();
+      const track = tracks[currentTrackIdx];
 
-      clearInterval(progressTimer);
-      progressTimer = setInterval(() => {
-        const allBars = document.querySelectorAll('.wave-bar');
-        const activeCount = Math.floor(Math.random() * allBars.length);
-        allBars.forEach((bar, idx) => {
-          bar.classList.toggle('active', idx <= activeCount);
+      if (track.url) {
+        audioElement.src = track.url;
+        audioElement.play().then(() => {
+          isPlaying = true;
+          updatePlayerUI();
+        }).catch(() => {
+          isPlaying = true;
+          updatePlayerUI();
         });
-      }, 150);
+      }
+
+      updatePlayerUI();
     }
 
     function togglePlayback() {
-      if (isPlaying) {
-        isPlaying = false;
-        stopSynth();
-        clearInterval(progressTimer);
-        updatePlayerUI();
-      } else {
+      if (!audioElement.src && tracks.length > 0) {
         playCurrentTrack(currentTrackIdx);
+        return;
       }
+
+      if (audioElement.paused) {
+        audioElement.play();
+        isPlaying = true;
+      } else {
+        audioElement.pause();
+        isPlaying = false;
+      }
+      updatePlayerUI();
     }
 
     function nextTrack() {
@@ -1117,6 +1159,9 @@
       currentTrackIdx = (currentTrackIdx - 1 + tracks.length) % tracks.length;
       playCurrentTrack(currentTrackIdx);
     }
+
+    audioElement.ontimeupdate = updateWaveProgress;
+    audioElement.onended = nextTrack;
 
     /* ================= 6. ДИСТРИБУЦИЯ ================= */
     function handleReleaseCover(e) {
@@ -1136,6 +1181,7 @@
     function handleReleaseAudio(e) {
       const file = e.target.files[0];
       if (file) {
+        uploadedAudioBlobUrl = URL.createObjectURL(file);
         document.getElementById('audioFileName').textContent = file.name;
       }
     }
@@ -1149,16 +1195,18 @@
         return;
       }
 
-      const coverUrl = uploadedCoverBase64 || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150';
+      const coverUrl = uploadedCoverBase64 || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';
+      const trackAudioUrl = uploadedAudioBlobUrl || 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3';
 
       const newTrack = {
         id: Date.now(),
         title: title,
         artist: artist,
         cover: coverUrl,
+        url: trackAudioUrl,
         category: 'charts',
+        duration: '03:15',
         isFav: false,
-        freq: 400 + Math.floor(Math.random() * 200),
         lyrics: `Студийный релиз «${title}» артиста ${artist}. Опубликовано через S U A Records.`
       };
 
