@@ -12,7 +12,6 @@
       --bg-glass-border: rgba(243, 204, 122, 0.18);
       --accent-gold: #f3cc7a;
       --accent-gold-gradient: linear-gradient(135deg, #f5d485 0%, #d4952b 50%, #915a13 100%);
-      --accent-wine: #5c142b;
       --text-main: #f0f2f5;
       --text-muted: #8d92a4;
       --border-radius: 16px;
@@ -521,8 +520,9 @@
           <div class="sidebar-link" onclick="filterMusic('fav', this)"><span>❤️</span> Избранное (<span id="favCount">0</span>)</div>
           <div class="sidebar-link" onclick="filterMusic('local', this)"><span>💾</span> Локальные файлы</div>
           <div class="sidebar-link" onclick="filterMusic('distro', this)"><span>📁</span> Мои релизы</div>
-          <div style="margin-top: auto;">
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px;">
             <button class="btn btn-dark" style="width: 100%; font-size: 12px;" onclick="openCreatePlaylistModal()">+ Создать плейлист</button>
+            <button class="btn btn-dark" style="width: 100%; font-size: 11px; color: #ff6b6b;" onclick="resetAllStorage()">🔄 Сбросить данные</button>
           </div>
         </aside>
 
@@ -560,7 +560,7 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
               <div style="font-weight: 700; font-size: 14px;" id="playlistSectionTitle">Все релизы S U A Music</div>
-              <span style="font-size: 11px; color: var(--text-muted);" id="trackCounter">3 трека</span>
+              <span style="font-size: 11px; color: var(--text-muted);" id="trackCounter">0 треков</span>
             </div>
             <div id="tracksPlaylist" style="display: flex; flex-direction: column; gap: 6px;"></div>
           </div>
@@ -681,9 +681,7 @@
           <div class="glass-panel" style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
             <div style="font-size: 13px; font-weight: 700;">Статусы каталога S U A</div>
             <div id="distroLogs" style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; overflow-y: auto;">
-              <div style="padding: 6px; background: rgba(0,0,0,0.3); border-radius: 4px; border-left: 2px solid #4cd137;">
-                <b>S U A — World Anthem</b> — В ротации (4/4 витрин)
-              </div>
+              <!-- Логи из localStorage -->
             </div>
           </div>
         </div>
@@ -718,8 +716,7 @@
     </div>
   </footer>
 
-  <!-- МОДАЛЬНЫЕ ОКНА ДЛЯ ВСЕХ ОПЕРАЦИЙ -->
-  <!-- 1. Текст трека -->
+  <!-- МОДАЛЬНЫЕ ОКНА -->
   <div class="modal-overlay" id="lyricsModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -731,7 +728,6 @@
     </div>
   </div>
 
-  <!-- 2. Добавление в плейлист -->
   <div class="modal-overlay" id="playlistModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -743,7 +739,6 @@
     </div>
   </div>
 
-  <!-- 3. Создание плейлиста -->
   <div class="modal-overlay" id="createPlaylistModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -755,7 +750,6 @@
     </div>
   </div>
 
-  <!-- 4. Новый артист -->
   <div class="modal-overlay" id="newArtistModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -767,7 +761,6 @@
     </div>
   </div>
 
-  <!-- 5. Новый диалог -->
   <div class="modal-overlay" id="newChatModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -779,7 +772,6 @@
     </div>
   </div>
 
-  <!-- 6. Профиль / Настройки -->
   <div class="modal-overlay" id="profileModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -797,7 +789,6 @@
     </div>
   </div>
 
-  <!-- 7. Вывод роялти -->
   <div class="modal-overlay" id="payoutModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -811,39 +802,76 @@
   </div>
 
   <script>
-    /* ================= 1. БАЗА ДАННЫХ И СОСТОЯНИЕ ================= */
-    let uploadedCoverBase64 = null;
-    let selectedTrackForPlaylist = 0;
-    let currentFilterMode = 'all';
-    let selectedArtistName = null;
-
-    let userPlaylists = ['Избранное S U A', 'Студийный чилл', 'Bass Boosted'];
-
-    const tracks = [
+    /* ================= 1. СИСТЕМА СОХРАНЕНИЯ (LOCALSTORAGE) ================= */
+    const DEFAULT_TRACKS = [
       { id: 1, title: 'World Anthem', artist: 'S U A Records', category: 'charts', cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150', freq: 440, isFav: false, lyrics: 'S U A World Music Records...\nGlobal rhythm in your soul.' },
       { id: 2, title: 'Midnight Horizon', artist: 'S U A x Neon Wave', category: 'radio', cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=150', freq: 350, isFav: false, lyrics: 'Night drive with pure sound quality.' },
       { id: 3, title: '808 Genesis', artist: 'S U A Beat Division', category: 'charts', cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150', freq: 220, isFav: false, lyrics: 'Deep bassline powered by S U A.' }
     ];
 
-    const artists = [
+    const DEFAULT_ARTISTS = [
       { name: 'S U A Records', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
       { name: 'S U A x Neon Wave', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120' },
       { name: 'S U A Beat Division', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120' }
     ];
 
-    let chats = [
+    const DEFAULT_CHATS = [
       { id: 1, name: 'S U A A&R Team', lastMsg: 'Релиз принят в ротацию.', msgs: ['Добро пожаловать в S U A World Music Records!', 'Присылайте новые демо на мастеринг.'] },
       { id: 2, name: 'S U A Sound Lab', lastMsg: 'WAV проверен на 24 bit.', msgs: ['Студия звукозаписи S U A готова к сведению.'] }
     ];
-    let activeChatIdx = 0;
 
+    const DEFAULT_PLAYLISTS = ['Избранное S U A', 'Студийный чилл', 'Bass Boosted'];
+
+    // Загрузка состояния из localStorage
+    let tracks = JSON.parse(localStorage.getItem('sua_tracks')) || DEFAULT_TRACKS;
+    let artists = JSON.parse(localStorage.getItem('sua_artists')) || DEFAULT_ARTISTS;
+    let chats = JSON.parse(localStorage.getItem('sua_chats')) || DEFAULT_CHATS;
+    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists')) || DEFAULT_PLAYLISTS;
+    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs')) || [
+      '<b>S U A — World Anthem</b> — В ротации (4/4 витрин)'
+    ];
+
+    let userProfile = JSON.parse(localStorage.getItem('sua_profile')) || {
+      name: 'S U A Studio',
+      avatar: null,
+      banner: null,
+      balance: '$12,450.00'
+    };
+
+    function saveAllState() {
+      try {
+        localStorage.setItem('sua_tracks', JSON.stringify(tracks));
+        localStorage.setItem('sua_artists', JSON.stringify(artists));
+        localStorage.setItem('sua_chats', JSON.stringify(chats));
+        localStorage.setItem('sua_playlists', JSON.stringify(userPlaylists));
+        localStorage.setItem('sua_distro_logs', JSON.stringify(distroLogs));
+        localStorage.setItem('sua_profile', JSON.stringify(userProfile));
+      } catch (err) {
+        console.warn('Storage limit reached or blocked', err);
+      }
+    }
+
+    function resetAllStorage() {
+      if (confirm('Сбросить все сохраненные треки, чаты и настройки до базовых?')) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+
+    /* ================= 2. ПЕРЕМЕННЫЕ ПЛЕЕРА И ИНТЕРФЕЙСА ================= */
+    let uploadedCoverBase64 = null;
+    let selectedTrackForPlaylist = 0;
+    let currentFilterMode = 'all';
+    let selectedArtistName = null;
+
+    let activeChatIdx = 0;
     let currentTrackIdx = 0;
     let isPlaying = false;
     let progressTimer = null;
 
     let audioCtx = null, osc = null, masterGain = null;
 
-    /* ================= 2. НАВИГАЦИЯ ================= */
+    /* ================= 3. НАВИГАЦИЯ ================= */
     function switchModule(mod) {
       document.querySelectorAll('.view-module').forEach(m => m.classList.remove('active'));
       document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
@@ -851,7 +879,7 @@
       document.getElementById(`btn-${mod}`).classList.add('active');
     }
 
-    /* ================= 3. ФИЛЬТРАЦИЯ И ПЛЕЙЛИСТЫ ================= */
+    /* ================= 4. МЕДИАТЕКА И СПИСКИ ================= */
     function filterMusic(mode, el) {
       currentFilterMode = mode;
       selectedArtistName = null;
@@ -910,6 +938,9 @@
       document.getElementById('trackCounter').textContent = `${filtered.length} треков`;
       list.innerHTML = '';
 
+      const favsCount = tracks.filter(item => item.isFav).length;
+      document.getElementById('favCount').textContent = favsCount;
+
       if (filtered.length === 0) {
         list.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); padding: 20px 0; text-align: center;">В этом разделе пока нет треков. Загрузите через «Дистрибуцию»!</div>`;
         return;
@@ -921,14 +952,14 @@
         row.className = `track-row ${realIdx === currentTrackIdx ? 'playing' : ''}`;
         row.onclick = () => playCurrentTrack(realIdx);
         row.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
             <img src="${t.cover}" class="track-thumb-img">
-            <div>
-              <div style="font-size: 13px; font-weight: 700;">${t.title}</div>
-              <div style="font-size: 11px; color: var(--text-muted);">${t.artist}</div>
+            <div style="overflow: hidden;">
+              <div style="font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${t.title}</div>
+              <div style="font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${t.artist}</div>
             </div>
           </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
+          <div style="display: flex; gap: 8px; align-items: center; flex-shrink: 0;">
             <button class="btn btn-dark" style="padding: 4px 8px; font-size: 11px;" onclick="event.stopPropagation(); toggleFav(${t.id})">
               ${t.isFav ? '❤️' : '🤍'}
             </button>
@@ -957,7 +988,32 @@
       });
     }
 
-    /* ================= 4. ПЛЕЕР ================= */
+    function renderDistroLogs() {
+      const logBox = document.getElementById('distroLogs');
+      logBox.innerHTML = '';
+      distroLogs.forEach(log => {
+        const item = document.createElement('div');
+        item.style.cssText = 'padding:6px; background:rgba(0,0,0,0.3); border-radius:4px; border-left:2px solid #4cd137;';
+        item.innerHTML = log;
+        logBox.appendChild(item);
+      });
+    }
+
+    function renderProfileData() {
+      document.getElementById('navUserName').textContent = userProfile.name;
+      document.getElementById('profileNameInput').value = userProfile.name;
+      document.getElementById('royaltyBalance').textContent = userProfile.balance;
+      document.getElementById('payoutModalAmount').textContent = userProfile.balance;
+
+      if (userProfile.avatar) {
+        document.getElementById('userAvatarBox').innerHTML = `<img src="${userProfile.avatar}">`;
+      }
+      if (userProfile.banner) {
+        document.getElementById('heroBanner').style.backgroundImage = `url(${userProfile.banner})`;
+      }
+    }
+
+    /* ================= 5. ПЛЕЕР ================= */
     function initWaveform() {
       const bars = document.getElementById('waveBars');
       bars.innerHTML = '';
@@ -1012,7 +1068,7 @@
     }
 
     function updatePlayerUI() {
-      const t = tracks[currentTrackIdx];
+      const t = tracks[currentTrackIdx] || tracks[0];
       document.getElementById('bottomTitle').textContent = t.title;
       document.getElementById('bottomArtist').textContent = t.artist;
       document.getElementById('bottomThumb').src = t.cover;
@@ -1028,7 +1084,7 @@
     function playCurrentTrack(i) {
       currentTrackIdx = i;
       isPlaying = true;
-      startSynth(tracks[i].freq);
+      startSynth(tracks[i].freq || 440);
       updatePlayerUI();
 
       clearInterval(progressTimer);
@@ -1062,7 +1118,7 @@
       playCurrentTrack(currentTrackIdx);
     }
 
-    /* ================= 5. ДИСТРИБУЦИЯ ================= */
+    /* ================= 6. ДИСТРИБУЦИЯ ================= */
     function handleReleaseCover(e) {
       const file = e.target.files[0];
       if (file) {
@@ -1096,30 +1152,32 @@
       const coverUrl = uploadedCoverBase64 || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150';
 
       const newTrack = {
-        id: tracks.length + 1,
+        id: Date.now(),
         title: title,
         artist: artist,
         cover: coverUrl,
         category: 'charts',
         isFav: false,
         freq: 400 + Math.floor(Math.random() * 200),
-        lyrics: 'Релиз дистрибуции S U A World Music Records.'
+        lyrics: `Студийный релиз «${title}» артиста ${artist}. Опубликовано через S U A Records.`
       };
 
       tracks.unshift(newTrack);
+      distroLogs.unshift(`<b>${title}</b> — В доставке S U A`);
+
+      saveAllState();
+      renderTracks();
+      renderDistroLogs();
+
       currentTrackIdx = 0;
       playCurrentTrack(0);
 
-      const logBox = document.getElementById('distroLogs');
-      const log = document.createElement('div');
-      log.style.cssText = 'padding:6px; background:rgba(0,0,0,0.3); border-radius:4px; border-left:2px solid var(--accent-gold);';
-      log.innerHTML = `<b>${title}</b> — В доставке S U A`;
-      logBox.prepend(log);
-
+      document.getElementById('distroTitle').value = '';
+      document.getElementById('distroArtist').value = '';
       switchModule('spotify');
     }
 
-    /* ================= 6. TELEGRAM MESSENGER ================= */
+    /* ================= 7. TELEGRAM MESSENGER ================= */
     function renderChats() {
       const list = document.getElementById('dialogsList');
       list.innerHTML = '';
@@ -1148,6 +1206,8 @@
     function renderMessages() {
       const box = document.getElementById('tgMsgBox');
       box.innerHTML = '';
+      if (!chats[activeChatIdx]) return;
+
       chats[activeChatIdx].msgs.forEach(m => {
         const bubble = document.createElement('div');
         bubble.className = 'tg-bubble in';
@@ -1159,7 +1219,7 @@
     function sendTgMessage() {
       const input = document.getElementById('tgInput');
       const text = input.value.trim();
-      if (!text) return;
+      if (!text || !chats[activeChatIdx]) return;
 
       const box = document.getElementById('tgMsgBox');
       const bubble = document.createElement('div');
@@ -1167,21 +1227,37 @@
       bubble.textContent = text;
       box.appendChild(bubble);
 
+      chats[activeChatIdx].msgs.push(text);
+      chats[activeChatIdx].lastMsg = text;
+
       input.value = '';
       box.scrollTop = box.scrollHeight;
+      saveAllState();
 
       setTimeout(() => {
-        const reply = document.createElement('div');
-        reply.className = 'tg-bubble in';
-        reply.textContent = 'A&R отдел S U A Records получил ваше сообщение.';
-        box.appendChild(reply);
+        const reply = 'A&R отдел S U A Records получил ваше сообщение.';
+        chats[activeChatIdx].msgs.push(reply);
+        chats[activeChatIdx].lastMsg = reply;
+
+        const replyBubble = document.createElement('div');
+        replyBubble.className = 'tg-bubble in';
+        replyBubble.textContent = reply;
+        box.appendChild(replyBubble);
         box.scrollTop = box.scrollHeight;
+
+        saveAllState();
+        renderChats();
       }, 700);
     }
 
     function clearChat() {
-      chats[activeChatIdx].msgs = [];
-      renderMessages();
+      if (chats[activeChatIdx]) {
+        chats[activeChatIdx].msgs = [];
+        chats[activeChatIdx].lastMsg = 'Чат очищен';
+        saveAllState();
+        renderMessages();
+        renderChats();
+      }
     }
 
     function searchDialogs(val) {
@@ -1191,29 +1267,23 @@
       });
     }
 
-    /* ================= 7. МОДАЛЬНЫЕ ОКНА И ОПЕРАЦИИ ================= */
-    function openModal(id) {
-      document.getElementById(id).style.display = 'flex';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
+    /* ================= 8. МОДАЛКИ И ОПЕРАЦИИ ================= */
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     function toggleFav(id) {
       const t = tracks.find(item => item.id === id);
       if (t) {
         t.isFav = !t.isFav;
-        const favs = tracks.filter(item => item.isFav).length;
-        document.getElementById('favCount').textContent = favs;
+        saveAllState();
         renderTracks();
       }
     }
 
     function openLyricsModal() {
-      const t = tracks[currentTrackIdx];
+      const t = tracks[currentTrackIdx] || tracks[0];
       document.getElementById('lyricsModalTitle').textContent = `Текст: ${t.title} (S U A Records)`;
-      document.getElementById('lyricsModalText').innerText = t.lyrics;
+      document.getElementById('lyricsModalText').innerText = t.lyrics || '(Текст отсутствует)';
       openModal('lyricsModal');
     }
 
@@ -1235,66 +1305,63 @@
       openModal('playlistModal');
     }
 
-    function openCreatePlaylistModal() {
-      openModal('createPlaylistModal');
-    }
+    function openCreatePlaylistModal() { openModal('createPlaylistModal'); }
 
     function confirmCreatePlaylist() {
       const val = document.getElementById('newPlaylistInput').value.trim();
       if (val) {
         userPlaylists.push(val);
         document.getElementById('newPlaylistInput').value = '';
+        saveAllState();
         closeModal('createPlaylistModal');
         alert(`Плейлист "${val}" успешно создан!`);
       }
     }
 
-    function openNewArtistModal() {
-      openModal('newArtistModal');
-    }
+    function openNewArtistModal() { openModal('newArtistModal'); }
 
     function confirmNewArtist() {
       const val = document.getElementById('newArtistNameInput').value.trim();
       if (val) {
         artists.push({ name: val, img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120' });
         document.getElementById('newArtistNameInput').value = '';
+        saveAllState();
         closeModal('newArtistModal');
         renderArtists();
       }
     }
 
-    function openNewChatModal() {
-      openModal('newChatModal');
-    }
+    function openNewChatModal() { openModal('newChatModal'); }
 
     function confirmNewChat() {
       const val = document.getElementById('newChatNameInput').value.trim();
       if (val) {
-        chats.unshift({ id: Date.now(), name: val, lastMsg: 'Чат создан', msgs: ['Привет!'] });
+        chats.unshift({ id: Date.now(), name: val, lastMsg: 'Диалог создан', msgs: ['Привет от S U A!'] });
         document.getElementById('newChatNameInput').value = '';
+        saveAllState();
         closeModal('newChatModal');
         selectChat(0);
       }
     }
 
-    function openProfileModal() {
-      openModal('profileModal');
-    }
+    function openProfileModal() { openModal('profileModal'); }
 
     function saveProfileSettings() {
       const val = document.getElementById('profileNameInput').value.trim();
       if (val) {
-        document.getElementById('navUserName').textContent = val;
+        userProfile.name = val;
+        saveAllState();
+        renderProfileData();
       }
       closeModal('profileModal');
     }
 
-    function openPayoutModal() {
-      openModal('payoutModal');
-    }
+    function openPayoutModal() { openModal('payoutModal'); }
 
     function confirmPayout() {
-      document.getElementById('royaltyBalance').textContent = '$0.00';
+      userProfile.balance = '$0.00';
+      saveAllState();
+      renderProfileData();
       closeModal('payoutModal');
       alert('Запрос на вывод средств сформирован и передан в финансовый отдел S U A Records!');
     }
@@ -1304,7 +1371,9 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = (event) => {
-          document.getElementById('userAvatarBox').innerHTML = `<img src="${event.target.result}">`;
+          userProfile.avatar = event.target.result;
+          saveAllState();
+          renderProfileData();
         };
         reader.readAsDataURL(file);
       }
@@ -1315,18 +1384,22 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = (event) => {
-          document.getElementById('heroBanner').style.backgroundImage = `url(${event.target.result})`;
+          userProfile.banner = event.target.result;
+          saveAllState();
+          renderProfileData();
         };
         reader.readAsDataURL(file);
       }
     }
 
-    /* ================= 8. ИНИЦИАЛИЗАЦИЯ ================= */
+    /* ================= 9. ИНИЦИАЛИЗАЦИЯ ================= */
     window.addEventListener('DOMContentLoaded', () => {
       initWaveform();
+      renderProfileData();
       renderArtists();
       renderTracks();
       renderChats();
+      renderDistroLogs();
       updatePlayerUI();
     });
   </script>
