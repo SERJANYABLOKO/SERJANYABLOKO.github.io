@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>S U A World Music Records — Enterprise Streaming Ecosystem</title>
+  <title>S U A World Music Records — Enterprise Streaming Platform</title>
   <style>
     :root {
       --bg-base: #08090d;
@@ -13,10 +13,8 @@
       --accent-gold: #f3cc7a;
       --accent-gold-gradient: linear-gradient(135deg, #fce09b 0%, #d4952b 50%, #8c530f 100%);
       --accent-wine: #5c142b;
-      --accent-wine-gradient: linear-gradient(135deg, #5c142b 0%, #1a050f 100%);
       --text-main: #f3f4f8;
       --text-muted: #8d92a4;
-      --status-green: #2ed573;
       --border-radius: 14px;
       --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -474,7 +472,6 @@
       width: 0%;
       background: var(--accent-gold-gradient);
       border-radius: 3px;
-      transition: width 0.1s linear;
     }
 
     #visualizerCanvas {
@@ -520,16 +517,17 @@
 </head>
 <body>
 
-  <!-- Аудиоплеер -->
-  <audio id="realAudioPlayer" preload="auto" crossorigin="anonymous"></audio>
+  <!-- Аудиоплеер HTML5 -->
+  <audio id="realAudioPlayer" preload="auto"></audio>
 
   <!-- Загрузка файлов -->
   <input type="file" id="userAvatarFile" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
   <input type="file" id="bannerImgFile" accept="image/*" style="display:none;" onchange="handleBannerUpload(event)">
   <input type="file" id="releaseCoverFile" accept="image/*" style="display:none;" onchange="handleReleaseCover(event)">
   <input type="file" id="releaseAudioFile" accept="audio/*" style="display:none;" onchange="handleReleaseAudio(event)">
+  <input type="file" id="directPlayFile" accept="audio/*" style="display:none;" onchange="handleDirectAudioUpload(event)">
 
-  <!-- Верхняя панель S U A World Music Records -->
+  <!-- Верхняя панель -->
   <header class="global-nav">
     <div class="brand-logo" onclick="switchModule('spotify')">
       <span>✦ S U A</span>
@@ -557,10 +555,10 @@
     </div>
   </header>
 
-  <!-- Рабочая область -->
+  <!-- Вьюпорт -->
   <main class="app-viewport">
 
-    <!-- 1. SPOTIFY STREAMING (GLOBAL TOP 50) -->
+    <!-- 1. SPOTIFY STREAMING (ТОП ТРЕКИ) -->
     <section class="view-module active" id="view-spotify">
       <div class="spotify-grid">
         
@@ -574,6 +572,7 @@
           <div class="sidebar-link" onclick="filterMusic('fav', this)"><span>❤️</span> Избранное (<span id="favCount">0</span>)</div>
           <div class="sidebar-link" onclick="filterMusic('distro', this)"><span>📁</span> Мои релизы</div>
           <div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px;">
+            <button class="btn btn-gold" style="width: 100%; font-size: 12px;" onclick="document.getElementById('directPlayFile').click()">📂 Открыть свой MP3</button>
             <button class="btn btn-dark" style="width: 100%; font-size: 12px;" onclick="openCreatePlaylistModal()">+ Создать плейлист</button>
             <button class="btn btn-dark" style="width: 100%; font-size: 11px; color: #ff6b6b;" onclick="resetAllStorage()">🔄 Сбросить данные</button>
           </div>
@@ -852,87 +851,122 @@
   </div>
 
   <script>
-    /* ================= 1. БАЗА ДАННЫХ: 50 САМЫХ ПОПУЛЯРНЫХ ТРЕКОВ ================= */
-    const TOP_50_GLOBAL_TRACKS = [
-      { id: 1, title: "Die With A Smile", artist: "Lady Gaga & Bruno Mars", category: "charts", duration: "04:13", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: true, lyrics: "If the world was ending, I'd wanna be next to you\nIf the party was over and our time on Earth was through..." },
-      { id: 2, title: "APT.", artist: "ROSÉ & Bruno Mars", category: "charts", duration: "02:54", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: true, lyrics: "Apateu apateu, apateu apateu!\nDon't you want me like I want you, baby?" },
-      { id: 3, title: "BIRDS OF A FEATHER", artist: "Billie Eilish", category: "charts", duration: "03:30", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: false, lyrics: "Birds of a feather, we should stick together\nI know I said I'd never think I wasn't better alone..." },
-      { id: 4, title: "Espresso", artist: "Sabrina Carpenter", category: "charts", duration: "02:55", cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: true, lyrics: "Now he's thinkin' 'bout me every night, oh\nIs it that sweet? I guess so\nSay you can't sleep, baby, I know, that's that me, espresso..." },
-      { id: 5, title: "Blinding Lights", artist: "The Weeknd", category: "charts", duration: "03:20", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "I said, ooh, I'm blinded by the lights\nNo, I can't sleep until I feel your touch..." },
-      { id: 6, title: "Beautiful Things", artist: "Benson Boone", category: "charts", duration: "03:00", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "Please stay, I want you, I need you, oh God\nDon't take these beautiful things that I've got..." },
-      { id: 7, title: "Luther", artist: "Kendrick Lamar & SZA", category: "charts", duration: "02:58", cover: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: false, lyrics: "Mastered in Compton & S U A Studios.\nDeep lyrical resonance and soul melody." },
-      { id: 8, title: "A Bar Song (Tipsy)", artist: "Shaboozey", category: "radio", duration: "02:51", cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: false, lyrics: "My baby want a Birkin, she's been workin' all day long\nSomebody pour me a double shot of whiskey..." },
-      { id: 9, title: "Timeless", artist: "The Weeknd & Playboi Carti", category: "charts", duration: "04:15", cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: true, lyrics: "Ever since I was a jit, I knew I was the shit\nSing it like it's timeless..." },
-      { id: 10, title: "Not Like Us", artist: "Kendrick Lamar", category: "charts", duration: "04:34", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "Mustard on the beat, ho!\nThey not like us, they not like us..." },
-      { id: 11, title: "Taste", artist: "Sabrina Carpenter", category: "charts", duration: "02:37", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "Oh, I leave quite an impression\nFive feet to be exact..." },
-      { id: 12, title: "Good Luck, Babe!", artist: "Chappell Roan", category: "radio", duration: "03:38", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: false, lyrics: "You'd have to stop the world just to stop the feeling\nGood luck, babe..." },
-      { id: 13, title: "Starboy", artist: "The Weeknd ft. Daft Punk", category: "charts", duration: "03:50", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "Look what you've done\nI'm a motherfuckin' starboy..." },
-      { id: 14, title: "As It Was", artist: "Harry Styles", category: "radio", duration: "02:47", cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "You know it's not the same as it was..." },
-      { id: 15, title: "Sweater Weather", artist: "The Neighbourhood", category: "radio", duration: "04:00", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "'Cause it's too cold for you here\nAnd now, so let me hold both your hands in the holes of my sweater..." },
-      { id: 16, title: "Lose Control", artist: "Teddy Swims", category: "charts", duration: "03:30", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "I lose control when you're not next to me..." },
-      { id: 17, title: "Cruel Summer", artist: "Taylor Swift", category: "charts", duration: "02:58", cover: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: true, lyrics: "Devils roll the dice, angels roll their eyes..." },
-      { id: 18, title: "Sunflower", artist: "Post Malone & Swae Lee", category: "radio", duration: "02:38", cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "Needless to say, I keep in check..." },
-      { id: 19, title: "One Dance", artist: "Drake ft. WizKid & Kyla", category: "radio", duration: "02:54", cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "Baby, I like your style..." },
-      { id: 20, title: "I Wanna Be Yours", artist: "Arctic Monkeys", category: "radio", duration: "03:04", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "I wanna be your vacuum cleaner..." },
-      { id: 21, title: "Shape of You", artist: "Ed Sheeran", category: "charts", duration: "03:53", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "The club isn't the best place to find a lover..." },
-      { id: 22, title: "Seven", artist: "Jung Kook ft. Latto", category: "charts", duration: "03:04", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: false, lyrics: "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday..." },
-      { id: 23, title: "Too Sweet", artist: "Hozier", category: "charts", duration: "04:11", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: false, lyrics: "I think I'll take my whiskey neat..." },
-      { id: 24, title: "I Had Some Help", artist: "Post Malone ft. Morgan Wallen", category: "charts", duration: "02:58", cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: true, lyrics: "I had some help, it wasn't just me..." },
-      { id: 25, title: "Locked Out of Heaven", artist: "Bruno Mars", category: "radio", duration: "03:53", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: false, lyrics: "'Cause your sex takes me to paradise..." },
-      { id: 26, title: "Believer", artist: "Imagine Dragons", category: "radio", duration: "03:24", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "First things first, I'ma say all the words inside my head..." },
-      { id: 27, title: "STAY", artist: "The Kid LAROI & Justin Bieber", category: "charts", duration: "02:21", cover: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: true, lyrics: "I do the same thing I told you that I never would..." },
-      { id: 28, title: "Yellow", artist: "Coldplay", category: "radio", duration: "04:29", cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "Look at the stars, look how they shine for you..." },
-      { id: 29, title: "Heat Waves", artist: "Glass Animals", category: "radio", duration: "03:58", cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "Sometimes, all I think about is you..." },
-      { id: 30, title: "Mr. Brightside", artist: "The Killers", category: "radio", duration: "03:42", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: false, lyrics: "Coming out of my cage and I've been doing just fine..." },
-      { id: 31, title: "Please Please Please", artist: "Sabrina Carpenter", category: "charts", duration: "03:06", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "Please, please, please, don't prove 'em right..." },
-      { id: 32, title: "DTMF", artist: "Bad Bunny", category: "charts", duration: "03:55", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: false, lyrics: "Debí Tirar Más Fotos...\nReggaeton latino exclusivo." },
-      { id: 33, title: "End of Beginning", artist: "Djo", category: "radio", duration: "02:39", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "And when I'm back in Chicago, I feel it..." },
-      { id: 34, title: "Choosin' Texas", artist: "Ella Langley", category: "charts", duration: "03:15", cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "Texas country chart breaker #1." },
-      { id: 35, title: "Watermelon Sugar", artist: "Harry Styles", category: "radio", duration: "02:54", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: false, lyrics: "Strawberries on a summer evening..." },
-      { id: 36, title: "Pink Pony Club", artist: "Chappell Roan", category: "radio", duration: "04:18", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "God, what have you done? You're a pink pony girl..." },
-      { id: 37, title: "Sailor Song", artist: "Gigi Perez", category: "charts", duration: "03:22", cover: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: true, lyrics: "I won't confess my love until the tides are high..." },
-      { id: 38, title: "Circles", artist: "Post Malone", category: "radio", duration: "03:35", cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "Seasons change and our love went cold..." },
-      { id: 39, title: "That's So True", artist: "Gracie Abrams", category: "charts", duration: "02:45", cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "I'm in your sweater and you're in her bed..." },
-      { id: 40, title: "goosebumps", artist: "Travis Scott", category: "charts", duration: "04:03", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "I get those goosebumps every time..." },
-      { id: 41, title: "Riptide", artist: "Vance Joy", category: "radio", duration: "03:24", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "Lady, running down to the riptide..." },
-      { id: 42, title: "Stargazing", artist: "Myles Smith", category: "charts", duration: "02:52", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: false, lyrics: "Time stood still, just you and I stargazing..." },
-      { id: 43, title: "Viva La Vida", artist: "Coldplay", category: "radio", duration: "04:02", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: false, lyrics: "I used to rule the world..." },
-      { id: 44, title: "Bed Chem", artist: "Sabrina Carpenter", category: "charts", duration: "02:51", cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "Who's the cute guy with the white jacket?..." },
-      { id: 45, title: "Without Me", artist: "Eminem", category: "radio", duration: "04:50", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "Guess who's back, back again?..." },
-      { id: 46, title: "Ordinary", artist: "Alex Warren", category: "charts", duration: "03:07", cover: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3", isFav: false, lyrics: "I don't wanna live an ordinary life..." },
-      { id: 47, title: "Bohemian Rhapsody", artist: "Queen", category: "radio", duration: "05:55", cover: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Sustains/Kai_Engel_-_08_-_Delirium.mp3", isFav: true, lyrics: "Is this the real life? Is this just fantasy?..." },
-      { id: 48, title: "Smells Like Teen Spirit", artist: "Nirvana", category: "radio", duration: "05:01", cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3", isFav: true, lyrics: "With the lights out, it's less dangerous..." },
-      { id: 49, title: "The Fate of Ophelia", artist: "Taylor Swift", category: "charts", duration: "03:42", cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Holmes_Music/Inspiring__Upbeat_Music/Scott_Holmes_Music_-_Upbeat_Party.mp3", isFav: false, lyrics: "A poetic tragedy turned into a pop record anthem." },
-      { id: 50, title: "S U A World Anthem (Master Sound)", artist: "S U A Records", category: "charts", duration: "03:30", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300", url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Broke_For_Free/Layers/Broke_For_Free_-_01_-_As_Colorful_As_Ever.mp3", isFav: true, lyrics: "S U A World Music Records...\nGlobal rhythm in your soul.\nExclusive 2026 flagship sound." }
+    /* ================= 1. БАЗА ДАННЫХ: НАСТОЯЩИЕ MP3 ПОТОКИ ================= */
+    const REAL_AUDIO_URLS = [
+      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Tchaikovsky_-_Nutcracker_Suite_-_03_Dance_of_the_Sugar_Plum_Fairy.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/0/0e/Air_on_the_G_String_%28BWV_1068%29_performed_by_USAF_Band.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1b/Beethoven_Moonlight_1st_movement.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/b/b2/Debussy_-_Clair_de_lune.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/d/df/Chopin_Nocturne_in_E-flat_major%2C_Op._9%2C_No._2.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/30/Vivaldi_Spring_mvt_1_Allegro.ogg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/46/Mozart_Eine_kleine_Nachtmusik_1st_movement.ogg"
     ];
 
+    const TITLES_AND_ARTISTS = [
+      ["Die With A Smile", "Lady Gaga & Bruno Mars", "charts", "04:13", "If the world was ending, I'd wanna be next to you..."],
+      ["APT.", "ROSÉ & Bruno Mars", "charts", "02:54", "Apateu apateu, apateu apateu! Don't you want me like I want you?"],
+      ["BIRDS OF A FEATHER", "Billie Eilish", "charts", "03:30", "Birds of a feather, we should stick together..."],
+      ["Espresso", "Sabrina Carpenter", "charts", "02:55", "Now he's thinkin' 'bout me every night, oh. That's that me, espresso."],
+      ["Blinding Lights", "The Weeknd", "charts", "03:20", "I said, ooh, I'm blinded by the lights..."],
+      ["Beautiful Things", "Benson Boone", "charts", "03:00", "Please stay, I want you, I need you, oh God..."],
+      ["Luther", "Kendrick Lamar & SZA", "charts", "02:58", "Mastered in Compton & S U A Studios."],
+      ["A Bar Song (Tipsy)", "Shaboozey", "radio", "02:51", "Somebody pour me a double shot of whiskey..."],
+      ["Timeless", "The Weeknd & Playboi Carti", "charts", "04:15", "Sing it like it's timeless..."],
+      ["Not Like Us", "Kendrick Lamar", "charts", "04:34", "Mustard on the beat, ho! They not like us."],
+      ["Taste", "Sabrina Carpenter", "charts", "02:37", "Oh, I leave quite an impression..."],
+      ["Good Luck, Babe!", "Chappell Roan", "radio", "03:38", "You'd have to stop the world just to stop the feeling..."],
+      ["Starboy", "The Weeknd ft. Daft Punk", "charts", "03:50", "Look what you've done, I'm a starboy."],
+      ["As It Was", "Harry Styles", "radio", "02:47", "You know it's not the same as it was..."],
+      ["Sweater Weather", "The Neighbourhood", "radio", "04:00", "Let me hold both your hands in the holes of my sweater..."],
+      ["Lose Control", "Teddy Swims", "charts", "03:30", "I lose control when you're not next to me..."],
+      ["Cruel Summer", "Taylor Swift", "charts", "02:58", "Devils roll the dice, angels roll their eyes..."],
+      ["Sunflower", "Post Malone & Swae Lee", "radio", "02:38", "Needless to say, I keep in check..."],
+      ["One Dance", "Drake ft. WizKid", "radio", "02:54", "Baby, I like your style..."],
+      ["I Wanna Be Yours", "Arctic Monkeys", "radio", "03:04", "I wanna be your vacuum cleaner..."],
+      ["Shape of You", "Ed Sheeran", "charts", "03:53", "I'm in love with the shape of you..."],
+      ["Seven", "Jung Kook ft. Latto", "charts", "03:04", "Seven days a week, every hour, every minute..."],
+      ["Too Sweet", "Hozier", "charts", "04:11", "I think I'll take my whiskey neat..."],
+      ["I Had Some Help", "Post Malone ft. Morgan Wallen", "charts", "02:58", "I had some help, it wasn't just me..."],
+      ["Locked Out of Heaven", "Bruno Mars", "radio", "03:53", "'Cause your sex takes me to paradise..."],
+      ["Believer", "Imagine Dragons", "radio", "03:24", "First things first, I'ma say all the words inside my head..."],
+      ["STAY", "The Kid LAROI & Justin Bieber", "charts", "02:21", "I do the same thing I told you that I never would..."],
+      ["Yellow", "Coldplay", "radio", "04:29", "Look at the stars, look how they shine for you..."],
+      ["Heat Waves", "Glass Animals", "radio", "03:58", "Sometimes, all I think about is you..."],
+      ["Mr. Brightside", "The Killers", "radio", "03:42", "Coming out of my cage and I've been doing just fine..."],
+      ["Please Please Please", "Sabrina Carpenter", "charts", "03:06", "Please, please, please, don't prove 'em right..."],
+      ["DTMF", "Bad Bunny", "charts", "03:55", "Debí Tirar Más Fotos. Latin Grammy hit."],
+      ["End of Beginning", "Djo", "radio", "02:39", "And when I'm back in Chicago, I feel it..."],
+      ["Choosin' Texas", "Ella Langley", "charts", "03:15", "Country charts #1 single."],
+      ["Watermelon Sugar", "Harry Styles", "radio", "02:54", "Strawberries on a summer evening..."],
+      ["Pink Pony Club", "Chappell Roan", "radio", "04:18", "God, what have you done? You're a pink pony girl..."],
+      ["Sailor Song", "Gigi Perez", "charts", "03:22", "Kiss me like a sailor on the ocean line..."],
+      ["Circles", "Post Malone", "radio", "03:35", "Seasons change and our love went cold..."],
+      ["That's So True", "Gracie Abrams", "charts", "02:45", "I'm in your sweater and you're in her bed..."],
+      ["goosebumps", "Travis Scott", "charts", "04:03", "I get those goosebumps every time..."],
+      ["Riptide", "Vance Joy", "radio", "03:24", "Lady, running down to the riptide..."],
+      ["Stargazing", "Myles Smith", "charts", "02:52", "Time stood still, just you and I stargazing..."],
+      ["Viva La Vida", "Coldplay", "radio", "04:02", "I used to rule the world..."],
+      ["Bed Chem", "Sabrina Carpenter", "charts", "02:51", "Who's the cute guy with the white jacket?"],
+      ["Without Me", "Eminem", "radio", "04:50", "Guess who's back, back again?"],
+      ["Ordinary", "Alex Warren", "charts", "03:07", "I don't wanna live an ordinary life without your love."],
+      ["Bohemian Rhapsody", "Queen", "radio", "05:55", "Is this the real life? Is this just fantasy?"],
+      ["Smells Like Teen Spirit", "Nirvana", "radio", "05:01", "With the lights out, it's less dangerous..."],
+      ["The Fate of Ophelia", "Taylor Swift", "charts", "03:42", "A poetic tragedy turned into a pop record anthem."],
+      ["S U A World Anthem (Studio Master)", "S U A Records", "charts", "03:30", "S U A World Music Records. Master Quality Sound."]
+    ];
+
+    const COVER_IMAGES = [
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300",
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300",
+      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300",
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300",
+      "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300",
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300"
+    ];
+
+    const TOP_50_GLOBAL_TRACKS = TITLES_AND_ARTISTS.map((item, idx) => ({
+      id: idx + 1,
+      title: item[0],
+      artist: item[1],
+      category: item[2],
+      duration: item[3],
+      lyrics: item[4],
+      cover: COVER_IMAGES[idx % COVER_IMAGES.length],
+      url: REAL_AUDIO_URLS[idx % REAL_AUDIO_URLS.length],
+      isFav: idx % 3 === 0
+    }));
+
     const DEFAULT_ARTISTS = [
-      { name: 'Lady Gaga & Bruno Mars', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=120' },
-      { name: 'The Weeknd', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120' },
-      { name: 'Billie Eilish', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=120' },
-      { name: 'Sabrina Carpenter', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
-      { name: 'Kendrick Lamar', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120' },
-      { name: 'Taylor Swift', img: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=120' },
-      { name: 'S U A Records', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=120' }
+      { name: 'Lady Gaga & Bruno Mars', img: COVER_IMAGES[0] },
+      { name: 'The Weeknd', img: COVER_IMAGES[4] },
+      { name: 'Billie Eilish', img: COVER_IMAGES[2] },
+      { name: 'Sabrina Carpenter', img: COVER_IMAGES[3] },
+      { name: 'Kendrick Lamar', img: COVER_IMAGES[6] },
+      { name: 'Taylor Swift', img: COVER_IMAGES[8] },
+      { name: 'S U A Records', img: COVER_IMAGES[9] }
     ];
 
     const DEFAULT_CHATS = [
-      { id: 1, name: 'S U A A&R Team', lastMsg: 'Вся мировая топ-50 библиотека активна!', msgs: ['Добро пожаловать в S U A World Music Records!', 'Каталог Global Top 50 полностью подключен.'] },
-      { id: 2, name: 'S U A Sound Lab', lastMsg: 'Плеер синхронизирован с аудиопотоком.', msgs: ['Все треки готовы к воспроизведению.'] }
+      { id: 1, name: 'S U A A&R Team', lastMsg: 'Вся мировая топ-50 библиотека активна!', msgs: ['Добро пожаловать в S U A World Music Records!', 'Все 50 треков загружены с чистым студийным звучанием.'] },
+      { id: 2, name: 'S U A Sound Lab', lastMsg: 'Плеер синхронизирован с аудиопотоком.', msgs: ['Плеер готов воспроизводить музыку без задержек.'] }
     ];
 
     const DEFAULT_PLAYLISTS = ['Избранное S U A', 'Global Hits 2026', 'Chill & Ambient'];
 
-    let tracks = JSON.parse(localStorage.getItem('sua_tracks_top50_v3')) || TOP_50_GLOBAL_TRACKS;
-    let artists = JSON.parse(localStorage.getItem('sua_artists_top50_v3')) || DEFAULT_ARTISTS;
-    let chats = JSON.parse(localStorage.getItem('sua_chats_top50_v3')) || DEFAULT_CHATS;
-    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists_top50_v3')) || DEFAULT_PLAYLISTS;
-    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs_top50_v3')) || [
+    let tracks = JSON.parse(localStorage.getItem('sua_tracks_clean_v4')) || TOP_50_GLOBAL_TRACKS;
+    let artists = JSON.parse(localStorage.getItem('sua_artists_clean_v4')) || DEFAULT_ARTISTS;
+    let chats = JSON.parse(localStorage.getItem('sua_chats_clean_v4')) || DEFAULT_CHATS;
+    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists_clean_v4')) || DEFAULT_PLAYLISTS;
+    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs_clean_v4')) || [
       '<b>Lady Gaga & Bruno Mars — Die With A Smile</b> — В ротации (4/4 витрин)',
       '<b>The Weeknd — Blinding Lights</b> — В ротации (4/4 витрин)'
     ];
 
-    let userProfile = JSON.parse(localStorage.getItem('sua_profile_top50_v3')) || {
+    let userProfile = JSON.parse(localStorage.getItem('sua_profile_clean_v4')) || {
       name: 'S U A Studio',
       avatar: null,
       banner: null,
@@ -941,14 +975,14 @@
 
     function saveAllState() {
       try {
-        localStorage.setItem('sua_tracks_top50_v3', JSON.stringify(tracks));
-        localStorage.setItem('sua_artists_top50_v3', JSON.stringify(artists));
-        localStorage.setItem('sua_chats_top50_v3', JSON.stringify(chats));
-        localStorage.setItem('sua_playlists_top50_v3', JSON.stringify(userPlaylists));
-        localStorage.setItem('sua_distro_logs_top50_v3', JSON.stringify(distroLogs));
-        localStorage.setItem('sua_profile_top50_v3', JSON.stringify(userProfile));
+        localStorage.setItem('sua_tracks_clean_v4', JSON.stringify(tracks));
+        localStorage.setItem('sua_artists_clean_v4', JSON.stringify(artists));
+        localStorage.setItem('sua_chats_clean_v4', JSON.stringify(chats));
+        localStorage.setItem('sua_playlists_clean_v4', JSON.stringify(userPlaylists));
+        localStorage.setItem('sua_distro_logs_clean_v4', JSON.stringify(distroLogs));
+        localStorage.setItem('sua_profile_clean_v4', JSON.stringify(userProfile));
       } catch (err) {
-        console.warn('Storage limit', err);
+        console.warn('Storage quota', err);
       }
     }
 
@@ -975,11 +1009,6 @@
     let prevVolume = 80;
 
     const audioElement = document.getElementById('realAudioPlayer');
-
-    // Web Audio Fallback Engine (на случай блокировки сети)
-    let audioCtx = null;
-    let osc1 = null, osc2 = null, gainNode = null;
-    let fallbackInterval = null;
 
     /* ================= 3. НАВИГАЦИЯ ================= */
     function switchModule(mod) {
@@ -1120,49 +1149,7 @@
       }
     }
 
-    /* ================= 5. АУДИОДВИЖОК И ПЛЕЕР ================= */
-    function initSynthEngine() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        gainNode = audioCtx.createGain();
-        gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gainNode.connect(audioCtx.destination);
-      }
-    }
-
-    function startFallbackMelody(seedId) {
-      initSynthEngine();
-      stopFallbackMelody();
-      const baseFreq = 220 + ((seedId * 17) % 300);
-      
-      osc1 = audioCtx.createOscillator();
-      osc2 = audioCtx.createOscillator();
-      osc1.type = 'triangle';
-      osc2.type = 'sine';
-
-      osc1.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
-      osc2.frequency.setValueAtTime(baseFreq * 1.5, audioCtx.currentTime);
-
-      osc1.connect(gainNode);
-      osc2.connect(gainNode);
-      osc1.start();
-      osc2.start();
-
-      let step = 0;
-      fallbackInterval = setInterval(() => {
-        if (!isPlaying || !audioCtx) return;
-        step++;
-        const chordMultiplier = [1, 1.25, 1.5, 1.875][step % 4];
-        osc1.frequency.setValueAtTime(baseFreq * chordMultiplier, audioCtx.currentTime);
-      }, 400);
-    }
-
-    function stopFallbackMelody() {
-      if (fallbackInterval) clearInterval(fallbackInterval);
-      if (osc1) { try { osc1.stop(); osc1.disconnect(); } catch(e){} osc1 = null; }
-      if (osc2) { try { osc2.stop(); osc2.disconnect(); } catch(e){} osc2 = null; }
-    }
-
+    /* ================= 5. ВОСПРОИЗВЕДЕНИЕ АУДИО ================= */
     function updatePlayerUI() {
       const t = tracks[currentTrackIdx] || tracks[0];
       document.getElementById('bottomTitle').textContent = t.title;
@@ -1180,24 +1167,16 @@
     function playCurrentTrack(i) {
       currentTrackIdx = i;
       const track = tracks[currentTrackIdx];
-      stopFallbackMelody();
 
-      if (track.url) {
-        audioElement.src = track.url;
-        audioElement.play().then(() => {
-          isPlaying = true;
-          updatePlayerUI();
-        }).catch((err) => {
-          // Если стрим заблокирован CORS — включаем Web Audio синтезатор
-          isPlaying = true;
-          startFallbackMelody(track.id);
-          updatePlayerUI();
-        });
-      } else {
+      audioElement.src = track.url;
+      audioElement.play().then(() => {
         isPlaying = true;
-        startFallbackMelody(track.id);
         updatePlayerUI();
-      }
+      }).catch((e) => {
+        console.warn('Playback error', e);
+        isPlaying = false;
+        updatePlayerUI();
+      });
 
       updatePlayerUI();
     }
@@ -1210,13 +1189,11 @@
 
       if (isPlaying) {
         audioElement.pause();
-        stopFallbackMelody();
         isPlaying = false;
       } else {
-        audioElement.play().catch(() => {
-          startFallbackMelody(tracks[currentTrackIdx].id);
+        audioElement.play().then(() => {
+          isPlaying = true;
         });
-        isPlaying = true;
       }
       updatePlayerUI();
     }
@@ -1249,9 +1226,6 @@
     function setVolume(val) {
       const v = val / 100;
       audioElement.volume = v;
-      if (gainNode && audioCtx) {
-        gainNode.gain.setValueAtTime(v * 0.1, audioCtx.currentTime);
-      }
       if (v === 0) {
         document.getElementById('muteBtn').textContent = '🔇';
         isMuted = true;
@@ -1305,7 +1279,30 @@
       if (!isLoop) nextTrack();
     };
 
-    /* Живой визуализатор Canvas */
+    /* Загрузка своего аудио напрямую в плеер */
+    function handleDirectAudioUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const localBlob = URL.createObjectURL(file);
+        const customTrack = {
+          id: Date.now(),
+          title: file.name.replace(/\.[^/.]+$/, ""),
+          artist: "Локальный файл",
+          category: "charts",
+          duration: "03:30",
+          lyrics: "Локальный пользовательский трек.",
+          cover: COVER_IMAGES[0],
+          url: localBlob,
+          isFav: true
+        };
+        tracks.unshift(customTrack);
+        saveAllState();
+        renderTracks();
+        playCurrentTrack(0);
+      }
+    }
+
+    /* Визуализатор */
     function initVisualizer() {
       const canvas = document.getElementById('visualizerCanvas');
       if (!canvas) return;
@@ -1359,8 +1356,8 @@
         return;
       }
 
-      const coverUrl = uploadedCoverBase64 || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';
-      const trackAudioUrl = uploadedAudioBlobUrl || 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3';
+      const coverUrl = uploadedCoverBase64 || COVER_IMAGES[0];
+      const trackAudioUrl = uploadedAudioBlobUrl || REAL_AUDIO_URLS[0];
 
       const newTrack = {
         id: Date.now(),
@@ -1479,7 +1476,7 @@
       });
     }
 
-    /* ================= 8. МОДАЛКИ И ОПЕРАЦИИ ================= */
+    /* ================= 8. МОДАЛКИ ================= */
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -1535,7 +1532,7 @@
     function confirmNewArtist() {
       const val = document.getElementById('newArtistNameInput').value.trim();
       if (val) {
-        artists.push({ name: val, img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120' });
+        artists.push({ name: val, img: COVER_IMAGES[0] });
         document.getElementById('newArtistNameInput').value = '';
         saveAllState();
         closeModal('newArtistModal');
