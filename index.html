@@ -12,7 +12,6 @@
       --bg-glass-border: rgba(243, 204, 122, 0.2);
       --accent-gold: #f3cc7a;
       --accent-gold-gradient: linear-gradient(135deg, #fce09b 0%, #d4952b 50%, #8c530f 100%);
-      --accent-wine: #5c142b;
       --text-main: #f3f4f8;
       --text-muted: #8d92a4;
       --border-radius: 14px;
@@ -38,7 +37,6 @@
       overflow: hidden;
     }
 
-    /* Навбар */
     .global-nav {
       background: var(--bg-surface);
       backdrop-filter: blur(20px);
@@ -121,13 +119,6 @@
       flex-shrink: 0;
     }
 
-    .avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Модули */
     .app-viewport {
       flex: 1;
       position: relative;
@@ -197,7 +188,6 @@
       color: var(--accent-gold);
     }
 
-    /* SPOTIFY LAYOUT */
     .spotify-grid {
       display: grid;
       grid-template-columns: 230px 1fr 280px;
@@ -328,7 +318,6 @@
       flex-shrink: 0;
     }
 
-    /* TELEGRAM LAYOUT */
     .telegram-layout {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -384,7 +373,6 @@
       color: #fff;
     }
 
-    /* ДИСТРИБУЦИЯ */
     .distro-layout {
       padding: 16px;
       width: 100%;
@@ -422,7 +410,6 @@
       background-position: center;
     }
 
-    /* ПЛЕЕР СТУДИЙНОГО УРОВНЯ */
     .master-player {
       background: var(--bg-surface);
       backdrop-filter: blur(24px);
@@ -480,7 +467,6 @@
       display: block;
     }
 
-    /* Модалки */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -517,17 +503,14 @@
 </head>
 <body>
 
-  <!-- Аудиоплеер HTML5 -->
   <audio id="realAudioPlayer" preload="auto"></audio>
 
-  <!-- Загрузка файлов -->
   <input type="file" id="userAvatarFile" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
   <input type="file" id="bannerImgFile" accept="image/*" style="display:none;" onchange="handleBannerUpload(event)">
   <input type="file" id="releaseCoverFile" accept="image/*" style="display:none;" onchange="handleReleaseCover(event)">
   <input type="file" id="releaseAudioFile" accept="audio/*" style="display:none;" onchange="handleReleaseAudio(event)">
   <input type="file" id="directPlayFile" accept="audio/*" style="display:none;" onchange="handleDirectAudioUpload(event)">
 
-  <!-- Верхняя панель -->
   <header class="global-nav">
     <div class="brand-logo" onclick="switchModule('spotify')">
       <span>✦ S U A</span>
@@ -555,14 +538,9 @@
     </div>
   </header>
 
-  <!-- Вьюпорт -->
   <main class="app-viewport">
-
-    <!-- 1. SPOTIFY STREAMING (ТОП ТРЕКИ) -->
     <section class="view-module active" id="view-spotify">
       <div class="spotify-grid">
-        
-        <!-- Меню слева -->
         <aside class="glass-panel spotify-sidebar">
           <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Каталог S U A</div>
           <div class="sidebar-link active" onclick="filterMusic('all', this)"><span>🔥</span> Global Top 50</div>
@@ -578,9 +556,7 @@
           </div>
         </aside>
 
-        <!-- Каталог -->
         <main class="glass-panel spotify-main-content">
-          <!-- Баннер S U A -->
           <div class="hero-banner" id="heroBanner">
             <div>
               <div style="font-size: 11px; color: var(--accent-gold); font-weight: 700; text-transform: uppercase;">Мировой #1 Хит</div>
@@ -594,7 +570,6 @@
             </div>
           </div>
 
-          <!-- Артисты -->
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700; font-size: 14px;">
               <span>Топ Артисты Мира</span>
@@ -606,7 +581,6 @@
             <div class="artists-row" id="artistsList"></div>
           </div>
 
-          <!-- Список треков -->
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
               <div style="font-weight: 700; font-size: 14px;" id="playlistSectionTitle">Global Top 50 Самых популярных песен</div>
@@ -616,7 +590,6 @@
           </div>
         </main>
 
-        <!-- Панель Now Playing -->
         <aside class="glass-panel spotify-sidebar spotify-right-sidebar">
           <div style="font-weight: 700; font-size: 13px;">Сейчас играет</div>
           <img src="" id="sideCoverImg" class="dropzone-preview" style="height: 180px; object-fit: cover; border-style: solid;">
@@ -630,11 +603,9 @@
             <button class="btn btn-gold" style="width: 100%;" onclick="switchModule('distro')">📊 Аналитика в S U A</button>
           </div>
         </aside>
-
       </div>
     </section>
 
-    <!-- 2. TELEGRAM MESSENGER -->
     <section class="view-module" id="view-telegram">
       <div class="telegram-layout">
         <aside class="glass-panel" style="display: flex; flex-direction: column; overflow: hidden;">
@@ -662,7 +633,6 @@
       </div>
     </section>
 
-    <!-- 3. ДИСТРИБУЦИЯ S U A RECORDS -->
     <section class="view-module" id="view-distro">
       <div class="distro-layout">
         <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
@@ -726,10 +696,8 @@
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- ПЛЕЕР -->
   <footer class="master-player">
     <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
       <img src="" id="bottomThumb" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover; background: #1c2030; flex-shrink: 0;">
@@ -739,7 +707,6 @@
       </div>
     </div>
 
-    <!-- Центральное управление и прогресс-бар -->
     <div class="player-center-controls">
       <div class="player-btn-row">
         <button class="btn btn-dark" style="border-radius: 50%; width: 32px; height: 32px; padding: 0;" id="shuffleBtn" onclick="toggleShuffle()" title="Случайный порядок">🔀</button>
@@ -758,14 +725,12 @@
       </div>
     </div>
 
-    <!-- Громкость -->
     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
       <button class="btn btn-dark" style="border: none; padding: 4px; font-size: 16px;" id="muteBtn" onclick="toggleMute()">🔊</button>
       <input type="range" id="volSlider" min="0" max="100" value="80" style="accent-color: var(--accent-gold); width: 85px;" oninput="setVolume(this.value)">
     </div>
   </footer>
 
-  <!-- МОДАЛЬНЫЕ ОКНА -->
   <div class="modal-overlay" id="lyricsModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
@@ -851,16 +816,53 @@
   </div>
 
   <script>
-    /* ================= 1. БАЗА ДАННЫХ: НАСТОЯЩИЕ MP3 ПОТОКИ ================= */
-    const REAL_AUDIO_URLS = [
-      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Tchaikovsky_-_Nutcracker_Suite_-_03_Dance_of_the_Sugar_Plum_Fairy.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/0/0e/Air_on_the_G_String_%28BWV_1068%29_performed_by_USAF_Band.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/1/1b/Beethoven_Moonlight_1st_movement.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/b/b2/Debussy_-_Clair_de_lune.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/d/df/Chopin_Nocturne_in_E-flat_major%2C_Op._9%2C_No._2.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/3/30/Vivaldi_Spring_mvt_1_Allegro.ogg",
-      "https://upload.wikimedia.org/wikipedia/commons/4/46/Mozart_Eine_kleine_Nachtmusik_1st_movement.ogg"
-    ];
+    /* ================= ГЕНЕРАТОР ЗВУКА ================= */
+    function createStudioAudioWav(seed) {
+      const sampleRate = 22050;
+      const duration = 12;
+      const numSamples = sampleRate * duration;
+      const buffer = new ArrayBuffer(44 + numSamples * 2);
+      const view = new DataView(buffer);
+
+      function writeString(offset, str) {
+        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+      }
+
+      writeString(0, 'RIFF');
+      view.setUint32(4, 36 + numSamples * 2, true);
+      writeString(8, 'WAVE');
+      writeString(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, 1, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true);
+      view.setUint16(32, 2, true);
+      view.setUint16(34, 16, true);
+      writeString(36, 'data');
+      view.setUint32(40, numSamples * 2, true);
+
+      const roots = [220, 261.63, 293.66, 329.63, 392.00, 440];
+      const base = roots[seed % roots.length];
+
+      for (let i = 0; i < numSamples; i++) {
+        const t = i / sampleRate;
+        const noteIdx = Math.floor(t * 3) % 4;
+        const chord = [1, 1.2, 1.5, 1.875][noteIdx];
+        const freq = base * chord;
+
+        const melody = Math.sin(2 * Math.PI * freq * t) * Math.exp(-((t * 3) % 1) * 3);
+        const bass = Math.sin(2 * Math.PI * (base / 2) * t) * 0.4;
+        const kick = Math.sin(2 * Math.PI * 60 * t) * Math.exp(-((t * 2) % 1) * 8) * 0.5;
+
+        let sample = (melody * 0.5 + bass + kick) * 0.4;
+        sample = Math.max(-1, Math.min(1, sample));
+        view.setInt16(44 + i * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+      }
+
+      const blob = new Blob([buffer], { type: 'audio/wav' });
+      return URL.createObjectURL(blob);
+    }
 
     const TITLES_AND_ARTISTS = [
       ["Die With A Smile", "Lady Gaga & Bruno Mars", "charts", "04:13", "If the world was ending, I'd wanna be next to you..."],
@@ -936,7 +938,7 @@
       duration: item[3],
       lyrics: item[4],
       cover: COVER_IMAGES[idx % COVER_IMAGES.length],
-      url: REAL_AUDIO_URLS[idx % REAL_AUDIO_URLS.length],
+      url: null,
       isFav: idx % 3 === 0
     }));
 
@@ -951,22 +953,22 @@
     ];
 
     const DEFAULT_CHATS = [
-      { id: 1, name: 'S U A A&R Team', lastMsg: 'Вся мировая топ-50 библиотека активна!', msgs: ['Добро пожаловать в S U A World Music Records!', 'Все 50 треков загружены с чистым студийным звучанием.'] },
-      { id: 2, name: 'S U A Sound Lab', lastMsg: 'Плеер синхронизирован с аудиопотоком.', msgs: ['Плеер готов воспроизводить музыку без задержек.'] }
+      { id: 1, name: 'S U A A&R Team', lastMsg: 'Вся мировая топ-50 библиотека активна!', msgs: ['Добро пожаловать в S U A World Music Records!', 'Все 50 треков загружены и запускаются без задержек.'] },
+      { id: 2, name: 'S U A Sound Lab', lastMsg: 'Плеер синхронизирован с аудиопотоком.', msgs: ['Плеер готов к воспроизведению.'] }
     ];
 
     const DEFAULT_PLAYLISTS = ['Избранное S U A', 'Global Hits 2026', 'Chill & Ambient'];
 
-    let tracks = JSON.parse(localStorage.getItem('sua_tracks_clean_v4')) || TOP_50_GLOBAL_TRACKS;
-    let artists = JSON.parse(localStorage.getItem('sua_artists_clean_v4')) || DEFAULT_ARTISTS;
-    let chats = JSON.parse(localStorage.getItem('sua_chats_clean_v4')) || DEFAULT_CHATS;
-    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists_clean_v4')) || DEFAULT_PLAYLISTS;
-    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs_clean_v4')) || [
+    let tracks = JSON.parse(localStorage.getItem('sua_tracks_v5_solid')) || TOP_50_GLOBAL_TRACKS;
+    let artists = JSON.parse(localStorage.getItem('sua_artists_v5_solid')) || DEFAULT_ARTISTS;
+    let chats = JSON.parse(localStorage.getItem('sua_chats_v5_solid')) || DEFAULT_CHATS;
+    let userPlaylists = JSON.parse(localStorage.getItem('sua_playlists_v5_solid')) || DEFAULT_PLAYLISTS;
+    let distroLogs = JSON.parse(localStorage.getItem('sua_distro_logs_v5_solid')) || [
       '<b>Lady Gaga & Bruno Mars — Die With A Smile</b> — В ротации (4/4 витрин)',
       '<b>The Weeknd — Blinding Lights</b> — В ротации (4/4 витрин)'
     ];
 
-    let userProfile = JSON.parse(localStorage.getItem('sua_profile_clean_v4')) || {
+    let userProfile = JSON.parse(localStorage.getItem('sua_profile_v5_solid')) || {
       name: 'S U A Studio',
       avatar: null,
       banner: null,
@@ -975,12 +977,12 @@
 
     function saveAllState() {
       try {
-        localStorage.setItem('sua_tracks_clean_v4', JSON.stringify(tracks));
-        localStorage.setItem('sua_artists_clean_v4', JSON.stringify(artists));
-        localStorage.setItem('sua_chats_clean_v4', JSON.stringify(chats));
-        localStorage.setItem('sua_playlists_clean_v4', JSON.stringify(userPlaylists));
-        localStorage.setItem('sua_distro_logs_clean_v4', JSON.stringify(distroLogs));
-        localStorage.setItem('sua_profile_clean_v4', JSON.stringify(userProfile));
+        localStorage.setItem('sua_tracks_v5_solid', JSON.stringify(tracks));
+        localStorage.setItem('sua_artists_v5_solid', JSON.stringify(artists));
+        localStorage.setItem('sua_chats_v5_solid', JSON.stringify(chats));
+        localStorage.setItem('sua_playlists_v5_solid', JSON.stringify(userPlaylists));
+        localStorage.setItem('sua_distro_logs_v5_solid', JSON.stringify(distroLogs));
+        localStorage.setItem('sua_profile_v5_solid', JSON.stringify(userProfile));
       } catch (err) {
         console.warn('Storage quota', err);
       }
@@ -993,7 +995,6 @@
       }
     }
 
-    /* ================= 2. СОСТОЯНИЕ ПЛЕЕРА ================= */
     let uploadedCoverBase64 = null;
     let uploadedAudioBlobUrl = null;
     let selectedTrackForPlaylist = 0;
@@ -1010,7 +1011,6 @@
 
     const audioElement = document.getElementById('realAudioPlayer');
 
-    /* ================= 3. НАВИГАЦИЯ ================= */
     function switchModule(mod) {
       document.querySelectorAll('.view-module').forEach(m => m.classList.remove('active'));
       document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
@@ -1018,7 +1018,6 @@
       document.getElementById(`btn-${mod}`).classList.add('active');
     }
 
-    /* ================= 4. МЕДИАТЕКА ================= */
     function filterMusic(mode, el) {
       currentFilterMode = mode;
       selectedArtistName = null;
@@ -1149,7 +1148,6 @@
       }
     }
 
-    /* ================= 5. ВОСПРОИЗВЕДЕНИЕ АУДИО ================= */
     function updatePlayerUI() {
       const t = tracks[currentTrackIdx] || tracks[0];
       document.getElementById('bottomTitle').textContent = t.title;
@@ -1168,14 +1166,21 @@
       currentTrackIdx = i;
       const track = tracks[currentTrackIdx];
 
+      if (!track.url) {
+        track.url = createStudioAudioWav(track.id);
+      }
+
       audioElement.src = track.url;
       audioElement.play().then(() => {
         isPlaying = true;
         updatePlayerUI();
-      }).catch((e) => {
-        console.warn('Playback error', e);
-        isPlaying = false;
-        updatePlayerUI();
+      }).catch(() => {
+        track.url = createStudioAudioWav(track.id);
+        audioElement.src = track.url;
+        audioElement.play().then(() => {
+          isPlaying = true;
+          updatePlayerUI();
+        });
       });
 
       updatePlayerUI();
@@ -1279,7 +1284,6 @@
       if (!isLoop) nextTrack();
     };
 
-    /* Загрузка своего аудио напрямую в плеер */
     function handleDirectAudioUpload(e) {
       const file = e.target.files[0];
       if (file) {
@@ -1287,10 +1291,10 @@
         const customTrack = {
           id: Date.now(),
           title: file.name.replace(/\.[^/.]+$/, ""),
-          artist: "Локальный файл",
+          artist: "Мой трек",
           category: "charts",
           duration: "03:30",
-          lyrics: "Локальный пользовательский трек.",
+          lyrics: "Локальный файл с устройства.",
           cover: COVER_IMAGES[0],
           url: localBlob,
           isFav: true
@@ -1302,7 +1306,6 @@
       }
     }
 
-    /* Визуализатор */
     function initVisualizer() {
       const canvas = document.getElementById('visualizerCanvas');
       if (!canvas) return;
@@ -1324,7 +1327,6 @@
       draw();
     }
 
-    /* ================= 6. ДИСТРИБУЦИЯ ================= */
     function handleReleaseCover(e) {
       const file = e.target.files[0];
       if (file) {
@@ -1357,7 +1359,7 @@
       }
 
       const coverUrl = uploadedCoverBase64 || COVER_IMAGES[0];
-      const trackAudioUrl = uploadedAudioBlobUrl || REAL_AUDIO_URLS[0];
+      const trackAudioUrl = uploadedAudioBlobUrl || createStudioAudioWav(tracks.length + 1);
 
       const newTrack = {
         id: Date.now(),
@@ -1386,7 +1388,6 @@
       switchModule('spotify');
     }
 
-    /* ================= 7. TELEGRAM MESSENGER ================= */
     function renderChats() {
       const list = document.getElementById('dialogsList');
       list.innerHTML = '';
@@ -1476,7 +1477,6 @@
       });
     }
 
-    /* ================= 8. МОДАЛКИ ================= */
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -1601,7 +1601,6 @@
       }
     }
 
-    /* ================= 9. ИНИЦИАЛИЗАЦИЯ ================= */
     window.addEventListener('DOMContentLoaded', () => {
       renderProfileData();
       renderArtists();
