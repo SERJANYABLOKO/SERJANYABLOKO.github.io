@@ -118,6 +118,7 @@
       justify-content: center;
       font-size: 12px;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .avatar-circle img {
@@ -494,11 +495,11 @@
       </button>
     </nav>
 
-    <div class="user-profile-badge" onclick="document.getElementById('userAvatarFile').click()" title="Нажмите, чтобы изменить аватарку лейбла">
+    <div class="user-profile-badge" onclick="openProfileModal()" title="Настройки аккаунта">
       <div class="avatar-circle" id="userAvatarBox">SUA</div>
       <div style="text-align: left;">
-        <div style="font-size: 12px; font-weight: 700;" id="navUserName">S U A Artist Studio</div>
-        <div style="font-size: 10px; color: var(--accent-gold);">📷 Сменить фото</div>
+        <div style="font-size: 12px; font-weight: 700;" id="navUserName">S U A Studio</div>
+        <div style="font-size: 10px; color: var(--accent-gold);">⚙️ Профиль</div>
       </div>
     </div>
   </header>
@@ -513,9 +514,13 @@
         <!-- Меню слева -->
         <aside class="glass-panel spotify-sidebar">
           <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Каталог S U A</div>
-          <div class="sidebar-link active" onclick="filterMusic('all', this)"><span>🔥</span> Релизы Лейбла</div>
+          <div class="sidebar-link active" onclick="filterMusic('all', this)"><span>🔥</span> Все треки</div>
+          <div class="sidebar-link" onclick="filterMusic('radio', this)"><span>📻</span> Радио S U A</div>
+          <div class="sidebar-link" onclick="filterMusic('charts', this)"><span>✨</span> Чарты 2026</div>
+          <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;">Моя медиатека</div>
           <div class="sidebar-link" onclick="filterMusic('fav', this)"><span>❤️</span> Избранное (<span id="favCount">0</span>)</div>
-          <div class="sidebar-link" onclick="filterMusic('distro', this)"><span>📁</span> Мои треки</div>
+          <div class="sidebar-link" onclick="filterMusic('local', this)"><span>💾</span> Локальные файлы</div>
+          <div class="sidebar-link" onclick="filterMusic('distro', this)"><span>📁</span> Мои релизы</div>
           <div style="margin-top: auto;">
             <button class="btn btn-dark" style="width: 100%; font-size: 12px;" onclick="openCreatePlaylistModal()">+ Создать плейлист</button>
           </div>
@@ -531,6 +536,7 @@
               <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Премьера главного звучания года от продюсеров S U A World Music Records.</p>
               <div style="display: flex; gap: 10px;">
                 <button class="btn btn-gold" onclick="playCurrentTrack(0)">Слушать</button>
+                <button class="btn btn-dark" onclick="openPlaylistPicker(0)">В плейлист</button>
                 <button class="btn btn-dark" onclick="document.getElementById('bannerImgFile').click()">📷 Сменить баннер</button>
               </div>
             </div>
@@ -540,7 +546,10 @@
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700; font-size: 14px;">
               <span>Резиденты S U A Records</span>
-              <span style="font-size: 11px; color: var(--accent-gold); cursor: pointer;" onclick="openNewArtistModal()">+ Добавить резидента</span>
+              <div style="display: flex; gap: 8px;">
+                <span style="font-size: 11px; color: var(--text-muted); cursor: pointer;" onclick="resetArtistFilter()">Сбросить фильтр</span>
+                <span style="font-size: 11px; color: var(--accent-gold); cursor: pointer;" onclick="openNewArtistModal()">+ Добавить</span>
+              </div>
             </div>
             <div class="artists-row" id="artistsList">
               <!-- Карточки артистов через JS -->
@@ -549,7 +558,10 @@
 
           <!-- Список треков -->
           <div>
-            <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px;">Все релизы S U A Music</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="font-weight: 700; font-size: 14px;" id="playlistSectionTitle">Все релизы S U A Music</div>
+              <span style="font-size: 11px; color: var(--text-muted);" id="trackCounter">3 трека</span>
+            </div>
             <div id="tracksPlaylist" style="display: flex; flex-direction: column; gap: 6px;"></div>
           </div>
         </main>
@@ -663,7 +675,7 @@
           <div class="glass-panel" style="padding: 16px;">
             <div style="font-size: 12px; color: var(--text-muted);">Роялти аккаунта S U A</div>
             <div style="font-size: 26px; font-weight: 800; color: var(--accent-gold); margin: 4px 0;" id="royaltyBalance">$12,450.00</div>
-            <button class="btn btn-dark" style="width: 100%; font-size: 12px;" onclick="payoutRoyalty()">Вывести роялти</button>
+            <button class="btn btn-dark" style="width: 100%; font-size: 12px;" onclick="openPayoutModal()">Вывести роялти</button>
           </div>
 
           <div class="glass-panel" style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
@@ -706,35 +718,117 @@
     </div>
   </footer>
 
-  <!-- МОДАЛЬНОЕ ОКНО: ТЕКСТ ТРЕКА -->
+  <!-- МОДАЛЬНЫЕ ОКНА ДЛЯ ВСЕХ ОПЕРАЦИЙ -->
+  <!-- 1. Текст трека -->
   <div class="modal-overlay" id="lyricsModal">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; font-weight: 700;">
         <span id="lyricsModalTitle">Текст трека S U A</span>
         <span style="cursor: pointer;" onclick="closeModal('lyricsModal')">&times;</span>
       </div>
-      <div style="font-size: 13px; line-height: 1.6; color: #d1d5db; max-height: 250px; overflow-y: auto;" id="lyricsModalText">
-        (Студийный релиз лейбла S U A World Music Records)
-      </div>
+      <div style="font-size: 13px; line-height: 1.6; color: #d1d5db; max-height: 250px; overflow-y: auto;" id="lyricsModalText"></div>
       <button class="btn btn-gold" onclick="closeModal('lyricsModal')">Закрыть</button>
     </div>
   </div>
 
+  <!-- 2. Добавление в плейлист -->
+  <div class="modal-overlay" id="playlistModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Добавить в плейлист</span>
+        <span style="cursor: pointer;" onclick="closeModal('playlistModal')">&times;</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;" id="playlistOptionsList"></div>
+      <button class="btn btn-dark" onclick="openCreatePlaylistModal()">+ Создать новый плейлист</button>
+    </div>
+  </div>
+
+  <!-- 3. Создание плейлиста -->
+  <div class="modal-overlay" id="createPlaylistModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Новый плейлист S U A</span>
+        <span style="cursor: pointer;" onclick="closeModal('createPlaylistModal')">&times;</span>
+      </div>
+      <input type="text" id="newPlaylistInput" class="input-field" placeholder="Название плейлиста...">
+      <button class="btn btn-gold" onclick="confirmCreatePlaylist()">Создать</button>
+    </div>
+  </div>
+
+  <!-- 4. Новый артист -->
+  <div class="modal-overlay" id="newArtistModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Подписать резидента</span>
+        <span style="cursor: pointer;" onclick="closeModal('newArtistModal')">&times;</span>
+      </div>
+      <input type="text" id="newArtistNameInput" class="input-field" placeholder="Сценическое имя артиста...">
+      <button class="btn btn-gold" onclick="confirmNewArtist()">Добавить в ростер</button>
+    </div>
+  </div>
+
+  <!-- 5. Новый диалог -->
+  <div class="modal-overlay" id="newChatModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Новый диалог</span>
+        <span style="cursor: pointer;" onclick="closeModal('newChatModal')">&times;</span>
+      </div>
+      <input type="text" id="newChatNameInput" class="input-field" placeholder="Имя собеседника или продюсера...">
+      <button class="btn btn-gold" onclick="confirmNewChat()">Начать чат</button>
+    </div>
+  </div>
+
+  <!-- 6. Профиль / Настройки -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Настройки профиля S U A</span>
+        <span style="cursor: pointer;" onclick="closeModal('profileModal')">&times;</span>
+      </div>
+      <div>
+        <label style="font-size: 11px; color: var(--accent-gold);">Отображаемое имя</label>
+        <input type="text" id="profileNameInput" class="input-field" value="S U A Studio">
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-dark" style="flex: 1;" onclick="document.getElementById('userAvatarFile').click()">Сменить фото</button>
+        <button class="btn btn-gold" style="flex: 1;" onclick="saveProfileSettings()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Вывод роялти -->
+  <div class="modal-overlay" id="payoutModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; font-weight: 700;">
+        <span>Вывод средств</span>
+        <span style="cursor: pointer;" onclick="closeModal('payoutModal')">&times;</span>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted);">Доступно к выводу: <b style="color: var(--accent-gold);" id="payoutModalAmount">$12,450.00</b></div>
+      <input type="text" class="input-field" placeholder="Номер карты или реквизиты счета...">
+      <button class="btn btn-gold" onclick="confirmPayout()">Подтвердить транзакцию</button>
+    </div>
+  </div>
+
   <script>
-    /* ================= 1. БАЗА ДАННЫХ ================= */
+    /* ================= 1. БАЗА ДАННЫХ И СОСТОЯНИЕ ================= */
     let uploadedCoverBase64 = null;
+    let selectedTrackForPlaylist = 0;
+    let currentFilterMode = 'all';
+    let selectedArtistName = null;
+
+    let userPlaylists = ['Избранное S U A', 'Студийный чилл', 'Bass Boosted'];
 
     const tracks = [
-      { id: 1, title: 'World Anthem', artist: 'S U A Records', cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150', freq: 440, lyrics: 'S U A World Music Records...\nGlobal rhythm in your soul.' },
-      { id: 2, title: 'Midnight Horizon', artist: 'S U A x Neon Wave', cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=150', freq: 350, lyrics: 'Night drive with pure sound quality.' },
-      { id: 3, title: '808 Genesis', artist: 'S U A Beat Division', cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150', freq: 220, lyrics: 'Deep bassline powered by S U A.' }
+      { id: 1, title: 'World Anthem', artist: 'S U A Records', category: 'charts', cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150', freq: 440, isFav: false, lyrics: 'S U A World Music Records...\nGlobal rhythm in your soul.' },
+      { id: 2, title: 'Midnight Horizon', artist: 'S U A x Neon Wave', category: 'radio', cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=150', freq: 350, isFav: false, lyrics: 'Night drive with pure sound quality.' },
+      { id: 3, title: '808 Genesis', artist: 'S U A Beat Division', category: 'charts', cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150', freq: 220, isFav: false, lyrics: 'Deep bassline powered by S U A.' }
     ];
 
     const artists = [
-      { name: 'S U A Team', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
-      { name: 'Metro Boomin', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120' },
-      { name: 'Oneheart', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120' },
-      { name: 'The Weeknd', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120' }
+      { name: 'S U A Records', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120' },
+      { name: 'S U A x Neon Wave', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120' },
+      { name: 'S U A Beat Division', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120' }
     ];
 
     let chats = [
@@ -757,58 +851,75 @@
       document.getElementById(`btn-${mod}`).classList.add('active');
     }
 
-    /* ================= 3. КАРТИНКИ ================= */
-    function handleAvatarUpload(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          document.getElementById('userAvatarBox').innerHTML = `<img src="${event.target.result}">`;
-        };
-        reader.readAsDataURL(file);
-      }
+    /* ================= 3. ФИЛЬТРАЦИЯ И ПЛЕЙЛИСТЫ ================= */
+    function filterMusic(mode, el) {
+      currentFilterMode = mode;
+      selectedArtistName = null;
+      document.querySelectorAll('.spotify-sidebar .sidebar-link').forEach(l => l.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      const titleMap = {
+        'all': 'Все релизы S U A Music',
+        'radio': 'Прямой эфир S U A Radio',
+        'charts': 'Топ чарты 2026',
+        'fav': 'Любимые композиции',
+        'local': 'Локальные аудиофайлы',
+        'distro': 'Релизы вашего профиля'
+      };
+      document.getElementById('playlistSectionTitle').textContent = titleMap[mode] || 'Медиатека';
+      renderTracks();
     }
 
-    function handleBannerUpload(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          document.getElementById('heroBanner').style.backgroundImage = `url(${event.target.result})`;
-        };
-        reader.readAsDataURL(file);
-      }
+    function filterByArtist(artistName) {
+      selectedArtistName = artistName;
+      document.getElementById('playlistSectionTitle').textContent = `Дискография: ${artistName}`;
+      renderTracks();
     }
 
-    function handleReleaseCover(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          uploadedCoverBase64 = event.target.result;
-          const box = document.getElementById('coverPreviewBox');
-          box.style.backgroundImage = `url(${uploadedCoverBase64})`;
-          document.getElementById('coverPlaceholderText').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-      }
+    function resetArtistFilter() {
+      selectedArtistName = null;
+      filterMusic(currentFilterMode, document.querySelector('.spotify-sidebar .sidebar-link.active'));
     }
 
-    function handleReleaseAudio(e) {
-      const file = e.target.files[0];
-      if (file) {
-        document.getElementById('audioFileName').textContent = file.name;
+    function getFilteredTracks() {
+      let list = tracks;
+      if (selectedArtistName) {
+        return list.filter(t => t.artist === selectedArtistName);
       }
+      if (currentFilterMode === 'fav') {
+        return list.filter(t => t.isFav);
+      }
+      if (currentFilterMode === 'radio') {
+        return list.filter(t => t.category === 'radio' || t.id % 2 === 0);
+      }
+      if (currentFilterMode === 'charts') {
+        return list.filter(t => t.category === 'charts');
+      }
+      if (currentFilterMode === 'distro') {
+        return list.filter(t => t.id > 3 || t.artist.includes('Studio') || t.artist.includes('S U A'));
+      }
+      if (currentFilterMode === 'local') {
+        return list.filter(t => t.isLocal);
+      }
+      return list;
     }
 
-    /* ================= 4. ПЛЕЕР ================= */
     function renderTracks() {
       const list = document.getElementById('tracksPlaylist');
+      const filtered = getFilteredTracks();
+      document.getElementById('trackCounter').textContent = `${filtered.length} треков`;
       list.innerHTML = '';
-      tracks.forEach((t, i) => {
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); padding: 20px 0; text-align: center;">В этом разделе пока нет треков. Загрузите через «Дистрибуцию»!</div>`;
+        return;
+      }
+
+      filtered.forEach((t) => {
+        const realIdx = tracks.findIndex(item => item.id === t.id);
         const row = document.createElement('div');
-        row.className = `track-row ${i === currentTrackIdx ? 'playing' : ''}`;
-        row.onclick = () => playCurrentTrack(i);
+        row.className = `track-row ${realIdx === currentTrackIdx ? 'playing' : ''}`;
+        row.onclick = () => playCurrentTrack(realIdx);
         row.innerHTML = `
           <div style="display: flex; align-items: center; gap: 10px;">
             <img src="${t.cover}" class="track-thumb-img">
@@ -818,7 +929,12 @@
             </div>
           </div>
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="btn btn-dark" style="padding: 4px 8px; font-size: 11px;" onclick="event.stopPropagation(); toggleFav(${t.id})">❤️</button>
+            <button class="btn btn-dark" style="padding: 4px 8px; font-size: 11px;" onclick="event.stopPropagation(); toggleFav(${t.id})">
+              ${t.isFav ? '❤️' : '🤍'}
+            </button>
+            <button class="btn btn-dark" style="padding: 4px 8px; font-size: 11px;" onclick="event.stopPropagation(); openPlaylistPicker(${realIdx})">
+              +
+            </button>
             <span style="font-size: 11px; color: var(--text-muted);">03:20</span>
           </div>
         `;
@@ -832,6 +948,7 @@
       artists.forEach(a => {
         const card = document.createElement('div');
         card.className = 'artist-card';
+        card.onclick = () => filterByArtist(a.name);
         card.innerHTML = `
           <div class="artist-img-box"><img src="${a.img}"></div>
           <div style="font-size: 11px; font-weight: 600;">${a.name}</div>
@@ -840,6 +957,7 @@
       });
     }
 
+    /* ================= 4. ПЛЕЕР ================= */
     function initWaveform() {
       const bars = document.getElementById('waveBars');
       bars.innerHTML = '';
@@ -849,6 +967,16 @@
         b.style.height = `${Math.floor(Math.random() * 70) + 15}%`;
         bars.appendChild(b);
       }
+    }
+
+    function seekWave(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      const secs = Math.floor(pct * 200);
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      document.getElementById('trackTimeDisplay').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
     function initAudioEngine() {
@@ -935,6 +1063,27 @@
     }
 
     /* ================= 5. ДИСТРИБУЦИЯ ================= */
+    function handleReleaseCover(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          uploadedCoverBase64 = event.target.result;
+          const box = document.getElementById('coverPreviewBox');
+          box.style.backgroundImage = `url(${uploadedCoverBase64})`;
+          document.getElementById('coverPlaceholderText').style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleReleaseAudio(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('audioFileName').textContent = file.name;
+      }
+    }
+
     function submitNewRelease() {
       const title = document.getElementById('distroTitle').value.trim();
       const artist = document.getElementById('distroArtist').value.trim();
@@ -951,6 +1100,8 @@
         title: title,
         artist: artist,
         cover: coverUrl,
+        category: 'charts',
+        isFav: false,
         freq: 400 + Math.floor(Math.random() * 200),
         lyrics: 'Релиз дистрибуции S U A World Music Records.'
       };
@@ -965,14 +1116,7 @@
       log.innerHTML = `<b>${title}</b> — В доставке S U A`;
       logBox.prepend(log);
 
-      alert(`Трек "${title}" отправлен на дистрибуцию через S U A World Music Records!`);
       switchModule('spotify');
-    }
-
-    function payoutRoyalty() {
-      const current = document.getElementById('royaltyBalance').textContent;
-      alert(`Вывод средств (${current}) успешно сформирован в системе S U A Records.`);
-      document.getElementById('royaltyBalance').textContent = '$0.00';
     }
 
     /* ================= 6. TELEGRAM MESSENGER ================= */
@@ -1040,45 +1184,144 @@
       renderMessages();
     }
 
-    function openNewChatModal() {
-      const name = prompt('Имя продюсера или резидента S U A:');
-      if (name) {
-        chats.unshift({ id: Date.now(), name: name, lastMsg: 'Диалог создан', msgs: ['Привет от S U A!'] });
-        selectChat(0);
-      }
+    function searchDialogs(val) {
+      const query = val.toLowerCase();
+      document.querySelectorAll('.tg-dialog-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? 'flex' : 'none';
+      });
     }
 
-    /* ================= 7. ВСПОМОГАТЕЛЬНЫЕ КНОПКИ ================= */
-    function toggleFav(id) {
-      const count = document.getElementById('favCount');
-      count.textContent = parseInt(count.textContent) + 1;
-      alert('Релиз добавлен в медиатеку S U A!');
-    }
-
-    function openLyricsModal() {
-      const t = tracks[currentTrackIdx];
-      document.getElementById('lyricsModalTitle').textContent = `Текст: ${t.title} (S U A Records)`;
-      document.getElementById('lyricsModalText').innerText = t.lyrics;
-      document.getElementById('lyricsModal').style.display = 'flex';
+    /* ================= 7. МОДАЛЬНЫЕ ОКНА И ОПЕРАЦИИ ================= */
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
     }
 
     function closeModal(id) {
       document.getElementById(id).style.display = 'none';
     }
 
+    function toggleFav(id) {
+      const t = tracks.find(item => item.id === id);
+      if (t) {
+        t.isFav = !t.isFav;
+        const favs = tracks.filter(item => item.isFav).length;
+        document.getElementById('favCount').textContent = favs;
+        renderTracks();
+      }
+    }
+
+    function openLyricsModal() {
+      const t = tracks[currentTrackIdx];
+      document.getElementById('lyricsModalTitle').textContent = `Текст: ${t.title} (S U A Records)`;
+      document.getElementById('lyricsModalText').innerText = t.lyrics;
+      openModal('lyricsModal');
+    }
+
+    function openPlaylistPicker(trackIdx) {
+      selectedTrackForPlaylist = trackIdx;
+      const container = document.getElementById('playlistOptionsList');
+      container.innerHTML = '';
+      userPlaylists.forEach(pl => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-dark';
+        btn.style.width = '100%';
+        btn.textContent = `📁 ${pl}`;
+        btn.onclick = () => {
+          alert(`Трек "${tracks[selectedTrackForPlaylist].title}" добавлен в плейлист "${pl}"!`);
+          closeModal('playlistModal');
+        };
+        container.appendChild(btn);
+      });
+      openModal('playlistModal');
+    }
+
     function openCreatePlaylistModal() {
-      const name = prompt('Название плейлиста S U A:');
-      if (name) alert(`Плейлист "${name}" добавлен в медиатеку!`);
+      openModal('createPlaylistModal');
+    }
+
+    function confirmCreatePlaylist() {
+      const val = document.getElementById('newPlaylistInput').value.trim();
+      if (val) {
+        userPlaylists.push(val);
+        document.getElementById('newPlaylistInput').value = '';
+        closeModal('createPlaylistModal');
+        alert(`Плейлист "${val}" успешно создан!`);
+      }
     }
 
     function openNewArtistModal() {
-      const name = prompt('Имя артиста для подписания на S U A:');
-      if (name) {
-        artists.push({ name: name, img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120' });
+      openModal('newArtistModal');
+    }
+
+    function confirmNewArtist() {
+      const val = document.getElementById('newArtistNameInput').value.trim();
+      if (val) {
+        artists.push({ name: val, img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120' });
+        document.getElementById('newArtistNameInput').value = '';
+        closeModal('newArtistModal');
         renderArtists();
       }
     }
 
+    function openNewChatModal() {
+      openModal('newChatModal');
+    }
+
+    function confirmNewChat() {
+      const val = document.getElementById('newChatNameInput').value.trim();
+      if (val) {
+        chats.unshift({ id: Date.now(), name: val, lastMsg: 'Чат создан', msgs: ['Привет!'] });
+        document.getElementById('newChatNameInput').value = '';
+        closeModal('newChatModal');
+        selectChat(0);
+      }
+    }
+
+    function openProfileModal() {
+      openModal('profileModal');
+    }
+
+    function saveProfileSettings() {
+      const val = document.getElementById('profileNameInput').value.trim();
+      if (val) {
+        document.getElementById('navUserName').textContent = val;
+      }
+      closeModal('profileModal');
+    }
+
+    function openPayoutModal() {
+      openModal('payoutModal');
+    }
+
+    function confirmPayout() {
+      document.getElementById('royaltyBalance').textContent = '$0.00';
+      closeModal('payoutModal');
+      alert('Запрос на вывод средств сформирован и передан в финансовый отдел S U A Records!');
+    }
+
+    function handleAvatarUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById('userAvatarBox').innerHTML = `<img src="${event.target.result}">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleBannerUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById('heroBanner').style.backgroundImage = `url(${event.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    /* ================= 8. ИНИЦИАЛИЗАЦИЯ ================= */
     window.addEventListener('DOMContentLoaded', () => {
       initWaveform();
       renderArtists();
