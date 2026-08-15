@@ -3,921 +3,1283 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Music & Social Hub</title>
+  <title>AURA — Global Music & Social Ecosystem</title>
   <style>
+    :root {
+      --bg-base: #090a0f;
+      --bg-surface: rgba(18, 20, 29, 0.75);
+      --bg-surface-elevated: rgba(28, 31, 46, 0.85);
+      --bg-glass-border: rgba(243, 204, 122, 0.15);
+      --accent-gold: #f3cc7a;
+      --accent-gold-gradient: linear-gradient(135deg, #f5d485 0%, #d4952b 50%, #915a13 100%);
+      --accent-wine: #5c142b;
+      --accent-wine-gradient: linear-gradient(135deg, #5c142b 0%, #200914 100%);
+      --text-main: #f0f2f5;
+      --text-muted: #8d92a4;
+      --tg-primary: #2ea5e8;
+      --border-radius: 16px;
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: #0f1115;
-      color: #e6e6e6;
+      background: radial-gradient(circle at 10% 20%, rgba(92, 20, 43, 0.25) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(26, 42, 77, 0.35) 0%, transparent 50%),
+                  var(--bg-base);
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
     }
 
-    /* Шапка сайта */
-    header {
-      background-color: #171922;
-      border-bottom: 1px solid #282b3a;
-      padding: 12px 16px;
+    /* Верхний глобальный бар */
+    .global-nav {
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--bg-glass-border);
+      padding: 10px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
-      z-index: 10;
+      z-index: 50;
     }
 
-    .logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: #ff9900;
-      letter-spacing: 0.5px;
-    }
-
-    .auth-panel {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .user-badge {
-      font-size: 13px;
-      color: #ff9900;
-      font-weight: 600;
-      display: none;
-    }
-
-    .btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
-    }
-
-    .btn-primary {
-      background: #ff9900;
-      color: #000;
-    }
-
-    .btn-primary:hover {
-      background: #e68a00;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #383c50;
-      color: #fff;
-    }
-
-    .btn-outline:hover {
-      background: #202433;
-    }
-
-    /* Основная рабочая область */
-    .main-layout {
-      display: grid;
-      grid-template-columns: 320px 1fr 340px;
-      gap: 16px;
-      padding: 16px;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .card {
-      background-color: #171922;
-      border: 1px solid #282b3a;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .card-header {
-      padding: 14px 16px;
-      border-bottom: 1px solid #282b3a;
-      font-weight: 700;
-      font-size: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    .scroll-content {
-      padding: 16px;
-      overflow-y: auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* 1. Блок: Мессенджер */
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 12px;
-      background: #12141a;
-      border-radius: 8px;
-    }
-
-    .chat-msg {
-      max-width: 80%;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      line-height: 1.3;
-    }
-
-    .chat-msg.incoming {
-      background: #1f222e;
-      align-self: flex-start;
-      border-bottom-left-radius: 2px;
-    }
-
-    .chat-msg.outgoing {
-      background: #ff9900;
-      color: #000;
-      font-weight: 500;
-      align-self: flex-end;
-      border-bottom-right-radius: 2px;
-    }
-
-    .chat-input-wrap {
-      display: flex;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .chat-input-wrap input, .post-input-wrap textarea, .modal-input {
-      background: #1f222e;
-      border: 1px solid #282b3a;
-      border-radius: 8px;
-      color: #fff;
-      padding: 8px 12px;
-      font-size: 13px;
-      outline: none;
-      width: 100%;
-    }
-
-    .chat-input-wrap input:focus, .post-input-wrap textarea:focus, .modal-input:focus {
-      border-color: #ff9900;
-    }
-
-    /* 2. Блок: Музыка и Дистрибуция */
-    .distribution-banner {
-      background: linear-gradient(135deg, #2b1f3d, #1a2540);
-      border: 1px dashed #7952b3;
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .distribution-banner h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .distribution-banner p {
-      font-size: 12px;
-      color: #bbb;
-      margin-bottom: 12px;
-    }
-
-    .music-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .track-card {
-      background: #1f222e;
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 1px solid transparent;
-    }
-
-    .track-card:hover {
-      border-color: #ff9900;
-      transform: translateY(-2px);
-    }
-
-    .track-card.active-playing {
-      border-color: #ff9900;
-      background: #272b3a;
-    }
-
-    .track-cover {
-      width: 100%;
-      aspect-ratio: 1/1;
-      background: #2d3244;
-      border-radius: 6px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-
-    .track-title {
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .track-artist {
-      font-size: 11px;
-      color: #9094a6;
-    }
-
-    /* 3. Блок: Лента новостей */
-    .post-create-box {
-      background: #1f222e;
-      padding: 12px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .post-create-box textarea {
-      resize: none;
-      height: 60px;
-    }
-
-    .post {
-      background: #1f222e;
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #383c50;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .post-body {
-      font-size: 13px;
-      line-height: 1.4;
-      color: #d1d5db;
-    }
-
-    .post-actions {
-      display: flex;
-      gap: 12px;
-      padding-top: 4px;
-      border-top: 1px solid #282b3a;
-    }
-
-    .like-btn {
-      background: none;
-      border: none;
-      color: #9094a6;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .like-btn.liked {
-      color: #ff4757;
-    }
-
-    /* 4. Аудиоплеер */
-    footer.player-bar {
-      background-color: #12141a;
-      border-top: 1px solid #282b3a;
-      padding: 10px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-      z-index: 10;
-    }
-
-    .player-controls-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .now-playing {
+    .brand-logo {
       display: flex;
       align-items: center;
       gap: 10px;
-      min-width: 140px;
-    }
-
-    .progress-container {
-      width: 100%;
-      height: 4px;
-      background: #282b3a;
-      border-radius: 2px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: var(--accent-gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       cursor: pointer;
+    }
+
+    .app-switcher {
+      display: flex;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--bg-glass-border);
+      gap: 4px;
+    }
+
+    .app-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .app-btn.active {
+      background: var(--accent-gold-gradient);
+      color: #111;
+      box-shadow: 0 4px 14px rgba(212, 149, 43, 0.3);
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--bg-glass-border);
+      padding: 6px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .user-profile-badge:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-gold-gradient);
+      color: #111;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* Основная рабочая область */
+    .app-viewport {
+      flex: 1;
       position: relative;
+      overflow: hidden;
+      display: flex;
     }
 
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #ff9900;
-      border-radius: 2px;
-    }
-
-    /* Модальные окна */
-    .modal-overlay {
-      position: fixed;
+    .view-module {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
       display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
     }
 
-    .modal {
-      background: #171922;
-      border: 1px solid #282b3a;
-      border-radius: 12px;
+    .view-module.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Общие стили карточек и кнопок */
+    .glass-panel {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--bg-glass-border);
+      border-radius: var(--border-radius);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-gold {
+      background: var(--accent-gold-gradient);
+      color: #0b0c10;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(212, 149, 43, 0.25);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 149, 43, 0.4);
+    }
+
+    .btn-dark {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-dark:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* =======================================================
+       1. СТИЛЬ SPOTIFY (МУЗЫКАЛЬНЫЙ ХАБ)
+    ======================================================= */
+    .spotify-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 300px;
+      gap: 16px;
+      padding: 16px;
       width: 100%;
-      max-width: 400px;
+      height: 100%;
+    }
+
+    .spotify-sidebar {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-group h5 {
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-gold);
+    }
+
+    .spotify-main-content {
+      overflow-y: auto;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 24px;
     }
 
-    .modal-header {
+    /* Баннер релиза (как в референсе) */
+    .hero-banner {
+      background: linear-gradient(90deg, rgba(92, 20, 43, 0.9) 0%, rgba(18, 20, 29, 0.95) 100%),
+                  radial-gradient(circle at right, rgba(212, 149, 43, 0.3), transparent 70%);
+      border: 1px solid var(--bg-glass-border);
+      border-radius: 20px;
+      padding: 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(243, 204, 122, 0.05));
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
       font-weight: 700;
-      font-size: 16px;
+      margin-bottom: 8px;
     }
 
-    .modal-close {
-      background: none;
-      border: none;
-      color: #9094a6;
-      font-size: 20px;
-      cursor: pointer;
+    .hero-title {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
 
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .hero-desc {
       font-size: 13px;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin-bottom: 18px;
+      line-height: 1.5;
     }
 
-    /* Мобильная навигация */
-    .mobile-tab-bar {
-      display: none;
-      background: #171922;
-      border-top: 1px solid #282b3a;
-      padding: 6px 0 10px 0;
-      justify-content: space-around;
-      flex-shrink: 0;
-      z-index: 15;
+    /* Секция артистов (кругляши) */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
     }
 
-    .tab-btn {
-      background: none;
-      border: none;
-      color: #9094a6;
-      font-size: 12px;
+    .artists-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 16px;
+      text-align: center;
+    }
+
+    .artist-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
       cursor: pointer;
-      width: 33.3%;
+      transition: var(--transition);
     }
 
-    .tab-btn.active {
-      color: #ff9900;
+    .artist-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .artist-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1c2338, #3b172a);
+      border: 2px solid var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .artist-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Список треков */
+    .track-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .track-row:hover, .track-row.playing {
+      background: var(--bg-surface-elevated);
+      border-color: var(--bg-glass-border);
+    }
+
+    .track-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .track-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #1c2030;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    /* Правая колонка Now Playing */
+    .spotify-right-sidebar {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .now-card-cover {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2b111e, #131c33);
+      border: 1px solid var(--bg-glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 54px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* =======================================================
+       2. СТИЛЬ TELEGRAM WEB (МЕССЕНДЖЕР)
+    ======================================================= */
+    .telegram-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      padding: 16px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tg-dialogs {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tg-search-bar {
+      padding: 12px;
+      border-bottom: 1px solid var(--bg-glass-border);
+    }
+
+    .tg-search-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--bg-glass-border);
+      padding: 8px 14px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .tg-chat-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tg-dialog-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      transition: var(--transition);
+    }
+
+    .tg-dialog-item:hover, .tg-dialog-item.active {
+      background: rgba(243, 204, 122, 0.07);
+    }
+
+    .tg-dialog-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 768px) {
-      .main-layout {
-        display: block;
-        padding: 8px;
-      }
+    .tg-chat-area {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, rgba(18, 20, 30, 0.6), rgba(9, 10, 15, 0.9));
+    }
 
-      .card {
+    .tg-chat-header {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--bg-glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+    }
+
+    .tg-messages-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tg-bubble {
+      max-width: 65%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.4;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .tg-bubble.in {
+      align-self: flex-start;
+      background: var(--bg-surface-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom-left-radius: 4px;
+    }
+
+    .tg-bubble.out {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #2b4c7e, #1a335a);
+      border: 1px solid rgba(243, 204, 122, 0.2);
+      border-bottom-right-radius: 4px;
+      color: #fff;
+    }
+
+    .tg-input-bar {
+      padding: 14px 20px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--bg-glass-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tg-text-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--bg-glass-border);
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: #fff;
+      outline: none;
+      font-size: 13px;
+    }
+
+    /* =======================================================
+       3. СТИЛЬ ДИСТРИБУЦИИ & КАБИНЕТА
+    ======================================================= */
+    .distro-layout {
+      padding: 24px;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+    }
+
+    .distro-form-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-field {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--bg-glass-border);
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: #fff;
+      outline: none;
+      font-size: 13px;
+      transition: var(--transition);
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .dropzone {
+      border: 2px dashed rgba(243, 204, 122, 0.3);
+      background: rgba(243, 204, 122, 0.02);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dropzone:hover {
+      border-color: var(--accent-gold);
+      background: rgba(243, 204, 122, 0.05);
+    }
+
+    .store-badge-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .store-label {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--bg-glass-border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .store-label input {
+      accent-color: var(--accent-gold);
+    }
+
+    .stats-card {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--accent-gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* =======================================================
+       НИЖНИЙ WAVEFORM ПЛЕЕР (КАК В МАКЕТЕ SPOTIFY)
+    ======================================================= */
+    .master-player {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--bg-glass-border);
+      padding: 12px 24px;
+      display: grid;
+      grid-template-columns: 240px 1fr 200px;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .player-track-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .waveform-visualizer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 32px;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .wave-bar {
+      flex: 1;
+      background: rgba(243, 204, 122, 0.3);
+      border-radius: 2px;
+      height: 20%;
+      transition: height 0.15s ease;
+    }
+
+    .wave-bar.active {
+      background: var(--accent-gold);
+    }
+
+    /* Мобильная адаптация */
+    @media (max-width: 900px) {
+      .spotify-grid {
+        grid-template-columns: 1fr;
+      }
+      .spotify-sidebar, .spotify-right-sidebar {
         display: none;
-        height: 100%;
       }
-
-      .card.active-tab {
-        display: flex;
+      .telegram-layout {
+        grid-template-columns: 1fr;
       }
-
-      .mobile-tab-bar {
-        display: flex;
+      .tg-dialogs {
+        display: none; /* Переключение экранов */
       }
-
-      .music-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .distro-layout {
+        grid-template-columns: 1fr;
+      }
+      .master-player {
+        grid-template-columns: 1fr auto;
+      }
+      .waveform-visualizer {
+        display: none;
+      }
+      .global-nav {
+        padding: 8px 12px;
+      }
+      .app-btn span {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Шапка -->
-  <header>
-    <div class="logo">AMAZON•HUB</div>
-    <div class="auth-panel">
-      <span class="user-badge" id="userBadge">@user</span>
-      <button class="btn btn-outline" id="authBtn" onclick="openAuthModal()">Войти</button>
-      <button class="btn btn-primary" id="regBtn" onclick="openAuthModal(true)">Регистрация</button>
+  <!-- Глобальный Навбар: Переключение модулей экосистемы -->
+  <header class="global-nav">
+    <div class="brand-logo" onclick="switchModule('spotify')">
+      <span>✦ AURA</span>
+    </div>
+
+    <nav class="app-switcher">
+      <button class="app-btn active" id="btn-spotify" onclick="switchModule('spotify')">
+        <span>🎵</span> <span>Стриминг</span>
+      </button>
+      <button class="app-btn" id="btn-telegram" onclick="switchModule('telegram')">
+        <span>💬</span> <span>Мессенджер</span>
+      </button>
+      <button class="app-btn" id="btn-distro" onclick="switchModule('distro')">
+        <span>🚀</span> <span>Дистрибуция</span>
+      </button>
+    </nav>
+
+    <div class="user-profile-badge" onclick="switchModule('distro')">
+      <div class="avatar-circle">A</div>
+      <div style="text-align: left;">
+        <div style="font-size: 12px; font-weight: 700;">Artist Studio</div>
+        <div style="font-size: 10px; color: var(--accent-gold);">PRO Label</div>
+      </div>
     </div>
   </header>
 
-  <!-- Контент -->
-  <div class="main-layout">
+  <!-- Вьюпорт модулей -->
+  <main class="app-viewport">
 
-    <!-- Блок: Музыка & Дистрибуция -->
-    <main class="card active-tab" id="tab-music">
-      <div class="card-header">
-        <span>Музыка & Дистрибуция</span>
-      </div>
-      <div class="scroll-content">
-        <div class="distribution-banner">
-          <h3>Дистрибуция треков</h3>
-          <p>Spotify, Apple Music, Яндекс Музыка и VK.</p>
-          <button class="btn btn-primary" onclick="openDistributeModal()">Загрузить релиз</button>
-        </div>
+    <!-- ==========================================
+         МОДУЛЬ 1: SPOTIFY MUSIC PLATFORM
+    =========================================== -->
+    <section class="view-module active" id="view-spotify">
+      <div class="spotify-grid">
+        
+        <!-- Сайдбар -->
+        <aside class="glass-panel spotify-sidebar">
+          <div class="nav-group">
+            <h5>Медиатека</h5>
+            <div class="sidebar-link active"><span>🔥</span> Обзор</div>
+            <div class="sidebar-link"><span>📻</span> Радио</div>
+            <div class="sidebar-link"><span>✨</span> Чарты 2026</div>
+          </div>
+          <div class="nav-group">
+            <h5>Моя музыка</h5>
+            <div class="sidebar-link"><span>❤️</span> Любимые треки</div>
+            <div class="sidebar-link"><span>💾</span> Локальные файлы</div>
+            <div class="sidebar-link"><span>📁</span> Релизы студии</div>
+          </div>
+        </aside>
 
-        <h4 style="margin-top: 6px; font-size: 14px;">Каталог треков</h4>
-        <div class="music-grid" id="trackList">
-          <!-- Карточки рендерятся через JS -->
-        </div>
-      </div>
-    </main>
-
-    <!-- Блок: Мессенджер -->
-    <aside class="card" id="tab-chats">
-      <div class="card-header">
-        <span>Мессенджер (MAX)</span>
-        <span style="font-size: 11px; color: #4cd137;">● Онлайн</span>
-      </div>
-      <div class="scroll-content">
-        <div class="chat-messages" id="chatBox">
-          <div class="chat-msg incoming">Привет! Добро пожаловать в хаб. Здесь можно обсуждать коллаборации и релизы.</div>
-        </div>
-        <div class="chat-input-wrap">
-          <input type="text" id="chatInput" placeholder="Написать сообщение..." onkeydown="if(event.key==='Enter') sendChatMessage()">
-          <button class="btn btn-primary" onclick="sendChatMessage()">➤</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Блок: Лента -->
-    <aside class="card" id="tab-feed">
-      <div class="card-header">
-        <span>Лента сообщества</span>
-      </div>
-      <div class="scroll-content">
-        <div class="post-create-box">
-          <textarea id="postInput" placeholder="Поделитесь новостью или мыслями..."></textarea>
-          <button class="btn btn-primary" style="align-self: flex-end;" onclick="createPost()">Опубликовать</button>
-        </div>
-        <div id="feedPosts" style="display: flex; flex-direction: column; gap: 10px;">
-          <div class="post">
-            <div class="post-header">
-              <div class="avatar">N</div>
-              <strong style="font-size: 13px;">News Hub</strong>
-            </div>
-            <div class="post-body">Открыта прямая дистрибуция релизов на все ключевые площадки с прозрачной статистикой стриминга.</div>
-            <div class="post-actions">
-              <button class="like-btn" onclick="toggleLike(this)">❤️ <span>12</span></button>
+        <!-- Центральный каталог -->
+        <main class="glass-panel spotify-main-content">
+          <!-- Curated Banner -->
+          <div class="hero-banner">
+            <div>
+              <div class="hero-tag">Эксклюзивный релиз</div>
+              <h1 class="hero-title">BLINDING LIGHT</h1>
+              <p class="hero-desc">Ощутите динамику нового альбома в объемном студийном звучании Master Quality.</p>
+              <div style="display: flex; gap: 12px;">
+                <button class="btn btn-gold" onclick="playCurrentTrack(0)">Слушать сейчас</button>
+                <button class="btn btn-dark">В плейлист</button>
+              </div>
             </div>
           </div>
-        </div>
+
+          <!-- Популярные артисты -->
+          <div>
+            <div class="section-title">
+              <span>Популярные продюсеры и артисты</span>
+              <span style="font-size: 12px; color: var(--text-muted); cursor: pointer;">Все</span>
+            </div>
+            <div class="artists-row">
+              <div class="artist-card">
+                <div class="artist-img">⚡</div>
+                <div class="artist-name">Metro Boomin</div>
+              </div>
+              <div class="artist-card">
+                <div class="artist-img">🎤</div>
+                <div class="artist-name">The Weeknd</div>
+              </div>
+              <div class="artist-card">
+                <div class="artist-img">🎹</div>
+                <div class="artist-name">Oneheart</div>
+              </div>
+              <div class="artist-card">
+                <div class="artist-img">🎧</div>
+                <div class="artist-name">Travis Scott</div>
+              </div>
+              <div class="artist-card">
+                <div class="artist-img">💎</div>
+                <div class="artist-name">Aura Label</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Список треков -->
+          <div>
+            <div class="section-title">
+              <span>Свежие релизы хаба</span>
+            </div>
+            <div id="tracksPlaylist" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Треки рендерятся через JS -->
+            </div>
+          </div>
+        </main>
+
+        <!-- Правый бар Now Playing -->
+        <aside class="glass-panel spotify-right-sidebar">
+          <div class="section-title">Сейчас играет</div>
+          <div class="now-card-cover" id="sideCover">🎵</div>
+          <div>
+            <h3 id="sideTitle" style="font-size: 16px; font-weight: 700;">Snowfall</h3>
+            <p id="sideArtist" style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Oneheart</p>
+          </div>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
+            <button class="btn btn-dark" style="width: 100%;">Текст трека</button>
+            <button class="btn btn-gold" style="width: 100%;" onclick="switchModule('distro')">Статистика стримов</button>
+          </div>
+        </aside>
+
       </div>
-    </aside>
+    </section>
 
-  </div>
+    <!-- ==========================================
+         МОДУЛЬ 2: TELEGRAM WEB MESSENGER
+    =========================================== -->
+    <section class="view-module" id="view-telegram">
+      <div class="telegram-layout">
+        
+        <!-- Список чатов -->
+        <aside class="glass-panel tg-dialogs">
+          <div class="tg-search-bar">
+            <input type="text" class="tg-search-input" placeholder="Поиск чатов и продюсеров...">
+          </div>
+          <div class="tg-chat-list">
+            <div class="tg-dialog-item active">
+              <div class="tg-dialog-avatar">🎧</div>
+              <div style="flex: 1; overflow: hidden;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                  <span>Label Distribution Support</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">18:42</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px;">
+                  Ваш релиз прошел пре-модерацию в Spotify!
+                </p>
+              </div>
+            </div>
 
-  <!-- Плеер -->
-  <footer class="player-bar">
-    <div class="progress-container" id="progressBarContainer" onclick="seekTrack(event)">
-      <div class="progress-bar" id="trackProgress"></div>
+            <div class="tg-dialog-item">
+              <div class="tg-dialog-avatar" style="background: linear-gradient(135deg, #7b1fa2, #e91e63);">🎹</div>
+              <div style="flex: 1; overflow: hidden;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                  <span>Beatmakers Hub [Chat]</span>
+                  <span style="font-size: 11px; color: var(--text-muted);">Вчера</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px;">
+                  Кто свободен для сведения вокала на 808?
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Окно чата -->
+        <main class="glass-panel tg-chat-area">
+          <div class="tg-chat-header">
+            <div>
+              <div style="font-size: 14px; font-weight: 700;">Label Distribution Support</div>
+              <div style="font-size: 11px; color: var(--accent-gold);">● Онлайн • Официальный бот платформы</div>
+            </div>
+            <button class="btn btn-dark" style="padding: 6px 12px; font-size: 12px;">Информация</button>
+          </div>
+
+          <div class="tg-messages-scroll" id="tgMsgBox">
+            <div class="tg-bubble in">
+              Здравствуйте! Здесь вы можете напрямую общаться со звукорежиссерами, саппортом дистрибуции и другими артистами нашей сети.
+            </div>
+            <div class="tg-bubble in">
+              Если у вас готов WAV/MP3 мастер и обложка 3000x3000px, перейдите во вкладку <b>«Дистрибуция»</b>.
+            </div>
+          </div>
+
+          <div class="tg-input-bar">
+            <input type="text" id="tgInput" class="tg-text-input" placeholder="Написать сообщение в поддержку или чат..." onkeydown="if(event.key==='Enter') sendTgMessage()">
+            <button class="btn btn-gold" style="border-radius: 50%; width: 40px; height: 40px; padding: 0;" onclick="sendTgMessage()">➤</button>
+          </div>
+        </main>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         МОДУЛЬ 3: МУЗЫКАЛЬНАЯ ДИСТРИБУЦИЯ & ЛК
+    =========================================== -->
+    <section class="view-module" id="view-distro">
+      <div class="distro-layout">
+        
+        <!-- Форма загрузки релиза -->
+        <div class="glass-panel distro-form-card">
+          <div class="section-title" style="margin-bottom: 0;">
+            <span>Загрузка релиза на стриминговые витрины</span>
+            <span style="font-size: 12px; color: var(--accent-gold); font-weight: 600;">UPC/ISRC Автогенерация</span>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Название трека / Альбома</label>
+              <input type="text" id="distroTitle" class="input-field" placeholder="Например: Midnight Symphony">
+            </div>
+            <div class="form-field">
+              <label>Основной артист (Никнейм)</label>
+              <input type="text" id="distroArtist" class="input-field" placeholder="Ваш сценический псевдоним">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Жанр релиза</label>
+              <input type="text" id="distroGenre" class="input-field" placeholder="Phonk, Hip-Hop, Electronic...">
+            </div>
+            <div class="form-field">
+              <label>Дата премьеры</label>
+              <input type="date" id="distroDate" class="input-field">
+            </div>
+          </div>
+
+          <!-- Дропзоны -->
+          <div class="form-grid-2">
+            <div class="dropzone" onclick="mockFileUpload('Обложка (3000x3000px JPG/PNG)')">
+              <div style="font-size: 28px; margin-bottom: 6px;">🖼️</div>
+              <div style="font-size: 12px; font-weight: 700;">Загрузить обложку</div>
+              <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Кликните для выбора</div>
+            </div>
+
+            <div class="dropzone" onclick="mockFileUpload('Аудиофайл (WAV 24bit / MP3 320kbps)')">
+              <div style="font-size: 28px; margin-bottom: 6px;">🎵</div>
+              <div style="font-size: 12px; font-weight: 700;">Загрузить аудио (WAV)</div>
+              <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Кликните для выбора</div>
+            </div>
+          </div>
+
+          <!-- Выбор площадок -->
+          <div class="form-field">
+            <label>Стриминговые сервисы для доставки</label>
+            <div class="store-badge-selector">
+              <label class="store-label"><input type="checkbox" checked> Spotify Worldwide</label>
+              <label class="store-label"><input type="checkbox" checked> Apple Music</label>
+              <label class="store-label"><input type="checkbox" checked> Яндекс Музыка</label>
+              <label class="store-label"><input type="checkbox" checked> VK Музыка</label>
+            </div>
+          </div>
+
+          <button class="btn btn-gold" style="padding: 14px; font-size: 14px;" onclick="submitNewRelease()">
+            🚀 Отправить релиз на дистрибуцию
+          </button>
+        </div>
+
+        <!-- Кабинет статистики -->
+        <aside style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="glass-panel stats-card">
+            <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">Стримы за все время</div>
+            <div class="stat-number">1,489,200</div>
+            <div style="font-size: 11px; color: #4cd137;">▲ +14.8% за эту неделю</div>
+          </div>
+
+          <div class="glass-panel stats-card">
+            <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">Баланс роялти (к выводу)</div>
+            <div class="stat-number">$3,240.50</div>
+            <button class="btn btn-dark" style="margin-top: 6px;">Запросить вывод</button>
+          </div>
+
+          <div class="glass-panel stats-card">
+            <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Статус активных доставок</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;" id="distroStatusList">
+              <div style="padding: 8px; background: rgba(0,0,0,0.3); border-radius: 6px; border-left: 3px solid #4cd137;">
+                <b>Blinding Light</b> — Доставлен (4/4 витрин)
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       НИЖНИЙ WAVEFORM МАСТЕР-ПЛЕЕР
+  =========================================== -->
+  <footer class="master-player">
+    <div class="player-track-info">
+      <div class="track-thumb" id="bottomThumb">🎵</div>
+      <div>
+        <div style="font-size: 13px; font-weight: 700;" id="bottomTitle">Snowfall</div>
+        <div style="font-size: 11px; color: var(--text-muted);" id="bottomArtist">Oneheart</div>
+      </div>
     </div>
-    <div class="player-controls-row">
-      <div class="now-playing">
-        <div class="avatar" style="border-radius: 4px; width: 32px; height: 32px;" id="playerCover">🎵</div>
-        <div>
-          <div style="font-size: 12px; font-weight: 600;" id="playerTitle">Cyber City</div>
-          <div style="font-size: 10px; color: #9094a6;" id="playerArtist">Neon Wave</div>
-        </div>
+
+    <!-- Waveform & Controls -->
+    <div class="waveform-visualizer">
+      <button class="btn btn-dark" style="border-radius: 50%; width: 36px; height: 36px; padding: 0;" onclick="prevTrack()">⏮</button>
+      <button class="btn btn-gold" style="border-radius: 50%; width: 42px; height: 42px; padding: 0;" id="playToggleBtn" onclick="togglePlayback()">▶</button>
+      <button class="btn btn-dark" style="border-radius: 50%; width: 36px; height: 36px; padding: 0;" onclick="nextTrack()">⏭</button>
+      
+      <div class="wave-bars" id="waveBars">
+        <!-- Столбцы звуковой волны генерируются через JS -->
       </div>
-      <div style="display: flex; gap: 8px;">
-        <button class="btn btn-outline" style="padding: 4px 10px;" onclick="prevTrack()">⏮</button>
-        <button class="btn btn-primary" style="padding: 4px 14px;" id="playBtn" onclick="togglePlay()">▶</button>
-        <button class="btn btn-outline" style="padding: 4px 10px;" onclick="nextTrack()">⏭</button>
-      </div>
+      <span style="font-size: 11px; color: var(--text-muted); min-width: 35px;" id="timeIndicator">0:30</span>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+      <span style="font-size: 14px;">🔊</span>
+      <input type="range" min="0" max="100" value="80" style="accent-color: var(--accent-gold); width: 80px;" oninput="setGain(this.value)">
     </div>
   </footer>
 
-  <!-- Мобильные вкладки -->
-  <nav class="mobile-tab-bar">
-    <button class="tab-btn active" onclick="switchTab('tab-music', this)">
-      <span style="font-size: 18px;">🎵</span>
-      <span>Музыка</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-chats', this)">
-      <span style="font-size: 18px;">💬</span>
-      <span>Чаты</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-feed', this)">
-      <span style="font-size: 18px;">📰</span>
-      <span>Лента</span>
-    </button>
-  </nav>
-
-  <!-- Модалка: Авторизация -->
-  <div class="modal-overlay" id="authModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span id="authModalTitle">Вход в систему</span>
-        <button class="modal-close" onclick="closeAuthModal()">&times;</button>
-      </div>
-      <input type="text" id="usernameInput" class="modal-input" placeholder="Никнейм или почта">
-      <input type="password" id="passwordInput" class="modal-input" placeholder="Пароль">
-      <button class="btn btn-primary" onclick="handleAuthSubmit()">Продолжить</button>
-    </div>
-  </div>
-
-  <!-- Модалка: Дистрибуция -->
-  <div class="modal-overlay" id="distributeModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span>Загрузка релиза</span>
-        <button class="modal-close" onclick="closeDistributeModal()">&times;</button>
-      </div>
-      <input type="text" id="releaseTitleInput" class="modal-input" placeholder="Название трека/альбома">
-      <input type="text" id="releaseArtistInput" class="modal-input" placeholder="Имя исполнителя">
-      
-      <div class="checkbox-group">
-        <span style="color: #9094a6; margin-bottom: 2px;">Площадки для релиза:</span>
-        <label><input type="checkbox" checked> Spotify</label>
-        <label><input type="checkbox" checked> Apple Music</label>
-        <label><input type="checkbox" checked> Яндекс Музыка</label>
-        <label><input type="checkbox" checked> VK Музыка</label>
-      </div>
-
-      <button class="btn btn-primary" onclick="submitRelease()">Отправить на модерацию</button>
-    </div>
-  </div>
-
+  <!-- ==========================================
+       JAVASCRIPT LOGIC ENGINE
+  =========================================== -->
   <script>
-    /* ================= 1. БАЗА ДАННЫХ И СОСТОЯНИЕ ================= */
-    let currentUser = localStorage.getItem('hub_user') || null;
-
-    const tracks = [
-      { id: 1, title: 'Cyber City', artist: 'Neon Wave', freq: 440, emoji: '⚡' },
-      { id: 2, title: 'Midnight Walk', artist: 'Skyline', freq: 330, emoji: '🌙' },
-      { id: 3, title: 'Sub Bass Pulse', artist: '808 Crew', freq: 220, emoji: '🔊' },
-      { id: 4, title: 'Retro Drive', artist: 'Synth Boy', freq: 554, emoji: '🚗' }
+    /* 1. БАЗА ДАННЫХ И СОСТОЯНИЕ */
+    const playlist = [
+      { id: 1, title: 'Snowfall', artist: 'Oneheart x reidenshi', emoji: '❄️', freq: 350 },
+      { id: 2, title: 'Blinding Light', artist: 'The Weeknd', emoji: '⚡', freq: 440 },
+      { id: 3, title: 'Mr. Right Now', artist: 'Metro Boomin ft. 21 Savage', emoji: '🌙', freq: 220 },
+      { id: 4, title: 'Many Men (Remix)', artist: '21 Savage', emoji: '🔥', freq: 520 },
+      { id: 5, title: 'Apathy', artist: 'Teeze', emoji: '✨', freq: 310 }
     ];
 
-    let currentTrackIndex = 0;
+    let currentTrackIdx = 0;
     let isPlaying = false;
-    let progress = 0;
-    let progressInterval = null;
+    let progressTimer = null;
+    let waveStep = 0;
 
-    // Web Audio API для генерации звука без внешних файлов
+    // Web Audio Synthesizer (для воспроизведения звука без внешних файлов)
     let audioCtx = null;
-    let oscillator = null;
-    let gainNode = null;
+    let osc = null;
+    let masterGain = null;
 
-    /* ================= 2. АВТОРИЗАЦИЯ ================= */
-    function initUser() {
-      const userBadge = document.getElementById('userBadge');
-      const authBtn = document.getElementById('authBtn');
-      const regBtn = document.getElementById('regBtn');
+    /* 2. НАВИГАЦИЯ МЕЖДУ СЕРВИСАМИ */
+    function switchModule(moduleName) {
+      document.querySelectorAll('.view-module').forEach(m => m.classList.remove('active'));
+      document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
 
-      if (currentUser) {
-        userBadge.textContent = `@${currentUser}`;
-        userBadge.style.display = 'inline-block';
-        authBtn.textContent = 'Выйти';
-        regBtn.style.display = 'none';
-      } else {
-        userBadge.style.display = 'none';
-        authBtn.textContent = 'Войти';
-        regBtn.style.display = 'inline-block';
+      document.getElementById(`view-${moduleName}`).classList.add('active');
+      document.getElementById(`btn-${moduleName}`).classList.add('active');
+    }
+
+    /* 3. РЕНДЕР И РАБОТА ПЛЕЕРА */
+    function initWaveform() {
+      const waveContainer = document.getElementById('waveBars');
+      waveContainer.innerHTML = '';
+      for (let i = 0; i < 48; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'wave-bar';
+        bar.style.height = `${Math.floor(Math.random() * 70) + 15}%`;
+        waveContainer.appendChild(bar);
       }
     }
 
-    function openAuthModal(isReg = false) {
-      if (currentUser) {
-        // Логика выхода
-        currentUser = null;
-        localStorage.removeItem('hub_user');
-        initUser();
-        return;
-      }
-      document.getElementById('authModalTitle').textContent = isReg ? 'Регистрация' : 'Вход в систему';
-      document.getElementById('authModal').style.display = 'flex';
-    }
-
-    function closeAuthModal() {
-      document.getElementById('authModal').style.display = 'none';
-    }
-
-    function handleAuthSubmit() {
-      const name = document.getElementById('usernameInput').value.trim();
-      if (!name) {
-        alert('Введите имя пользователя!');
-        return;
-      }
-      currentUser = name;
-      localStorage.setItem('hub_user', name);
-      initUser();
-      closeAuthModal();
-      document.getElementById('usernameInput').value = '';
-      document.getElementById('passwordInput').value = '';
-    }
-
-    /* ================= 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР ================= */
-    function renderTracks() {
-      const container = document.getElementById('trackList');
+    function renderPlaylist() {
+      const container = document.getElementById('tracksPlaylist');
       container.innerHTML = '';
 
-      tracks.forEach((track, index) => {
-        const card = document.createElement('div');
-        card.className = `track-card ${index === currentTrackIndex ? 'active-playing' : ''}`;
-        card.onclick = () => selectTrack(index);
-        card.innerHTML = `
-          <div class="track-cover">${track.emoji}</div>
-          <div class="track-title">${track.title}</div>
-          <div class="track-artist">${track.artist}</div>
+      playlist.forEach((track, i) => {
+        const row = document.createElement('div');
+        row.className = `track-row ${i === currentTrackIdx ? 'playing' : ''}`;
+        row.onclick = () => playCurrentTrack(i);
+        row.innerHTML = `
+          <div class="track-meta">
+            <div class="track-thumb">${track.emoji}</div>
+            <div>
+              <div style="font-size: 13px; font-weight: 700;">${track.title}</div>
+              <div style="font-size: 11px; color: var(--text-muted);">${track.artist}</div>
+            </div>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted);">03:15</div>
         `;
-        container.appendChild(card);
+        container.appendChild(row);
       });
     }
 
-    function initAudio() {
+    function updatePlayerInfo() {
+      const track = playlist[currentTrackIdx];
+      document.getElementById('bottomTitle').textContent = track.title;
+      document.getElementById('bottomArtist').textContent = track.artist;
+      document.getElementById('bottomThumb').textContent = track.emoji;
+      
+      document.getElementById('sideTitle').textContent = track.title;
+      document.getElementById('sideArtist').textContent = track.artist;
+      document.getElementById('sideCover').textContent = track.emoji;
+
+      document.getElementById('playToggleBtn').textContent = isPlaying ? '⏸' : '▶';
+      renderPlaylist();
+    }
+
+    function initAudioEngine() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
       }
     }
 
-    function startSound(frequency) {
-      initAudio();
-      stopSound();
-      oscillator = audioCtx.createOscillator();
-      gainNode = audioCtx.createGain();
-      
-      oscillator.type = 'triangle';
-      oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-      gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      oscillator.start();
+    function startSynth(freq) {
+      initAudioEngine();
+      stopSynth();
+      osc = audioCtx.createOscillator();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      osc.connect(masterGain);
+      osc.start();
     }
 
-    function stopSound() {
-      if (oscillator) {
+    function stopSynth() {
+      if (osc) {
         try {
-          oscillator.stop();
-          oscillator.disconnect();
+          osc.stop();
+          osc.disconnect();
         } catch (e) {}
-        oscillator = null;
+        osc = null;
       }
     }
 
-    function updatePlayerUI() {
-      const track = tracks[currentTrackIndex];
-      document.getElementById('playerTitle').textContent = track.title;
-      document.getElementById('playerArtist').textContent = track.artist;
-      document.getElementById('playerCover').textContent = track.emoji;
-      document.getElementById('playBtn').textContent = isPlaying ? '⏸' : '▶';
-      renderTracks();
-    }
-
-    function togglePlay() {
-      if (isPlaying) {
-        pauseTrack();
-      } else {
-        playTrack();
+    function setGain(val) {
+      if (masterGain && audioCtx) {
+        masterGain.gain.setValueAtTime((val / 100) * 0.1, audioCtx.currentTime);
       }
     }
 
-    function playTrack() {
+    function playCurrentTrack(idx) {
+      currentTrackIdx = idx;
       isPlaying = true;
-      startSound(tracks[currentTrackIndex].freq);
-      updatePlayerUI();
+      startSynth(playlist[idx].freq);
+      updatePlayerInfo();
 
-      clearInterval(progressInterval);
-      progressInterval = setInterval(() => {
-        progress += 1;
-        if (progress > 100) {
-          nextTrack();
-        } else {
-          document.getElementById('trackProgress').style.width = progress + '%';
-        }
-      }, 300);
+      clearInterval(progressTimer);
+      progressTimer = setInterval(animateWaveform, 200);
     }
 
-    function pauseTrack() {
-      isPlaying = false;
-      stopSound();
-      clearInterval(progressInterval);
-      updatePlayerUI();
-    }
-
-    function selectTrack(index) {
-      currentTrackIndex = index;
-      progress = 0;
-      playTrack();
+    function togglePlayback() {
+      if (isPlaying) {
+        isPlaying = false;
+        stopSynth();
+        clearInterval(progressTimer);
+        updatePlayerInfo();
+      } else {
+        playCurrentTrack(currentTrackIdx);
+      }
     }
 
     function nextTrack() {
-      currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-      progress = 0;
-      playTrack();
+      currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
+      playCurrentTrack(currentTrackIdx);
     }
 
     function prevTrack() {
-      currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-      progress = 0;
-      playTrack();
+      currentTrackIdx = (currentTrackIdx - 1 + playlist.length) % playlist.length;
+      playCurrentTrack(currentTrackIdx);
     }
 
-    function seekTrack(event) {
-      const container = document.getElementById('progressBarContainer');
-      const rect = container.getBoundingClientRect();
-      const clickX = event.clientX - rect.left;
-      const percentage = (clickX / rect.width) * 100;
-      progress = Math.max(0, Math.min(100, percentage));
-      document.getElementById('trackProgress').style.width = progress + '%';
+    function animateWaveform() {
+      const bars = document.querySelectorAll('.wave-bar');
+      bars.forEach((bar, idx) => {
+        if (idx <= waveStep) {
+          bar.classList.add('active');
+        } else {
+          bar.classList.remove('active');
+        }
+      });
+      waveStep = (waveStep + 1) % bars.length;
     }
 
-    /* ================= 4. ДИСТРИБУЦИЯ ================= */
-    function openDistributeModal() {
-      document.getElementById('distributeModal').style.display = 'flex';
+    /* 4. TELEGRAM WEB LOGIC */
+    function sendTgMessage() {
+      const input = document.getElementById('tgInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const box = document.getElementById('tgMsgBox');
+      const outMsg = document.createElement('div');
+      outMsg.className = 'tg-bubble out';
+      outMsg.textContent = text;
+      box.appendChild(outMsg);
+
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      setTimeout(() => {
+        const inMsg = document.createElement('div');
+        inMsg.className = 'tg-bubble in';
+        inMsg.textContent = 'Менеджер лейбла получил сообщение. Запрос на релиз взят в работу!';
+        box.appendChild(inMsg);
+        box.scrollTop = box.scrollHeight;
+      }, 1000);
     }
 
-    function closeDistributeModal() {
-      document.getElementById('distributeModal').style.display = 'none';
+    /* 5. ДИСТРИБУЦИЯ LOGIC */
+    function mockFileUpload(type) {
+      alert(`[Симуляция проводника]: Выбран файл для «${type}»`);
     }
 
-    function submitRelease() {
-      const title = document.getElementById('releaseTitleInput').value.trim();
-      const artist = document.getElementById('releaseArtistInput').value.trim() || (currentUser || 'Новый артист');
+    function submitNewRelease() {
+      const title = document.getElementById('distroTitle').value.trim();
+      const artist = document.getElementById('distroArtist').value.trim();
 
-      if (!title) {
-        alert('Укажите название трека!');
+      if (!title || !artist) {
+        alert('Пожалуйста, заполните название трека и имя артиста!');
         return;
       }
 
+      // Добавляем в общий стриминг каталог
       const newTrack = {
-        id: tracks.length + 1,
+        id: playlist.length + 1,
         title: title,
         artist: artist,
-        freq: 400 + Math.floor(Math.random() * 200),
-        emoji: '🔥'
+        emoji: '⚡',
+        freq: 380 + Math.floor(Math.random() * 200)
       };
+      playlist.unshift(newTrack);
+      currentTrackIdx = 0;
+      updatePlayerInfo();
 
-      tracks.push(newTrack);
-      renderTracks();
-      closeDistributeModal();
+      // Добавляем статус в ЛК
+      const statusList = document.getElementById('distroStatusList');
+      const statusItem = document.createElement('div');
+      statusItem.style.cssText = 'padding: 8px; background: rgba(0,0,0,0.3); border-radius: 6px; border-left: 3px solid var(--accent-gold);';
+      statusItem.innerHTML = `<b>${title}</b> — На модерации (Spotify, Apple, VK)`;
+      statusList.prepend(statusItem);
 
-      // Очистка
-      document.getElementById('releaseTitleInput').value = '';
-      document.getElementById('releaseArtistInput').value = '';
-
-      alert(`Релиз "${title}" отправлен на дистрибуцию и добавлен в ваш каталог!`);
+      alert(`Релиз «${title}» успешно загружен в экосистему и отправлен на дистрибуцию!`);
+      document.getElementById('distroTitle').value = '';
+      document.getElementById('distroArtist').value = '';
+      switchModule('spotify');
     }
 
-    /* ================= 5. МЕССЕНДЖЕР ================= */
-    function sendChatMessage() {
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const chatBox = document.getElementById('chatBox');
-
-      // Исходящее сообщение
-      const msgOut = document.createElement('div');
-      msgOut.className = 'chat-msg outgoing';
-      msgOut.textContent = text;
-      chatBox.appendChild(msgOut);
-
-      input.value = '';
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      // Автоответ через 800мс
-      setTimeout(() => {
-        const msgIn = document.createElement('div');
-        msgIn.className = 'chat-msg incoming';
-        msgIn.textContent = 'Принято! Ответ команды саппорта: проверяем детали.';
-        chatBox.appendChild(msgIn);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }, 800);
-    }
-
-    /* ================= 6. ЛЕНТА ================= */
-    function createPost() {
-      const input = document.getElementById('postInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const feed = document.getElementById('feedPosts');
-      const author = currentUser || 'Аноним';
-      const initial = author.charAt(0).toUpperCase();
-
-      const post = document.createElement('div');
-      post.className = 'post';
-      post.innerHTML = `
-        <div class="post-header">
-          <div class="avatar">${initial}</div>
-          <strong style="font-size: 13px;">${author}</strong>
-        </div>
-        <div class="post-body">${text}</div>
-        <div class="post-actions">
-          <button class="like-btn" onclick="toggleLike(this)">❤️ <span>0</span></button>
-        </div>
-      `;
-
-      feed.prepend(post);
-      input.value = '';
-    }
-
-    function toggleLike(btn) {
-      const countSpan = btn.querySelector('span');
-      let count = parseInt(countSpan.textContent, 10);
-      btn.classList.toggle('liked');
-      if (btn.classList.contains('liked')) {
-        countSpan.textContent = count + 1;
-      } else {
-        countSpan.textContent = Math.max(0, count - 1);
-      }
-    }
-
-    /* ================= 7. НАВИГАЦИЯ ================= */
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.card').forEach(card => card.classList.remove('active-tab'));
-      document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
-      
-      document.getElementById(tabId).classList.add('active-tab');
-      btn.classList.add('active');
-    }
-
-    // Инициализация при старте
+    // Инициализация при загрузке
     window.addEventListener('DOMContentLoaded', () => {
-      initUser();
-      renderTracks();
-      updatePlayerUI();
+      initWaveform();
+      renderPlaylist();
+      updatePlayerInfo();
     });
   </script>
 </body>
