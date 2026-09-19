@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SerjantDev | Мониторинг заказов: Боты, Сайты, Mini Apps</title>
+    <title>SerjantDev | Радар заказов, Студия и Цифровые товары</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
@@ -24,7 +24,6 @@
             color: #e0e0e0;
             line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh;
         }
 
         ::-webkit-scrollbar {
@@ -45,7 +44,6 @@
             padding: 0 20px;
         }
 
-        /* ===== НАВИГАЦИЯ ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -87,7 +85,7 @@
 
         .nav-links {
             display: flex;
-            gap: 18px;
+            gap: 16px;
             list-style: none;
             align-items: center;
             flex-wrap: wrap;
@@ -97,7 +95,7 @@
             color: #a0a0b0;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 5px 0;
@@ -124,14 +122,18 @@
             width: 100%;
         }
 
-        .order-badge {
+        .cart-badge, .radar-badge {
             background: #00ff88;
             color: #0a0a0f;
             border-radius: 50px;
-            padding: 2px 10px;
-            font-size: 0.75rem;
+            padding: 2px 8px;
+            font-size: 0.7rem;
             font-weight: 700;
-            margin-left: 5px;
+            margin-left: 4px;
+        }
+
+        .radar-badge {
+            background: #00ccff;
         }
 
         .burger {
@@ -149,7 +151,6 @@
             transition: all 0.3s ease;
         }
 
-        /* ===== СТРАНИЦЫ И СЕКЦИИ ===== */
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
@@ -162,14 +163,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
@@ -177,12 +172,12 @@
             font-size: 2.3rem;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             background: linear-gradient(135deg, #00ff88, #00ccff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
         }
 
@@ -228,9 +223,9 @@
             font-size: 0.75rem;
         }
 
-        /* ===== ХЕДЕР / HERO ===== */
+        /* ===== ГЛАВНАЯ (HERO) ===== */
         .hero {
-            min-height: 85vh;
+            min-height: 90vh;
             display: flex;
             align-items: center;
             position: relative;
@@ -261,7 +256,7 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 50px;
             align-items: center;
         }
@@ -284,19 +279,19 @@
             font-size: 1.05rem;
             color: #a0a0b0;
             margin-bottom: 25px;
-            max-width: 540px;
+            max-width: 520px;
         }
 
         .hero-badges {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
         .badge {
-            padding: 6px 16px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 5px 14px;
+            border: 1px solid rgba(0, 255, 136, 0.15);
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
@@ -348,7 +343,7 @@
 
         .hero-code {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.08);
             border-radius: 20px;
             padding: 24px;
             backdrop-filter: blur(10px);
@@ -361,21 +356,18 @@
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
             color: #00ff88;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            line-height: 1.7;
+            border: 1px solid rgba(255,255,255,0.03);
+            line-height: 1.6;
         }
 
+        .hero-code .comment { color: #4a4a5a; }
         .hero-code .keyword { color: #ff6b9d; }
         .hero-code .string { color: #ffd93d; }
         .hero-code .function { color: #6bcbff; }
-        .hero-code .comment { color: #4a4a5a; }
+        .hero-code .variable { color: #ff9f43; }
 
-        /* ===== ЛЕНТА ЗАКАЗОВ ===== */
-        .orders-page {
-            padding: 30px 0 80px;
-        }
-
-        .orders-controls {
+        /* ===== РАДАР ЗАКАЗОВ ===== */
+        .radar-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -384,13 +376,13 @@
             margin-bottom: 25px;
         }
 
-        .orders-filters {
+        .radar-filters {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .orders-filters button {
+        .radar-filters button {
             padding: 8px 18px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -402,27 +394,22 @@
             font-size: 0.8rem;
         }
 
-        .orders-filters button:hover, .orders-filters button.active {
+        .radar-filters button:hover, .radar-filters button.active {
             border-color: #00ff88;
             color: #00ff88;
             background: rgba(0, 255, 136, 0.1);
         }
 
-        .search-box {
-            position: relative;
-            min-width: 260px;
-        }
-
         .search-box input {
-            width: 100%;
-            padding: 10px 16px;
+            padding: 10px 18px;
             background: #0d0d14;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             color: #fff;
             font-size: 0.85rem;
             outline: none;
-            transition: all 0.3s ease;
+            width: 250px;
+            transition: all 0.3s;
         }
 
         .search-box input:focus {
@@ -430,67 +417,50 @@
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
         }
 
-        .orders-grid {
+        .radar-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
         }
 
-        .order-card {
+        .radar-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 18px;
             padding: 22px;
             transition: all 0.3s ease;
-            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
-        .order-card::before {
+        .radar-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 3px;
             background: linear-gradient(90deg, #00ff88, #00ccff);
             transform: scaleX(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
             border-top-left-radius: 18px;
             border-top-right-radius: 18px;
         }
 
-        .order-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .order-card:hover {
-            transform: translateY(-6px);
+        .radar-card:hover::before { transform: scaleX(1); }
+        .radar-card:hover {
+            transform: translateY(-5px);
             border-color: rgba(0, 255, 136, 0.25);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .order-header {
+        .radar-badge-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 12px;
-            gap: 10px;
         }
 
-        .order-source {
-            font-size: 0.7rem;
-            padding: 3px 10px;
-            background: rgba(0, 204, 255, 0.1);
-            color: #00ccff;
-            border: 1px solid rgba(0, 204, 255, 0.2);
-            border-radius: 50px;
-            font-weight: 600;
-        }
-
-        .order-category {
+        .radar-tag {
             font-size: 0.7rem;
             padding: 3px 10px;
             background: rgba(0, 255, 136, 0.1);
@@ -500,15 +470,24 @@
             font-weight: 600;
         }
 
-        .order-card h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #f1f5f9;
-            margin-bottom: 15px;
-            line-height: 1.4;
+        .radar-source {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            background: rgba(0, 204, 255, 0.1);
+            color: #00ccff;
+            border: 1px solid rgba(0, 204, 255, 0.2);
+            border-radius: 50px;
+            font-weight: 600;
         }
 
-        .order-price {
+        .radar-card h3 {
+            font-size: 1.05rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: #f1f5f9;
+        }
+
+        .radar-price {
             font-family: 'Orbitron', monospace;
             font-size: 1.15rem;
             font-weight: 700;
@@ -516,54 +495,282 @@
             margin-bottom: 15px;
         }
 
-        .order-card a {
-            align-self: flex-start;
-            text-decoration: none;
+        /* ===== УСЛУГИ ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #00ff88;
+        }
+
+        .service-card p {
+            color: #a0a0b0;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .service-features span {
+            font-size: 0.7rem;
+            padding: 3px 12px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 20px;
+            color: #9090a0;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .service-tag {
+            display: inline-block;
+            padding: 4px 15px;
+            background: rgba(0, 255, 136, 0.08);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.05);
+        }
+
+        /* ===== МАГАЗИН ===== */
+        .shop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .shop-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .shop-filters button {
             padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            color: #a0a0b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
             font-size: 0.8rem;
         }
 
-        .orders-empty {
-            text-align: center;
-            grid-column: 1 / -1;
-            padding: 60px 20px;
-            color: #707080;
+        .shop-filters button:hover, .shop-filters button.active {
+            border-color: #00ff88;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
         }
 
-        .orders-empty .icon {
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .shop-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .shop-item .image {
+            height: 130px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 3.5rem;
-            display: block;
-            margin-bottom: 15px;
+            position: relative;
         }
 
-        /* ===== КАЛЬКУЛЯТОР ===== */
-        .calculator-page {
-            padding: 40px 0 80px;
+        .shop-item .image .tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 12px;
+            background: rgba(0, 255, 136, 0.15);
+            border-radius: 50px;
+            font-size: 0.65rem;
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.1);
         }
 
-        .calc-box {
+        .shop-item .info {
+            padding: 20px;
+        }
+
+        .shop-item .info h4 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #00ff88;
+        }
+
+        .shop-item .info .desc {
+            color: #a0a0b0;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            min-height: 40px;
+        }
+
+        .shop-item .info .price {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #00ccff;
+            margin-bottom: 12px;
+        }
+
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .admin-panel.open { display: block; }
+        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .admin-form .full-width { grid-column: 1 / -1; }
+        .admin-form label { font-size: 0.8rem; color: #a0a0b0; margin-bottom: 4px; display: block; }
+        .admin-form input, .admin-form select, .admin-form textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0d0d14;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        /* ===== КОРЗИНА И МОДАЛКИ ===== */
+        .cart-sidebar {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: #0d0d14;
+            border-left: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 30px;
+            transition: right 0.4s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open { right: 0; }
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            display: none;
+        }
+        .cart-overlay.show { display: block; }
+
+        .password-modal, .settings-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.show, .settings-modal.show { display: flex; }
+        .modal-content {
+            background: #0d0d14;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 24px;
+            padding: 35px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .settings-group { margin-bottom: 20px; text-align: left; }
+        .settings-group label { display: block; color: #a0a0b0; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+        .theme-options, .lang-options { display: flex; gap: 10px; }
+        .theme-options button, .lang-options button {
+            flex: 1; padding: 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+            background: transparent; color: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 600;
+        }
+        .theme-options button.active-theme, .lang-options button.active-lang {
+            border-color: #00ff88; background: rgba(0, 255, 136, 0.1); color: #00ff88;
+        }
+
+        /* ===== КАЛЬКУЛЯТОР И КОНТАКТЫ ===== */
+        .calc-box, .contact-form {
             max-width: 650px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             padding: 35px;
             backdrop-filter: blur(10px);
         }
 
-        .calc-box label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #c0c0d0;
-            font-size: 0.9rem;
+        .calc-box label, .contact-form label {
+            display: block; font-weight: 600; margin-bottom: 8px; color: #c0c0d0; font-size: 0.9rem;
         }
 
-        .calc-box select, .calc-box input[type="range"] {
+        .calc-box select, .calc-box input[type="range"], .contact-form input, .contact-form select, .contact-form textarea {
             width: 100%;
             padding: 12px 16px;
             background: #0d0d14;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             color: #e0e0e0;
             font-size: 0.95rem;
@@ -577,157 +784,82 @@
             background: linear-gradient(90deg, #00ff88, #00ccff);
             border-radius: 2px;
             padding: 0;
-            margin-bottom: 25px;
         }
 
         .calc-box input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #00ff88;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            -webkit-appearance: none; width: 20px; height: 20px; background: #00ff88; border-radius: 50%; cursor: pointer;
         }
 
         .calc-result {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
-            border-radius: 16px;
-            border: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center; padding: 25px; background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
+            border-radius: 16px; border: 1px solid rgba(0, 255, 136, 0.08);
         }
 
         .calc-result .price {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #00ff88;
+            font-family: 'Orbitron', monospace; font-size: 2.6rem; font-weight: 900; color: #00ff88;
         }
 
-        /* ===== МОДАЛКА НАСТРОЕК ===== */
-        .settings-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .settings-modal.show {
-            display: flex;
+        .contact-info-item {
+            text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;
         }
 
-        .settings-modal .modal-content {
-            background: #0d0d14;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-        }
-
-        .settings-modal h3 {
-            font-family: 'Orbitron', monospace;
-            color: #00ff88;
-            margin-bottom: 20px;
+        .footer {
+            padding: 35px 0;
             text-align: center;
-        }
-
-        .settings-group {
-            margin-bottom: 20px;
-        }
-
-        .settings-group label {
-            display: block;
-            color: #a0a0b0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: #64748b;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 8px;
+            margin-top: 50px;
         }
 
-        .theme-options, .lang-options {
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-options button, .lang-options button {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            background: transparent;
-            color: #fff;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .theme-options button.active-theme, .lang-options button.active-lang {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
-        }
-
-        /* ===== УВЕДОМЛЕНИЯ ===== */
         .toast {
             position: fixed;
             bottom: 30px;
             right: 30px;
             background: #00ff88;
             color: #0a0a0f;
-            padding: 14px 25px;
-            border-radius: 12px;
+            padding: 14px 26px;
+            border-radius: 14px;
             font-weight: 700;
             transform: translateY(100px);
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.4s ease;
             z-index: 9999;
             font-size: 0.85rem;
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
 
-        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 992px) {
-            .hero .container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
             .hero-content p { margin: 0 auto 25px auto; }
             .hero-badges, .hero-buttons, .hero-stats { justify-content: center; }
             .hero-code { display: none; }
+            .cart-sidebar { width: 100%; right: -100%; }
         }
 
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 15, 0.98);
-                padding: 20px;
-                gap: 15px;
-                border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+                display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10, 10, 15, 0.98); padding: 20px; gap: 15px; border-bottom: 1px solid rgba(0, 255, 136, 0.1);
             }
             .nav-links.active { display: flex; }
             .burger { display: flex; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .orders-controls { flex-direction: column; align-items: stretch; }
-            .search-box { width: 100%; }
+            .hero-content h1 { font-size: 2.1rem; }
+            .admin-form { grid-template-columns: 1fr; }
+            .radar-controls { flex-direction: column; align-items: stretch; }
+            .search-box input { width: 100%; }
         }
     </style>
 </head>
@@ -739,34 +871,51 @@
             <a href="#" class="logo" data-page="home">SERJANT<span>DEV</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" data-page="home" class="active" data-i18n="nav_home">Главная</a></li>
+                <li><a href="#" data-page="services" data-i18n="nav_services">Услуги</a></li>
+                <li><a href="#" data-page="shop" data-i18n="nav_shop">Магазин</a></li>
                 <li>
-                    <a href="#" data-page="orders" data-i18n="nav_orders">
-                        Заказы <span class="order-badge" id="orderCount">0</span>
+                    <a href="#" data-page="radar" data-i18n="nav_radar">
+                        ⚡ Радар заказов <span class="radar-badge" id="radarCount">0</span>
                     </a>
                 </li>
                 <li><a href="#" data-page="calculator" data-i18n="nav_calculator">Калькулятор</a></li>
+                <li><a href="#" data-page="contact" data-i18n="nav_contact">Контакты</a></li>
                 <li><a href="#" id="settingsToggle">⚙️</a></li>
-                <li><a href="#" class="btn btn-sm" id="refreshBtn" data-i18n="nav_refresh">⚡ Обновить</a></li>
+                <li>
+                    <a href="#" id="cartToggle">
+                        🛒 <span class="cart-badge" id="cartCount">0</span>
+                    </a>
+                </li>
             </ul>
             <div class="burger" id="burger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
 
+    <!-- МОДАЛКА ПАРОЛЯ АДМИНКИ -->
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-content">
+            <span style="font-size: 3.5rem; display: block; margin-bottom: 15px;">🔐</span>
+            <h3 style="font-family: 'Orbitron'; color: #00ff88; margin-bottom: 8px;">Вход в админ-панель</h3>
+            <p style="color: #a0a0b0; font-size: 0.85rem; margin-bottom: 20px;">Введите пароль управления товарами</p>
+            <input type="password" id="passwordInput" placeholder="Пароль" style="width:100%; padding:12px; background:#0a0a0f; border:1px solid #334155; border-radius:10px; color:#fff; margin-bottom:15px; outline:none;" />
+            <button class="btn" style="width: 100%;" id="passwordSubmit">Войти</button>
+            <div id="passwordError" style="color: #ff4757; font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный пароль!</div>
+        </div>
+    </div>
+
     <!-- МОДАЛКА НАСТРОЕК -->
     <div class="settings-modal" id="settingsModal">
         <div class="modal-content">
-            <h3>⚙️ Настройки</h3>
+            <h3 style="font-family: 'Orbitron'; color: #00ff88; margin-bottom: 20px;">⚙️ Настройки</h3>
             
             <div class="settings-group">
-                <label data-i18n="settings_theme">Цветовая схема</label>
+                <label data-i18n="settings_theme">Тема оформления</label>
                 <div class="theme-options">
-                    <button data-theme="green" class="active-theme">🟢 Green</button>
-                    <button data-theme="blue">🔵 Cyan</button>
-                    <button data-theme="red">🔴 Red</button>
+                    <button data-theme="green" class="active-theme">🟢 Зеленая</button>
+                    <button data-theme="red">🔴 Красная</button>
+                    <button data-theme="blue">🔵 Синяя</button>
                 </div>
             </div>
 
@@ -782,260 +931,548 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА: ГЛАВНАЯ -->
+    <!-- КОРЗИНА И ОВЕРЛЕЙ -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.05);">
+            <h3 style="font-family:'Orbitron'; color:#00ff88;">🛒 Корзина</h3>
+            <button style="background:none; border:none; color:#a0a0b0; font-size:1.5rem; cursor:pointer;" id="cartClose">✕</button>
+        </div>
+        <div id="cartItems"><p style="color: #707080; text-align: center; padding: 30px 0;">Корзина пуста</p></div>
+        <div id="cartTotal" style="display: none; padding: 20px 0; border-top: 2px solid rgba(0,255,136,0.1); margin-top: 20px; text-align: center;">
+            <div style="color: #707080; font-size: 0.9rem;">Итого:</div>
+            <div id="totalPrice" style="font-family: 'Orbitron'; font-size: 2rem; color: #00ff88; margin-bottom: 15px;">0 ₽</div>
+            <button class="btn" style="width: 100%;" id="checkoutBtn">Оформить заказ</button>
+        </div>
+    </div>
+
+    <!-- 1. СТРАНИЦА: ГЛАВНАЯ -->
     <div class="page active" id="page-home">
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-badges">
-                        <span class="badge">🤖 Telegram Боты</span>
-                        <span class="badge">📱 Telegram Mini Apps</span>
-                        <span class="badge">🌐 Сайты и Верстка</span>
+                        <span class="badge">🌐 Сайты</span>
+                        <span class="badge">🤖 Боты</span>
+                        <span class="badge">📱 Mini Apps</span>
+                        <span class="badge">⚡ Парсер заказов</span>
+                        <span class="badge">⛏️ Моды</span>
                     </div>
                     <h1>
-                        <span data-i18n="hero_title1">Автоматический радар</span> <br />
-                        <span class="highlight" data-i18n="hero_title2">IT-заказов и клиентов</span>
+                        <span data-i18n="hero_title1">Разработка и</span> <br />
+                        <span class="highlight" data-i18n="hero_title2">поиск IT-заказов</span>
                     </h1>
                     <p data-i18n="hero_desc">
-                        Парсинг свежих задач с Habr Freelance, FL.ru, Freelance.ru и закрытых Telegram-каналов в реальном времени. Только твои компетенции без спама.
+                        Создание сайтов, Telegram-ботов, Mini Apps и встроенный мониторинг свежих заказов с фриланс-бирж каждые 15 минут.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn" data-page="orders" data-i18n="hero_btn_orders">Смотреть заказы</a>
-                        <a href="#" class="btn btn-secondary" data-page="calculator" data-i18n="hero_btn_calc">Калькулятор прайса</a>
+                        <a href="#" class="btn" data-page="radar">⚡ Радар заказов</a>
+                        <a href="#" class="btn btn-secondary" data-page="shop">В магазин</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="number" id="statTotal">0</div>
-                            <div class="label" data-i18n="stat_active">Активных заказов</div>
+                            <div class="number" id="statOrdersCount">0</div>
+                            <div class="label">Заказов в радаре</div>
                         </div>
                         <div class="stat-item">
-                            <div class="number">24/7</div>
-                            <div class="label" data-i18n="stat_parser">Работа парсера</div>
+                            <div class="number">15 мин</div>
+                            <div class="label">Автообновление</div>
                         </div>
                         <div class="stat-item">
                             <div class="number">100%</div>
-                            <div class="label" data-i18n="stat_skills">По твоим стекам</div>
+                            <div class="label">Готов к работе</div>
                         </div>
                     </div>
                 </div>
                 <div class="hero-code">
                     <div class="code-window">
-                        <div><span class="comment"># SerjantDev Parser Engine</span></div>
-                        <div><span class="keyword">from</span> aggregator <span class="keyword">import</span> TGHub, RSSFeed</div>
-                        <div><span class="keyword">class</span> <span class="function">ClientRadar</span>:</div>
-                        <div>&nbsp;&nbsp;filters = [<span class="string">"telegram bot"</span>, <span class="string">"mini app"</span>, <span class="string">"html/css"</span>]</div>
-                        <div>&nbsp;&nbsp;status = <span class="string">"⚡ Сканирую рынок..."</span></div>
+                        <div class="comment"># SerjantDev Core Engine</div>
+                        <div><span class="keyword">from</span> aggregator <span class="keyword">import</span> Radar</div>
+                        <div><span class="keyword">class</span> <span class="function">ProjectRadar</span>:</div>
+                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.<span class="variable">interval</span> = <span class="string">"15 minutes"</span></div>
+                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.<span class="variable">status</span> = <span class="string">"🚀 Сканирование активно!"</span></div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- СТРАНИЦА: ЛЕНТА ЗАКАЗОВ -->
-    <div class="page" id="page-orders">
-        <div class="container orders-page">
-            <h2 class="section-title" data-i18n="orders_title">Радар IT-Заказов</h2>
+    <!-- 2. СТРАНИЦА: РАДАР ЗАКАЗОВ (ПАРСЕР) -->
+    <div class="page" id="page-radar">
+        <div class="container" style="padding: 30px 20px 80px;">
+            <h2 class="section-title">Радар IT-Заказов</h2>
             
-            <div class="orders-controls">
-                <div class="orders-filters" id="orderFilters">
-                    <button class="active" data-filter="all" data-i18n="filter_all">Все</button>
-                    <button data-filter="Telegram">🤖 Telegram / TMA</button>
+            <div class="radar-controls">
+                <div class="radar-filters" id="radarFilters">
+                    <button class="active" data-filter="all">Все</button>
+                    <button data-filter="Telegram">🤖 Telegram / Mini Apps</button>
                     <button data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
                 </div>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Поиск по ключевому слову..." />
+                <div style="display: flex; gap: 10px;">
+                    <div class="search-box">
+                        <input type="text" id="radarSearch" placeholder="Поиск по задачам..." />
+                    </div>
+                    <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
                 </div>
             </div>
 
-            <div class="orders-grid" id="ordersGrid">
-                <!-- Заказы загружаются через JavaScript -->
+            <div class="radar-grid" id="radarGrid">
+                <!-- Карточки заказов из orders.json -->
             </div>
         </div>
     </div>
 
-    <!-- СТРАНИЦА: КАЛЬКУЛЯТОР -->
+    <!-- 3. СТРАНИЦА: УСЛУГИ -->
+    <div class="page" id="page-services">
+        <div class="container" style="padding: 30px 20px 80px;">
+            <h2 class="section-title">Мои услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">🌐</span>
+                    <h3>Сайты</h3>
+                    <p>Лендинги, магазины, админ-панели, визитки и верстка интерфейсов.</p>
+                    <div class="service-features"><span>Адаптив</span><span>HTML5</span><span>CSS3 / JS</span></div>
+                    <span class="service-tag">Веб-разработка</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🤖</span>
+                    <h3>Telegram Боты</h3>
+                    <p>Автоматизация задач, уведомления, приём платежей, авторассылки.</p>
+                    <div class="service-features"><span>Python</span><span>aiogram</span><span>Базы данных</span></div>
+                    <span class="service-tag">Telegram API</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📱</span>
+                    <h3>Telegram Mini Apps</h3>
+                    <p>Веб-приложения прямо внутри Telegram: магазины, личные кабинеты, кликеры.</p>
+                    <div class="service-features"><span>WebApp</span><span>Интерактив</span><span>API</span></div>
+                    <span class="service-tag">TMA</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">☁️</span>
+                    <h3>Хостинг</h3>
+                    <p>Размещение сайтов и ботов на 24/7 серверах. Бекапы и мониторинг.</p>
+                    <div class="service-features"><span>Linux</span><span>SSL</span><span>24/7</span></div>
+                    <span class="service-tag">DevOps</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">⛏️</span>
+                    <h3>Моды Minecraft</h3>
+                    <p>Кастомные моды: новые механики, предметы, блоки, мобы и генерации.</p>
+                    <div class="service-features"><span>Java</span><span>Fabric</span><span>Forge</span></div>
+                    <span class="service-tag">Gamedev</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🎨</span>
+                    <h3>Текстуры Minecraft</h3>
+                    <p>Качественные ресурс-паки, стилизация предметов и 3D-модели.</p>
+                    <div class="service-features"><span>Blockbench</span><span>PBR</span><span>UI</span></div>
+                    <span class="service-tag">Дизайн</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. СТРАНИЦА: МАГАЗИН -->
+    <div class="page" id="page-shop">
+        <div class="container" style="padding: 30px 20px 80px;">
+            <h2 class="section-title">Магазин цифровых товаров</h2>
+            <div class="shop-controls">
+                <div class="shop-filters" id="shopFilters">
+                    <button class="active" data-filter="all">Все</button>
+                    <button data-filter="miniapp">📱 Mini Apps</button>
+                    <button data-filter="bot">🤖 Боты</button>
+                    <button data-filter="site">🌐 Сайты</button>
+                    <button data-filter="mod">⛏️ Моды</button>
+                    <button data-filter="texture">🎨 Текстуры</button>
+                </div>
+                <button class="btn btn-sm btn-secondary" id="toggleAdmin">⚙️ Админ</button>
+            </div>
+
+            <!-- Админка -->
+            <div class="admin-panel" id="adminPanel">
+                <h3 style="font-family:'Orbitron'; color:#00ff88; margin-bottom:15px;">⚙️ Добавление товара</h3>
+                <form class="admin-form" id="adminForm">
+                    <div>
+                        <label>Название</label>
+                        <input type="text" id="adminName" required placeholder="Например: ТГ бот рассылок" />
+                    </div>
+                    <div>
+                        <label>Категория</label>
+                        <select id="adminCategory">
+                            <option value="miniapp">📱 Mini Apps</option>
+                            <option value="bot">🤖 Боты</option>
+                            <option value="site">🌐 Сайты</option>
+                            <option value="mod">⛏️ Моды</option>
+                            <option value="texture">🎨 Текстуры</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Иконка (эмодзи)</label>
+                        <input type="text" id="adminIcon" value="📦" required />
+                    </div>
+                    <div>
+                        <label>Цена (₽)</label>
+                        <input type="number" id="adminPrice" required placeholder="3000" />
+                    </div>
+                    <div class="full-width">
+                        <label>Описание</label>
+                        <textarea id="adminDesc" required placeholder="Описание функционала товара..."></textarea>
+                    </div>
+                    <div class="full-width" style="display:flex; gap:10px;">
+                        <button type="submit" class="btn btn-sm">➕ Сохранить товар</button>
+                        <button type="button" class="btn btn-sm btn-secondary" id="adminClose">✕ Закрыть</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="shop-grid" id="shopGrid"></div>
+        </div>
+    </div>
+
+    <!-- 5. СТРАНИЦА: КАЛЬКУЛЯТОР -->
     <div class="page" id="page-calculator">
-        <div class="container calculator-page">
-            <h2 class="section-title" data-i18n="calc_title">Калькулятор стоимости</h2>
+        <div class="container" style="padding: 40px 20px 80px;">
+            <h2 class="section-title">Калькулятор стоимости</h2>
             <div class="calc-box">
-                <label data-i18n="calc_service">Направление проекта</label>
+                <label>Что нужно разработать?</label>
                 <select id="calcService">
                     <option value="bot">🤖 Telegram Бот</option>
                     <option value="miniapp">📱 Telegram Mini App</option>
-                    <option value="landing">🌐 Лендинг / Одностраничник</option>
-                    <option value="full">🔥 Комплекс (Бот + Mini App)</option>
+                    <option value="site">🌐 Веб-сайт / Лендинг</option>
+                    <option value="full">🔥 Комплекс (Сайт + Бот)</option>
+                    <option value="mod">⛏️ Мод для Minecraft</option>
                 </select>
 
-                <label>Сложность задачи: <span id="calcLevelLabel" style="color: #00ff88;">Средняя</span></label>
-                <input type="range" id="calcRange" min="1" max="5" value="3" />
+                <label>Сложность проекта: <span id="calcComplexityLabel" style="color:#00ff88;">Средняя</span></label>
+                <input type="range" id="calcComplexity" min="1" max="5" value="3" />
 
                 <div class="calc-result">
-                    <div style="font-size: 0.85rem; color: #707080; margin-bottom: 5px;">Рекомендуемая цена клиенту:</div>
-                    <div class="price" id="calcPrice">10 000 ₽</div>
+                    <div style="font-size:0.85rem; color:#707080; margin-bottom:5px;">Ориентировочный бюджет:</div>
+                    <div class="price" id="calcPrice">12 000 ₽</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 6. СТРАНИЦА: КОНТАКТЫ -->
+    <div class="page" id="page-contact">
+        <div class="container" style="padding: 40px 20px 80px;">
+            <h2 class="section-title">Обсудить проект</h2>
+            <form class="contact-form" id="contactForm">
+                <div>
+                    <label>Как к вам обращаться?</label>
+                    <input type="text" id="contactName" placeholder="Ваше имя" required />
+                </div>
+                <div>
+                    <label>Ваш Telegram</label>
+                    <input type="text" id="contactTg" placeholder="@username" required />
+                </div>
+                <div>
+                    <label>Услуга</label>
+                    <select id="contactService">
+                        <option value="bot">🤖 Telegram Бот</option>
+                        <option value="miniapp">📱 Telegram Mini App</option>
+                        <option value="site">🌐 Сайт под ключ</option>
+                        <option value="mod">⛏️ Мод / Текстуры</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Описание задачи</label>
+                    <textarea id="contactMsg" placeholder="Опишите, что нужно сделать..." required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Отправить заявку</button>
+            </form>
+
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <span style="font-size:1.8rem; display:block; margin-bottom:5px;">📱</span>
+                    <a href="https://t.me/serjantyabloko" target="_blank" style="color:#00ff88; text-decoration:none;">@serjantyabloko</a>
+                </div>
+                <div class="contact-info-item">
+                    <span style="font-size:1.8rem; display:block; margin-bottom:5px;">📧</span>
+                    <a href="mailto:geraskinlev81@gmail.com" style="color:#00ff88; text-decoration:none;">geraskinlev81@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 SerjantDev. Радар заказов и разработка цифровых решений.</p>
+        </div>
+    </footer>
+
     <!-- УВЕДОМЛЕНИЕ -->
-    <div class="toast" id="toast">✅ Обновлено!</div>
+    <div class="toast" id="toast">✅ Готово!</div>
 
     <script>
-        // ===== СОСТОЯНИЕ И ДАННЫЕ =====
-        let orders = [];
-        let currentTheme = 'green';
+        // ===== НАСТРОЙКИ ТЕЛЕГРАМ БОТА =====
+        const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
+        const CHAT_ID = '8673619246';
+        const ADMIN_PASSWORD = 'L20812081';
+
+        // ===== НАЧАЛЬНЫЕ ТОВАРЫ =====
+        const defaultProducts = [
+            { id: 1, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Магазин товаров в Telegram с онлайн оплатой.', price: 7900, tag: 'Хит' },
+            { id: 2, name: 'Telegram Бот "Рассылка"', category: 'bot', icon: '📢', desc: 'Удобная панель рассылок подписчикам.', price: 3500, tag: 'Популярно' },
+            { id: 3, name: 'Лендинг для IT-проекта', category: 'site', icon: '🌐', desc: 'Стильный одностраничник с адаптивной версткой.', price: 4500, tag: '' },
+            { id: 4, name: 'Мод "Магия & Технологии"', category: 'mod', icon: '🔮', desc: 'Кастомная сборка заклинаний и генераторов.', price: 3900, tag: 'Новинка' }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('shopProducts')) || defaultProducts;
+        let cart = JSON.parse(localStorage.getItem('shopCart')) || [];
+        let radarOrders = [];
+        let isAdmin = false;
         let currentLang = 'ru';
 
-        const translations = {
-            ru: {
-                nav_home: "Главная",
-                nav_orders: "Заказы",
-                nav_calculator: "Калькулятор",
-                nav_refresh: "⚡ Обновить",
-                settings_theme: "Цветовая схема",
-                settings_lang: "Язык интерфейса",
-                hero_title1: "Автоматический радар",
-                hero_title2: "IT-заказов и клиентов",
-                hero_desc: "Парсинг свежих задач с Habr Freelance, FL.ru, Freelance.ru и закрытых Telegram-каналов в реальном времени. Только твои компетенции без спама.",
-                hero_btn_orders: "Смотреть заказы",
-                hero_btn_calc: "Калькулятор прайса",
-                stat_active: "Активных заказов",
-                stat_parser: "Работа парсера",
-                stat_skills: "По твоим стекам",
-                orders_title: "Радар IT-Заказов",
-                filter_all: "Все",
-                calc_title: "Калькулятор стоимости",
-                calc_service: "Направление проекта"
-            },
-            en: {
-                nav_home: "Home",
-                nav_orders: "Orders",
-                nav_calculator: "Calculator",
-                nav_refresh: "⚡ Refresh",
-                settings_theme: "Color Theme",
-                settings_lang: "Language",
-                hero_title1: "Automated Radar for",
-                hero_title2: "IT Orders & Clients",
-                hero_desc: "Real-time task scraper for Habr Freelance, FL.ru, Freelance.ru and Telegram channels. Filtered strictly to your skills.",
-                hero_btn_orders: "View Orders",
-                hero_btn_calc: "Price Calculator",
-                stat_active: "Active Orders",
-                stat_parser: "Scraper Uptime",
-                stat_skills: "Matching Stack",
-                orders_title: "IT Orders Radar",
-                filter_all: "All",
-                calc_title: "Cost Calculator",
-                calc_service: "Project Scope"
-            }
-        };
-
-        // ===== ЗАГРУЗКА ЗАКАЗОВ =====
-        async function fetchOrders() {
+        // ===== РАДАР ЗАКАЗОВ (РАЗ В 15 МИНУТ) =====
+        async function fetchRadarOrders() {
             try {
                 const res = await fetch(`orders.json?t=${Date.now()}`);
-                orders = await res.json();
-                renderOrders();
-                document.getElementById('orderCount').textContent = orders.length;
-                document.getElementById('statTotal').textContent = orders.length;
-                showToast("✅ База заказов загружена!");
+                radarOrders = await res.json();
+                renderRadar();
+                document.getElementById('radarCount').textContent = radarOrders.length;
+                document.getElementById('statOrdersCount').textContent = radarOrders.length;
+                showToast("⚡ Радар заказов обновлен!");
             } catch (e) {
-                document.getElementById('ordersGrid').innerHTML = `
-                    <div class="orders-empty">
-                        <span class="icon">⚠️</span>
-                        <h3>Файл orders.json пока не найден</h3>
-                        <p>Запустите workflow в GitHub Actions или выполните parser.py</p>
+                document.getElementById('radarGrid').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #707080;">
+                        <span style="font-size: 3rem; display: block; margin-bottom: 10px;">⏳</span>
+                        <h3>Заказы обновляются...</h3>
+                        <p>GitHub Actions генерирует orders.json каждые 15 минут</p>
                     </div>
                 `;
             }
         }
 
-        // ===== ОТРИСОВКА КАРТОЧЕК =====
-        function renderOrders(filterCategory = 'all', searchQuery = '') {
-            const grid = document.getElementById('ordersGrid');
-            let filtered = orders;
+        function renderRadar(filter = 'all', query = '') {
+            const grid = document.getElementById('radarGrid');
+            let list = radarOrders;
 
-            if (filterCategory !== 'all') {
-                filtered = filtered.filter(o => o.category === filterCategory);
+            if (filter !== 'all') {
+                list = list.filter(o => o.category === filter);
+            }
+            if (query.trim() !== '') {
+                list = list.filter(o => o.title.toLowerCase().includes(query.toLowerCase()));
             }
 
-            if (searchQuery.trim() !== '') {
-                filtered = filtered.filter(o => 
-                    o.title.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-            }
-
-            if (!filtered || filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="orders-empty">
-                        <span class="icon">📭</span>
-                        <h3>Подходящих заказов пока нет</h3>
-                        <p>Попробуйте сбросить фильтры или обновить парсер через пару минут.</p>
-                    </div>
-                `;
+            if (!list.length) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#707080;">Заказов по вашему фильтру пока нет</div>`;
                 return;
             }
 
-            grid.innerHTML = filtered.map(o => `
-                <div class="order-card">
+            grid.innerHTML = list.map(o => `
+                <div class="radar-card">
                     <div>
-                        <div class="order-header">
-                            <span class="order-category">${o.category || 'IT'}</span>
-                            <span class="order-source">${o.source || 'Биржа'}</span>
+                        <div class="radar-badge-row">
+                            <span class="radar-tag">${o.category || 'IT'}</span>
+                            <span class="radar-source">${o.source || 'Биржа'}</span>
                         </div>
                         <h3>${o.title}</h3>
                     </div>
                     <div>
-                        <div class="order-price">${o.price || 'Договорная'}</div>
-                        <a href="${o.url}" target="_blank" class="btn btn-sm">Открыть заказ ➔</a>
+                        <div class="radar-price">${o.price || 'Договорной'}</div>
+                        <a href="${o.url}" target="_blank" class="btn btn-sm">Открыть задачу ➔</a>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ===== ФИЛЬТРАЦИЯ И ПОИСК =====
-        document.querySelectorAll('#orderFilters button').forEach(btn => {
+        document.querySelectorAll('#radarFilters button').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('#orderFilters button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('#radarFilters button').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                renderOrders(btn.dataset.filter, document.getElementById('searchInput').value);
+                renderRadar(btn.dataset.filter, document.getElementById('radarSearch').value);
             });
         });
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const activeFilter = document.querySelector('#orderFilters button.active').dataset.filter;
-            renderOrders(activeFilter, e.target.value);
+        document.getElementById('radarSearch').addEventListener('input', (e) => {
+            const active = document.querySelector('#radarFilters button.active').dataset.filter;
+            renderRadar(active, e.target.value);
         });
 
-        // ===== КАЛЬКУЛЯТОР =====
-        const basePrices = { bot: 6000, miniapp: 12000, landing: 8000, full: 18000 };
-        const levelNames = ['Очень простой', 'Простой', 'Средний', 'Сложный', 'Enterprise'];
+        document.getElementById('radarRefreshBtn').addEventListener('click', () => {
+            fetchRadarOrders();
+        });
 
-        function updateCalculator() {
-            const service = document.getElementById('calcService').value;
-            const level = parseInt(document.getElementById('calcRange').value);
-            document.getElementById('calcLevelLabel').textContent = levelNames[level - 1];
-            
-            const cost = Math.round(basePrices[service] * (0.6 + level * 0.25));
-            document.getElementById('calcPrice').textContent = cost.toLocaleString('ru-RU') + ' ₽';
+        // Автообновление каждые 15 минут
+        setInterval(fetchRadarOrders, 15 * 60 * 1000);
+
+        // ===== МАГАЗИН И ТОВАРЫ =====
+        function renderShop(filter = 'all') {
+            const grid = document.getElementById('shopGrid');
+            const list = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            grid.innerHTML = list.map(p => `
+                <div class="shop-item">
+                    <div class="image">
+                        ${p.icon || '📦'}
+                        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+                    </div>
+                    <div class="info">
+                        <h4>${p.name}</h4>
+                        <div class="desc">${p.desc}</div>
+                        <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-sm" onclick="addToCart(${p.id})">В корзину</button>
+                            ${isAdmin ? `<button class="btn btn-sm btn-secondary" onclick="deleteProduct(${p.id})">✕</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        document.getElementById('calcService').addEventListener('change', updateCalculator);
-        document.getElementById('calcRange').addEventListener('input', updateCalculator);
-        updateCalculator();
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+            const inCart = cart.find(p => p.id === id);
+            if (inCart) inCart.qty++;
+            else cart.push({ ...item, qty: 1 });
+            saveCart();
+            showToast(`✅ ${item.name} добавлен в корзину`);
+        }
 
-        // ===== НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ =====
+        function saveCart() {
+            localStorage.setItem('shopCart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItems');
+            const totalEl = document.getElementById('totalPrice');
+            const badge = document.getElementById('cartCount');
+            const block = document.getElementById('cartTotal');
+
+            const count = cart.reduce((sum, i) => sum + i.qty, 0);
+            badge.textContent = count;
+
+            if (!cart.length) {
+                container.innerHTML = `<p style="color:#707080; text-align:center; padding:30px 0;">Корзина пуста</p>`;
+                block.style.display = 'none';
+                return;
+            }
+
+            block.style.display = 'block';
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <div>
+                            <div style="font-weight:600;">${i.name}</div>
+                            <div style="color:#00ccff; font-size:0.8rem;">${i.price} ₽ × ${i.qty}</div>
+                        </div>
+                        <button onclick="removeFromCart(${i.id})" style="background:none; border:none; color:#ff4757; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+        }
+
+        // Оформление корзины
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (!cart.length) return;
+            const items = cart.map(i => `• ${i.name} x${i.qty} (${i.price * i.qty} ₽)`).join('\n');
+            const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            const msg = `🛒 <b>Новый заказ с сайта!</b>\n\n${items}\n\n💰 <b>Итого:</b> ${total} ₽`;
+            sendTg(msg);
+            cart = [];
+            saveCart();
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+            showToast("✅ Заказ отправлен в Telegram!");
+        });
+
+        // Корзина открытие/закрытие
+        document.getElementById('cartToggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('cartSidebar').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('show');
+        });
+        document.getElementById('cartClose').addEventListener('click', () => {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+        });
+        document.getElementById('cartOverlay').addEventListener('click', () => {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+        });
+
+        // Админка
+        document.getElementById('toggleAdmin').addEventListener('click', () => {
+            if (isAdmin) {
+                isAdmin = false;
+                document.getElementById('adminPanel').classList.remove('open');
+                renderShop();
+                showToast("🔒 Админ-панель закрыта");
+                return;
+            }
+            document.getElementById('passwordModal').classList.add('show');
+        });
+
+        document.getElementById('passwordSubmit').addEventListener('click', () => {
+            if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
+                isAdmin = true;
+                document.getElementById('passwordModal').classList.remove('show');
+                document.getElementById('adminPanel').classList.add('open');
+                renderShop();
+                showToast("🔓 Добро пожаловать, Админ!");
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        });
+
+        document.getElementById('adminClose').addEventListener('click', () => {
+            document.getElementById('adminPanel').classList.remove('open');
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('adminName').value,
+                category: document.getElementById('adminCategory').value,
+                icon: document.getElementById('adminIcon').value,
+                price: parseInt(document.getElementById('adminPrice').value),
+                desc: document.getElementById('adminDesc').value,
+                tag: 'Новинка'
+            };
+            products.push(newItem);
+            localStorage.setItem('shopProducts', JSON.stringify(products));
+            renderShop();
+            document.getElementById('adminForm').reset();
+            showToast("✅ Товар успешно добавлен!");
+        });
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('shopProducts', JSON.stringify(products));
+            renderShop();
+            showToast("🗑️ Товар удален");
+        }
+
+        // ===== НАВИГАЦИЯ =====
         const pages = {
             home: document.getElementById('page-home'),
-            orders: document.getElementById('page-orders'),
-            calculator: document.getElementById('page-calculator')
+            radar: document.getElementById('page-radar'),
+            services: document.getElementById('page-services'),
+            shop: document.getElementById('page-shop'),
+            calculator: document.getElementById('page-calculator'),
+            contact: document.getElementById('page-contact')
         };
 
         function showPage(pageId) {
             Object.values(pages).forEach(p => p.classList.remove('active'));
             if (pages[pageId]) pages[pageId].classList.add('active');
-            
-            document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
-                link.classList.toggle('active', link.dataset.page === pageId);
+            document.querySelectorAll('.nav-links a[data-page]').forEach(l => {
+                l.classList.toggle('active', l.dataset.page === pageId);
             });
             document.getElementById('navLinks').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1048,70 +1485,85 @@
             });
         });
 
-        // Кнопка обновления
-        document.getElementById('refreshBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            fetchOrders();
-        });
-
-        // Мобильное меню
         document.getElementById('burger').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('active');
         });
 
-        // Модалка настроек
-        const settingsModal = document.getElementById('settingsModal');
+        // ===== КАЛЬКУЛЯТОР =====
+        const calcPrices = { bot: 7000, miniapp: 14000, site: 9000, full: 20000, mod: 8000 };
+        const calcLevels = ['Минимальная', 'Базовая', 'Средняя', 'Высокая', 'PRO'];
+        function updateCalc() {
+            const s = document.getElementById('calcService').value;
+            const l = parseInt(document.getElementById('calcComplexity').value);
+            document.getElementById('calcComplexityLabel').textContent = calcLevels[l - 1];
+            const price = Math.round(calcPrices[s] * (0.6 + l * 0.25));
+            document.getElementById('calcPrice').textContent = price.toLocaleString('ru-RU') + ' ₽';
+        }
+        document.getElementById('calcService').addEventListener('change', updateCalc);
+        document.getElementById('calcComplexity').addEventListener('input', updateCalc);
+        updateCalc();
+
+        // ===== ОТПРАВКА ЗАЯВКИ В TELEGRAM =====
+        async function sendTg(text) {
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
+                });
+            } catch (err) {}
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = `📬 <b>Новая заявка с сайта!</b>\n\n👤 <b>Имя:</b> ${document.getElementById('contactName').value}\n📱 <b>Telegram:</b> ${document.getElementById('contactTg').value}\n🔧 <b>Услуга:</b> ${document.getElementById('contactService').value}\n📝 <b>Задача:</b> ${document.getElementById('contactMsg').value}`;
+            await sendTg(text);
+            showToast("✅ Заявка отправлена! Скоро свяжусь.");
+            document.getElementById('contactForm').reset();
+        });
+
+        // ===== НАСТРОЙКИ (ТЕМА И ЯЗЫК) =====
         document.getElementById('settingsToggle').addEventListener('click', (e) => {
             e.preventDefault();
-            settingsModal.classList.add('show');
+            document.getElementById('settingsModal').classList.add('show');
         });
         document.getElementById('settingsClose').addEventListener('click', () => {
-            settingsModal.classList.remove('show');
+            document.getElementById('settingsModal').classList.remove('show');
         });
 
-        // Смена темы
-        document.querySelectorAll('.theme-options button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const theme = btn.dataset.theme;
-                document.querySelectorAll('.theme-options button').forEach(b => b.classList.remove('active-theme'));
-                btn.classList.add('active-theme');
-                
-                let primary = '#00ff88', secondary = '#00ccff';
-                if (theme === 'blue') { primary = '#00ccff'; secondary = '#3b82f6'; }
-                if (theme === 'red') { primary = '#ff4757'; secondary = '#ffa502'; }
+        document.querySelectorAll('.theme-options button').forEach(b => {
+            b.addEventListener('click', () => {
+                const t = b.dataset.theme;
+                document.querySelectorAll('.theme-options button').forEach(x => x.classList.remove('active-theme'));
+                b.classList.add('active-theme');
+                let p = '#00ff88', s = '#00ccff';
+                if (t === 'red') { p = '#ff4757'; s = '#ff6b81'; }
+                if (t === 'blue') { p = '#36a6ff'; s = '#5cb8ff'; }
 
-                document.querySelectorAll('.btn, .logo, .stat-item .number, .calc-result .price, .order-category').forEach(el => {
-                    el.style.color = primary;
-                });
-                showToast(`🎨 Тема переключена: ${theme}`);
+                const style = document.createElement('style');
+                style.textContent = `
+                    .logo, .btn-secondary, .service-card h3, .calc-result .price, .radar-tag, .stat-item .number { color: ${p} !important; }
+                    .btn, .cart-badge, .radar-badge { background: linear-gradient(135deg, ${p}, ${s}) !important; color: #0a0a0f !important; }
+                    .btn-secondary { border-color: ${p} !important; }
+                    .section-title, .highlight { background: linear-gradient(135deg, ${p}, ${s}) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+                    .toast { background: ${p} !important; }
+                `;
+                document.head.appendChild(style);
+                showToast("🎨 Тема изменена!");
             });
         });
 
-        // Смена языка
-        document.querySelectorAll('.lang-options button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentLang = btn.dataset.lang;
-                document.querySelectorAll('.lang-options button').forEach(b => b.classList.remove('active-lang'));
-                btn.classList.add('active-lang');
-                
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.dataset.i18n;
-                    if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
-                });
-                showToast(`🌍 Язык: ${currentLang.toUpperCase()}`);
-            });
-        });
-
-        // Всплывающее уведомление
         function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
         // Запуск
-        fetchOrders();
+        renderShop();
+        updateCartUI();
+        fetchRadarOrders();
     </script>
 </body>
 </html>
