@@ -1,63 +1,1117 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мониторинг IT Заказов</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0f19; color: #f1f5f9; padding: 24px 16px; margin: 0; }
-    .container { max-width: 760px; margin: 0 auto; }
-    h1 { font-size: 22px; margin-bottom: 6px; }
-    .subtitle { color: #64748b; font-size: 14px; margin-bottom: 24px; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SerjantDev | Мониторинг заказов: Боты, Сайты, Mini Apps</title>
     
-    .card { background: #161f30; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-    .card h3 { margin: 0; font-size: 17px; line-height: 1.4; }
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     
-    .badge { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; white-space: nowrap; }
-    .badge-tg { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .badge-web { background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
-    
-    .price { font-weight: 600; color: #f59e0b; font-size: 15px; }
-    .card a { align-self: flex-start; background: #2563eb; color: #ffffff; text-decoration: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; }
-    .card a:hover { background: #1d4ed8; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Лента заказов</h1>
-    <div class="subtitle">Только Telegram боты, Mini Apps и веб-сайты</div>
-    
-    <div id="orders">Загрузка актуальных заказов...</div>
-  </div>
-
-  <script>
-    async function loadOrders() {
-      try {
-        const res = await fetch(`orders.json?t=${Date.now()}`);
-        const orders = await res.json();
-        const container = document.getElementById('orders');
-        
-        if (!orders.length) {
-          container.innerHTML = '<p style="color: #64748b;">Новых заказов по этим темам пока нет. Проверь чуть позже!</p>';
-          return;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        container.innerHTML = orders.map(o => `
-          <div class="card">
-            <div class="header-row">
-              <h3>${o.title}</h3>
-              <span class="badge ${o.category === 'Telegram' ? 'badge-tg' : 'badge-web'}">${o.category}</span>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 18px 0;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 12px 0;
+            background: rgba(10, 10, 15, 0.97);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #00ff88;
+            text-decoration: none;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .logo span {
+            color: #00ccff;
+            text-shadow: 0 0 30px rgba(0, 204, 255, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #00ff88;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .order-badge {
+            background: #00ff88;
+            color: #0a0a0f;
+            border-radius: 50px;
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger span {
+            width: 30px;
+            height: 3px;
+            background: #00ff88;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== СТРАНИЦЫ И СЕКЦИИ ===== */
+        .page {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+            padding-top: 90px;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            color: #0a0a0f;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', monospace;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00ff88;
+            border: 2px solid #00ff88;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: #00ff88;
+            color: #0a0a0f;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 0.75rem;
+        }
+
+        /* ===== ХЕДЕР / HERO ===== */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.05rem;
+            color: #a0a0b0;
+            margin-bottom: 25px;
+            max-width: 540px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 6px 16px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(0, 255, 136, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .stat-item .number {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ff88;
+        }
+
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: #707080;
+            margin-top: 4px;
+        }
+
+        .hero-code {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-code .code-window {
+            background: #0d0d14;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #00ff88;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            line-height: 1.7;
+        }
+
+        .hero-code .keyword { color: #ff6b9d; }
+        .hero-code .string { color: #ffd93d; }
+        .hero-code .function { color: #6bcbff; }
+        .hero-code .comment { color: #4a4a5a; }
+
+        /* ===== ЛЕНТА ЗАКАЗОВ ===== */
+        .orders-page {
+            padding: 30px 0 80px;
+        }
+
+        .orders-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .orders-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .orders-filters button {
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            color: #a0a0b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .orders-filters button:hover, .orders-filters button.active {
+            border-color: #00ff88;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px;
+            background: #0d0d14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+
+        .orders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .order-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .order-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+        }
+
+        .order-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .order-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 255, 136, 0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .order-source {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            background: rgba(0, 204, 255, 0.1);
+            color: #00ccff;
+            border: 1px solid rgba(0, 204, 255, 0.2);
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .order-category {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .order-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .order-price {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #00ccff;
+            margin-bottom: 15px;
+        }
+
+        .order-card a {
+            align-self: flex-start;
+            text-decoration: none;
+            padding: 8px 18px;
+            font-size: 0.8rem;
+        }
+
+        .orders-empty {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            color: #707080;
+        }
+
+        .orders-empty .icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        /* ===== КАЛЬКУЛЯТОР ===== */
+        .calculator-page {
+            padding: 40px 0 80px;
+        }
+
+        .calc-box {
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 35px;
+            backdrop-filter: blur(10px);
+        }
+
+        .calc-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #c0c0d0;
+            font-size: 0.9rem;
+        }
+
+        .calc-box select, .calc-box input[type="range"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0d0d14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .calc-box input[type="range"] {
+            -webkit-appearance: none;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            border-radius: 2px;
+            padding: 0;
+            margin-bottom: 25px;
+        }
+
+        .calc-box input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #00ff88;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .calc-result {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .calc-result .price {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff88;
+        }
+
+        /* ===== МОДАЛКА НАСТРОЕК ===== */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-modal.show {
+            display: flex;
+        }
+
+        .settings-modal .modal-content {
+            background: #0d0d14;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .settings-modal h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-group label {
+            display: block;
+            color: #a0a0b0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .theme-options, .lang-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-options button, .lang-options button {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .theme-options button.active-theme, .lang-options button.active-lang {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+        }
+
+        /* ===== УВЕДОМЛЕНИЯ ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00ff88;
+            color: #0a0a0f;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 9999;
+            font-size: 0.85rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 992px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p { margin: 0 auto 25px auto; }
+            .hero-badges, .hero-buttons, .hero-stats { justify-content: center; }
+            .hero-code { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 15, 0.98);
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            }
+            .nav-links.active { display: flex; }
+            .burger { display: flex; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .orders-controls { flex-direction: column; align-items: stretch; }
+            .search-box { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo" data-page="home">SERJANT<span>DEV</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" data-page="home" class="active" data-i18n="nav_home">Главная</a></li>
+                <li>
+                    <a href="#" data-page="orders" data-i18n="nav_orders">
+                        Заказы <span class="order-badge" id="orderCount">0</span>
+                    </a>
+                </li>
+                <li><a href="#" data-page="calculator" data-i18n="nav_calculator">Калькулятор</a></li>
+                <li><a href="#" id="settingsToggle">⚙️</a></li>
+                <li><a href="#" class="btn btn-sm" id="refreshBtn" data-i18n="nav_refresh">⚡ Обновить</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="price">${o.price}</div>
-            <a href="${o.url}" target="_blank" rel="noopener">Открыть задачу</a>
-          </div>
-        `).join('');
-      } catch (e) {
-        document.getElementById('orders').innerHTML = '<p style="color: #ef4444;">Не удалось загрузить данные.</p>';
-      }
-    }
-    loadOrders();
-  </script>
+        </div>
+    </nav>
+
+    <!-- МОДАЛКА НАСТРОЕК -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="modal-content">
+            <h3>⚙️ Настройки</h3>
+            
+            <div class="settings-group">
+                <label data-i18n="settings_theme">Цветовая схема</label>
+                <div class="theme-options">
+                    <button data-theme="green" class="active-theme">🟢 Green</button>
+                    <button data-theme="blue">🔵 Cyan</button>
+                    <button data-theme="red">🔴 Red</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <label data-i18n="settings_lang">Язык интерфейса</label>
+                <div class="lang-options">
+                    <button data-lang="ru" class="active-lang">🇷🇺 Русский</button>
+                    <button data-lang="en">🇬🇧 English</button>
+                </div>
+            </div>
+
+            <button class="btn btn-sm btn-secondary" style="width: 100%;" id="settingsClose">✕ Закрыть</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА: ГЛАВНАЯ -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badges">
+                        <span class="badge">🤖 Telegram Боты</span>
+                        <span class="badge">📱 Telegram Mini Apps</span>
+                        <span class="badge">🌐 Сайты и Верстка</span>
+                    </div>
+                    <h1>
+                        <span data-i18n="hero_title1">Автоматический радар</span> <br />
+                        <span class="highlight" data-i18n="hero_title2">IT-заказов и клиентов</span>
+                    </h1>
+                    <p data-i18n="hero_desc">
+                        Парсинг свежих задач с Habr Freelance, FL.ru, Freelance.ru и закрытых Telegram-каналов в реальном времени. Только твои компетенции без спама.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn" data-page="orders" data-i18n="hero_btn_orders">Смотреть заказы</a>
+                        <a href="#" class="btn btn-secondary" data-page="calculator" data-i18n="hero_btn_calc">Калькулятор прайса</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="number" id="statTotal">0</div>
+                            <div class="label" data-i18n="stat_active">Активных заказов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">24/7</div>
+                            <div class="label" data-i18n="stat_parser">Работа парсера</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">100%</div>
+                            <div class="label" data-i18n="stat_skills">По твоим стекам</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-code">
+                    <div class="code-window">
+                        <div><span class="comment"># SerjantDev Parser Engine</span></div>
+                        <div><span class="keyword">from</span> aggregator <span class="keyword">import</span> TGHub, RSSFeed</div>
+                        <div><span class="keyword">class</span> <span class="function">ClientRadar</span>:</div>
+                        <div>&nbsp;&nbsp;filters = [<span class="string">"telegram bot"</span>, <span class="string">"mini app"</span>, <span class="string">"html/css"</span>]</div>
+                        <div>&nbsp;&nbsp;status = <span class="string">"⚡ Сканирую рынок..."</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- СТРАНИЦА: ЛЕНТА ЗАКАЗОВ -->
+    <div class="page" id="page-orders">
+        <div class="container orders-page">
+            <h2 class="section-title" data-i18n="orders_title">Радар IT-Заказов</h2>
+            
+            <div class="orders-controls">
+                <div class="orders-filters" id="orderFilters">
+                    <button class="active" data-filter="all" data-i18n="filter_all">Все</button>
+                    <button data-filter="Telegram">🤖 Telegram / TMA</button>
+                    <button data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Поиск по ключевому слову..." />
+                </div>
+            </div>
+
+            <div class="orders-grid" id="ordersGrid">
+                <!-- Заказы загружаются через JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА: КАЛЬКУЛЯТОР -->
+    <div class="page" id="page-calculator">
+        <div class="container calculator-page">
+            <h2 class="section-title" data-i18n="calc_title">Калькулятор стоимости</h2>
+            <div class="calc-box">
+                <label data-i18n="calc_service">Направление проекта</label>
+                <select id="calcService">
+                    <option value="bot">🤖 Telegram Бот</option>
+                    <option value="miniapp">📱 Telegram Mini App</option>
+                    <option value="landing">🌐 Лендинг / Одностраничник</option>
+                    <option value="full">🔥 Комплекс (Бот + Mini App)</option>
+                </select>
+
+                <label>Сложность задачи: <span id="calcLevelLabel" style="color: #00ff88;">Средняя</span></label>
+                <input type="range" id="calcRange" min="1" max="5" value="3" />
+
+                <div class="calc-result">
+                    <div style="font-size: 0.85rem; color: #707080; margin-bottom: 5px;">Рекомендуемая цена клиенту:</div>
+                    <div class="price" id="calcPrice">10 000 ₽</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- УВЕДОМЛЕНИЕ -->
+    <div class="toast" id="toast">✅ Обновлено!</div>
+
+    <script>
+        // ===== СОСТОЯНИЕ И ДАННЫЕ =====
+        let orders = [];
+        let currentTheme = 'green';
+        let currentLang = 'ru';
+
+        const translations = {
+            ru: {
+                nav_home: "Главная",
+                nav_orders: "Заказы",
+                nav_calculator: "Калькулятор",
+                nav_refresh: "⚡ Обновить",
+                settings_theme: "Цветовая схема",
+                settings_lang: "Язык интерфейса",
+                hero_title1: "Автоматический радар",
+                hero_title2: "IT-заказов и клиентов",
+                hero_desc: "Парсинг свежих задач с Habr Freelance, FL.ru, Freelance.ru и закрытых Telegram-каналов в реальном времени. Только твои компетенции без спама.",
+                hero_btn_orders: "Смотреть заказы",
+                hero_btn_calc: "Калькулятор прайса",
+                stat_active: "Активных заказов",
+                stat_parser: "Работа парсера",
+                stat_skills: "По твоим стекам",
+                orders_title: "Радар IT-Заказов",
+                filter_all: "Все",
+                calc_title: "Калькулятор стоимости",
+                calc_service: "Направление проекта"
+            },
+            en: {
+                nav_home: "Home",
+                nav_orders: "Orders",
+                nav_calculator: "Calculator",
+                nav_refresh: "⚡ Refresh",
+                settings_theme: "Color Theme",
+                settings_lang: "Language",
+                hero_title1: "Automated Radar for",
+                hero_title2: "IT Orders & Clients",
+                hero_desc: "Real-time task scraper for Habr Freelance, FL.ru, Freelance.ru and Telegram channels. Filtered strictly to your skills.",
+                hero_btn_orders: "View Orders",
+                hero_btn_calc: "Price Calculator",
+                stat_active: "Active Orders",
+                stat_parser: "Scraper Uptime",
+                stat_skills: "Matching Stack",
+                orders_title: "IT Orders Radar",
+                filter_all: "All",
+                calc_title: "Cost Calculator",
+                calc_service: "Project Scope"
+            }
+        };
+
+        // ===== ЗАГРУЗКА ЗАКАЗОВ =====
+        async function fetchOrders() {
+            try {
+                const res = await fetch(`orders.json?t=${Date.now()}`);
+                orders = await res.json();
+                renderOrders();
+                document.getElementById('orderCount').textContent = orders.length;
+                document.getElementById('statTotal').textContent = orders.length;
+                showToast("✅ База заказов загружена!");
+            } catch (e) {
+                document.getElementById('ordersGrid').innerHTML = `
+                    <div class="orders-empty">
+                        <span class="icon">⚠️</span>
+                        <h3>Файл orders.json пока не найден</h3>
+                        <p>Запустите workflow в GitHub Actions или выполните parser.py</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ===== ОТРИСОВКА КАРТОЧЕК =====
+        function renderOrders(filterCategory = 'all', searchQuery = '') {
+            const grid = document.getElementById('ordersGrid');
+            let filtered = orders;
+
+            if (filterCategory !== 'all') {
+                filtered = filtered.filter(o => o.category === filterCategory);
+            }
+
+            if (searchQuery.trim() !== '') {
+                filtered = filtered.filter(o => 
+                    o.title.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            if (!filtered || filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="orders-empty">
+                        <span class="icon">📭</span>
+                        <h3>Подходящих заказов пока нет</h3>
+                        <p>Попробуйте сбросить фильтры или обновить парсер через пару минут.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(o => `
+                <div class="order-card">
+                    <div>
+                        <div class="order-header">
+                            <span class="order-category">${o.category || 'IT'}</span>
+                            <span class="order-source">${o.source || 'Биржа'}</span>
+                        </div>
+                        <h3>${o.title}</h3>
+                    </div>
+                    <div>
+                        <div class="order-price">${o.price || 'Договорная'}</div>
+                        <a href="${o.url}" target="_blank" class="btn btn-sm">Открыть заказ ➔</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== ФИЛЬТРАЦИЯ И ПОИСК =====
+        document.querySelectorAll('#orderFilters button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#orderFilters button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderOrders(btn.dataset.filter, document.getElementById('searchInput').value);
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const activeFilter = document.querySelector('#orderFilters button.active').dataset.filter;
+            renderOrders(activeFilter, e.target.value);
+        });
+
+        // ===== КАЛЬКУЛЯТОР =====
+        const basePrices = { bot: 6000, miniapp: 12000, landing: 8000, full: 18000 };
+        const levelNames = ['Очень простой', 'Простой', 'Средний', 'Сложный', 'Enterprise'];
+
+        function updateCalculator() {
+            const service = document.getElementById('calcService').value;
+            const level = parseInt(document.getElementById('calcRange').value);
+            document.getElementById('calcLevelLabel').textContent = levelNames[level - 1];
+            
+            const cost = Math.round(basePrices[service] * (0.6 + level * 0.25));
+            document.getElementById('calcPrice').textContent = cost.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        document.getElementById('calcService').addEventListener('change', updateCalculator);
+        document.getElementById('calcRange').addEventListener('input', updateCalculator);
+        updateCalculator();
+
+        // ===== НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ =====
+        const pages = {
+            home: document.getElementById('page-home'),
+            orders: document.getElementById('page-orders'),
+            calculator: document.getElementById('page-calculator')
+        };
+
+        function showPage(pageId) {
+            Object.values(pages).forEach(p => p.classList.remove('active'));
+            if (pages[pageId]) pages[pageId].classList.add('active');
+            
+            document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+                link.classList.toggle('active', link.dataset.page === pageId);
+            });
+            document.getElementById('navLinks').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('[data-page]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(el.dataset.page);
+            });
+        });
+
+        // Кнопка обновления
+        document.getElementById('refreshBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            fetchOrders();
+        });
+
+        // Мобильное меню
+        document.getElementById('burger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Модалка настроек
+        const settingsModal = document.getElementById('settingsModal');
+        document.getElementById('settingsToggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            settingsModal.classList.add('show');
+        });
+        document.getElementById('settingsClose').addEventListener('click', () => {
+            settingsModal.classList.remove('show');
+        });
+
+        // Смена темы
+        document.querySelectorAll('.theme-options button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                document.querySelectorAll('.theme-options button').forEach(b => b.classList.remove('active-theme'));
+                btn.classList.add('active-theme');
+                
+                let primary = '#00ff88', secondary = '#00ccff';
+                if (theme === 'blue') { primary = '#00ccff'; secondary = '#3b82f6'; }
+                if (theme === 'red') { primary = '#ff4757'; secondary = '#ffa502'; }
+
+                document.querySelectorAll('.btn, .logo, .stat-item .number, .calc-result .price, .order-category').forEach(el => {
+                    el.style.color = primary;
+                });
+                showToast(`🎨 Тема переключена: ${theme}`);
+            });
+        });
+
+        // Смена языка
+        document.querySelectorAll('.lang-options button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.dataset.lang;
+                document.querySelectorAll('.lang-options button').forEach(b => b.classList.remove('active-lang'));
+                btn.classList.add('active-lang');
+                
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.dataset.i18n;
+                    if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+                });
+                showToast(`🌍 Язык: ${currentLang.toUpperCase()}`);
+            });
+        });
+
+        // Всплывающее уведомление
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Запуск
+        fetchOrders();
+    </script>
 </body>
 </html>
