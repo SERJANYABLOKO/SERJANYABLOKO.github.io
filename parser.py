@@ -1,37 +1,35 @@
 import json
 import re
 import requests
+import feedparser
 from bs4 import BeautifulSoup
 
 # ==========================================
-# 1. СПИСОК ПУБЛИЧНЫХ ТЕЛЕГРАМ-КАНАЛОВ
-# Вставляй сюда юзернеймы БЕЗ символа '@'
-# Например: если ссылка https://t.me/freelance_orders, пиши "freelance_orders"
+# 1. СПИСОК TELEGRAM-КАНАЛОВ
 # ==========================================
 TG_CHANNELS = [
     "freelancetavern",
     "digitaltender",
-    "freelance_zakazy"
-]
+    "freelance_zakazy",
+    "forfreelance",
+    "zakazy_it",
+    "freelance_rabota_rf"
 ]
 
 # ==========================================
 # 2. ФИЛЬТРЫ ЗАКАЗОВ
 # ==========================================
-
-# Белый список: ищем только твои направления
 TARGET_KEYWORDS = [
     # Telegram боты и Mini Apps
-    "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бот для тг",
-    "mini app", "мини апп", "tma", "webapp", "web app", "бота",
+    "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бот для тг", "бота",
+    "mini app", "мини апп", "tma", "webapp", "web app", "бота для",
     
     # Сайты и фронтенд
     "верстка", "сверстать", "html", "css", "landing", "лендинг", 
     "сайт визитка", "простой сайт", "статический сайт", "правки на сайте",
-    "доработать сайт", "поправить верстку"
+    "доработать сайт", "поправить верстку", "одностраничник", "сайт под ключ"
 ]
 
-# Стоп-слова: отсекаем сложные/неподходящие технологии
 STOP_WORDS = [
     "1с", "1c", "bitrix", "битрикс", "wordpress", "wp",
     "senior", "lead", "teamlead", "мидл", "middle",
@@ -40,20 +38,18 @@ STOP_WORDS = [
 ]
 
 def clean_text(text: str) -> str:
-    """Убирает лишние пробелы и переносы строк."""
+    """Убирает лишние пробелы, теги и символы."""
+    text = re.sub(r"<[^>]+>", "", text)
     return re.sub(r"\s+", " ", text).strip()
 
 def is_matching_order(text: str) -> bool:
-    """Проверяет, подходит ли задача под твои критерии."""
+    """Проверяет соответствие ключевым словам."""
     text_lower = text.lower()
     
-    # 1. Если найдено хоть одно стоп-слово — отклоняем
     for stop in STOP_WORDS:
-        # Граница слова, чтобы случайно не зацепить похожие фразы
         if re.search(r"\b" + re.escape(stop) + r"\b", text_lower):
             return False
             
-    # 2. Если есть совпадение по целевым словам — пропускаем
     for target in TARGET_KEYWORDS:
         if target in text_lower:
             return True
@@ -61,58 +57,51 @@ def is_matching_order(text: str) -> bool:
     return False
 
 # ==========================================
-# 3. ФУНКЦИИ ПАРСИНГА
+# 3. ИСТОЧНИКИ ДАННЫХ
 # ==========================================
 
-def parse_habr():
-    """Сбор задач с Habr Freelance."""
-    url = "https://freelance.habr.com/tasks"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+def parse_rss_feed(url: str, source_name: str):
+    """Универсальный сборщик через открытые RSS-ленты (FL.ru, Freelance.ru, Habr)."""
     tasks = []
-    
     try:
-        response = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(response.text, "html.parser")
-        cards = soup.select(".task-card")
+        # User-Agent нужен, чтобы лента отдала данные
+        feed = feedparser.parse(url, agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
         
-        for card in cards:
-            title_elem = card.select_one(".task-card__title a")
-            price_elem = card.select_one(".task-card__price")
+        for entry in feed.entries[:25]:
+            title = clean_text(entry.get("title", ""))
+            summary = clean_text(entry.get("summary", ""))
+            link = entry.get("link", "")
             
-            if not title_elem:
-                continue
-                
-            title = clean_text(title_elem.text)
-            link = "https://freelance.habr.com" + title_elem["href"]
-            price = clean_text(price_elem.text) if price_elem else "Договорная"
+            # Проверяем и заголовок, и краткое описание
+            full_check_text = f"{title} {summary}"
             
-            if is_matching_order(title):
-                category = "Telegram" if any(k in title.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
+            if is_matching_order(full_check_text):
+                cat = "Telegram" if any(k in full_check_text.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
                 tasks.append({
-                    "title": title,
-                    "price": price,
+                    "title": title[:100],
+                    "price": "Смотреть на бирже",
                     "url": link,
-                    "category": category,
-                    "source": "Habr"
+                    "category": cat,
+                    "source": source_name
                 })
     except Exception as e:
-        print(f"[!] Ошибка при парсинге Habr: {e}")
+        print(f"[!] Ошибка RSS {source_name}: {e}")
         
     return tasks
 
 def parse_tg_channel(channel_username: str):
-    """Сбор постов из открытых Telegram-каналов через веб-интерфейс."""
+    """Сбор постов из веб-версий Telegram-каналов."""
     username = channel_username.replace("@", "").strip()
     url = f"https://t.me/s/{username}"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     tasks = []
     
     try:
-        response = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(response.text, "html.parser")
+        res = requests.get(url, headers=headers, timeout=10)
+        soup = BeautifulSoup(res.text, "html.parser")
         messages = soup.select(".tgme_widget_message")
         
-        for msg in messages[-12:]:  # Проверяем последние 12 сообщений канала
+        for msg in messages[-15:]:
             text_elem = msg.select_one(".tgme_widget_message_text")
             link_elem = msg.select_one(".tgme_widget_message_date")
             
@@ -123,40 +112,53 @@ def parse_tg_channel(channel_username: str):
             link = link_elem.get("href")
             
             if is_matching_order(full_text):
-                # Берем первую строчку сообщения в качестве заголовка
                 first_line = clean_text(full_text.split("\n")[0])
-                title = (first_line[:85] + "...") if len(first_line) > 85 else first_line
+                title = (first_line[:90] + "...") if len(first_line) > 90 else first_line
                 
                 tasks.append({
                     "title": title,
-                    "price": "В описании",
+                    "price": "В канале",
                     "url": link,
                     "category": "Telegram",
                     "source": f"@{username}"
                 })
     except Exception as e:
-        print(f"[!] Ошибка парсинга канала @{username}: {e}")
+        print(f"[!] Ошибка канала @{username}: {e}")
         
     return tasks
 
 # ==========================================
-# 4. ЗАПУСК И СОХРАНЕНИЕ
+# 4. ЗАПУСК
 # ==========================================
 
 if __name__ == "__main__":
     all_orders = []
-    
-    # Собираем с биржи
-    print("Собираю заказы с Хабра...")
-    all_orders.extend(parse_habr())
-    
-    # Собираем с Telegram-каналов
+
+    # 1. Биржи через стабильные RSS-ленты
+    print("Собираем RSS FL.ru...")
+    all_orders.extend(parse_rss_feed("https://www.fl.ru/rss/all.xml?category=5", "FL.ru"))
+
+    print("Собираем RSS Freelance.ru...")
+    all_orders.extend(parse_rss_feed("https://freelance.ru/rss/index", "Freelance.ru"))
+
+    print("Собираем RSS Habr Freelance...")
+    all_orders.extend(parse_rss_feed("https://freelance.habr.com/tasks.rss", "Habr"))
+
+    # 2. Telegram-каналы
     for ch in TG_CHANNELS:
-        print(f"Проверяю канал @{ch}...")
+        print(f"Проверяем Telegram @{ch}...")
         all_orders.extend(parse_tg_channel(ch))
-        
-    # Сохраняем в файл orders.json для сайта
+
+    # 3. Удаление дубликатов по URL
+    unique_orders = []
+    seen_urls = set()
+    for o in all_orders:
+        if o["url"] not in seen_urls:
+            seen_urls.add(o["url"])
+            unique_orders.append(o)
+
+    # 4. Сохранение
     with open("orders.json", "w", encoding="utf-8") as f:
-        json.dump(all_orders, f, ensure_ascii=False, indent=2)
-        
-    print(f"\nГотово! Всего найдено подходящих заказов: {len(all_orders)}")
+        json.dump(unique_orders, f, ensure_ascii=False, indent=2)
+
+    print(f"\nУспешно! Найдено уникальных заказов: {len(unique_orders)}")
