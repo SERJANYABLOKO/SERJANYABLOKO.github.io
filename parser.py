@@ -9,9 +9,10 @@ from bs4 import BeautifulSoup
 # Например: если ссылка https://t.me/freelance_orders, пиши "freelance_orders"
 # ==========================================
 TG_CHANNELS = [
-    "freelance_orders",     # Замени на свои реальные каналы
-    "it_freelance_zakaz",
-    "web_freelance_hub"
+    "freelancetavern",
+    "digitaltender",
+    "freelance_zakazy"
+]
 ]
 
 # ==========================================
