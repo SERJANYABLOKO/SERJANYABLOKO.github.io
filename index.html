@@ -452,6 +452,7 @@
             border-radius: 12px;
             border: 1px solid var(--border-subtle);
             gap: 4px;
+            flex-wrap: wrap;
         }
 
         .filter-tab {
@@ -696,6 +697,7 @@
             margin-bottom: 8px;
         }
 
+        /* ПОЛЯ ВВОДА И ВЫПАДАЮЩИЙ СПИСОК */
         .form-control {
             width: 100%;
             padding: 12px 16px;
@@ -714,7 +716,6 @@
             box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
-        /* Кастомный select без серого фона */
         select.form-control {
             appearance: none;
             -webkit-appearance: none;
@@ -980,7 +981,7 @@
                         <span>IT-Радар фриланса</span>
                     </h1>
                     <p>
-                        Создание Telegram-ботов, Mini Apps, веб-ресурсов и моментальный перехват свежих задач без комиссий и биржевой переплаты.
+                        Создание Telegram-ботов, Mini Apps, веб-ресурсов, парсеров и моментальный перехват свежих задач без биржевых комиссий.
                     </p>
                     <div class="hero-actions">
                         <a class="btn" data-page="radar">⚡ Открыть радар</a>
@@ -1055,16 +1056,17 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Цифровые решения</h2>
-                <p class="section-subtitle">Готовые исходники ботов, Telegram Mini Apps и веб-шаблонов</p>
+                <p class="section-subtitle">Готовые Mini Apps, боты, веб-шаблоны, хостинги и парсеры</p>
             </div>
 
             <div class="radar-bar">
                 <div class="filter-tabs" id="shopFilterGroup">
                     <button class="filter-tab active" data-filter="all">Все</button>
                     <button class="filter-tab" data-filter="miniapp">📱 Mini Apps</button>
-                    <button class="filter-tab" data-filter="bot">🤖 Боты</button>
+                    <button class="filter-tab" data-filter="bot">🤖 TG Боты</button>
                     <button class="filter-tab" data-filter="site">🌐 Сайты</button>
-                    <button class="filter-tab" data-filter="mod">⛏️ Моды</button>
+                    <button class="filter-tab" data-filter="hosting">☁️ Хостинги</button>
+                    <button class="filter-tab" data-filter="parser">⚡ Парсеры</button>
                 </div>
                 <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель управления</button>
             </div>
@@ -1079,10 +1081,11 @@
                     <div>
                         <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Категория</label>
                         <select class="form-control" id="adminCategory">
-                            <option value="miniapp">📱 Mini App</option>
-                            <option value="bot">🤖 Бот</option>
-                            <option value="site">🌐 Сайт</option>
-                            <option value="mod">⛏️ Мод</option>
+                            <option value="miniapp">📱 Mini Apps</option>
+                            <option value="bot">🤖 TG Боты</option>
+                            <option value="site">🌐 Сайты</option>
+                            <option value="hosting">☁️ Хостинги</option>
+                            <option value="parser">⚡ Парсеры</option>
                         </select>
                     </div>
                     <div>
@@ -1131,15 +1134,16 @@
                         <div class="form-group">
                             <label>Тип разработки</label>
                             <select class="form-control" id="contactService">
-                                <option value="Telegram Бот">🤖 Telegram-бот (aiogram, SQLite, API)</option>
                                 <option value="Telegram Mini App">📱 Telegram Mini App (TMA, WebApp)</option>
+                                <option value="Telegram Бот">🤖 Telegram-бот (aiogram, SQLite, API)</option>
                                 <option value="Сайт / Верстка">🌐 Сайт / Лендинг под ключ</option>
+                                <option value="Хостинг / Сервер">☁️ Настройка хостинга & 24/7 Сервера</option>
                                 <option value="Парсер / Скрипт">⚡ Python-парсер / Автоматизация</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Суть проекта</label>
-                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Что должен делать бот или сайт?..." required></textarea>
+                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Что должен делать бот, сайт или скрипт?..." required></textarea>
                         </div>
                         <button type="submit" class="btn" style="width: 100%;">Отправить запрос ➔</button>
                     </form>
@@ -1179,14 +1183,17 @@
         const CHAT_ID = '8673619246';
         const ADMIN_PASSWORD = 'admin123';
 
+        // Обновленные товары по умолчанию (без майнкрафта)
         const defaultProducts = [
             { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
             { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' },
             { id: 103, name: 'Сайт-портфолио IT', category: 'site', icon: '🌐', desc: 'Адаптивный современный одностраничник с темной темой и анимацией.', price: 4500, tag: '' },
-            { id: 104, name: 'Мод Minecraft "Tech & Magic"', category: 'mod', icon: '🔮', desc: 'Набор кастомных механизмов, крафтов и внутриигровых сущностей.', price: 3900, tag: 'Новинка' }
+            { id: 104, name: 'Облачный хостинг под ключ', category: 'hosting', icon: '☁️', desc: 'Настройка VPS Linux, SSL-сертификатов, автозапуска ботов 24/7.', price: 2900, tag: 'Услуга' },
+            { id: 105, name: 'Парсер каналов & чатов', category: 'parser', icon: '⚡', desc: 'Мгновенный сбор контактов и заказов по ключевым словам на Python.', price: 3200, tag: 'Новинка' }
         ];
 
-        let products = JSON.parse(localStorage.getItem('serjant_products')) || defaultProducts;
+        // Используем ключ v2, чтобы обновить старую базу в localStorage пользователя
+        let products = JSON.parse(localStorage.getItem('serjant_products_v2')) || defaultProducts;
         let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
         let radarOrders = [];
         let isAdmin = false;
@@ -1386,7 +1393,7 @@
             } else if (delBtn) {
                 const id = parseInt(delBtn.dataset.id);
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('serjant_products', JSON.stringify(products));
+                localStorage.setItem('serjant_products_v2', JSON.stringify(products));
                 renderShop();
                 showToast("Товар удален");
             }
@@ -1529,7 +1536,7 @@
                 tag: 'Новинка'
             };
             products.push(newItem);
-            localStorage.setItem('serjant_products', JSON.stringify(products));
+            localStorage.setItem('serjant_products_v2', JSON.stringify(products));
             renderShop();
             document.getElementById('adminForm').reset();
             showToast("Товар сохранен!");
