@@ -1,19 +1,25 @@
 import json
 import re
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import requests
 from bs4 import BeautifulSoup
 
+# ==========================================
+# 1. СПИСОК ПРОВЕРЕННЫХ TELEGRAM-КАНАЛОВ
+# ==========================================
 TG_CHANNELS = [
     "freelancetavern",
     "digitaltender",
-    "freelance_zakazy",
     "forfreelance",
     "it_freelance_zakaz",
     "zakazy_it",
-    "py_jobs"
+    "work_in_it",
+    "job_python"
 ]
 
+# ==========================================
+# 2. ФИЛЬТРЫ ТЕХНОЛОГИЙ И СТОП-СЛОВА
+# ==========================================
 TARGET_KEYWORDS = [
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота",
     "mini app", "мини апп", "tma", "webapp", "web app",
@@ -22,6 +28,9 @@ TARGET_KEYWORDS = [
 ]
 
 STOP_WORDS = [
+    # Запрещаем любые платные биржи и спам Kwork
+    "kwork", "кворк", "fl.ru", "freelance.ru",
+    # Неподходящие технологии
     "1с", "1c", "bitrix", "битрикс", "wordpress",
     "senior", "lead", "teamlead", "мидл", "middle",
     "flutter", "react native", "swift", "kotlin", "ios", "android",
@@ -32,15 +41,23 @@ def clean_text(text: str) -> str:
     text = re.sub(r"<[^>]+>", "", text)
     return re.sub(r"\s+", " ", text).strip()
 
-def is_matching(text: str) -> bool:
+def is_matching_skills(text: str) -> bool:
     text_lower = text.lower()
     for stop in STOP_WORDS:
         if re.search(r"\b" + re.escape(stop) + r"\b", text_lower):
             return False
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
+def is_fresh_date(dt: datetime) -> bool:
+    """Проверяет, что дата — сегодня или вчера (не старше 48 часов)."""
+    now = datetime.now(timezone.utc)
+    delta = now - dt
+    return delta.total_seconds() <= 48 * 3600
+
+# ==========================================
+# 3. СБОР С ХАБР ФРИЛАНС
+# ==========================================
 def parse_habr():
-    """Собирает заказы с Хабра вместе со временем и числом откликов."""
     url = "https://freelance.habr.com/tasks"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     tasks = []
@@ -56,26 +73,34 @@ def parse_habr():
                 continue
                 
             title = clean_text(title_el.text)
-            if not is_matching(title):
+            if not is_matching_skills(title):
                 continue
-                
-            link = "https://freelance.habr.com" + title_el.get("href", "")
             
-            # Бюджет
+            # 1. ПРОВЕРКА ОТКЛИКОВ (максимум 5)
+            responses_el = card.select_one(".task-params__item_responses")
+            responses_count = 0
+            responses_text = "0 откликов"
+            
+            if responses_el:
+                responses_text = clean_text(responses_el.text)
+                digits = re.findall(r"\d+", responses_text)
+                if digits:
+                    responses_count = int(digits[0])
+            
+            if responses_count > 5:
+                continue  # Пропускаем, если откликов больше 5
+
+            # 2. ПРОВЕРКА ДАТЫ (только сегодня и вчера)
+            date_el = card.select_one(".task-params__item_published")
+            published_text = clean_text(date_el.text).lower() if date_el else ""
+            
+            # Хабр пишет: "сегодня", "вчера", или дату вроде "15 сентября"
+            if not any(word in published_text for word in ["сегодня", "вчера", "назад", "минут", "час"]):
+                continue  # Старый заказ
+
             price_el = card.select_one(".task-card__price")
             price = clean_text(price_el.text) if price_el else "Договорная"
-            
-            # Количество откликов (на Хабре лежит в блоке параметров задания)
-            responses_el = card.select_one(".task-params__item_responses")
-            if responses_el:
-                responses_count = clean_text(responses_el.text)
-            else:
-                responses_count = "0 откликов"
-                
-            # Время публикации
-            date_el = card.select_one(".task-params__item_published")
-            published_at = clean_text(date_el.text) if date_el else "Сегодня"
-
+            link = "https://freelance.habr.com" + title_el.get("href", "")
             cat = "Telegram" if any(k in title.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
 
             tasks.append({
@@ -84,17 +109,19 @@ def parse_habr():
                 "url": link,
                 "category": cat,
                 "source": "Хабр Фриланс",
-                "published_at": published_at,
-                "responses": responses_count,
+                "published_at": published_text.capitalize(),
+                "responses": f"{responses_count} откл.",
                 "direct_contact": None
             })
     except Exception as e:
-        print(f"[!] Ошибка парсинга Хабра: {e}")
+        print(f"[!] Ошибка Хабра: {e}")
         
     return tasks
 
+# ==========================================
+# 4. СБОР ИЗ TELEGRAM (БЕЗ KWORK И СТАРЬЯ)
+# ==========================================
 def parse_tg(channel: str):
-    """Собирает посты из публичной веб-ленты Telegram-канала."""
     url = f"https://t.me/s/{channel}"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     tasks = []
@@ -104,7 +131,7 @@ def parse_tg(channel: str):
         soup = BeautifulSoup(res.text, "html.parser")
         messages = soup.select(".tgme_widget_message")
         
-        for msg in messages[-15:]:
+        for msg in messages[-20:]:
             text_el = msg.select_one(".tgme_widget_message_text")
             date_el = msg.select_one(".tgme_widget_message_date time")
             link_el = msg.select_one(".tgme_widget_message_date")
@@ -113,28 +140,35 @@ def parse_tg(channel: str):
                 continue
                 
             text = text_el.text.strip()
-            if not is_matching(text):
-                continue
-                
-            first_line = clean_text(text.split("\n")[0])
-            title = (first_line[:90] + "...") if len(first_line) > 90 else first_line
-            link = link_el.get("href")
             
-            # Время поста из атрибута datetime: "2026-09-20T08:45:00+00:00"
-            published_at = "Недавно"
+            # Фильтр навыков и стоп-слов (включая Kwork)
+            if not is_matching_skills(text):
+                continue
+
+            # ПРОВЕРКА ДАТЫ: только сегодня или вчера
+            published_str = "Недавно"
             if date_el and date_el.get("datetime"):
                 raw_time = date_el.get("datetime")
                 try:
-                    dt = datetime.fromisoformat(raw_time)
-                    published_at = dt.strftime("%d.%m %H:%M")
+                    msg_dt = datetime.fromisoformat(raw_time)
+                    if not is_fresh_date(msg_dt):
+                        continue  # Старше вчерашнего дня — пропускаем
+                    published_str = msg_dt.strftime("%d.%m %H:%M")
                 except Exception:
-                    published_at = raw_time[:10]
+                    pass
 
-            # Ищем @username в тексте поста
+            first_line = clean_text(text.split("\n")[0])
+            title = (first_line[:90] + "...") if len(first_line) > 90 else first_line
+            link = link_el.get("href")
+
+            # Поиск прямого контакта @username
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{5,}", text)
             if found_usernames:
-                direct_contact = found_usernames[0]
+                # Отсекаем юзернейм самого канала
+                valid_usernames = [u for u in found_usernames if channel.lower() not in u.lower()]
+                if valid_usernames:
+                    direct_contact = valid_usernames[0]
 
             cat = "Telegram" if any(k in text.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
 
@@ -144,15 +178,18 @@ def parse_tg(channel: str):
                 "url": link,
                 "category": cat,
                 "source": f"@{channel}",
-                "published_at": published_at,
-                "responses": "В личке", # В ТГ нет счетчика откликов
+                "published_at": published_str,
+                "responses": "Прямой контакт",
                 "direct_contact": direct_contact
             })
     except Exception as e:
-        print(f"[!] Ошибка канала @{channel}: {e}")
+        print(f"[!] Ошибка @{channel}: {e}")
         
     return tasks
 
+# ==========================================
+# 5. ОСНОВНОЙ ЗАПУСК
+# ==========================================
 if __name__ == "__main__":
     all_orders = []
     
@@ -160,18 +197,19 @@ if __name__ == "__main__":
     for ch in TG_CHANNELS:
         all_orders.extend(parse_tg(ch))
         
-    # 2. Хабр
+    # 2. Хабр Фриланс
     all_orders.extend(parse_habr())
     
-    # 3. Дедупликация
-    seen_urls = set()
+    # 3. Удаление дубликатов по URL
     unique_orders = []
+    seen_urls = set()
     for o in all_orders:
         if o["url"] not in seen_urls:
             seen_urls.add(o["url"])
             unique_orders.append(o)
             
+    # 4. Сохранение
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(unique_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"Готово! Сохранено заказов: {len(unique_orders)}")
+    print(f"Готово! Найдено {len(unique_orders)} свежих заказов (<= 5 откликов, сегодня/вчера).")
