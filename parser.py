@@ -6,38 +6,110 @@ import requests
 from bs4 import BeautifulSoup
 
 # ==========================================
-# 1. ТЕЛЕГРАМ-КАНАЛЫ С ПРЯМОЙ СВЯЗЬЮ
+# 1. СПИСОК TELEGRAM-КАНАЛОВ И ЧАТОВ (~55 ИСТОЧНИКОВ)
+# Все каналы открытые, парсятся через web-интерфейс t.me/s/ без API-ключей
 # ==========================================
 TG_CHANNELS = [
+    # --- Python, Telegram-боты, Mini Apps, Скрипты ---
     "job_python",
     "py_jobs",
     "aiogram_jobs",
     "python_rabota",
+    "it_podrabotka",
+    "zakazy_it",
+    "web_zakazy",
+    "python_jobs",
+    "pythonjob",
+    "python_work",
+    "django_jobs",
+    "telethon_jobs",
+    "tg_apps_jobs",
+    "python_freelance",
+    "pydevjob",
+    "python_dev_jobs",
+
+    # --- Официальные открытые ленты бирж (без платных тарифов) ---
+    "freelansim_ru",          # Официальный канал заказов Хабр Фриланс
+    "freelancehunt_orders",   # Открытый поток задач с Freelancehunt
+
+    # --- Общие IT-заказы и подработка без переплат ---
     "freelancetavern",
     "digitaltender",
     "forfreelance",
     "it_freelance_zakaz",
-    "zakazy_it",
     "work_in_it",
     "freelance_rabota_rf",
-    "it_podrabotka",
-    "web_zakazy"
+    "freelance_orders_ru",
+    "it_job_board",
+    "freeworkfeed",
+    "pomogator_freelance",
+    "freelance_choice",
+    "freelance_it_job",
+    "it_hiring_chat",
+    "zakazy_na_sait",
+    "ru_freelance",
+    "freelance_daily",
+    "freelancers_hub",
+    "it_lead_jobs",
+    "freelance_chat_it",
+    "it_freelance_hub",
+    "web_dev_jobs",
+    "frontend_jobs_ru",
+    "backend_jobs_ru",
+    "it_projects_ru",
+
+    # --- Веб-верстка, Frontend и Сайты ---
+    "front_jobs",
+    "html_css_jobs",
+    "webdev_chat",
+    "verstka_jobs",
+    "tma_developers",
+    "telegram_mini_apps",
+    "miniapps_jobs",
+    "bot_creators_ru",
+    "bots_orders",
+    "zakaz_na_bota",
+    "bot_zakazy"
 ]
 
 # ==========================================
-# 2. ФИЛЬТРЫ ТЕХНОЛОГИЙ И СТОП-СЛОВА
+# 2. ФИЛЬТР ЦЕЛЕВЫХ НАВЫКОВ (РАЗРАБОТКА)
 # ==========================================
 TARGET_KEYWORDS = [
+    # Telegram боты и WebApp / Mini App
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота", "бота для",
-    "написать бота", "дописать бота", "починить бота", "aiogram", "telethon",
-    "mini app", "мини апп", "tma", "webapp", "web app",
+    "написать бота", "дописать бота", "починить бота", "разработка бота",
+    "aiogram", "telethon", "pyrogram", "python-telegram-bot",
+    "mini app", "мини апп", "tma", "webapp", "web app", "telegram mini app",
+    
+    # Сайты и верстка
     "верстка", "сверстать", "html", "css", "landing", "лендинг", 
     "сайт визитка", "простой сайт", "статический сайт", "поправить верстку",
-    "написать скрипт", "сделать парсер", "парсер на python", "спарсить", "скрипт"
+    "сделать сайт", "доработать сайт", "натянуть верстку", "адаптивная верстка",
+    
+    # Парсеры, скрипты и автоматизация
+    "написать скрипт", "сделать парсер", "парсер на python", "спарсить",
+    "скрипт на python", "парсер данных", "автоматизация", "парсер",
+    "выгрузить данные", "сбор данных"
 ]
 
+# ==========================================
+# 3. СТОП-СЛОВА (SMM + МАРКЕТИНГ + БИРЖИ С ОГРАНИЧЕНИЯМИ)
+# ==========================================
 STOP_WORDS = [
+    # Биржи с платными откликами / обязательной верификацией
     "kwork", "кворк", "fl.ru", "freelance.ru",
+    
+    # SMM, маркетинг, контент и соцсети (полная блокировка)
+    "smm", "смм", "smm-специалист", "смм-специалист", "ведение канала",
+    "ведение telegram", "контент-мейкер", "копирайтер", "копирайтинг",
+    "таргетолог", "таргет", "рилс", "reels", "shorts", "монтажер",
+    "дизайнер", "дизайн карточек", "оформление канала", "сторисмейкер",
+    "менеджер блогера", "закупка рекламы", "трафик", "инвайтинг",
+    "накрутка", "прогрев", "reelsмейкер", "сторис", "маркетолог",
+    "контент план", "постинг", "рассыльщик вручную", "отзывы",
+    
+    # Неподходящий или корпоративный стек
     "1с", "1c", "bitrix", "битрикс", "wordpress",
     "senior", "lead", "teamlead", "мидл", "middle",
     "flutter", "react native", "swift", "kotlin", "ios", "android",
@@ -50,20 +122,24 @@ def clean_text(text: str) -> str:
 
 def is_matching_skills(text: str) -> bool:
     text_lower = text.lower()
+    
+    # Жесткий фильтр SMM и стоп-слов
     for stop in STOP_WORDS:
-        if re.search(r"\b" + re.escape(stop) + r"\b", text_lower):
+        if stop in text_lower:
             return False
+            
+    # Проверка на наличие технической задачи
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
 def is_fresh_date(dt: datetime) -> bool:
-    """Проверка даты: не старше 48 часов (172 800 секунд)."""
+    """Не старше 48 часов."""
     now = datetime.now(timezone.utc)
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
     return (now - dt).total_seconds() <= 48 * 3600
 
 # ==========================================
-# 3. СБОР С ХАБРА (СТРОГО <= 5 ОТКЛИКОВ)
+# 4. СБОР С ХАБР ФРИЛАНСА (СТРОГО ДО 10 ОТКЛИКОВ)
 # ==========================================
 def parse_habr():
     url = "https://freelance.habr.com/tasks"
@@ -87,7 +163,7 @@ def parse_habr():
             if not is_matching_skills(title):
                 continue
             
-            # Не больше 5 откликов
+            # Фильтр: строго <= 10 откликов
             responses_el = card.select_one(".task-params__item_responses")
             responses_count = 0
             if responses_el:
@@ -95,10 +171,10 @@ def parse_habr():
                 if digits:
                     responses_count = int(digits[0])
             
-            if responses_count > 5:
+            if responses_count > 10:
                 continue
 
-            # Только свежие (сегодня/вчера)
+            # Фильтр свежести: сегодня / вчера
             date_el = card.select_one(".task-params__item_published")
             published_text = clean_text(date_el.text).lower() if date_el else ""
             if not any(w in published_text for w in ["сегодня", "вчера", "назад", "минут", "час"]):
@@ -107,14 +183,21 @@ def parse_habr():
             price_el = card.select_one(".task-card__price")
             price = clean_text(price_el.text) if price_el else "Договорная"
             link = "https://freelance.habr.com" + title_el.get("href", "")
-            cat = "Telegram" if any(k in title.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
+            
+            title_lower = title.lower()
+            if any(k in title_lower for k in ["бот", "app", "tma"]):
+                cat = "Telegram"
+            elif any(k in title_lower for k in ["парсер", "спарсить", "скрипт"]):
+                cat = "Парсеры"
+            else:
+                cat = "Веб-сайт"
 
             tasks.append({
                 "title": title,
                 "price": price,
                 "url": link,
                 "category": cat,
-                "source": "Хабр (< 5 откликов)",
+                "source": "Хабр (< 10 откл.)",
                 "published_at": published_text.capitalize(),
                 "responses": f"{responses_count} откл.",
                 "direct_contact": None,
@@ -126,7 +209,7 @@ def parse_habr():
     return tasks
 
 # ==========================================
-# 4. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ)
+# 5. СБОР ИЗ TELEGRAM-КАНАЛОВ И ЧАТОВ
 # ==========================================
 def parse_tg(channel: str):
     url = f"https://t.me/s/{channel}"
@@ -134,7 +217,7 @@ def parse_tg(channel: str):
     tasks = []
     
     try:
-        res = requests.get(url, headers=headers, timeout=10)
+        res = requests.get(url, headers=headers, timeout=8)
         if res.status_code != 200:
             return tasks
             
@@ -168,7 +251,7 @@ def parse_tg(channel: str):
             title = (first_line[:90] + "...") if len(first_line) > 90 else first_line
             link = link_el.get("href")
 
-            # Извлечение контакта
+            # Поиск контакта @username в сообщении
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{5,}", text)
             if found_usernames:
@@ -176,7 +259,13 @@ def parse_tg(channel: str):
                 if valid_usernames:
                     direct_contact = valid_usernames[0]
 
-            cat = "Telegram" if any(k in text.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
+            text_lower = text.lower()
+            if any(k in text_lower for k in ["бот", "app", "tma"]):
+                cat = "Telegram"
+            elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт"]):
+                cat = "Парсеры"
+            else:
+                cat = "Веб-сайт"
 
             discovered_time = msg_dt.isoformat() if msg_dt else datetime.now(timezone.utc).isoformat()
 
@@ -191,16 +280,16 @@ def parse_tg(channel: str):
                 "direct_contact": direct_contact,
                 "discovered_at": discovered_time
             })
-    except Exception as e:
-        print(f"[!] TG @{channel} ошибка: {e}")
+    except Exception:
+        # Пропускаем недоступные или приватные каналы без прерывания
+        pass
         
     return tasks
 
 # ==========================================
-# 5. ХРАНИЛИЩЕ И ОЧИСТКА СТАРШЕ 2 ДНЕЙ
+# 6. ХРАНЕНИЕ И АВТООЧИСТКА ЗАКАЗОВ (48 ЧАСОВ)
 # ==========================================
 def load_existing_orders() -> list:
-    """Загружает уже сохраненные заказы из orders.json."""
     if not os.path.exists("orders.json"):
         return []
     try:
@@ -211,22 +300,22 @@ def load_existing_orders() -> list:
         return []
 
 def filter_orders_under_48h(orders: list) -> list:
-    """Оставляет только те заказы, с момента появления которых прошло меньше 48 часов."""
     now = datetime.now(timezone.utc)
     fresh_orders = []
 
     for order in orders:
+        # Чистим историю от попавшего ранее SMM
+        if not is_matching_skills(order.get("title", "")):
+            continue
+            
         disc_str = order.get("discovered_at")
         if not disc_str:
-            # Если метки времени нет, сохраняем заказ
             fresh_orders.append(order)
             continue
         try:
             order_time = datetime.fromisoformat(disc_str)
             if order_time.tzinfo is None:
                 order_time = order_time.replace(tzinfo=timezone.utc)
-            
-            # Прошло меньше 2 дней (48 часов)
             if (now - order_time).total_seconds() <= 48 * 3600:
                 fresh_orders.append(order)
         except Exception:
@@ -235,17 +324,17 @@ def filter_orders_under_48h(orders: list) -> list:
     return fresh_orders
 
 if __name__ == "__main__":
-    # 1. Загружаем историю прошлых заказов
     old_orders = load_existing_orders()
     
-    # 2. Собираем свежие задачи
     new_scraped = []
+    print(f"[*] Сканирование {len(TG_CHANNELS)} каналов и чатов...")
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
+        
+    print("[*] Сканирование Хабр Фриланс...")
     new_scraped.extend(parse_habr())
     
-    # 3. Объединяем старые и новые без дубликатов по ссылке
-    # Новые задачи идут в начало списка
+    # Объединяем старые и новые без повторов
     combined_orders = []
     seen_urls = set()
     
@@ -255,11 +344,9 @@ if __name__ == "__main__":
             seen_urls.add(url)
             combined_orders.append(order)
             
-    # 4. Удаляем то, что старше 48 часов
     final_orders = filter_orders_under_48h(combined_orders)
     
-    # 5. Сохраняем обратно в orders.json
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(final_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"Готово! В базе {len(final_orders)} актуальных заказов за последние 2 дня.")
+    print(f"[+] Успешно! В базе {len(final_orders)} актуальных заказов без SMM за 48 часов.")
