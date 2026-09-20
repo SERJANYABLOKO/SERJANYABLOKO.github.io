@@ -73,9 +73,9 @@ def is_matching_skills(text: str) -> bool:
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
 def is_fresh_date(dt: datetime) -> bool:
-    """Не старше 36 часов (сегодня и вчера)."""
+    """Не старше 48 часов (сегодня и вчера)."""
     now = datetime.now(timezone.utc)
-    return (now - dt).total_seconds() <= 36 * 3600
+    return (now - dt).total_seconds() <= 48 * 4800
 
 # ==========================================
 # 4. СБОР С ХАБРА (СТРОГО <= 5 ОТКЛИКОВ)
