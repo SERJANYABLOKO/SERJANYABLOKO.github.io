@@ -13,7 +13,7 @@
             --secondary: #00ccff;
             --accent: #ff4757;
             --bg-dark: #0a0a0f;
-            --card-bg: rgba(18, 22, 34, 0.65);
+            --card-bg: rgba(18, 22, 34, 0.7);
             --card-border: rgba(0, 255, 136, 0.12);
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
@@ -273,7 +273,7 @@
                 linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: 1;
-            pointer-events: none; /* чтобы не мешать кликам */
+            pointer-events: none;
         }
 
         .hero .container {
@@ -462,8 +462,46 @@
         .radar-card h3 {
             font-size: 1.05rem;
             line-height: 1.4;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #f1f5f9;
+        }
+
+        .radar-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0 16px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .radar-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0, 204, 255, 0.12);
+            color: var(--secondary);
+            border: 1px solid rgba(0, 204, 255, 0.25);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .contact-pill:hover {
+            background: var(--secondary);
+            color: #0a0a0f;
         }
 
         .radar-price {
@@ -1248,15 +1286,33 @@
             container.innerHTML = list.map(o => `
                 <div class="radar-card">
                     <div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                             <span class="badge" style="font-size:0.7rem;">${o.category || 'IT'}</span>
-                            <span style="font-size:0.7rem; color:var(--secondary); font-weight:600;">${o.source || 'Биржа'}</span>
+                            <span style="font-size:0.75rem; color:var(--secondary); font-weight:600;">${o.source || 'Биржа'}</span>
                         </div>
+                        
                         <h3>${o.title}</h3>
+
+                        ${o.direct_contact ? `
+                            <a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="contact-pill">
+                                💬 Написать заказчику: ${o.direct_contact}
+                            </a>
+                        ` : ''}
+
+                        <div class="radar-meta-row">
+                            <span class="radar-meta-item">
+                                🕒 <b>${o.published_at || 'Сегодня'}</b>
+                            </span>
+                            <span class="radar-meta-item" style="color: ${o.responses && o.responses.includes('0') ? '#00ff88' : 'var(--text-muted)'};">
+                                👥 <b>${o.responses || 'В личке'}</b>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <div class="radar-price">${o.price || 'Договорная'}</div>
-                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm">Открыть заказ ➔</a>
+                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm" style="width: 100%; text-align: center;">
+                            Открыть задачу ➔
+                        </a>
                     </div>
                 </div>
             `).join('');
@@ -1273,9 +1329,9 @@
 
         document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
         document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
-        setInterval(fetchRadarOrders, 15 * 60 * 1000); // Автопроверка каждые 15 минут
+        setInterval(fetchRadarOrders, 15 * 60 * 1000);
 
-        // ===== МАГАЗИН И ТОВАРЫ (ДЕЛЕГИРОВАНИЕ КЛИКОВ) =====
+        // ===== МАГАЗИН И ТОВАРЫ =====
         function renderShop() {
             const container = document.getElementById('shopGridContainer');
             const activeFilter = document.querySelector('#shopFilterGroup .filter-btn.active').dataset.filter;
@@ -1318,7 +1374,7 @@
             });
         });
 
-        // ЕДИНЫЙ ОБРАБОТЧИК КЛИКОВ ДЛЯ КАРТОЧЕК МАГАЗИНА
+        // Слушатель кликов магазина
         document.getElementById('shopGridContainer').addEventListener('click', (e) => {
             const addBtn = e.target.closest('.btn-add-cart');
             const delBtn = e.target.closest('.btn-del-product');
@@ -1390,7 +1446,6 @@
             totalEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
         }
 
-        // Удаление из корзины по клику
         document.getElementById('cartItemsContainer').addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-remove-item');
             if (btn) {
@@ -1400,7 +1455,7 @@
             }
         });
 
-        // Открытие/закрытие сайдбара корзины
+        // Открытие/закрытие корзины
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
 
@@ -1450,7 +1505,7 @@
             showToast("✅ Заказ отправлен! Я напишу вам в Telegram.");
         });
 
-        // ===== АДМИН-ПАНЕЛЬ С ПАРОЛЕМ =====
+        // ===== АДМИН-ПАНЕЛЬ =====
         const adminPanel = document.getElementById('adminPanel');
         const passwordModal = document.getElementById('passwordModal');
 
@@ -1564,7 +1619,7 @@
             });
         });
 
-        // ===== ПЕРВЫЙ ЗАПУСК =====
+        // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
         renderShop();
         updateCartUI();
         fetchRadarOrders();
