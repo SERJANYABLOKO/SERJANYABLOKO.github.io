@@ -99,7 +99,7 @@
 
         .nav-links {
             display: flex;
-            gap: 16px;
+            gap: 20px;
             list-style: none;
             align-items: center;
         }
@@ -108,7 +108,7 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 6px 0;
@@ -617,120 +617,6 @@
             outline: none;
         }
 
-        /* УСЛУГИ */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .service-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 30px 25px;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 255, 136, 0.35);
-        }
-
-        .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .service-card h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .service-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .service-features span {
-            font-size: 0.7rem;
-            padding: 4px 12px;
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 20px;
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        /* КАЛЬКУЛЯТОР & КОНТАКТЫ */
-        .calc-box, .contact-form {
-            max-width: 620px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 35px;
-            backdrop-filter: blur(10px);
-        }
-
-        .calc-box label, .contact-form label {
-            display: block; font-weight: 600; margin-bottom: 8px; color: #cbd5e1; font-size: 0.9rem;
-        }
-
-        .calc-box select, .contact-form input, .contact-form select, .contact-form textarea {
-            width: 100%;
-            padding: 12px 16px;
-            background: #0d0d14;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            outline: none;
-        }
-
-        .calc-box input[type="range"] {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-            margin-bottom: 25px;
-        }
-
-        .calc-box input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px; height: 22px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        .calc-result {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
-            border-radius: 16px;
-            border: 1px solid rgba(0, 255, 136, 0.15);
-        }
-
-        .calc-result .price {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.6rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-
         /* КОРЗИНА И МОДАЛКИ */
         .cart-sidebar {
             position: fixed;
@@ -833,24 +719,21 @@
 </head>
 <body>
 
-    <!-- НАВИГАЦИЯ -->
+    <!-- НАВИГАЦИЯ (ТОЛЬКО ГЛАВНЫЕ 3 ВКЛАДКИ) -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a class="logo" data-page="home">SERJANT<span>DEV</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a data-page="home" class="active">Главная</a></li>
-                <li><a data-page="services">Услуги</a></li>
-                <li><a data-page="shop">Магазин</a></li>
                 <li>
                     <a data-page="radar">
                         ⚡ Радар заказов <span class="radar-badge" id="radarCount">0</span>
                     </a>
                 </li>
-                <li><a data-page="calculator">Калькулятор</a></li>
-                <li><a data-page="contact">Контакты</a></li>
-                <li><a id="settingsToggle">⚙️</a></li>
+                <li><a data-page="shop">Магазин</a></li>
+                <li><a id="settingsToggle" title="Сменить тему">⚙️</a></li>
                 <li>
-                    <a id="cartToggle">
+                    <a id="cartToggle" title="Корзина">
                         🛒 <span class="cart-badge" id="cartCount">0</span>
                     </a>
                 </li>
@@ -933,7 +816,7 @@
                         <span class="highlight">поиск IT-заказов</span>
                     </h1>
                     <p>
-                        Создание сайтов, Telegram-ботов, Mini Apps и встроенный мониторинг свежих заказов с фриланс-бирж каждые 30 минут.
+                        Telegram-боты, сайты, Mini Apps и встроенный мониторинг свежих заказов с бирж и каналов без посредников.
                     </p>
                     <div class="hero-buttons">
                         <a class="btn" data-page="radar">⚡ Радар заказов</a>
@@ -949,8 +832,8 @@
                             <div class="label">Автообновление</div>
                         </div>
                         <div class="stat-item">
-                            <div class="number">100%</div>
-                            <div class="label">По твоим стекам</div>
+                            <div class="number">48 ч</div>
+                            <div class="label">Хранение задач</div>
                         </div>
                     </div>
                 </div>
@@ -960,7 +843,7 @@
                         <div><span class="keyword">from</span> client_radar <span class="keyword">import</span> Parser</div>
                         <div><span class="keyword">class</span> <span class="function">DevRadar</span>:</div>
                         <div>&nbsp;&nbsp;<span class="keyword">self</span>.update_interval = <span class="string">"30 min"</span></div>
-                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.status = <span class="string">"⚡ Сканирование активно"</span></div>
+                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.history = <span class="string">"48 hours"</span></div>
                     </div>
                 </div>
             </div>
@@ -988,52 +871,7 @@
         </div>
     </div>
 
-    <!-- 3. УСЛУГИ -->
-    <div class="page" id="page-services">
-        <div class="container" style="padding: 20px 20px 80px;">
-            <h2 class="section-title">Мои услуги</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <span class="service-icon">🌐</span>
-                    <h3>Сайты</h3>
-                    <p>Лендинги, магазины, админ-панели, визитки и чистая адаптивная верстка.</p>
-                    <div class="service-features"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Адаптив</span></div>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">🤖</span>
-                    <h3>Telegram Боты</h3>
-                    <p>Автоматизация, прием платежей, авторассылки, модерация чатов и базы данных.</p>
-                    <div class="service-features"><span>Python</span><span>aiogram</span><span>SQLite</span></div>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">📱</span>
-                    <h3>Telegram Mini Apps</h3>
-                    <p>Интерактивные веб-приложения внутри Telegram: магазины, кликеры, клановые панели.</p>
-                    <div class="service-features"><span>TMA</span><span>WebApp</span><span>REST API</span></div>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">☁️</span>
-                    <h3>Хостинг</h3>
-                    <p>Размещение сайтов и ботов на 24/7 серверах с SSL и бекапами.</p>
-                    <div class="service-features"><span>Linux</span><span>SSL</span><span>24/7</span></div>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">⛏️</span>
-                    <h3>Моды Minecraft</h3>
-                    <p>Кастомные моды: новые механики, предметы, блоки, мобы и генерация.</p>
-                    <div class="service-features"><span>Java</span><span>Fabric</span><span>Forge</span></div>
-                </div>
-                <div class="service-card">
-                    <span class="service-icon">🎨</span>
-                    <h3>Текстуры Minecraft</h3>
-                    <p>Ресурс-паки любой сложности, 3D-модели предметов и интерфейсы.</p>
-                    <div class="service-features"><span>Blockbench</span><span>UI/UX</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. МАГАЗИН -->
+    <!-- 3. МАГАЗИН -->
     <div class="page" id="page-shop">
         <div class="container" style="padding: 20px 20px 80px;">
             <h2 class="section-title">Магазин цифровых товаров</h2>
@@ -1048,6 +886,7 @@
                 <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель админа</button>
             </div>
 
+            <!-- Админка магазина -->
             <div class="admin-panel" id="adminPanel">
                 <h3 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:15px;">⚙️ Добавить новый товар</h3>
                 <form class="admin-form" id="adminForm">
@@ -1087,73 +926,6 @@
         </div>
     </div>
 
-    <!-- 5. КАЛЬКУЛЯТОР -->
-    <div class="page" id="page-calculator">
-        <div class="container" style="padding: 20px 20px 80px;">
-            <h2 class="section-title">Калькулятор стоимости</h2>
-            <div class="calc-box">
-                <label>Что нужно разработать?</label>
-                <select id="calcService">
-                    <option value="bot">🤖 Telegram Бот</option>
-                    <option value="miniapp">📱 Telegram Mini App</option>
-                    <option value="site">🌐 Веб-сайт / Лендинг</option>
-                    <option value="full">🔥 Комплекс (Сайт + Бот)</option>
-                    <option value="mod">⛏️ Мод для Minecraft</option>
-                </select>
-
-                <label>Сложность проекта: <span id="calcComplexityLabel" style="color:var(--primary); font-weight: 700;">Средняя</span></label>
-                <input type="range" id="calcComplexity" min="1" max="5" value="3" />
-
-                <div class="calc-result">
-                    <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:5px;">Рекомендуемый бюджет клиенту:</div>
-                    <div class="price" id="calcPriceDisplay">12 000 ₽</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. КОНТАКТЫ -->
-    <div class="page" id="page-contact">
-        <div class="container" style="padding: 20px 20px 80px;">
-            <h2 class="section-title">Обсудить проект</h2>
-            <form class="contact-form" id="contactForm">
-                <div>
-                    <label>Как к вам обращаться?</label>
-                    <input type="text" id="contactName" placeholder="Ваше имя" required />
-                </div>
-                <div>
-                    <label>Ваш Telegram</label>
-                    <input type="text" id="contactTg" placeholder="@username" required />
-                </div>
-                <div>
-                    <label>Какая задача?</label>
-                    <select id="contactService">
-                        <option value="Telegram Бот">🤖 Telegram Бот</option>
-                        <option value="Telegram Mini App">📱 Telegram Mini App</option>
-                        <option value="Сайт под ключ">🌐 Сайт под ключ</option>
-                        <option value="Мод / Текстуры">⛏️ Мод / Текстуры</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Описание задачи</label>
-                    <textarea id="contactMsg" placeholder="Опишите, что именно требуется разработать..." required style="min-height: 100px;"></textarea>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">Отправить заявку</button>
-            </form>
-
-            <div class="contact-info" style="margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div class="stat-item" style="padding: 12px 25px;">
-                    <span style="font-size: 1.2rem; display: block;">📱 Telegram</span>
-                    <a href="https://t.me/serjantyabloko" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">@serjantyabloko</a>
-                </div>
-                <div class="stat-item" style="padding: 12px 25px;">
-                    <span style="font-size: 1.2rem; display: block;">📧 Email</span>
-                    <a href="mailto:geraskinlev81@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">geraskinlev81@gmail.com</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- ПОДВАЛ -->
     <footer style="padding: 30px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.04); color: #64748b; font-size: 0.85rem;">
         <div class="container">
@@ -1165,7 +937,6 @@
     <div class="toast" id="toast">✅ Готово!</div>
 
     <script>
-        // НАСТРОЙКИ
         const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
         const CHAT_ID = '8673619246';
         const ADMIN_PASSWORD = 'L20812081';
@@ -1201,18 +972,17 @@
             }
         }
 
-        // НАВИГАЦИЯ
+        // НАВИГАЦИЯ (3 ВКЛАДКИ)
         const pages = {
             home: document.getElementById('page-home'),
             radar: document.getElementById('page-radar'),
-            services: document.getElementById('page-services'),
-            shop: document.getElementById('page-shop'),
-            calculator: document.getElementById('page-calculator'),
-            contact: document.getElementById('page-contact')
+            shop: document.getElementById('page-shop')
         };
 
         function navigateTo(pageId) {
-            Object.values(pages).forEach(p => p.classList.remove('active'));
+            Object.values(pages).forEach(p => {
+                if (p) p.classList.remove('active');
+            });
             if (pages[pageId]) pages[pageId].classList.add('active');
             
             document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
@@ -1321,7 +1091,7 @@
         document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
         document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
 
-        // Автообновление каждые 30 минут (1 800 000 миллисекунд)
+        // Обновление раз в 30 минут
         setInterval(fetchRadarOrders, 30 * 60 * 1000);
 
         // МАГАЗИН
@@ -1551,37 +1321,7 @@
             showToast("✅ Товар успешно добавлен!");
         });
 
-        // КАЛЬКУЛЯТОР
-        const calcPrices = { bot: 7000, miniapp: 14000, site: 9000, full: 21000, mod: 8000 };
-        const calcLabels = ['Минимальная', 'Базовая', 'Средняя', 'Высокая', 'PRO'];
-
-        function updateCalculator() {
-            const s = document.getElementById('calcService').value;
-            const l = parseInt(document.getElementById('calcComplexity').value);
-            document.getElementById('calcComplexityLabel').textContent = calcLabels[l - 1];
-            const price = Math.round(calcPrices[s] * (0.6 + l * 0.25));
-            document.getElementById('calcPriceDisplay').textContent = price.toLocaleString('ru-RU') + ' ₽';
-        }
-
-        document.getElementById('calcService').addEventListener('change', updateCalculator);
-        document.getElementById('calcComplexity').addEventListener('input', updateCalculator);
-        updateCalculator();
-
-        // ФОРМА ОБРАТНОЙ СВЯЗИ
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('contactName').value.trim();
-            const tg = document.getElementById('contactTg').value.trim();
-            const service = document.getElementById('contactService').value;
-            const msg = document.getElementById('contactMsg').value.trim();
-
-            const text = `📬 <b>Новая заявка на разработку!</b>\n\n👤 <b>Имя:</b> ${name}\n📱 <b>Telegram:</b> ${tg}\n🔧 <b>Услуга:</b> ${service}\n📝 <b>Задача:</b> ${msg}`;
-            await sendToTelegram(text);
-            showToast("✅ Заявка отправлена! Скоро свяжусь.");
-            document.getElementById('contactForm').reset();
-        });
-
-        // ТЕМЫ ОФОРМЛЕНИЯ
+        // ТЕМЫ
         const settingsModal = document.getElementById('settingsModal');
         document.getElementById('settingsToggle').addEventListener('click', (e) => {
             e.preventDefault();
