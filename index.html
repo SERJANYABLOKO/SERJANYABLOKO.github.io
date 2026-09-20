@@ -11,17 +11,17 @@
     
     <style>
         :root {
-            --primary: #00ff88;
-            --primary-glow: rgba(0, 255, 136, 0.25);
-            --secondary: #00e5ff;
+            --primary: #ff3366;
+            --primary-glow: rgba(255, 51, 102, 0.25);
+            --secondary: #ff9900;
             --accent: #ff3366;
-            --bg-base: #06070a;
-            --bg-gradient-1: rgba(0, 255, 136, 0.07);
-            --bg-gradient-2: rgba(0, 229, 255, 0.05);
-            --surface-1: rgba(13, 16, 23, 0.75);
-            --surface-2: rgba(22, 27, 39, 0.6);
+            --bg-base: #0f0508;
+            --bg-gradient-1: rgba(255, 51, 102, 0.09);
+            --bg-gradient-2: rgba(255, 153, 0, 0.06);
+            --surface-1: rgba(28, 12, 18, 0.75);
+            --surface-2: rgba(41, 17, 26, 0.6);
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(0, 255, 136, 0.4);
+            --border-focus: rgba(255, 51, 102, 0.4);
             --text-main: #f8fafc;
             --text-muted: #8b9bb4;
             --font-display: 'Space Grotesk', sans-serif;
@@ -73,7 +73,7 @@
             top: 0; left: 0; right: 0;
             z-index: 1000;
             padding: 18px 0;
-            background: rgba(6, 7, 10, 0.75);
+            background: rgba(15, 5, 8, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
@@ -82,7 +82,7 @@
 
         .navbar.scrolled {
             padding: 12px 0;
-            background: rgba(6, 7, 10, 0.94);
+            background: rgba(15, 5, 8, 0.94);
             border-bottom: 1px solid var(--border-focus);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
@@ -158,7 +158,7 @@
             vertical-align: middle;
         }
 
-        .radar-badge { background: rgba(0, 229, 255, 0.15); color: var(--secondary); border: 1px solid rgba(0, 229, 255, 0.3); }
+        .radar-badge { background: rgba(255, 153, 0, 0.15); color: var(--secondary); border: 1px solid rgba(255, 153, 0, 0.3); }
 
         .nav-actions {
             display: flex;
@@ -210,7 +210,7 @@
             gap: 10px;
             padding: 12px 26px;
             background: var(--primary);
-            color: #06070a !important;
+            color: #fff !important;
             font-weight: 700;
             font-size: 0.88rem;
             font-family: var(--font-body);
@@ -696,7 +696,6 @@
             margin-bottom: 8px;
         }
 
-        /* ПОЛЯ ВВОДА И ВЫПАДАЮЩИЙ СПИСОК */
         .form-control {
             width: 100%;
             padding: 12px 16px;
@@ -715,7 +714,7 @@
             box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
-        /* Убираем серый фон у select и добавляем аккуратную стрелку */
+        /* Кастомный select без серого фона */
         select.form-control {
             appearance: none;
             -webkit-appearance: none;
@@ -729,7 +728,7 @@
         }
 
         select.form-control option {
-            background: #0b0f17;
+            background: #14080c;
             color: #fff;
             padding: 10px;
         }
@@ -942,9 +941,9 @@
         <div class="modal-content">
             <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙️ Палитра темы</h3>
             <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-                <button class="filter-tab active theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
+                <button class="filter-tab theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
                 <button class="filter-tab theme-btn" data-theme="blue" style="flex: 1; border: 1px solid var(--border-subtle);">🔵 Кибер-синий</button>
-                <button class="filter-tab theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
+                <button class="filter-tab active theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
             </div>
             <button class="btn btn-secondary btn-sm" style="width: 100%;" id="settingsClose">Закрыть</button>
         </div>
@@ -1178,7 +1177,7 @@
     <script>
         const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
         const CHAT_ID = '8673619246';
-        const ADMIN_PASSWORD = 'L20812081';
+        const ADMIN_PASSWORD = 'admin123';
 
         const defaultProducts = [
             { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
@@ -1561,12 +1560,22 @@
                 btn.classList.add('active');
                 const theme = btn.dataset.theme;
 
-                let p = '#00ff88', s = '#00e5ff', glow = 'rgba(0, 255, 136, 0.25)';
-                let bg = '#06070a', g1 = 'rgba(0, 255, 136, 0.07)', g2 = 'rgba(0, 229, 255, 0.05)';
-                let surf1 = 'rgba(13, 16, 23, 0.75)', surf2 = 'rgba(22, 27, 39, 0.6)';
-                let focus = 'rgba(0, 255, 136, 0.4)';
+                let p = '#ff3366', s = '#ff9900', glow = 'rgba(255, 51, 102, 0.25)';
+                let bg = '#0f0508', g1 = 'rgba(255, 51, 102, 0.09)', g2 = 'rgba(255, 153, 0, 0.06)';
+                let surf1 = 'rgba(28, 12, 18, 0.75)', surf2 = 'rgba(41, 17, 26, 0.6)';
+                let focus = 'rgba(255, 51, 102, 0.4)';
 
-                if (theme === 'blue') { 
+                if (theme === 'green') { 
+                    p = '#00ff88'; 
+                    s = '#00e5ff'; 
+                    glow = 'rgba(0, 255, 136, 0.25)'; 
+                    bg = '#06070a';
+                    g1 = 'rgba(0, 255, 136, 0.07)';
+                    g2 = 'rgba(0, 229, 255, 0.05)';
+                    surf1 = 'rgba(13, 16, 23, 0.75)';
+                    surf2 = 'rgba(22, 27, 39, 0.6)';
+                    focus = 'rgba(0, 255, 136, 0.4)';
+                } else if (theme === 'blue') { 
                     p = '#00e5ff'; 
                     s = '#3b82f6'; 
                     glow = 'rgba(0, 229, 255, 0.25)'; 
@@ -1576,16 +1585,6 @@
                     surf1 = 'rgba(10, 20, 36, 0.75)';
                     surf2 = 'rgba(15, 29, 53, 0.6)';
                     focus = 'rgba(0, 229, 255, 0.4)';
-                } else if (theme === 'red') { 
-                    p = '#ff3366'; 
-                    s = '#ff9900'; 
-                    glow = 'rgba(255, 51, 102, 0.25)'; 
-                    bg = '#0f0508';
-                    g1 = 'rgba(255, 51, 102, 0.09)';
-                    g2 = 'rgba(255, 153, 0, 0.06)';
-                    surf1 = 'rgba(28, 12, 18, 0.75)';
-                    surf2 = 'rgba(41, 17, 26, 0.6)';
-                    focus = 'rgba(255, 51, 102, 0.4)';
                 }
 
                 document.documentElement.style.setProperty('--primary', p);
