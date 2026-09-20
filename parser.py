@@ -5,16 +5,13 @@ import requests
 from bs4 import BeautifulSoup
 
 # ==========================================
-# 1. ТЕЛЕГРАМ-КАНАЛЫ С ПРЯМОЙ СВЯЗЬЮ (БЕЗ БИРЖ)
+# 1. ТЕЛЕГРАМ-КАНАЛЫ С ПРЯМОЙ СВЯЗЬЮ
 # ==========================================
 TG_CHANNELS = [
-    # Заказы по ботам и скриптам
     "job_python",
     "py_jobs",
     "aiogram_jobs",
     "python_rabota",
-    
-    # Фриланс и подработка с прямыми контактами
     "freelancetavern",
     "digitaltender",
     "forfreelance",
@@ -27,34 +24,19 @@ TG_CHANNELS = [
 ]
 
 # ==========================================
-# 2. ГРУППЫ VK (ОТКРЫТЫЕ СТЕНЫ БЕЗ РЕГИСТРАЦИИ)
-# Сбор постов с открытых сообществ фриланса через RSS-мост
-# ==========================================
-VK_COMMUNITIES = [
-    "freelance_it",       # пример открытого паблика заказов
-    "zakaz_na_sait",      # заказы на сайты и верстку
-    "bots_orders"         # разработка ботов
-]
-
-# ==========================================
-# 3. ФИЛЬТРЫ ТЕХНОЛОГИЙ И СТОП-СЛОВА
+# 2. КЛЮЧЕВЫЕ И СТОП-СЛОВА
 # ==========================================
 TARGET_KEYWORDS = [
-    # Telegram боты и TMA
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота", "бота для",
     "написать бота", "дописать бота", "починить бота", "aiogram", "telethon",
     "mini app", "мини апп", "tma", "webapp", "web app",
-    
-    # Веб, верстка, скрипты
     "верстка", "сверстать", "html", "css", "landing", "лендинг", 
     "сайт визитка", "простой сайт", "статический сайт", "поправить верстку",
     "написать скрипт", "сделать парсер", "парсер на python", "спарсить", "скрипт"
 ]
 
 STOP_WORDS = [
-    # Платные биржи
     "kwork", "кворк", "fl.ru", "freelance.ru",
-    # Сложные технологии
     "1с", "1c", "bitrix", "битрикс", "wordpress",
     "senior", "lead", "teamlead", "мидл", "middle",
     "flutter", "react native", "swift", "kotlin", "ios", "android",
@@ -73,14 +55,15 @@ def is_matching_skills(text: str) -> bool:
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
 def is_fresh_date(dt: datetime) -> bool:
-    """Не старше 48 часов."""
+    """Проверка: задача опубликована за последние 48 часов."""
     now = datetime.now(timezone.utc)
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
+    # 48 часов * 3600 секунд в часе
     return (now - dt).total_seconds() <= 48 * 3600
 
 # ==========================================
-# 4. СБОР С ХАБРА (СТРОГО <= 5 ОТКЛИКОВ)
+# 3. СБОР С ХАБРА (<= 5 ОТКЛИКОВ)
 # ==========================================
 def parse_habr():
     url = "https://freelance.habr.com/tasks"
@@ -89,6 +72,9 @@ def parse_habr():
     
     try:
         res = requests.get(url, headers=headers, timeout=12)
+        if res.status_code != 200:
+            return tasks
+            
         soup = BeautifulSoup(res.text, "html.parser")
         cards = soup.select(".task-card")
         
@@ -101,7 +87,7 @@ def parse_habr():
             if not is_matching_skills(title):
                 continue
             
-            # Фильтр: не больше 5 откликов
+            # Фильтр: не более 5 откликов
             responses_el = card.select_one(".task-params__item_responses")
             responses_count = 0
             if responses_el:
@@ -112,7 +98,7 @@ def parse_habr():
             if responses_count > 5:
                 continue
 
-            # Дата: только сегодня / вчера
+            # Фильтр даты: только свежие
             date_el = card.select_one(".task-params__item_published")
             published_text = clean_text(date_el.text).lower() if date_el else ""
             if not any(w in published_text for w in ["сегодня", "вчера", "назад", "минут", "час"]):
@@ -134,12 +120,12 @@ def parse_habr():
                 "direct_contact": None
             })
     except Exception as e:
-        print(f"[!] Хабр ошибка: {e}")
+        print(f"[!] Ошибка парсинга Хабра: {e}")
         
     return tasks
 
 # ==========================================
-# 5. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ В ЛС)
+# 4. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ)
 # ==========================================
 def parse_tg(channel: str):
     url = f"https://t.me/s/{channel}"
@@ -148,10 +134,13 @@ def parse_tg(channel: str):
     
     try:
         res = requests.get(url, headers=headers, timeout=10)
+        if res.status_code != 200:
+            return tasks
+            
         soup = BeautifulSoup(res.text, "html.parser")
         messages = soup.select(".tgme_widget_message")
         
-        for msg in messages[-20:]:
+        for msg in messages[-25:]:
             text_el = msg.select_one(".tgme_widget_message_text")
             date_el = msg.select_one(".tgme_widget_message_date time")
             link_el = msg.select_one(".tgme_widget_message_date")
@@ -163,7 +152,6 @@ def parse_tg(channel: str):
             if not is_matching_skills(text):
                 continue
 
-            # Время
             published_str = "Сегодня"
             if date_el and date_el.get("datetime"):
                 try:
@@ -178,7 +166,7 @@ def parse_tg(channel: str):
             title = (first_line[:90] + "...") if len(first_line) > 90 else first_line
             link = link_el.get("href")
 
-            # Контакт заказчика
+            # Извлечение контакта
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{5,}", text)
             if found_usernames:
@@ -204,24 +192,19 @@ def parse_tg(channel: str):
     return tasks
 
 # ==========================================
-# 6. СБОР ИЗ ДИСКОРДА (ЧЕРЕЗ WEBHOOK / ЧАТЫ)
+# 5. СТАРТ ПАРСИНГА И ЗАПИСЬ
 # ==========================================
-# Совет: вступи на популярные русскоязычные Discord-сервера программистов 
-# (например, "IT Guild", "Python Community", "Discord Боты").
-# В ветках #заказы или #ищу-разработчика люди часто ищут исполнителя.
-# Если у тебя есть Discord-токен, его можно подключить сюда для автоматического парсинга каналов.
-
 if __name__ == "__main__":
     all_orders = []
     
-    # Telegram
+    # Сбор из ТГ
     for ch in TG_CHANNELS:
         all_orders.extend(parse_tg(ch))
         
-    # Хабр
+    # Сбор с Хабра
     all_orders.extend(parse_habr())
     
-    # Дедупликация
+    # Удаление дубликатов по URL
     unique_orders = []
     seen = set()
     for o in all_orders:
@@ -232,4 +215,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(unique_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"Готово! Собрано {len(unique_orders)} заказов без бирж и с < 5 откликами.")
+    print(f"Готово! Сохранено {len(unique_orders)} заказов в orders.json")
