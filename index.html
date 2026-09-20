@@ -974,14 +974,14 @@
                 <div class="hero-content">
                     <div class="hero-pill">
                         <span class="pulse-dot"></span>
-                        Мониторинг заказов активен 24/7
+                        Мониторинг 50+ каналов и бирж активен 24/7
                     </div>
                     <h1>
                         Разработка & <br />
                         <span>IT-Радар фриланса</span>
                     </h1>
                     <p>
-                        Создание Telegram-ботов, Mini Apps, веб-ресурсов, парсеров и моментальный перехват свежих задач без биржевых комиссий.
+                        Telegram-боты, Mini Apps, веб-ресурсы, скрипты и автономный перехват свежих задач (до 10 откликов) без биржевых комиссий.
                     </p>
                     <div class="hero-actions">
                         <a class="btn" data-page="radar">⚡ Открыть радар</a>
@@ -1012,9 +1012,9 @@
                     <div class="terminal-body">
                         <div><span class="c-muted">01</span> <span class="c-blue">from</span> radar.core <span class="c-blue">import</span> StreamEngine</div>
                         <div><span class="c-muted">02</span> </div>
-                        <div><span class="c-muted">03</span> engine = StreamEngine(interval=<span class="c-green">"30m"</span>)</div>
-                        <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">5</span>)</div>
-                        <div><span class="c-muted">05</span> engine.listen_direct_contacts()</div>
+                        <div><span class="c-muted">03</span> engine = StreamEngine(channels_count=<span class="c-green">55</span>)</div>
+                        <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">10</span>)</div>
+                        <div><span class="c-muted">05</span> engine.block_keywords([<span class="c-green">"smm"</span>, <span class="c-green">"reels"</span>])</div>
                         <div><span class="c-muted">06</span> </div>
                         <div><span class="c-muted">07</span> <span class="c-green">> [OK] 0% биржевых комиссий</span></div>
                         <div><span class="c-muted">08</span> <span class="c-green">> [OK] Прямая связь в Telegram</span></div>
@@ -1029,7 +1029,7 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Радар IT-Заказов</h2>
-                <p class="section-subtitle">Парсинг заказов с Хабра (< 5 откликов) и прямых каналов за последние 48 часов</p>
+                <p class="section-subtitle">Парсинг 50+ открытых каналов и Хабра (строго до 10 откликов, без SMM)</p>
             </div>
 
             <div class="radar-bar">
@@ -1037,6 +1037,7 @@
                     <button class="filter-tab active" data-filter="all">Все потоки</button>
                     <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
                     <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
+                    <button class="filter-tab" data-filter="Парсеры">⚡ Скрипты / Парсеры</button>
                 </div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div class="search-bar">
@@ -1183,7 +1184,6 @@
         const CHAT_ID = '8673619246';
         const ADMIN_PASSWORD = 'admin123';
 
-        // Обновленные товары по умолчанию (без майнкрафта)
         const defaultProducts = [
             { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
             { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' },
@@ -1192,7 +1192,6 @@
             { id: 105, name: 'Парсер каналов & чатов', category: 'parser', icon: '⚡', desc: 'Мгновенный сбор контактов и заказов по ключевым словам на Python.', price: 3200, tag: 'Новинка' }
         ];
 
-        // Используем ключ v2, чтобы обновить старую базу в localStorage пользователя
         let products = JSON.parse(localStorage.getItem('serjant_products_v2')) || defaultProducts;
         let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
         let radarOrders = [];
