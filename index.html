@@ -668,7 +668,7 @@
             margin-bottom: 16px;
         }
 
-        /* КОНТАКТЫ */
+        /* КОНТАКТЫ & СТИЛИЗАЦИЯ ПОЛЕЙ */
         .contact-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -696,6 +696,7 @@
             margin-bottom: 8px;
         }
 
+        /* ПОЛЯ ВВОДА И ВЫПАДАЮЩИЙ СПИСОК */
         .form-control {
             width: 100%;
             padding: 12px 16px;
@@ -712,6 +713,25 @@
         .form-control:focus {
             border-color: var(--border-focus);
             box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        /* Убираем серый фон у select и добавляем аккуратную стрелку */
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b9bb4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        select.form-control option {
+            background: #0b0f17;
+            color: #fff;
+            padding: 10px;
         }
 
         .direct-contacts {
