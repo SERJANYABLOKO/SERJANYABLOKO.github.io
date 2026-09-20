@@ -16,6 +16,8 @@
             --secondary: #00e5ff;
             --accent: #ff3366;
             --bg-base: #06070a;
+            --bg-gradient-1: rgba(0, 255, 136, 0.07);
+            --bg-gradient-2: rgba(0, 229, 255, 0.05);
             --surface-1: rgba(13, 16, 23, 0.75);
             --surface-2: rgba(22, 27, 39, 0.6);
             --border-subtle: rgba(255, 255, 255, 0.08);
@@ -39,14 +41,16 @@
 
         body {
             font-family: var(--font-body);
-            background: var(--bg-base);
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 15%, var(--bg-gradient-1) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, var(--bg-gradient-2) 0%, transparent 45%);
+            background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.06) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.05) 0%, transparent 40%);
+            transition: background-color 0.4s ease, background-image 0.4s ease;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -78,8 +82,8 @@
 
         .navbar.scrolled {
             padding: 12px 0;
-            background: rgba(6, 7, 10, 0.92);
-            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+            background: rgba(6, 7, 10, 0.94);
+            border-bottom: 1px solid var(--border-focus);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
@@ -155,7 +159,6 @@
         }
 
         .radar-badge { background: rgba(0, 229, 255, 0.15); color: var(--secondary); border: 1px solid rgba(0, 229, 255, 0.3); }
-        .cart-badge { background: rgba(0, 255, 136, 0.15); color: var(--primary); border: 1px solid rgba(0, 255, 136, 0.3); }
 
         .nav-actions {
             display: flex;
@@ -168,19 +171,19 @@
             border: 1px solid var(--border-subtle);
             color: var(--text-main);
             border-radius: 12px;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .icon-btn:hover {
             border-color: var(--border-focus);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             transform: translateY(-1px);
         }
 
@@ -222,7 +225,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+            box-shadow: 0 8px 25px var(--primary-glow);
             filter: brightness(1.05);
         }
 
@@ -236,7 +239,7 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
@@ -316,8 +319,8 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            background: rgba(0, 255, 136, 0.08);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-focus);
             border-radius: 30px;
             font-size: 0.8rem;
             color: var(--primary);
@@ -398,11 +401,12 @@
         }
 
         .hero-terminal {
-            background: #090c12;
+            background: rgba(0, 0, 0, 0.45);
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             overflow: hidden;
+            backdrop-filter: blur(16px);
         }
 
         .terminal-header {
@@ -488,7 +492,7 @@
 
         .search-input:focus {
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
         .search-icon {
@@ -519,7 +523,7 @@
 
         .radar-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(0, 255, 136, 0.3);
+            border-color: var(--border-focus);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
@@ -559,8 +563,8 @@
             align-items: center;
             gap: 6px;
             padding: 6px 12px;
-            background: rgba(0, 229, 255, 0.08);
-            border: 1px solid rgba(0, 229, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-focus);
             border-radius: 8px;
             color: var(--secondary);
             font-size: 0.8rem;
@@ -608,13 +612,13 @@
 
         .shop-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(0, 255, 136, 0.3);
+            border-color: var(--border-focus);
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .shop-thumb {
             height: 120px;
-            background: linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(0,229,255,0.05) 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -629,9 +633,9 @@
             font-size: 0.68rem;
             padding: 3px 10px;
             border-radius: 30px;
-            background: rgba(0, 255, 136, 0.15);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--primary);
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            border: 1px solid var(--border-focus);
             font-weight: 700;
         }
 
@@ -695,7 +699,7 @@
         .form-control {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.35);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             color: #fff;
@@ -707,7 +711,7 @@
 
         .form-control:focus {
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
         .direct-contacts {
@@ -739,12 +743,13 @@
             width: 48px;
             height: 48px;
             border-radius: 14px;
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
+            border: 1px solid var(--border-subtle);
         }
 
         .direct-info h5 {
@@ -766,7 +771,7 @@
             top: 0;
             width: 400px;
             height: 100vh;
-            background: #090c12;
+            background: var(--bg-base);
             border-left: 1px solid var(--border-subtle);
             padding: 30px;
             transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -800,7 +805,7 @@
 
         .modal.show { display: flex; }
         .modal-content {
-            background: #0d111a;
+            background: var(--surface-1);
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             padding: 32px;
@@ -808,6 +813,7 @@
             width: 90%;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
         }
 
         .toast {
@@ -848,7 +854,7 @@
                 flex-direction: column;
                 position: absolute;
                 top: 100%; left: 0; right: 0;
-                background: #06070a;
+                background: var(--bg-base);
                 padding: 24px;
                 border-bottom: 1px solid var(--border-subtle);
                 gap: 16px;
@@ -878,10 +884,8 @@
                 <li><a data-page="contact">Контакты</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="icon-btn" id="settingsToggle" title="Тема">⚙️</button>
-                <button class="icon-btn" id="cartToggle" title="Корзина">
-                    🛒 <span class="badge-counter cart-badge" id="cartCount">0</span>
-                </button>
+                <button class="icon-btn" id="settingsToggle" title="Сменить тему">⚙️</button>
+                <button class="icon-btn" id="cartToggle" title="Корзина">🛒</button>
                 <div class="burger" id="burger">
                     <span></span><span></span>
                 </div>
@@ -1358,7 +1362,7 @@
                     if (exist) exist.qty++;
                     else cart.push({ ...item, qty: 1 });
                     saveCart();
-                    showToast(`${item.name} в корзине`);
+                    showToast(`${item.name} добавлен в корзину`);
                 }
             } else if (delBtn) {
                 const id = parseInt(delBtn.dataset.id);
@@ -1378,10 +1382,6 @@
             const container = document.getElementById('cartItemsContainer');
             const totalEl = document.getElementById('cartTotalPrice');
             const totalBlock = document.getElementById('cartTotalBlock');
-            const badge = document.getElementById('cartCount');
-
-            const count = cart.reduce((s, i) => s + i.qty, 0);
-            badge.textContent = count;
 
             if (!cart.length) {
                 container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
@@ -1530,7 +1530,7 @@
             document.getElementById('contactForm').reset();
         });
 
-        // ТЕМА
+        // СМЕНА ТЕМЫ И ФОНА
         const settingsModal = document.getElementById('settingsModal');
         document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
         document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
@@ -1542,13 +1542,43 @@
                 const theme = btn.dataset.theme;
 
                 let p = '#00ff88', s = '#00e5ff', glow = 'rgba(0, 255, 136, 0.25)';
-                if (theme === 'blue') { p = '#00e5ff'; s = '#3b82f6'; glow = 'rgba(0, 229, 255, 0.25)'; }
-                if (theme === 'red') { p = '#ff3366'; s = '#ff9900'; glow = 'rgba(255, 51, 102, 0.25)'; }
+                let bg = '#06070a', g1 = 'rgba(0, 255, 136, 0.07)', g2 = 'rgba(0, 229, 255, 0.05)';
+                let surf1 = 'rgba(13, 16, 23, 0.75)', surf2 = 'rgba(22, 27, 39, 0.6)';
+                let focus = 'rgba(0, 255, 136, 0.4)';
+
+                if (theme === 'blue') { 
+                    p = '#00e5ff'; 
+                    s = '#3b82f6'; 
+                    glow = 'rgba(0, 229, 255, 0.25)'; 
+                    bg = '#050b14';
+                    g1 = 'rgba(0, 229, 255, 0.08)';
+                    g2 = 'rgba(59, 130, 246, 0.08)';
+                    surf1 = 'rgba(10, 20, 36, 0.75)';
+                    surf2 = 'rgba(15, 29, 53, 0.6)';
+                    focus = 'rgba(0, 229, 255, 0.4)';
+                } else if (theme === 'red') { 
+                    p = '#ff3366'; 
+                    s = '#ff9900'; 
+                    glow = 'rgba(255, 51, 102, 0.25)'; 
+                    bg = '#0f0508';
+                    g1 = 'rgba(255, 51, 102, 0.09)';
+                    g2 = 'rgba(255, 153, 0, 0.06)';
+                    surf1 = 'rgba(28, 12, 18, 0.75)';
+                    surf2 = 'rgba(41, 17, 26, 0.6)';
+                    focus = 'rgba(255, 51, 102, 0.4)';
+                }
 
                 document.documentElement.style.setProperty('--primary', p);
                 document.documentElement.style.setProperty('--secondary', s);
                 document.documentElement.style.setProperty('--primary-glow', glow);
-                showToast("Тема оформления обновлена");
+                document.documentElement.style.setProperty('--bg-base', bg);
+                document.documentElement.style.setProperty('--bg-gradient-1', g1);
+                document.documentElement.style.setProperty('--bg-gradient-2', g2);
+                document.documentElement.style.setProperty('--surface-1', surf1);
+                document.documentElement.style.setProperty('--surface-2', surf2);
+                document.documentElement.style.setProperty('--border-focus', focus);
+
+                showToast("Тема и фон обновлены");
             });
         });
 
