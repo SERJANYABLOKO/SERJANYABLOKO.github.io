@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SerjantDev | Радар IT-заказов и Студия</title>
+    <title>SerjantDev | IT Radar & Digital Studio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #00ff88;
-            --secondary: #00ccff;
-            --accent: #ff4757;
-            --bg-dark: #0a0a0f;
-            --card-bg: rgba(18, 22, 34, 0.7);
-            --card-border: rgba(0, 255, 136, 0.12);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
+            --primary-glow: rgba(0, 255, 136, 0.25);
+            --secondary: #00e5ff;
+            --accent: #ff3366;
+            --bg-base: #06070a;
+            --surface-1: rgba(13, 16, 23, 0.75);
+            --surface-2: rgba(22, 27, 39, 0.6);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 255, 136, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #8b9bb4;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * {
@@ -30,30 +38,29 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
+            font-family: var(--font-body);
+            background: var(--bg-base);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.05) 0%, transparent 40%);
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0f;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
         ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
         }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         /* НАВИГАЦИЯ */
@@ -61,18 +68,19 @@
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 1000;
-            padding: 16px 0;
-            background: rgba(10, 10, 15, 0.85);
+            padding: 18px 0;
+            background: rgba(6, 7, 10, 0.75);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
-            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .navbar.scrolled {
             padding: 12px 0;
-            background: rgba(10, 10, 15, 0.98);
-            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: rgba(6, 7, 10, 0.92);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .navbar .container {
@@ -82,24 +90,26 @@
         }
 
         .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--primary);
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #fff;
             text-decoration: none;
-            text-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
-            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: -0.5px;
             cursor: pointer;
         }
 
         .logo span {
-            color: var(--secondary);
-            text-shadow: 0 0 25px rgba(0, 204, 255, 0.3);
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
         }
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             list-style: none;
             align-items: center;
         }
@@ -107,12 +117,16 @@
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
             position: relative;
             padding: 6px 0;
             cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
         }
 
         .nav-links a::after {
@@ -120,31 +134,54 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 0; height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--primary);
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+            transition: width 0.25s ease;
+            border-radius: 2px;
         }
 
         .nav-links a:hover::after, .nav-links a.active::after {
             width: 100%;
         }
 
-        .cart-badge, .radar-badge {
-            background: var(--primary);
-            color: #0a0a0f;
-            border-radius: 50px;
-            padding: 2px 8px;
-            font-size: 0.7rem;
+        .badge-counter {
+            padding: 2px 7px;
+            border-radius: 20px;
+            font-size: 0.72rem;
             font-weight: 700;
-            margin-left: 4px;
+            font-family: var(--font-mono);
+            margin-left: 5px;
+            vertical-align: middle;
         }
 
-        .radar-badge {
-            background: var(--secondary);
+        .radar-badge { background: rgba(0, 229, 255, 0.15); color: var(--secondary); border: 1px solid rgba(0, 229, 255, 0.3); }
+        .cart-badge { background: rgba(0, 255, 136, 0.15); color: var(--primary); border: 1px solid rgba(0, 255, 136, 0.3); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--border-focus);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
         }
 
         .burger {
@@ -155,11 +192,11 @@
         }
 
         .burger span {
-            width: 28px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px;
-            transition: all 0.3s ease;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: 0.3s;
         }
 
         /* КНОПКИ */
@@ -167,134 +204,153 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 28px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #0a0a0f !important;
+            gap: 10px;
+            padding: 12px 26px;
+            background: var(--primary);
+            color: #06070a !important;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
+            font-family: var(--font-body);
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Orbitron', monospace;
-            box-shadow: 0 0 25px rgba(0, 255, 136, 0.25);
-            user-select: none;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            letter-spacing: -0.2px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.45);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+            filter: brightness(1.05);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
+        .btn:active { transform: translateY(0); }
 
         .btn-secondary {
-            background: rgba(0, 255, 136, 0.05);
-            color: var(--primary) !important;
-            border: 1px solid var(--primary);
+            background: var(--surface-2);
+            color: #fff !important;
+            border: 1px solid var(--border-subtle);
             box-shadow: none;
         }
 
         .btn-secondary:hover {
-            background: var(--primary);
-            color: #0a0a0f !important;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .btn-sm {
             padding: 8px 16px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
+            border-radius: 8px;
         }
 
         .btn-danger {
-            background: rgba(255, 71, 87, 0.1);
+            background: rgba(255, 51, 102, 0.15);
             color: var(--accent) !important;
-            border: 1px solid var(--accent);
-            box-shadow: none;
+            border: 1px solid rgba(255, 51, 102, 0.3);
         }
 
         .btn-danger:hover {
             background: var(--accent);
             color: #fff !important;
-            box-shadow: 0 0 25px rgba(255, 71, 87, 0.4);
         }
 
         /* СТРАНИЦЫ */
         .page {
             display: none;
-            padding-top: 90px;
+            padding-top: 100px;
             min-height: 100vh;
-            animation: fadeIn 0.4s ease;
-            position: relative;
-            z-index: 10;
+            animation: modernFade 0.35s ease forwards;
         }
 
-        .page.active {
-            display: block;
-        }
+        .page.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+        @keyframes modernFade {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.2rem;
-            font-weight: 900;
+        .section-header {
             text-align: center;
-            margin-bottom: 35px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.98rem;
         }
 
         /* HERO */
         .hero {
-            min-height: 88vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             position: relative;
         }
 
-        .hero-grid-bg {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 1;
-            pointer-events: none;
-        }
-
         .hero .container {
-            position: relative;
-            z-index: 5;
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
             gap: 50px;
             align-items: center;
+            width: 100%;
         }
 
-        .hero-content h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.15;
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(0, 255, 136, 0.08);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
             margin-bottom: 20px;
         }
 
-        .hero-content h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-display);
+            font-size: 3.4rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -302,342 +358,430 @@
         .hero-content p {
             font-size: 1.05rem;
             color: var(--text-muted);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             max-width: 520px;
         }
 
-        .hero-badges {
+        .hero-actions {
             display: flex;
-            gap: 8px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            padding: 5px 14px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--primary);
-            background: rgba(0, 255, 136, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
+            gap: 14px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
 
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 35px;
+            gap: 16px;
         }
 
-        .stat-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+        .stat-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
             border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+            padding: 18px;
+            backdrop-filter: blur(12px);
         }
 
-        .stat-item .number {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--primary);
+        .stat-card .num {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
         }
 
-        .stat-item .label {
-            font-size: 0.8rem;
-            color: #707080;
-            margin-top: 4px;
+        .stat-card .desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
-        .hero-code {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+        .hero-terminal {
+            background: #090c12;
+            border: 1px solid var(--border-subtle);
             border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .t-red { background: #ff5f56; }
+        .t-yellow { background: #ffbd2e; }
+        .t-green { background: #27c93f; }
+
+        .terminal-body {
             padding: 24px;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-code .code-window {
-            background: #0d0d14;
-            border-radius: 12px;
-            padding: 20px;
-            font-family: 'Courier New', monospace;
+            font-family: var(--font-mono);
             font-size: 0.85rem;
-            color: var(--primary);
-            line-height: 1.7;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            line-height: 1.8;
+            color: #cbd5e1;
         }
 
-        .hero-code .comment { color: #525266; }
-        .hero-code .keyword { color: #ff6b9d; }
-        .hero-code .string { color: #ffd93d; }
-        .hero-code .function { color: #6bcbff; }
+        .c-muted { color: #5b687c; }
+        .c-green { color: var(--primary); }
+        .c-blue { color: var(--secondary); }
 
         /* РАДАР */
-        .radar-controls {
+        .radar-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 16px;
+            margin-bottom: 30px;
         }
 
-        .filter-btn-group {
+        .filter-tabs {
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            background: var(--surface-1);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            gap: 4px;
         }
 
-        .filter-btn {
+        .filter-tab {
             padding: 8px 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
             color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 0.84rem;
             font-weight: 600;
-            font-size: 0.8rem;
-            user-select: none;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: rgba(0, 255, 136, 0.1);
+        .filter-tab:hover { color: #fff; }
+        .filter-tab.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .search-bar {
+            position: relative;
+            min-width: 260px;
         }
 
         .search-input {
-            padding: 10px 18px;
-            background: #0d0d14;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50px;
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
             color: #fff;
             font-size: 0.85rem;
             outline: none;
-            width: 260px;
-            transition: all 0.3s ease;
+            transition: 0.2s;
         }
 
         .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
         }
 
-        .radar-grid {
+        .search-icon {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 20px;
         }
 
         .radar-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
             border-radius: 18px;
-            padding: 22px;
-            transition: all 0.3s ease;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
         }
 
         .radar-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 255, 136, 0.35);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .radar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .tag-pill {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        .source-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
         }
 
         .radar-card h3 {
-            font-size: 1.05rem;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            color: #f1f5f9;
+            font-size: 1.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            margin-bottom: 14px;
+            color: #fff;
         }
 
-        .radar-meta-row {
+        .direct-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: 8px;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: 0.2s;
+        }
+
+        .direct-link:hover {
+            background: var(--secondary);
+            color: #06070a;
+        }
+
+        .radar-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 12px 0 16px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-        }
-
-        .radar-meta-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .contact-pill {
-            display: inline-block;
-            padding: 4px 10px;
-            background: rgba(0, 204, 255, 0.12);
-            color: var(--secondary);
-            border: 1px solid rgba(0, 204, 255, 0.25);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .contact-pill:hover {
-            background: var(--secondary);
-            color: #0a0a0f;
+            margin-bottom: 18px;
         }
 
         .radar-price {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.15rem;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 15px;
+            color: #fff;
+            margin-bottom: 16px;
         }
 
         /* МАГАЗИН */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .shop-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+        .shop-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .shop-item:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 255, 136, 0.35);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+        .shop-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        .shop-item .image {
-            height: 130px;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
+        .shop-thumb {
+            height: 120px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(0,229,255,0.05) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             position: relative;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
-        .shop-item .image .tag {
+        .shop-tag {
             position: absolute;
-            top: 10px; right: 10px;
-            padding: 3px 12px;
+            top: 12px; right: 12px;
+            font-size: 0.68rem;
+            padding: 3px 10px;
+            border-radius: 30px;
             background: rgba(0, 255, 136, 0.15);
-            border-radius: 50px;
-            font-size: 0.65rem;
             color: var(--primary);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            font-weight: 600;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            font-weight: 700;
         }
 
-        .shop-item .info {
-            padding: 20px;
+        .shop-content {
+            padding: 22px;
             display: flex;
             flex-direction: column;
             flex: 1;
             justify-content: space-between;
         }
 
-        .shop-item .info h4 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.05rem;
+        .shop-content h4 {
+            font-size: 1.12rem;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: var(--primary);
-        }
-
-        .shop-item .info .desc {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-            flex: 1;
-        }
-
-        .shop-item .info .price {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 15px;
-        }
-
-        .shop-actions-row {
-            display: flex;
-            gap: 8px;
-        }
-
-        /* АДМИНКА */
-        .admin-panel {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .admin-panel.open { display: block; }
-        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .admin-form .full-width { grid-column: 1 / -1; }
-        .admin-form label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block; }
-        .admin-form input, .admin-form select, .admin-form textarea {
-            width: 100%;
-            padding: 10px 14px;
-            background: #0d0d14;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
             color: #fff;
-            font-size: 0.9rem;
-            outline: none;
         }
 
-        /* КОРЗИНА И МОДАЛКИ */
+        .shop-content p {
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            margin-bottom: 18px;
+        }
+
+        .shop-price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        /* КОНТАКТЫ */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .contact-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.92rem;
+            font-family: var(--font-body);
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .direct-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .direct-item {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s;
+        }
+
+        .direct-item:hover {
+            border-color: var(--border-focus);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .direct-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .direct-info h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .direct-info span {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        /* КОРЗИНА / SIDEBAR */
         .cart-sidebar {
             position: fixed;
             right: -420px;
             top: 0;
             width: 400px;
             height: 100vh;
-            background: #0d0d14;
-            border-left: 1px solid rgba(0, 255, 136, 0.15);
+            background: #090c12;
+            border-left: 1px solid var(--border-subtle);
             padding: 30px;
-            transition: right 0.35s ease;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 2000;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .cart-sidebar.open { right: 0; }
         .cart-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             z-index: 1999;
             display: none;
         }
@@ -646,7 +790,7 @@
         .modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             z-index: 3000;
             display: none;
@@ -656,70 +800,70 @@
 
         .modal.show { display: flex; }
         .modal-content {
-            background: #0d0d14;
-            border: 1px solid rgba(0, 255, 136, 0.25);
-            border-radius: 24px;
-            padding: 35px;
+            background: #0d111a;
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
             max-width: 420px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 12px;
-            background: #0a0a0f;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: #fff;
-            margin-bottom: 15px;
-            outline: none;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
         }
 
         .toast {
             position: fixed;
-            bottom: 30px; right: 30px;
-            background: var(--primary);
-            color: #0a0a0f;
-            padding: 14px 26px;
-            border-radius: 14px;
-            font-weight: 700;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 9999;
+            bottom: 24px; right: 24px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-focus);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-weight: 600;
             font-size: 0.85rem;
-            pointer-events: none;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .toast.show { transform: translateY(0); opacity: 1; }
 
+        /* АДАПТИВ */
         @media (max-width: 992px) {
             .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero-content p { margin: 0 auto 25px auto; }
-            .hero-badges, .hero-buttons, .hero-stats { justify-content: center; }
-            .hero-code { display: none; }
+            .hero-content p { margin: 0 auto 30px auto; }
+            .hero-actions, .hero-stats { justify-content: center; }
+            .hero-terminal { display: none; }
+            .contact-layout { grid-template-columns: 1fr; }
             .cart-sidebar { width: 100%; right: -100%; }
         }
 
         @media (max-width: 768px) {
             .nav-links {
-                display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
-                background: rgba(10, 10, 15, 0.98); padding: 25px; gap: 15px; border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: #06070a;
+                padding: 24px;
+                border-bottom: 1px solid var(--border-subtle);
+                gap: 16px;
             }
             .nav-links.active { display: flex; }
             .burger { display: flex; }
-            .hero-content h1 { font-size: 2.1rem; }
-            .admin-form { grid-template-columns: 1fr; }
-            .radar-controls { flex-direction: column; align-items: stretch; }
-            .search-input { width: 100%; }
+            .hero-content h1 { font-size: 2.3rem; }
+            .radar-bar { flex-direction: column; align-items: stretch; }
+            .search-bar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- НАВИГАЦИЯ (ТОЛЬКО ГЛАВНЫЕ 3 ВКЛАДКИ) -->
+    <!-- ШАПКА -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a class="logo" data-page="home">SERJANT<span>DEV</span></a>
@@ -727,19 +871,20 @@
                 <li><a data-page="home" class="active">Главная</a></li>
                 <li>
                     <a data-page="radar">
-                        ⚡ Радар заказов <span class="radar-badge" id="radarCount">0</span>
+                        ⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span>
                     </a>
                 </li>
                 <li><a data-page="shop">Магазин</a></li>
-                <li><a id="settingsToggle" title="Сменить тему">⚙️</a></li>
-                <li>
-                    <a id="cartToggle" title="Корзина">
-                        🛒 <span class="cart-badge" id="cartCount">0</span>
-                    </a>
-                </li>
+                <li><a data-page="contact">Контакты</a></li>
             </ul>
-            <div class="burger" id="burger">
-                <span></span><span></span><span></span>
+            <div class="nav-actions">
+                <button class="icon-btn" id="settingsToggle" title="Тема">⚙️</button>
+                <button class="icon-btn" id="cartToggle" title="Корзина">
+                    🛒 <span class="badge-counter cart-badge" id="cartCount">0</span>
+                </button>
+                <div class="burger" id="burger">
+                    <span></span><span></span>
+                </div>
             </div>
         </div>
     </nav>
@@ -747,22 +892,20 @@
     <!-- МОДАЛКА ПАРОЛЯ АДМИНКИ -->
     <div class="modal" id="passwordModal">
         <div class="modal-content">
-            <span style="font-size: 3.5rem; display: block; margin-bottom: 15px;">🔐</span>
-            <h3 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 8px;">Вход в админ-панель</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите пароль управления магазином</p>
-            <input type="password" id="passwordInput" placeholder="Пароль" />
+            <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔐 Вход в админку</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите пароль управления каталогом</p>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Пароль" style="margin-bottom: 14px;" />
             <button class="btn" style="width: 100%;" id="passwordSubmit">Войти</button>
-            <div id="passwordError" style="color: #ff4757; font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный пароль!</div>
+            <div id="passwordError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный пароль</div>
         </div>
     </div>
 
-    <!-- МОДАЛКА ОФОРМЛЕНИЯ ЗАКАЗА -->
+    <!-- МОДАЛКА ОФОРМЛЕНИЯ ЗАКАЗА ИЗ КОРЗИНЫ -->
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
-            <span style="font-size: 3rem; display: block; margin-bottom: 10px;">📦</span>
-            <h3 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 10px;">Оформление заказа</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш контакт, чтобы получить заказ</p>
-            <input type="text" id="checkoutTg" placeholder="Ваш Telegram (@username)" required />
+            <h3 style="font-family: var(--font-display); margin-bottom: 8px;">📦 Оформление заказа</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы забрать товар</p>
+            <input type="text" class="form-control" id="checkoutTg" placeholder="@username" style="margin-bottom: 16px;" required />
             <div style="display: flex; gap: 10px;">
                 <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Отправить</button>
                 <button class="btn btn-secondary btn-sm" id="checkoutCancelBtn">Отмена</button>
@@ -773,168 +916,240 @@
     <!-- МОДАЛКА НАСТРОЕК ТЕМЫ -->
     <div class="modal" id="settingsModal">
         <div class="modal-content">
-            <h3 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;">⚙️ Оформление</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">Выберите неоновую тему:</p>
-            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
-                <button class="filter-btn active theme-btn" data-theme="green" style="flex: 1;">🟢 Green</button>
-                <button class="filter-btn theme-btn" data-theme="blue" style="flex: 1;">🔵 Blue</button>
-                <button class="filter-btn theme-btn" data-theme="red" style="flex: 1;">🔴 Red</button>
+            <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙️ Палитра темы</h3>
+            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                <button class="filter-tab active theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
+                <button class="filter-tab theme-btn" data-theme="blue" style="flex: 1; border: 1px solid var(--border-subtle);">🔵 Кибер-синий</button>
+                <button class="filter-tab theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
             </div>
-            <button class="btn btn-sm btn-secondary" style="width: 100%;" id="settingsClose">✕ Закрыть</button>
+            <button class="btn btn-secondary btn-sm" style="width: 100%;" id="settingsClose">Закрыть</button>
         </div>
     </div>
 
     <!-- КОРЗИНА -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-sidebar" id="cartSidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.06);">
-            <h3 style="font-family:'Orbitron'; color:var(--primary);">🛒 Корзина</h3>
-            <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" id="cartClose">✕</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem;">🛒 Корзина</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;" id="cartClose">✕</button>
         </div>
-        <div id="cartItemsContainer"></div>
-        <div id="cartTotalBlock" style="display: none; padding: 20px 0; border-top: 2px solid rgba(0,255,136,0.1); margin-top: 20px; text-align: center;">
-            <div style="color: var(--text-muted); font-size: 0.9rem;">Сумма к оплате:</div>
-            <div id="cartTotalPrice" style="font-family: 'Orbitron'; font-size: 2rem; color: var(--primary); margin-bottom: 15px;">0 ₽</div>
-            <button class="btn" style="width: 100%;" id="cartCheckoutBtn">Оформить заказ</button>
+        <div id="cartItemsContainer" style="flex: 1;"></div>
+        <div id="cartTotalBlock" style="display: none; padding-top: 20px; border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 16px;">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Итого к оплате:</span>
+                <span id="cartTotalPrice" style="font-family: var(--font-display); font-size: 1.5rem; font-weight:700; color: var(--primary);">0 ₽</span>
+            </div>
+            <button class="btn" style="width: 100%;" id="cartCheckoutBtn">Оформить покупку</button>
         </div>
     </div>
 
-    <!-- 1. ГЛАВНАЯ -->
+    <!-- 1. СТРАНИЦА: ГЛАВНАЯ -->
     <div class="page active" id="page-home">
         <section class="hero">
-            <div class="hero-grid-bg"></div>
             <div class="container">
                 <div class="hero-content">
-                    <div class="hero-badges">
-                        <span class="badge">🌐 Сайты</span>
-                        <span class="badge">🤖 Боты</span>
-                        <span class="badge">📱 Mini Apps</span>
-                        <span class="badge">⚡ Радар заказов 24/7</span>
+                    <div class="hero-pill">
+                        <span class="pulse-dot"></span>
+                        Мониторинг заказов активен 24/7
                     </div>
                     <h1>
-                        Разработка и <br />
-                        <span class="highlight">поиск IT-заказов</span>
+                        Разработка & <br />
+                        <span>IT-Радар фриланса</span>
                     </h1>
                     <p>
-                        Telegram-боты, сайты, Mini Apps и встроенный мониторинг свежих заказов с бирж и каналов без посредников.
+                        Создание Telegram-ботов, Mini Apps, веб-ресурсов и моментальный перехват свежих задач без комиссий и биржевой переплаты.
                     </p>
-                    <div class="hero-buttons">
-                        <a class="btn" data-page="radar">⚡ Радар заказов</a>
-                        <a class="btn btn-secondary" data-page="shop">В магазин</a>
+                    <div class="hero-actions">
+                        <a class="btn" data-page="radar">⚡ Открыть радар</a>
+                        <a class="btn btn-secondary" data-page="contact">Обсудить проект</a>
                     </div>
                     <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="number" id="statOrdersCount">0</div>
-                            <div class="label">Заказов в радаре</div>
+                        <div class="stat-card">
+                            <div class="num" id="statOrdersCount">0</div>
+                            <div class="desc">Задач в сети</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="number">30 мин</div>
-                            <div class="label">Автообновление</div>
+                        <div class="stat-card">
+                            <div class="num">30 мин</div>
+                            <div class="desc">Интервал цикла</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="number">48 ч</div>
-                            <div class="label">Хранение задач</div>
+                        <div class="stat-card">
+                            <div class="num">48 ч</div>
+                            <div class="desc">Срок жизни задач</div>
                         </div>
                     </div>
                 </div>
-                <div class="hero-code">
-                    <div class="code-window">
-                        <div class="comment"># SerjantDev Core Engine</div>
-                        <div><span class="keyword">from</span> client_radar <span class="keyword">import</span> Parser</div>
-                        <div><span class="keyword">class</span> <span class="function">DevRadar</span>:</div>
-                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.update_interval = <span class="string">"30 min"</span></div>
-                        <div>&nbsp;&nbsp;<span class="keyword">self</span>.history = <span class="string">"48 hours"</span></div>
+                <div class="hero-terminal">
+                    <div class="terminal-header">
+                        <span class="t-dot t-red"></span>
+                        <span class="t-dot t-yellow"></span>
+                        <span class="t-dot t-green"></span>
+                        <span style="margin-left: 10px; font-size: 0.75rem; color: #5b687c; font-family: var(--font-mono);">serjant_radar.py</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div><span class="c-muted">01</span> <span class="c-blue">from</span> radar.core <span class="c-blue">import</span> StreamEngine</div>
+                        <div><span class="c-muted">02</span> </div>
+                        <div><span class="c-muted">03</span> engine = StreamEngine(interval=<span class="c-green">"30m"</span>)</div>
+                        <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">5</span>)</div>
+                        <div><span class="c-muted">05</span> engine.listen_direct_contacts()</div>
+                        <div><span class="c-muted">06</span> </div>
+                        <div><span class="c-muted">07</span> <span class="c-green">> [OK] 0% биржевых комиссий</span></div>
+                        <div><span class="c-muted">08</span> <span class="c-green">> [OK] Прямая связь в Telegram</span></div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- 2. РАДАР ЗАКАЗОВ -->
+    <!-- 2. СТРАНИЦА: РАДАР ЗАКАЗОВ -->
     <div class="page" id="page-radar">
-        <div class="container" style="padding: 20px 20px 80px;">
-            <h2 class="section-title">Радар IT-Заказов</h2>
-            
-            <div class="radar-controls">
-                <div class="filter-btn-group" id="radarFilterGroup">
-                    <button class="filter-btn active" data-filter="all">Все</button>
-                    <button class="filter-btn" data-filter="Telegram">🤖 Telegram / TMA</button>
-                    <button class="filter-btn" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Радар IT-Заказов</h2>
+                <p class="section-subtitle">Парсинг заказов с Хабра (< 5 откликов) и прямых каналов за последние 48 часов</p>
+            </div>
+
+            <div class="radar-bar">
+                <div class="filter-tabs" id="radarFilterGroup">
+                    <button class="filter-tab active" data-filter="all">Все потоки</button>
+                    <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
+                    <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
                 </div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по задачам..." />
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по стеку или задаче..." />
+                    </div>
                     <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
                 </div>
             </div>
 
-            <div class="radar-grid" id="radarGridContainer"></div>
+            <div class="cards-grid" id="radarGridContainer"></div>
         </div>
     </div>
 
-    <!-- 3. МАГАЗИН -->
+    <!-- 3. СТРАНИЦА: МАГАЗИН -->
     <div class="page" id="page-shop">
-        <div class="container" style="padding: 20px 20px 80px;">
-            <h2 class="section-title">Магазин цифровых товаров</h2>
-            <div class="radar-controls">
-                <div class="filter-btn-group" id="shopFilterGroup">
-                    <button class="filter-btn active" data-filter="all">Все</button>
-                    <button class="filter-btn" data-filter="miniapp">📱 Mini Apps</button>
-                    <button class="filter-btn" data-filter="bot">🤖 Боты</button>
-                    <button class="filter-btn" data-filter="site">🌐 Сайты</button>
-                    <button class="filter-btn" data-filter="mod">⛏️ Моды</button>
-                </div>
-                <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель админа</button>
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Цифровые решения</h2>
+                <p class="section-subtitle">Готовые исходники ботов, Telegram Mini Apps и веб-шаблонов</p>
             </div>
 
-            <!-- Админка магазина -->
-            <div class="admin-panel" id="adminPanel">
-                <h3 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:15px;">⚙️ Добавить новый товар</h3>
-                <form class="admin-form" id="adminForm">
+            <div class="radar-bar">
+                <div class="filter-tabs" id="shopFilterGroup">
+                    <button class="filter-tab active" data-filter="all">Все</button>
+                    <button class="filter-tab" data-filter="miniapp">📱 Mini Apps</button>
+                    <button class="filter-tab" data-filter="bot">🤖 Боты</button>
+                    <button class="filter-tab" data-filter="site">🌐 Сайты</button>
+                    <button class="filter-tab" data-filter="mod">⛏️ Моды</button>
+                </div>
+                <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель управления</button>
+            </div>
+
+            <div id="adminPanel" style="display: none; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 26px; margin-bottom: 30px;">
+                <h3 style="font-family: var(--font-display); margin-bottom: 16px;">Добавить новый товар</h3>
+                <form id="adminForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                     <div>
-                        <label>Название товара</label>
-                        <input type="text" id="adminName" required placeholder="Например: Бот автопродаж" />
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Название</label>
+                        <input type="text" class="form-control" id="adminName" required />
                     </div>
                     <div>
-                        <label>Категория</label>
-                        <select id="adminCategory">
-                            <option value="miniapp">📱 Mini Apps</option>
-                            <option value="bot">🤖 Боты</option>
-                            <option value="site">🌐 Сайты</option>
-                            <option value="mod">⛏️ Моды</option>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Категория</label>
+                        <select class="form-control" id="adminCategory">
+                            <option value="miniapp">📱 Mini App</option>
+                            <option value="bot">🤖 Бот</option>
+                            <option value="site">🌐 Сайт</option>
+                            <option value="mod">⛏️ Мод</option>
                         </select>
                     </div>
                     <div>
-                        <label>Иконка (эмодзи)</label>
-                        <input type="text" id="adminIcon" value="📦" required />
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Эмодзи</label>
+                        <input type="text" class="form-control" id="adminIcon" value="📦" required />
                     </div>
                     <div>
-                        <label>Цена (₽)</label>
-                        <input type="number" id="adminPrice" required placeholder="3000" />
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Цена (₽)</label>
+                        <input type="number" class="form-control" id="adminPrice" required />
                     </div>
-                    <div class="full-width">
-                        <label>Краткое описание</label>
-                        <textarea id="adminDesc" required placeholder="Опишите функции товара..."></textarea>
+                    <div style="grid-column: 1 / -1;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Описание</label>
+                        <textarea class="form-control" id="adminDesc" rows="3" required></textarea>
                     </div>
-                    <div class="full-width" style="display:flex; gap:10px;">
-                        <button type="submit" class="btn btn-sm">➕ Сохранить товар</button>
-                        <button type="button" class="btn btn-sm btn-secondary" id="adminCloseBtn">✕ Закрыть</button>
+                    <div style="grid-column: 1 / -1; display:flex; gap:10px;">
+                        <button type="submit" class="btn btn-sm">Сохранить</button>
+                        <button type="button" class="btn btn-sm btn-secondary" id="adminCloseBtn">Отмена</button>
                     </div>
                 </form>
             </div>
 
-            <div class="shop-grid" id="shopGridContainer"></div>
+            <div class="cards-grid" id="shopGridContainer"></div>
         </div>
     </div>
 
-    <!-- ПОДВАЛ -->
-    <footer style="padding: 30px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.04); color: #64748b; font-size: 0.85rem;">
-        <div class="container">
-            <p>© 2026 SerjantDev. Все права защищены. Мониторинг заказов обновляется каждые 30 минут.</p>
-        </div>
-    </footer>
+    <!-- 4. СТРАНИЦА: КОНТАКТЫ -->
+    <div class="page" id="page-contact">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Связь & Заказ</h2>
+                <p class="section-subtitle">Опишите задачу — я оперативно сориентирую по срокам и стоимости реализации</p>
+            </div>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast">✅ Готово!</div>
+            <div class="contact-layout">
+                <div class="contact-card">
+                    <h3 style="font-family: var(--font-display); margin-bottom: 20px;">Отправить ТЗ на расчет</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Ваше имя</label>
+                            <input type="text" class="form-control" id="contactName" placeholder="Александр" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Telegram для связи</label>
+                            <input type="text" class="form-control" id="contactTg" placeholder="@username" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Тип разработки</label>
+                            <select class="form-control" id="contactService">
+                                <option value="Telegram Бот">🤖 Telegram-бот (aiogram, SQLite, API)</option>
+                                <option value="Telegram Mini App">📱 Telegram Mini App (TMA, WebApp)</option>
+                                <option value="Сайт / Верстка">🌐 Сайт / Лендинг под ключ</option>
+                                <option value="Парсер / Скрипт">⚡ Python-парсер / Автоматизация</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Суть проекта</label>
+                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Что должен делать бот или сайт?..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Отправить запрос ➔</button>
+                    </form>
+                </div>
+
+                <div class="direct-contacts">
+                    <a href="https://t.me/serjantyabloko" target="_blank" class="direct-item">
+                        <div class="direct-icon">💬</div>
+                        <div class="direct-info">
+                            <h5>Telegram канал & ЛС</h5>
+                            <span>@serjantyabloko (Быстрый ответ)</span>
+                        </div>
+                    </a>
+                    <a href="mailto:geraskinlev81@gmail.com" class="direct-item">
+                        <div class="direct-icon">✉️</div>
+                        <div class="direct-info">
+                            <h5>Электронная почта</h5>
+                            <span>geraskinlev81@gmail.com</span>
+                        </div>
+                    </a>
+                    <div class="stat-card" style="margin-top: 10px;">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: #fff;">💡 Условия сотрудничества</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                            Работаю по понятному ТЗ, поэтапно демонстрирую прогресс и помогаю с размещением на хостинге или сервере.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- УВЕДОМЛЕНИЕ -->
+    <div class="toast" id="toast"><span>✅</span> <span id="toastText">Готово!</span></div>
 
     <script>
         const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
@@ -942,10 +1157,10 @@
         const ADMIN_PASSWORD = 'L20812081';
 
         const defaultProducts = [
-            { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Полноценный магазин внутри Telegram с корзиной и оплатой.', price: 7900, tag: 'Хит' },
-            { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с админ-панелью для мгновенной рассылки клиентам.', price: 3500, tag: 'Популярно' },
-            { id: 103, name: 'Сайт-портфолио / Лендинг', category: 'site', icon: '🌐', desc: 'Стильный одностраничник в стиле киберпанк с анимациями.', price: 4500, tag: '' },
-            { id: 104, name: 'Мод "Магия & Технологии"', category: 'mod', icon: '🔮', desc: 'Кастомные механизмы, реакторы и 15 заклинаний.', price: 3900, tag: 'Новинка' }
+            { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
+            { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' },
+            { id: 103, name: 'Сайт-портфолио IT', category: 'site', icon: '🌐', desc: 'Адаптивный современный одностраничник с темной темой и анимацией.', price: 4500, tag: '' },
+            { id: 104, name: 'Мод Minecraft "Tech & Magic"', category: 'mod', icon: '🔮', desc: 'Набор кастомных механизмов, крафтов и внутриигровых сущностей.', price: 3900, tag: 'Новинка' }
         ];
 
         let products = JSON.parse(localStorage.getItem('serjant_products')) || defaultProducts;
@@ -955,9 +1170,9 @@
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
-            toast.textContent = msg;
+            document.getElementById('toastText').textContent = msg;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2800);
+            setTimeout(() => toast.classList.remove('show'), 2600);
         }
 
         async function sendToTelegram(text) {
@@ -968,21 +1183,20 @@
                     body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
                 });
             } catch (err) {
-                console.error("Ошибка отправки в ТГ:", err);
+                console.error("Ошибка отправки сообщения:", err);
             }
         }
 
-        // НАВИГАЦИЯ (3 ВКЛАДКИ)
+        // НАВИГАЦИЯ
         const pages = {
             home: document.getElementById('page-home'),
             radar: document.getElementById('page-radar'),
-            shop: document.getElementById('page-shop')
+            shop: document.getElementById('page-shop'),
+            contact: document.getElementById('page-contact')
         };
 
         function navigateTo(pageId) {
-            Object.values(pages).forEach(p => {
-                if (p) p.classList.remove('active');
-            });
+            Object.values(pages).forEach(p => { if (p) p.classList.remove('active'); });
             if (pages[pageId]) pages[pageId].classList.add('active');
             
             document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
@@ -1004,10 +1218,10 @@
         });
 
         window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
         });
 
-        // ЗАГРУЗКА ЗАКАЗОВ (РАДАР)
+        // ЗАГРУЗКА РАДАРА
         async function fetchRadarOrders() {
             try {
                 const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
@@ -1015,13 +1229,13 @@
                 renderRadar();
                 document.getElementById('radarCount').textContent = radarOrders.length;
                 document.getElementById('statOrdersCount').textContent = radarOrders.length;
-                showToast("⚡ Радар заказов обновлен!");
+                showToast("⚡ Радар синхронизирован!");
             } catch (err) {
                 document.getElementById('radarGridContainer').innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
-                        <span style="font-size: 3rem; display: block; margin-bottom: 10px;">⏳</span>
-                        <h3>Заказы загружаются...</h3>
-                        <p>GitHub Actions выполняет сканирование каждые 30 минут.</p>
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">⏳</span>
+                        <h4>Загрузка потока заказов...</h4>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">Скрипт проверяет биржи и каналы каждые 30 минут.</p>
                     </div>
                 `;
             }
@@ -1029,7 +1243,7 @@
 
         function renderRadar() {
             const container = document.getElementById('radarGridContainer');
-            const activeFilter = document.querySelector('#radarFilterGroup .filter-btn.active').dataset.filter;
+            const activeFilter = document.querySelector('#radarFilterGroup .filter-tab.active').dataset.filter;
             const query = document.getElementById('radarSearchInput').value.toLowerCase().trim();
 
             let list = radarOrders;
@@ -1041,38 +1255,36 @@
             }
 
             if (!list.length) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Подходящих заказов пока нет. Проверьте чуть позже!</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">Заказы в выбранной категории пока не найдены.</div>`;
                 return;
             }
 
             container.innerHTML = list.map(o => `
                 <div class="radar-card">
                     <div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <span class="badge" style="font-size:0.7rem;">${o.category || 'IT'}</span>
-                            <span style="font-size:0.75rem; color:var(--secondary); font-weight:600;">${o.source || 'Биржа'}</span>
+                        <div class="radar-top">
+                            <span class="tag-pill">${o.category || 'IT'}</span>
+                            <span class="source-tag">${o.source || 'Прямой контакт'}</span>
                         </div>
                         
                         <h3>${o.title}</h3>
 
                         ${o.direct_contact ? `
-                            <a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="contact-pill">
-                                💬 Написать заказчику: ${o.direct_contact}
+                            <a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="direct-link">
+                                💬 ЛС заказчика: ${o.direct_contact}
                             </a>
                         ` : ''}
 
-                        <div class="radar-meta-row">
-                            <span class="radar-meta-item">
-                                🕒 <b>${o.published_at || 'Сегодня'}</b>
-                            </span>
-                            <span class="radar-meta-item" style="color: ${o.responses && o.responses.includes('0') ? '#00ff88' : 'var(--text-muted)'};">
-                                👥 <b>${o.responses || 'В личке'}</b>
+                        <div class="radar-meta">
+                            <span>🕒 ${o.published_at || 'Недавно'}</span>
+                            <span style="color: ${o.responses && o.responses.includes('0') ? 'var(--primary)' : 'inherit'};">
+                                👥 ${o.responses || 'В личке'}
                             </span>
                         </div>
                     </div>
                     <div>
                         <div class="radar-price">${o.price || 'Договорная'}</div>
-                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm" style="width: 100%; text-align: center;">
+                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm btn-secondary" style="width: 100%;">
                             Открыть задачу ➔
                         </a>
                     </div>
@@ -1080,9 +1292,9 @@
             `).join('');
         }
 
-        document.querySelectorAll('#radarFilterGroup .filter-btn').forEach(btn => {
+        document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('#radarFilterGroup .filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 renderRadar();
             });
@@ -1090,36 +1302,34 @@
 
         document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
         document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
-
-        // Обновление раз в 30 минут
         setInterval(fetchRadarOrders, 30 * 60 * 1000);
 
         // МАГАЗИН
         function renderShop() {
             const container = document.getElementById('shopGridContainer');
-            const activeFilter = document.querySelector('#shopFilterGroup .filter-btn.active').dataset.filter;
+            const activeFilter = document.querySelector('#shopFilterGroup .filter-tab.active').dataset.filter;
             const list = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
 
             if (!list.length) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Товаров в этой категории пока нет.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Товары отсутствуют.</div>`;
                 return;
             }
 
             container.innerHTML = list.map(p => `
-                <div class="shop-item">
-                    <div class="image">
+                <div class="shop-card">
+                    <div class="shop-thumb">
                         ${p.icon || '📦'}
-                        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+                        ${p.tag ? `<span class="shop-tag">${p.tag}</span>` : ''}
                     </div>
-                    <div class="info">
+                    <div class="shop-content">
                         <div>
                             <h4>${p.name}</h4>
-                            <div class="desc">${p.desc}</div>
+                            <p>${p.desc}</p>
                         </div>
                         <div>
-                            <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
-                            <div class="shop-actions-row">
-                                <button class="btn btn-sm btn-add-cart" data-id="${p.id}" style="flex: 1;">В корзину</button>
+                            <div class="shop-price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-sm btn-add-cart" data-id="${p.id}" style="flex: 1;">Купить</button>
                                 ${isAdmin ? `<button class="btn btn-sm btn-danger btn-del-product" data-id="${p.id}">✕</button>` : ''}
                             </div>
                         </div>
@@ -1128,9 +1338,9 @@
             `).join('');
         }
 
-        document.querySelectorAll('#shopFilterGroup .filter-btn').forEach(btn => {
+        document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('#shopFilterGroup .filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 renderShop();
             });
@@ -1142,32 +1352,22 @@
 
             if (addBtn) {
                 const id = parseInt(addBtn.dataset.id);
-                addToCart(id);
+                const item = products.find(p => p.id === id);
+                if (item) {
+                    const exist = cart.find(p => p.id === id);
+                    if (exist) exist.qty++;
+                    else cart.push({ ...item, qty: 1 });
+                    saveCart();
+                    showToast(`${item.name} в корзине`);
+                }
             } else if (delBtn) {
                 const id = parseInt(delBtn.dataset.id);
-                deleteProduct(id);
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('serjant_products', JSON.stringify(products));
+                renderShop();
+                showToast("Товар удален");
             }
         });
-
-        function addToCart(id) {
-            const item = products.find(p => p.id === id);
-            if (!item) return;
-            const inCart = cart.find(p => p.id === id);
-            if (inCart) {
-                inCart.qty++;
-            } else {
-                cart.push({ ...item, qty: 1 });
-            }
-            saveCart();
-            showToast(`✅ ${item.name} добавлен в корзину`);
-        }
-
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('serjant_products', JSON.stringify(products));
-            renderShop();
-            showToast("🗑️ Товар удален");
-        }
 
         function saveCart() {
             localStorage.setItem('serjant_cart', JSON.stringify(cart));
@@ -1180,11 +1380,11 @@
             const totalBlock = document.getElementById('cartTotalBlock');
             const badge = document.getElementById('cartCount');
 
-            const count = cart.reduce((sum, i) => sum + i.qty, 0);
+            const count = cart.reduce((s, i) => s + i.qty, 0);
             badge.textContent = count;
 
             if (!cart.length) {
-                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пуста</p>`;
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
                 totalBlock.style.display = 'none';
                 return;
             }
@@ -1194,12 +1394,12 @@
             container.innerHTML = cart.map(i => {
                 total += i.price * i.qty;
                 return `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-subtle);">
                         <div>
-                            <div style="font-weight:600; font-size:0.95rem;">${i.name}</div>
-                            <div style="color:var(--secondary); font-size:0.85rem;">${i.price.toLocaleString('ru-RU')} ₽ × ${i.qty}</div>
+                            <div style="font-weight:600; font-size:0.92rem; color:#fff;">${i.name}</div>
+                            <div style="color:var(--text-muted); font-size:0.82rem;">${i.price.toLocaleString('ru-RU')} ₽ × ${i.qty}</div>
                         </div>
-                        <button class="btn-remove-item" data-id="${i.id}" style="background:none; border:none; color:var(--accent); font-size:1.2rem; cursor:pointer; padding:5px;">✕</button>
+                        <button class="btn-remove-item" data-id="${i.id}" style="background:none; border:none; color:var(--accent); font-size:1.1rem; cursor:pointer;">✕</button>
                     </div>
                 `;
             }).join('');
@@ -1218,49 +1418,44 @@
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
 
-        function openCart() {
-            cartSidebar.classList.add('open');
-            cartOverlay.classList.add('show');
-        }
-
-        function closeCart() {
-            cartSidebar.classList.remove('open');
-            cartOverlay.classList.remove('show');
-        }
-
         document.getElementById('cartToggle').addEventListener('click', (e) => {
             e.preventDefault();
-            openCart();
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
         });
-        document.getElementById('cartClose').addEventListener('click', closeCart);
-        document.getElementById('cartOverlay').addEventListener('click', closeCart);
+        document.getElementById('cartClose').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
 
         const checkoutModal = document.getElementById('checkoutModal');
         document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
-            closeCart();
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
             checkoutModal.classList.add('show');
         });
-
         document.getElementById('checkoutCancelBtn').addEventListener('click', () => {
             checkoutModal.classList.remove('show');
         });
-
         document.getElementById('checkoutConfirmBtn').addEventListener('click', async () => {
             const tg = document.getElementById('checkoutTg').value.trim();
             if (!tg) {
-                showToast("⚠️ Укажите ваш Telegram!");
+                showToast("Укажите ваш контакт в Telegram");
                 return;
             }
-
             const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
-            const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            const msg = `🛒 <b>Новый заказ из магазина!</b>\n\n👤 <b>Покупатель:</b> ${tg}\n\n📦 <b>Товары:</b>\n${items}\n\n💰 <b>Итого:</b> ${total.toLocaleString('ru-RU')} ₽`;
-
+            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            const msg = `🛒 <b>Покупка в магазине:</b>\n👤 <b>Контакт:</b> ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого:</b> ${total.toLocaleString('ru-RU')} ₽`;
+            
             await sendToTelegram(msg);
             cart = [];
             saveCart();
             checkoutModal.classList.remove('show');
-            showToast("✅ Заказ отправлен! Я напишу вам в Telegram.");
+            showToast("Заказ передан разработчику!");
         });
 
         // АДМИНКА
@@ -1270,10 +1465,10 @@
         document.getElementById('toggleAdminBtn').addEventListener('click', () => {
             if (isAdmin) {
                 isAdmin = false;
-                adminPanel.classList.remove('open');
-                document.getElementById('toggleAdminBtn').textContent = '⚙️ Панель админа';
+                adminPanel.style.display = 'none';
+                document.getElementById('toggleAdminBtn').textContent = '⚙️ Панель управления';
                 renderShop();
-                showToast("🔒 Админка закрыта");
+                showToast("Админка закрыта");
                 return;
             }
             passwordModal.classList.add('show');
@@ -1286,10 +1481,10 @@
             if (pass === ADMIN_PASSWORD) {
                 isAdmin = true;
                 passwordModal.classList.remove('show');
-                adminPanel.classList.add('open');
+                adminPanel.style.display = 'block';
                 document.getElementById('toggleAdminBtn').textContent = '✕ Закрыть админку';
                 renderShop();
-                showToast("🔓 Успешный вход в админку!");
+                showToast("Доступ подтвержден");
             } else {
                 document.getElementById('passwordError').style.display = 'block';
             }
@@ -1300,7 +1495,7 @@
         });
 
         document.getElementById('adminCloseBtn').addEventListener('click', () => {
-            adminPanel.classList.remove('open');
+            adminPanel.style.display = 'none';
         });
 
         document.getElementById('adminForm').addEventListener('submit', (e) => {
@@ -1318,18 +1513,27 @@
             localStorage.setItem('serjant_products', JSON.stringify(products));
             renderShop();
             document.getElementById('adminForm').reset();
-            showToast("✅ Товар успешно добавлен!");
+            showToast("Товар сохранен!");
         });
 
-        // ТЕМЫ
-        const settingsModal = document.getElementById('settingsModal');
-        document.getElementById('settingsToggle').addEventListener('click', (e) => {
+        // ФОРМА КОНТАКТОВ
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            settingsModal.classList.add('show');
+            const name = document.getElementById('contactName').value.trim();
+            const tg = document.getElementById('contactTg').value.trim();
+            const service = document.getElementById('contactService').value;
+            const msg = document.getElementById('contactMsg').value.trim();
+
+            const text = `📬 <b>Заявка с сайта!</b>\n\n👤 <b>Клиент:</b> ${name}\n💬 <b>Telegram:</b> ${tg}\n🔧 <b>Услуга:</b> ${service}\n📝 <b>ТЗ:</b> ${msg}`;
+            await sendToTelegram(text);
+            showToast("Заявка успешно отправлена!");
+            document.getElementById('contactForm').reset();
         });
-        document.getElementById('settingsClose').addEventListener('click', () => {
-            settingsModal.classList.remove('show');
-        });
+
+        // ТЕМА
+        const settingsModal = document.getElementById('settingsModal');
+        document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
+        document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
 
         document.querySelectorAll('.theme-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1337,13 +1541,14 @@
                 btn.classList.add('active');
                 const theme = btn.dataset.theme;
 
-                let p = '#00ff88', s = '#00ccff';
-                if (theme === 'blue') { p = '#00ccff'; s = '#3b82f6'; }
-                if (theme === 'red') { p = '#ff4757'; s = '#ffa502'; }
+                let p = '#00ff88', s = '#00e5ff', glow = 'rgba(0, 255, 136, 0.25)';
+                if (theme === 'blue') { p = '#00e5ff'; s = '#3b82f6'; glow = 'rgba(0, 229, 255, 0.25)'; }
+                if (theme === 'red') { p = '#ff3366'; s = '#ff9900'; glow = 'rgba(255, 51, 102, 0.25)'; }
 
                 document.documentElement.style.setProperty('--primary', p);
                 document.documentElement.style.setProperty('--secondary', s);
-                showToast(`🎨 Тема изменена!`);
+                document.documentElement.style.setProperty('--primary-glow', glow);
+                showToast("Тема оформления обновлена");
             });
         });
 
