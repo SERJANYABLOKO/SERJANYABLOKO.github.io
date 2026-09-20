@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from datetime import datetime, timezone
 import requests
@@ -24,7 +25,7 @@ TG_CHANNELS = [
 ]
 
 # ==========================================
-# 2. КЛЮЧЕВЫЕ И СТОП-СЛОВА
+# 2. ФИЛЬТРЫ ТЕХНОЛОГИЙ И СТОП-СЛОВА
 # ==========================================
 TARGET_KEYWORDS = [
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота", "бота для",
@@ -55,15 +56,14 @@ def is_matching_skills(text: str) -> bool:
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
 def is_fresh_date(dt: datetime) -> bool:
-    """Проверка: задача опубликована за последние 48 часов."""
+    """Проверка даты: не старше 48 часов (172 800 секунд)."""
     now = datetime.now(timezone.utc)
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
-    # 48 часов * 3600 секунд в часе
     return (now - dt).total_seconds() <= 48 * 3600
 
 # ==========================================
-# 3. СБОР С ХАБРА (<= 5 ОТКЛИКОВ)
+# 3. СБОР С ХАБРА (СТРОГО <= 5 ОТКЛИКОВ)
 # ==========================================
 def parse_habr():
     url = "https://freelance.habr.com/tasks"
@@ -87,7 +87,7 @@ def parse_habr():
             if not is_matching_skills(title):
                 continue
             
-            # Фильтр: не более 5 откликов
+            # Не больше 5 откликов
             responses_el = card.select_one(".task-params__item_responses")
             responses_count = 0
             if responses_el:
@@ -98,7 +98,7 @@ def parse_habr():
             if responses_count > 5:
                 continue
 
-            # Фильтр даты: только свежие
+            # Только свежие (сегодня/вчера)
             date_el = card.select_one(".task-params__item_published")
             published_text = clean_text(date_el.text).lower() if date_el else ""
             if not any(w in published_text for w in ["сегодня", "вчера", "назад", "минут", "час"]):
@@ -117,10 +117,11 @@ def parse_habr():
                 "source": "Хабр (< 5 откликов)",
                 "published_at": published_text.capitalize(),
                 "responses": f"{responses_count} откл.",
-                "direct_contact": None
+                "direct_contact": None,
+                "discovered_at": datetime.now(timezone.utc).isoformat()
             })
     except Exception as e:
-        print(f"[!] Ошибка парсинга Хабра: {e}")
+        print(f"[!] Хабр ошибка: {e}")
         
     return tasks
 
@@ -152,6 +153,7 @@ def parse_tg(channel: str):
             if not is_matching_skills(text):
                 continue
 
+            msg_dt = None
             published_str = "Сегодня"
             if date_el and date_el.get("datetime"):
                 try:
@@ -176,6 +178,8 @@ def parse_tg(channel: str):
 
             cat = "Telegram" if any(k in text.lower() for k in ["бот", "app", "tma"]) else "Веб-сайт"
 
+            discovered_time = msg_dt.isoformat() if msg_dt else datetime.now(timezone.utc).isoformat()
+
             tasks.append({
                 "title": title,
                 "price": "В описании",
@@ -184,7 +188,8 @@ def parse_tg(channel: str):
                 "source": f"TG (@{channel})",
                 "published_at": published_str,
                 "responses": "0–1 чел. (в ЛС)",
-                "direct_contact": direct_contact
+                "direct_contact": direct_contact,
+                "discovered_at": discovered_time
             })
     except Exception as e:
         print(f"[!] TG @{channel} ошибка: {e}")
@@ -192,27 +197,69 @@ def parse_tg(channel: str):
     return tasks
 
 # ==========================================
-# 5. СТАРТ ПАРСИНГА И ЗАПИСЬ
+# 5. ХРАНИЛИЩЕ И ОЧИСТКА СТАРШЕ 2 ДНЕЙ
 # ==========================================
-if __name__ == "__main__":
-    all_orders = []
-    
-    # Сбор из ТГ
-    for ch in TG_CHANNELS:
-        all_orders.extend(parse_tg(ch))
-        
-    # Сбор с Хабра
-    all_orders.extend(parse_habr())
-    
-    # Удаление дубликатов по URL
-    unique_orders = []
-    seen = set()
-    for o in all_orders:
-        if o["url"] not in seen:
-            seen.add(o["url"])
-            unique_orders.append(o)
+def load_existing_orders() -> list:
+    """Загружает уже сохраненные заказы из orders.json."""
+    if not os.path.exists("orders.json"):
+        return []
+    try:
+        with open("orders.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data if isinstance(data, list) else []
+    except Exception:
+        return []
+
+def filter_orders_under_48h(orders: list) -> list:
+    """Оставляет только те заказы, с момента появления которых прошло меньше 48 часов."""
+    now = datetime.now(timezone.utc)
+    fresh_orders = []
+
+    for order in orders:
+        disc_str = order.get("discovered_at")
+        if not disc_str:
+            # Если метки времени нет, сохраняем заказ
+            fresh_orders.append(order)
+            continue
+        try:
+            order_time = datetime.fromisoformat(disc_str)
+            if order_time.tzinfo is None:
+                order_time = order_time.replace(tzinfo=timezone.utc)
             
+            # Прошло меньше 2 дней (48 часов)
+            if (now - order_time).total_seconds() <= 48 * 3600:
+                fresh_orders.append(order)
+        except Exception:
+            fresh_orders.append(order)
+
+    return fresh_orders
+
+if __name__ == "__main__":
+    # 1. Загружаем историю прошлых заказов
+    old_orders = load_existing_orders()
+    
+    # 2. Собираем свежие задачи
+    new_scraped = []
+    for ch in TG_CHANNELS:
+        new_scraped.extend(parse_tg(ch))
+    new_scraped.extend(parse_habr())
+    
+    # 3. Объединяем старые и новые без дубликатов по ссылке
+    # Новые задачи идут в начало списка
+    combined_orders = []
+    seen_urls = set()
+    
+    for order in new_scraped + old_orders:
+        url = order.get("url")
+        if url and url not in seen_urls:
+            seen_urls.add(url)
+            combined_orders.append(order)
+            
+    # 4. Удаляем то, что старше 48 часов
+    final_orders = filter_orders_under_48h(combined_orders)
+    
+    # 5. Сохраняем обратно в orders.json
     with open("orders.json", "w", encoding="utf-8") as f:
-        json.dump(unique_orders, f, ensure_ascii=False, indent=2)
+        json.dump(final_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"Готово! Сохранено {len(unique_orders)} заказов в orders.json")
+    print(f"Готово! В базе {len(final_orders)} актуальных заказов за последние 2 дня.")
