@@ -1,1008 +1,1616 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Football Boots, Jerseys & Cases</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  
-  <style>
-    :root {
-      --bg-main: #0a0c10;
-      --bg-card: #121620;
-      --accent-green: #00ff66;
-      --accent-gold: #ffcc00;
-      --text: #ffffff;
-      
-      /* Цвета редкостей */
-      --common: #8a9bb0;
-      --rare: #0088ff;
-      --epic: #a300ff;
-      --legendary: #ffaa00;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SerjantDev | IT Radar & Digital Studio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff3366;
+            --primary-glow: rgba(255, 51, 102, 0.25);
+            --secondary: #ff9900;
+            --accent: #ff3366;
+            --bg-base: #0f0508;
+            --bg-gradient-1: rgba(255, 51, 102, 0.09);
+            --bg-gradient-2: rgba(255, 153, 0, 0.06);
+            --surface-1: rgba(28, 12, 18, 0.75);
+            --surface-2: rgba(41, 17, 26, 0.6);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(255, 51, 102, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #8b9bb4;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      padding: 16px 16px 80px 16px;
-      background-color: var(--bg-main);
-      background-image: 
-        radial-gradient(circle at 50% 10%, rgba(255, 204, 0, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 50% 90%, rgba(0, 255, 102, 0.05) 0%, transparent 60%);
-      color: var(--text);
-      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      user-select: none;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Шапка */
-    .header {
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 15%, var(--bg-gradient-1) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, var(--bg-gradient-2) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-color 0.4s ease, background-image 0.4s ease;
+        }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 900;
-      font-size: 18px;
-      font-style: italic;
-      color: #fff;
-      text-transform: uppercase;
-    }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-    .brand span {
-      color: var(--accent-gold);
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-    .balance-box {
-      background: rgba(18, 22, 32, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 15px;
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        /* НАВИГАЦИЯ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 18px 0;
+            background: rgba(15, 5, 8, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    /* Нижнее меню вкладок */
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: rgba(18, 22, 32, 0.95);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
-      max-width: 420px;
-      margin: 0 auto;
-    }
+        .navbar.scrolled {
+            padding: 12px 0;
+            background: rgba(15, 5, 8, 0.94);
+            border-bottom: 1px solid var(--border-focus);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
-    .nav-tab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: #6b7280;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      cursor: pointer;
-      width: 33%;
-      padding: 8px 0;
-      transition: all 0.2s;
-    }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .nav-tab .tab-icon {
-      font-size: 20px;
-    }
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
 
-    .nav-tab.active {
-      color: var(--accent-gold);
-    }
+        .logo span {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
 
-    /* Контейнеры вкладок */
-    .tab-content {
-      width: 100%;
-      max-width: 420px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-    }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+        }
 
-    .tab-content.active {
-      display: flex;
-    }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+            position: relative;
+            padding: 6px 0;
+            cursor: pointer;
+        }
 
-    /* Селектор кейсов */
-    .case-selector {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      margin-bottom: 12px;
-    }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
 
-    .case-tab-btn {
-      flex: 1;
-      padding: 10px;
-      background: #141722;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: #8a9bb0;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+            transition: width 0.25s ease;
+            border-radius: 2px;
+        }
 
-    .case-tab-btn.active {
-      background: rgba(255, 204, 0, 0.1);
-      border-color: var(--accent-gold);
-      color: #fff;
-    }
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
 
-    /* === ВКЛАДКА 1: КЕЙСЫ === */
-    .clicker-section {
-      text-align: center;
-      margin-bottom: 16px;
-    }
+        .badge-counter {
+            padding: 2px 7px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            margin-left: 5px;
+            vertical-align: middle;
+        }
 
-    .ball-btn {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d1d5db 60%, #9ca3af 100%);
-      border: none;
-      font-size: 42px;
-      cursor: pointer;
-      box-shadow: 0 0 25px rgba(255, 204, 0, 0.2), inset -5px -5px 15px rgba(0, 0, 0, 0.4);
-      transition: transform 0.05s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-      margin: 0 auto;
-    }
+        .radar-badge { background: rgba(255, 153, 0, 0.15); color: var(--secondary); border: 1px solid rgba(255, 153, 0, 0.3); }
 
-    .ball-btn:active {
-      transform: scale(0.92) rotate(15deg);
-    }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .hint {
-      font-size: 11px;
-      color: #6b7280;
-      margin-top: 6px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+        .icon-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.1rem;
+        }
 
-    .case-wrapper {
-      width: 100%;
-      position: relative;
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 14px 6px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    }
+        .icon-btn:hover {
+            border-color: var(--border-focus);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
 
-    .pointer {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 100%;
-      background: var(--accent-gold);
-      z-index: 10;
-      box-shadow: 0 0 12px var(--accent-gold);
-    }
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
 
-    .roulette-viewport {
-      overflow: hidden;
-      width: 100%;
-      height: 110px;
-      position: relative;
-    }
+        .burger span {
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
 
-    .roulette-track {
-      display: flex;
-      gap: 12px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      transition: transform 5s cubic-bezier(0.08, 0.82, 0.17, 0.99);
-    }
+        /* КНОПКИ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 26px;
+            background: var(--primary);
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 0.88rem;
+            font-family: var(--font-body);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            letter-spacing: -0.2px;
+        }
 
-    .item-card {
-      width: 100px;
-      height: 105px;
-      background: #0d0e15;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-bottom: 4px solid var(--common);
-      font-size: 10px;
-      font-weight: 700;
-      text-align: center;
-      padding: 8px 4px;
-      position: relative;
-    }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--primary-glow);
+            filter: brightness(1.05);
+        }
 
-    .item-card.common { border-bottom-color: var(--common); }
-    .item-card.rare { border-bottom-color: var(--rare); }
-    .item-card.epic { border-bottom-color: var(--epic); }
-    .item-card.legendary { 
-      border-bottom-color: var(--legendary); 
-      box-shadow: inset 0 0 15px rgba(255, 170, 0, 0.15);
-    }
+        .btn:active { transform: translateY(0); }
 
-    .brand-tag {
-      font-size: 9px;
-      opacity: 0.6;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+        .btn-secondary {
+            background: var(--surface-2);
+            color: #fff !important;
+            border: 1px solid var(--border-subtle);
+            box-shadow: none;
+        }
 
-    .item-icon {
-      font-size: 32px;
-      margin: 2px 0;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
-    }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
 
-    .item-name {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
-      color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border-radius: 8px;
+        }
 
-    .color-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+        .btn-danger {
+            background: rgba(255, 51, 102, 0.15);
+            color: var(--accent) !important;
+            border: 1px solid rgba(255, 51, 102, 0.3);
+        }
 
-    .open-btn {
-      margin-top: 16px;
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-      border: none;
-      border-radius: 14px;
-      color: #000;
-      font-size: 16px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255, 204, 0, 0.3);
-      transition: all 0.2s;
-    }
+        .btn-danger:hover {
+            background: var(--accent);
+            color: #fff !important;
+        }
 
-    .open-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      box-shadow: none;
-      background: #2a303c;
-      color: #6b7280;
-    }
+        /* СТРАНИЦЫ */
+        .page {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+            animation: modernFade 0.35s ease forwards;
+        }
 
-    .result-banner {
-      margin-top: 12px;
-      font-size: 13px;
-      font-weight: 800;
-      min-height: 20px;
-      text-align: center;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-    }
+        .page.active { display: block; }
 
-    /* === ВКЛАДКА 2: ПЕРСОНАЖ И ИМЯ === */
-    .character-stage {
-      width: 100%;
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-      overflow: hidden;
-    }
+        @keyframes modernFade {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .player-name-badge {
-      font-size: 16px;
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 6px 16px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
 
-    .avatar-wrapper {
-      position: relative;
-      width: 180px;
-      height: 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, rgba(255,204,0,0.05) 0%, transparent 70%);
-    }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .player-body {
-      font-size: 90px;
-      line-height: 1;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));
-      z-index: 1;
-    }
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
 
-    .equipped-slot {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      padding: 4px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 2;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
+        /* HERO */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
 
-    .equipped-jersey-slot {
-      top: 15px;
-    }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 50px;
+            align-items: center;
+            width: 100%;
+        }
 
-    .equipped-boots-slot {
-      bottom: 0px;
-    }
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-focus);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
 
-    .slots-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 1.8s infinite;
+        }
 
-    .equip-slot {
-      background: #090a0f;
-      border-radius: 12px;
-      padding: 10px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px dashed rgba(255, 255, 255, 0.2);
-      font-size: 10px;
-      color: #6b7280;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
 
-    .equip-slot.active-slot {
-      border: 1px solid var(--accent-gold);
-      background: rgba(255, 204, 0, 0.05);
-      color: #fff;
-    }
+        .hero-content h1 {
+            font-family: var(--font-display);
+            font-size: 3.4rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
 
-    .equip-slot .slot-title {
-      font-size: 9px;
-      margin-bottom: 4px;
-      opacity: 0.6;
-    }
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .locker-inventory {
-      width: 100%;
-      margin-top: 20px;
-    }
+        .hero-content p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 520px;
+        }
 
-    .section-title {
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      color: #9ca3af;
-      letter-spacing: 0.5px;
-    }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
 
-    .locker-selector-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
 
-    .locker-item {
-      background: #0d0e15;
-      border-radius: 12px;
-      padding: 10px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      cursor: pointer;
-      position: relative;
-      transition: all 0.2s;
-    }
+        .stat-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 18px;
+            backdrop-filter: blur(12px);
+        }
 
-    .locker-item.equipped {
-      border: 2px solid var(--accent-gold);
-      box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
-      background: rgba(255, 204, 0, 0.05);
-    }
+        .stat-card .num {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
 
-    .locker-item .l-icon { font-size: 28px; margin: 4px 0; }
-    .locker-item .l-name { font-size: 10px; font-weight: 800; color: #fff; text-align: center; }
-    .locker-item .l-sub { font-size: 8px; color: #9ca3af; margin-top: 2px; }
+        .stat-card .desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
 
-    .equipped-badge {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      background: var(--accent-gold);
-      color: #000;
-      font-size: 8px;
-      font-weight: 900;
-      padding: 2px 4px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
+        .hero-terminal {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+        }
 
-    /* === ВКЛАДКА 3: КОЛЛЕКЦИЯ === */
-    .collection-section {
-      width: 100%;
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
 
-    .collection-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      font-size: 14px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
+        .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .t-red { background: #ff5f56; }
+        .t-yellow { background: #ffbd2e; }
+        .t-green { background: #27c93f; }
 
-    .collection-count {
-      color: var(--accent-gold);
-      background: rgba(255, 204, 0, 0.1);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
+        .terminal-body {
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
 
-    .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
+        .c-muted { color: #5b687c; }
+        .c-green { color: var(--primary); }
+        .c-blue { color: var(--secondary); }
 
-    .collection-item {
-      background: #090a0f;
-      border-radius: 10px;
-      padding: 8px 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
-      opacity: 0.35;
-      filter: grayscale(100%);
-      transition: all 0.3s ease;
-    }
+        /* РАДАР */
+        .radar-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
 
-    .collection-item.owned {
-      opacity: 1;
-      filter: grayscale(0%);
-      background: #121520;
-    }
+        .filter-tabs {
+            display: flex;
+            background: var(--surface-1);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            gap: 4px;
+            flex-wrap: wrap;
+        }
 
-    .collection-item.owned.common { border: 1px solid var(--common); }
-    .collection-item.owned.rare { border: 1px solid var(--rare); box-shadow: 0 0 8px rgba(0,136,255,0.2); }
-    .collection-item.owned.epic { border: 1px solid var(--epic); box-shadow: 0 0 8px rgba(163,0,255,0.2); }
-    .collection-item.owned.legendary { border: 1px solid var(--legendary); box-shadow: 0 0 10px rgba(255,170,0,0.3); }
+        .filter-tab {
+            padding: 8px 18px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-    .collection-item .c-icon { font-size: 24px; margin: 4px 0; }
-    .collection-item .c-name { font-size: 9px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-    .collection-item .c-sub { font-size: 8px; color: #9ca3af; margin-top: 2px; }
-    .lock-badge { position: absolute; top: 4px; right: 4px; font-size: 10px; }
-  </style>
+        .filter-tab:hover { color: #fff; }
+        .filter-tab.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .search-bar {
+            position: relative;
+            min-width: 260px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .radar-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
+        }
+
+        .radar-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-focus);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .radar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .tag-pill {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        .source-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .radar-card h3 {
+            font-size: 1.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+
+        .direct-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-focus);
+            border-radius: 8px;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: 0.2s;
+        }
+
+        .direct-link:hover {
+            background: var(--secondary);
+            color: #06070a;
+        }
+
+        .radar-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .radar-price {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        /* МАГАЗИН */
+        .shop-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .shop-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-focus);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .shop-thumb {
+            height: 120px;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            position: relative;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .shop-tag {
+            position: absolute;
+            top: 12px; right: 12px;
+            font-size: 0.68rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            border: 1px solid var(--border-focus);
+            font-weight: 700;
+        }
+
+        .shop-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .shop-content h4 {
+            font-size: 1.12rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .shop-content p {
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            margin-bottom: 18px;
+        }
+
+        .shop-price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        /* КОНТАКТЫ & СТИЛИЗАЦИЯ ПОЛЕЙ */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .contact-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.92rem;
+            font-family: var(--font-body);
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b9bb4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        select.form-control option {
+            background: #14080c;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .direct-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .direct-item {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s;
+        }
+
+        .direct-item:hover {
+            border-color: var(--border-focus);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .direct-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .direct-info h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .direct-info span {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        /* КОРЗИНА / SIDEBAR */
+        .cart-sidebar {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-base);
+            border-left: 1px solid var(--border-subtle);
+            padding: 30px;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open { right: 0; }
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1999;
+            display: none;
+        }
+        .cart-overlay.show { display: block; }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show { display: flex; }
+        .modal-content {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-focus);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 992px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 30px auto; }
+            .hero-actions, .hero-stats { justify-content: center; }
+            .hero-terminal { display: none; }
+            .contact-layout { grid-template-columns: 1fr; }
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: var(--bg-base);
+                padding: 24px;
+                border-bottom: 1px solid var(--border-subtle);
+                gap: 16px;
+            }
+            .nav-links.active { display: flex; }
+            .burger { display: flex; }
+            .hero-content h1 { font-size: 2.3rem; }
+            .radar-bar { flex-direction: column; align-items: stretch; }
+            .search-bar { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Шапка -->
-  <div class="header">
-    <div class="brand">BOOTS & <span>JERSEYS</span> ⚽</div>
-    <div class="balance-box">⭐ <span id="balance">10</span></div>
-  </div>
-
-  <!-- ВКЛАДКА 1: КЕЙСЫ -->
-  <div class="tab-content active" id="tab-cases">
-    <!-- Селектор кейсов -->
-    <div class="case-selector">
-      <button class="case-tab-btn active" id="btnCaseBoots" onclick="selectCaseType('boots')">👟 Кейс Бутс</button>
-      <button class="case-tab-btn" id="btnCaseJerseys" onclick="selectCaseType('jerseys')">👕 Кейс Джерси</button>
-    </div>
-
-    <div class="clicker-section">
-      <button class="ball-btn" id="clickBtn">⚽</button>
-      <div class="hint">Чекань мяч, чтобы фармить Stars</div>
-    </div>
-
-    <div class="case-wrapper">
-      <div class="pointer"></div>
-      <div class="roulette-viewport">
-        <div class="roulette-track" id="track"></div>
-      </div>
-    </div>
-
-    <button class="open-btn" id="openBtn">Открыть кейс (5 ⭐)</button>
-    <div class="result-banner" id="resultText"></div>
-  </div>
-
-  <!-- ВКЛАДКА 2: ПЕРСОНАЖ / РАЗДЕВАЛКА -->
-  <div class="tab-content" id="tab-character">
-    <div class="character-stage">
-      <!-- Имя игрока -->
-      <div class="player-name-badge">
-        <span>⚽</span> <span id="playerName">Player</span>
-      </div>
-
-      <div class="avatar-wrapper">
-        <!-- Надетое Джерси -->
-        <div class="equipped-slot equipped-jersey-slot">
-          <span id="charJerseyIcon">👕</span>
-          <span id="charJerseyName" style="color: #fff;">Без джерси</span>
+    <!-- ШАПКА -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a class="logo" data-page="home">SERJANT<span>DEV</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a data-page="home" class="active">Главная</a></li>
+                <li>
+                    <a data-page="radar">
+                        ⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span>
+                    </a>
+                </li>
+                <li><a data-page="shop">Магазин</a></li>
+                <li><a data-page="contact">Контакты</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="icon-btn" id="settingsToggle" title="Сменить тему">⚙️</button>
+                <button class="icon-btn" id="cartToggle" title="Корзина">🛒</button>
+                <div class="burger" id="burger">
+                    <span></span><span></span>
+                </div>
+            </div>
         </div>
+    </nav>
 
-        <div class="player-body">🏃‍♂️</div>
-
-        <!-- Надетые Бутсы -->
-        <div class="equipped-slot equipped-boots-slot">
-          <span id="charBootIcon">🦶</span>
-          <span id="charBootName" style="color: #fff;">Без бутс</span>
+    <!-- МОДАЛКА ПАРОЛЯ АДМИНКИ -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔐 Вход в админку</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите пароль управления каталогом</p>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Пароль" style="margin-bottom: 14px;" />
+            <button class="btn" style="width: 100%;" id="passwordSubmit">Войти</button>
+            <div id="passwordError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный пароль</div>
         </div>
-      </div>
+    </div>
 
-      <div class="slots-grid">
-        <div class="equip-slot active-slot">
-          <div class="slot-title">Обувь</div>
-          <div id="slotBootStatus">Надето</div>
+    <!-- МОДАЛКА ОФОРМЛЕНИЯ ЗАКАЗА ИЗ КОРЗИНЫ -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h3 style="font-family: var(--font-display); margin-bottom: 8px;">📦 Оформление заказа</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы забрать товар</p>
+            <input type="text" class="form-control" id="checkoutTg" placeholder="@username" style="margin-bottom: 16px;" required />
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Отправить</button>
+                <button class="btn btn-secondary btn-sm" id="checkoutCancelBtn">Отмена</button>
+            </div>
         </div>
-        <div class="equip-slot active-slot">
-          <div class="slot-title">Джерси</div>
-          <div id="slotJerseyStatus">Надето</div>
+    </div>
+
+    <!-- МОДАЛКА НАСТРОЕК ТЕМЫ -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙️ Палитра темы</h3>
+            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                <button class="filter-tab theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
+                <button class="filter-tab theme-btn" data-theme="blue" style="flex: 1; border: 1px solid var(--border-subtle);">🔵 Кибер-синий</button>
+                <button class="filter-tab active theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="width: 100%;" id="settingsClose">Закрыть</button>
         </div>
-        <div class="equip-slot">
-          <div class="slot-title">Аксессуары</div>
-          <div>Скоро</div>
+    </div>
+
+    <!-- КОРЗИНА -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem;">🛒 Корзина</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;" id="cartClose">✕</button>
         </div>
-      </div>
+        <div id="cartItemsContainer" style="flex: 1;"></div>
+        <div id="cartTotalBlock" style="display: none; padding-top: 20px; border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 16px;">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Итого к оплате:</span>
+                <span id="cartTotalPrice" style="font-family: var(--font-display); font-size: 1.5rem; font-weight:700; color: var(--primary);">0 ₽</span>
+            </div>
+            <button class="btn" style="width: 100%;" id="cartCheckoutBtn">Оформить покупку</button>
+        </div>
     </div>
 
-    <div class="locker-inventory">
-      <div class="section-title">Выбрать бутсы из гардероба</div>
-      <div class="locker-selector-grid" id="lockerBootsGrid"></div>
-
-      <div class="section-title" style="margin-top: 16px;">Выбрать джерси из гардероба</div>
-      <div class="locker-selector-grid" id="lockerJerseysGrid"></div>
+    <!-- 1. СТРАНИЦА: ГЛАВНАЯ -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-pill">
+                        <span class="pulse-dot"></span>
+                        Мониторинг 50+ каналов и бирж активен 24/7
+                    </div>
+                    <h1>
+                        Разработка & <br />
+                        <span>Web-Дизайн Радар</span>
+                    </h1>
+                    <p>
+                        Создание ботов, Mini Apps, веб-ресурсов, Figma UI/UX и автономный перехват свежих задач (до 10 откликов) без биржевых комиссий.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn" data-page="radar">⚡ Открыть радар</a>
+                        <a class="btn btn-secondary" data-page="contact">Обсудить проект</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="num" id="statOrdersCount">0</div>
+                            <div class="desc">Задач в сети</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="num">30 мин</div>
+                            <div class="desc">Интервал цикла</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="num">48 ч</div>
+                            <div class="desc">Срок жизни задач</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-terminal">
+                    <div class="terminal-header">
+                        <span class="t-dot t-red"></span>
+                        <span class="t-dot t-yellow"></span>
+                        <span class="t-dot t-green"></span>
+                        <span style="margin-left: 10px; font-size: 0.75rem; color: #5b687c; font-family: var(--font-mono);">serjant_radar.py</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div><span class="c-muted">01</span> <span class="c-blue">from</span> radar.core <span class="c-blue">import</span> StreamEngine</div>
+                        <div><span class="c-muted">02</span> </div>
+                        <div><span class="c-muted">03</span> engine = StreamEngine(channels=<span class="c-green">"IT + Design"</span>)</div>
+                        <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">10</span>)</div>
+                        <div><span class="c-muted">05</span> engine.block_keywords([<span class="c-green">"smm"</span>, <span class="c-green">"reels"</span>])</div>
+                        <div><span class="c-muted">06</span> </div>
+                        <div><span class="c-muted">07</span> <span class="c-green">> [OK] 0% биржевых комиссий</span></div>
+                        <div><span class="c-muted">08</span> <span class="c-green">> [OK] Разработка, TMA, Figma & UI/UX</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
 
-  <!-- ВКЛАДКА 3: КОЛЛЕКЦИЯ -->
-  <div class="tab-content" id="tab-collection">
-    <div class="collection-section">
-      <div class="collection-header">
-        <div>Коллекция Бутс</div>
-        <div class="collection-count"><span id="ownedBootsCount">0</span> / 16</div>
-      </div>
-      <div class="collection-grid" id="collectionBootsGrid"></div>
+    <!-- 2. СТРАНИЦА: РАДАР ЗАКАЗОВ -->
+    <div class="page" id="page-radar">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Радар Заказов</h2>
+                <p class="section-subtitle">Заказы по разработке и веб-дизайну с Хабра (< 10 откликов) и прямых каналов</p>
+            </div>
 
-      <div class="collection-header" style="margin-top: 20px;">
-        <div>Коллекция Джерси</div>
-        <div class="collection-count"><span id="ownedJerseysCount">0</span> / 12</div>
-      </div>
-      <div class="collection-grid" id="collectionJerseysGrid"></div>
+            <div class="radar-bar">
+                <div class="filter-tabs" id="radarFilterGroup">
+                    <button class="filter-tab active" data-filter="all">Все потоки</button>
+                    <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
+                    <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
+                    <button class="filter-tab" data-filter="Дизайн">🎨 Web-Дизайн / UI</button>
+                    <button class="filter-tab" data-filter="Парсеры">⚡ Скрипты</button>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по задачам или Figma..." />
+                    </div>
+                    <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="radarGridContainer"></div>
+        </div>
     </div>
-  </div>
 
-  <!-- Навигация -->
-  <div class="nav-bar">
-    <div class="nav-tab active" onclick="switchTab('cases')">
-      <span class="tab-icon">🎰</span>
-      <span>Кейсы</span>
+    <!-- 3. СТРАНИЦА: МАГАЗИН -->
+    <div class="page" id="page-shop">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Цифровые решения</h2>
+                <p class="section-subtitle">Готовые Mini Apps, боты, веб-шаблоны, хостинги и дизайн-макеты</p>
+            </div>
+
+            <div class="radar-bar">
+                <div class="filter-tabs" id="shopFilterGroup">
+                    <button class="filter-tab active" data-filter="all">Все</button>
+                    <button class="filter-tab" data-filter="miniapp">📱 Mini Apps</button>
+                    <button class="filter-tab" data-filter="bot">🤖 TG Боты</button>
+                    <button class="filter-tab" data-filter="site">🌐 Сайты</button>
+                    <button class="filter-tab" data-filter="design">🎨 UI/UX Макеты</button>
+                    <button class="filter-tab" data-filter="hosting">☁️ Хостинги</button>
+                </div>
+                <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель управления</button>
+            </div>
+
+            <div id="adminPanel" style="display: none; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 26px; margin-bottom: 30px;">
+                <h3 style="font-family: var(--font-display); margin-bottom: 16px;">Добавить новый товар</h3>
+                <form id="adminForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Название</label>
+                        <input type="text" class="form-control" id="adminName" required />
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Категория</label>
+                        <select class="form-control" id="adminCategory">
+                            <option value="miniapp">📱 Mini Apps</option>
+                            <option value="bot">🤖 TG Боты</option>
+                            <option value="site">🌐 Сайты</option>
+                            <option value="design">🎨 UI/UX Макеты</option>
+                            <option value="hosting">☁️ Хостинги</option>
+                            <option value="parser">⚡ Парсеры</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Эмодзи</label>
+                        <input type="text" class="form-control" id="adminIcon" value="📦" required />
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Цена (₽)</label>
+                        <input type="number" class="form-control" id="adminPrice" required />
+                    </div>
+                    <div style="grid-column: 1 / -1;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Описание</label>
+                        <textarea class="form-control" id="adminDesc" rows="3" required></textarea>
+                    </div>
+                    <div style="grid-column: 1 / -1; display:flex; gap:10px;">
+                        <button type="submit" class="btn btn-sm">Сохранить</button>
+                        <button type="button" class="btn btn-sm btn-secondary" id="adminCloseBtn">Отмена</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="cards-grid" id="shopGridContainer"></div>
+        </div>
     </div>
-    <div class="nav-tab" onclick="switchTab('character')">
-      <span class="tab-icon">👕</span>
-      <span>Игрок</span>
+
+    <!-- 4. СТРАНИЦА: КОНТАКТЫ -->
+    <div class="page" id="page-contact">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Связь & Заказ</h2>
+                <p class="section-subtitle">Опишите задачу — сориентирую по срокам и стоимости реализации</p>
+            </div>
+
+            <div class="contact-layout">
+                <div class="contact-card">
+                    <h3 style="font-family: var(--font-display); margin-bottom: 20px;">Отправить ТЗ на расчет</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Ваше имя</label>
+                            <input type="text" class="form-control" id="contactName" placeholder="Александр" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Telegram для связи</label>
+                            <input type="text" class="form-control" id="contactTg" placeholder="@username" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Тип задачи</label>
+                            <select class="form-control" id="contactService">
+                                <option value="Web-Дизайн / Figma">🎨 Web-Дизайн & UI/UX (Figma, прототипы)</option>
+                                <option value="Telegram Mini App">📱 Telegram Mini App (TMA, WebApp)</option>
+                                <option value="Telegram Бот">🤖 Telegram-бот (aiogram, SQLite, API)</option>
+                                <option value="Сайт / Верстка">🌐 Сайт / Лендинг под ключ</option>
+                                <option value="Парсер / Скрипт">⚡ Python-парсер / Автоматизация</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Суть проекта</label>
+                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Опишите, какой бот, сайт или дизайн вам нужен..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Отправить запрос ➔</button>
+                    </form>
+                </div>
+
+                <div class="direct-contacts">
+                    <a href="https://t.me/serjantyabloko" target="_blank" class="direct-item">
+                        <div class="direct-icon">💬</div>
+                        <div class="direct-info">
+                            <h5>Telegram канал & ЛС</h5>
+                            <span>@serjantyabloko (Быстрый ответ)</span>
+                        </div>
+                    </a>
+                    <a href="mailto:geraskinlev81@gmail.com" class="direct-item">
+                        <div class="direct-icon">✉️</div>
+                        <div class="direct-info">
+                            <h5>Электронная почта</h5>
+                            <span>geraskinlev81@gmail.com</span>
+                        </div>
+                    </a>
+                    <div class="stat-card" style="margin-top: 10px;">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: #fff;">💡 Условия сотрудничества</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                            Работаю по понятному ТЗ, показываю макеты в Figma и поэтапный код, помогаю с хостингом и запуском 24/7.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="nav-tab" onclick="switchTab('collection')">
-      <span class="tab-icon">🏆</span>
-      <span>Коллекция</span>
-    </div>
-  </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    <!-- УВЕДОМЛЕНИЕ -->
+    <div class="toast" id="toast"><span>✅</span> <span id="toastText">Готово!</span></div>
 
-    // Загрузка имени из Telegram
-    const telegramUser = tg.initDataUnsafe?.user;
-    const playerName = telegramUser?.first_name || "Player";
-    document.getElementById('playerName').textContent = playerName;
+    <script>
+        const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
+        const CHAT_ID = '8673619246';
+        const ADMIN_PASSWORD = 'admin123';
 
-    // База бутс
-    const BOOTS = [
-      { id: "az_common", type: "boot", brand: "Nike", name: "Air Zoom", subName: "Серый", colorHex: "#718096", rarity: "common", price: 2, icon: "👟" },
-      { id: "az_rare", type: "boot", brand: "Nike", name: "Air Zoom", subName: "Синий", colorHex: "#0088ff", rarity: "rare", price: 6, icon: "👟" },
-      { id: "az_epic", type: "boot", brand: "Nike", name: "Air Zoom", subName: "Неон", colorHex: "#00ffcc", rarity: "epic", price: 20, icon: "👟" },
-      { id: "az_legendary", type: "boot", brand: "Nike", name: "Air Zoom", subName: "Золотой", colorHex: "#ffaa00", rarity: "legendary", price: 75, icon: "👑" },
+        const defaultProducts = [
+            { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
+            { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' },
+            { id: 103, name: 'UI/UX Макет Лендинга (Figma)', category: 'design', icon: '🎨', desc: 'Современный прототип и адаптивный дизайн в темных неоновых тонах.', price: 3900, tag: 'Новинка' },
+            { id: 104, name: 'Сайт-портфолио IT', category: 'site', icon: '🌐', desc: 'Адаптивный современный одностраничник с темной темой и анимацией.', price: 4500, tag: '' },
+            { id: 105, name: 'Облачный хостинг под ключ', category: 'hosting', icon: '☁️', desc: 'Настройка VPS Linux, SSL-сертификатов, автозапуска ботов 24/7.', price: 2900, tag: 'Услуга' }
+        ];
 
-      { id: "f50_common", type: "boot", brand: "Adidas", name: "F50", subName: "Белый", colorHex: "#e2e8f0", rarity: "common", price: 2, icon: "👟" },
-      { id: "f50_rare", type: "boot", brand: "Adidas", name: "F50", subName: "Красный", colorHex: "#e53e3e", rarity: "rare", price: 6, icon: "👟" },
-      { id: "f50_epic", type: "boot", brand: "Adidas", name: "F50", subName: "Фиолет", colorHex: "#a300ff", rarity: "epic", price: 25, icon: "👟" },
-      { id: "f50_legendary", type: "boot", brand: "Adidas", name: "F50", subName: "Изумруд", colorHex: "#00ff66", rarity: "legendary", price: 100, icon: "👑" },
+        let products = JSON.parse(localStorage.getItem('serjant_products_v3')) || defaultProducts;
+        let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
+        let radarOrders = [];
+        let isAdmin = false;
 
-      { id: "pred_common", type: "boot", brand: "Adidas", name: "Predator", subName: "Черный", colorHex: "#222222", rarity: "common", price: 3, icon: "👟" },
-      { id: "pred_rare", type: "boot", brand: "Adidas", name: "Predator", subName: "Желтый", colorHex: "#ffcc00", rarity: "rare", price: 8, icon: "👟" },
-      { id: "pred_epic", type: "boot", brand: "Adidas", name: "Predator", subName: "Платина", colorHex: "#cbd5e1", rarity: "epic", price: 30, icon: "👟" },
-      { id: "pred_legendary", type: "boot", brand: "Adidas", name: "Predator", subName: "Рубин", colorHex: "#dc2626", rarity: "legendary", price: 120, icon: "👑" },
-
-      { id: "merc_common", type: "boot", brand: "Nike", name: "Mercurial", subName: "Зеленый", colorHex: "#16a34a", rarity: "common", price: 3, icon: "👟" },
-      { id: "merc_rare", type: "boot", brand: "Nike", name: "Mercurial", subName: "Оранж", colorHex: "#ea580c", rarity: "rare", price: 9, icon: "👟" },
-      { id: "merc_epic", type: "boot", brand: "Nike", name: "Mercurial", colorName: "Розовый", colorHex: "#ec4899", rarity: "epic", price: 40, icon: "👟" },
-      { id: "merc_legendary", type: "boot", brand: "Nike", name: "Mercurial", subName: "Алмаз", colorHex: "#00ffff", rarity: "legendary", price: 200, icon: "⚡" }
-    ];
-
-    // База Джерси (Реал Мадрид 2017 & Барселона 2025)
-    const JERSEYS = [
-      // Реал Мадрид 2017
-      { id: "rm_casemiro", type: "jersey", brand: "Real Madrid 2017", name: "Casemiro #14", subName: "2017", colorHex: "#ffffff", rarity: "common", price: 3, icon: "👕" },
-      { id: "rm_isco", type: "jersey", brand: "Real Madrid 2017", name: "Isco #22", subName: "2017", colorHex: "#00ffff", rarity: "rare", price: 10, icon: "👕" },
-      { id: "rm_benzema", type: "jersey", brand: "Real Madrid 2017", name: "Benzema #9", subName: "2017", colorHex: "#ffffff", rarity: "rare", price: 12, icon: "👕" },
-      { id: "rm_modric", type: "jersey", brand: "Real Madrid 2017", name: "Modrić #19", subName: "2017", colorHex: "#00ffff", rarity: "epic", price: 35, icon: "👕" },
-      { id: "rm_ramos", type: "jersey", brand: "Real Madrid 2017", name: "Ramos #4", subName: "2017", colorHex: "#ffffff", rarity: "epic", price: 40, icon: "👕" },
-      { id: "rm_ronaldo", type: "jersey", brand: "Real Madrid 2017", name: "Ronaldo #7", subName: "2017", colorHex: "#ffaa00", rarity: "legendary", price: 250, icon: "👑" },
-
-      // Барселона 2025
-      { id: "bar_gavi", type: "jersey", brand: "Barcelona 2025", name: "Gavi #6", subName: "2025", colorHex: "#a50044", rarity: "common", price: 3, icon: "👕" },
-      { id: "bar_pedri", type: "jersey", brand: "Barcelona 2025", name: "Pedri #8", subName: "2025", colorHex: "#004d98", rarity: "rare", price: 10, icon: "👕" },
-      { id: "bar_cubarsi", type: "jersey", brand: "Barcelona 2025", name: "Cubarsí #2", subName: "2025", colorHex: "#a50044", rarity: "rare", price: 12, icon: "👕" },
-      { id: "bar_raphinha", type: "jersey", brand: "Barcelona 2025", name: "Raphinha #11", subName: "2025", colorHex: "#004d98", rarity: "epic", price: 35, icon: "👕" },
-      { id: "bar_lewy", type: "jersey", brand: "Barcelona 2025", name: "Lewandowski #9", subName: "2025", colorHex: "#a50044", rarity: "epic", price: 45, icon: "👕" },
-      { id: "bar_yamal", type: "jersey", brand: "Barcelona 2025", name: "Lamine Yamal #19", subName: "2025", colorHex: "#00ffff", rarity: "legendary", price: 250, icon: "⚡" }
-    ];
-
-    const CASE_COST = 5;
-    let activeCaseType = "boots"; // 'boots' или 'jerseys'
-
-    let balance = parseInt(localStorage.getItem('fb_stars_balance')) || 10;
-    let collectionBoots = JSON.parse(localStorage.getItem('fb_coll_boots')) || [];
-    let collectionJerseys = JSON.parse(localStorage.getItem('fb_coll_jerseys')) || [];
-    
-    let equippedBootId = localStorage.getItem('fb_equipped_boot') || null;
-    let equippedJerseyId = localStorage.getItem('fb_equipped_jersey') || null;
-    let isSpinning = false;
-
-    // DOM Элементы
-    const balanceEl = document.getElementById('balance');
-    const clickBtn = document.getElementById('clickBtn');
-    const openBtn = document.getElementById('openBtn');
-    const track = document.getElementById('track');
-    const resultText = document.getElementById('resultText');
-
-    const lockerBootsGrid = document.getElementById('lockerBootsGrid');
-    const lockerJerseysGrid = document.getElementById('lockerJerseysGrid');
-    const collectionBootsGrid = document.getElementById('collectionBootsGrid');
-    const collectionJerseysGrid = document.getElementById('collectionJerseysGrid');
-
-    const ownedBootsCountEl = document.getElementById('ownedBootsCount');
-    const ownedJerseysCountEl = document.getElementById('ownedJerseysCount');
-
-    const charBootIcon = document.getElementById('charBootIcon');
-    const charBootName = document.getElementById('charBootName');
-    const charJerseyIcon = document.getElementById('charJerseyIcon');
-    const charJerseyName = document.getElementById('charJerseyName');
-
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-
-      document.getElementById(`tab-${tabName}`).classList.add('active');
-      
-      const tabs = ['cases', 'character', 'collection'];
-      const index = tabs.indexOf(tabName);
-      document.querySelectorAll('.nav-tab')[index].classList.add('active');
-    }
-
-    function selectCaseType(type) {
-      if (isSpinning) return;
-      activeCaseType = type;
-      document.getElementById('btnCaseBoots').classList.toggle('active', type === 'boots');
-      document.getElementById('btnCaseJerseys').classList.toggle('active', type === 'jerseys');
-      
-      currentItems = generateTrack(60);
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-    }
-
-    function updateUI() {
-      balanceEl.textContent = balance;
-      openBtn.disabled = isSpinning || balance < CASE_COST;
-      
-      ownedBootsCountEl.textContent = collectionBoots.length;
-      ownedJerseysCountEl.textContent = collectionJerseys.length;
-      
-      localStorage.setItem('fb_stars_balance', balance);
-      localStorage.setItem('fb_coll_boots', JSON.stringify(collectionBoots));
-      localStorage.setItem('fb_coll_jerseys', JSON.stringify(collectionJerseys));
-      
-      if (equippedBootId) localStorage.setItem('fb_equipped_boot', equippedBootId);
-      if (equippedJerseyId) localStorage.setItem('fb_equipped_jersey', equippedJerseyId);
-
-      renderCollections();
-      renderLockers();
-      updateCharacterDisplay();
-    }
-
-    // Фарм Stars
-    clickBtn.addEventListener('click', () => {
-      balance += 1;
-      updateUI();
-    });
-
-    function updateCharacterDisplay() {
-      // Отображение бутс
-      if (equippedBootId) {
-        const boot = BOOTS.find(b => b.id === equippedBootId);
-        if (boot) {
-          charBootIcon.textContent = boot.icon;
-          charBootName.textContent = boot.name;
-          charBootName.style.color = boot.colorHex;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2600);
         }
-      } else {
-        charBootIcon.textContent = "🦶";
-        charBootName.textContent = "Без бутс";
-        charBootName.style.color = "#fff";
-      }
 
-      // Отображение джерси
-      if (equippedJerseyId) {
-        const jersey = JERSEYS.find(j => j.id === equippedJerseyId);
-        if (jersey) {
-          charJerseyIcon.textContent = jersey.icon;
-          charJerseyName.textContent = jersey.name;
-          charJerseyName.style.color = jersey.colorHex;
+        async function sendToTelegram(text) {
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
+                });
+            } catch (err) {
+                console.error("Ошибка отправки сообщения:", err);
+            }
         }
-      } else {
-        charJerseyIcon.textContent = "👕";
-        charJerseyName.textContent = "Без джерси";
-        charJerseyName.style.color = "#fff";
-      }
-    }
 
-    // Отрисовка раздевалки
-    function renderLockers() {
-      // Бутсы
-      lockerBootsGrid.innerHTML = '';
-      if (collectionBoots.length === 0) {
-        lockerBootsGrid.innerHTML = `<div style="grid-column: span 3; color: #6b7280; font-size: 11px; text-align: center;">Нет бутс</div>`;
-      } else {
-        collectionBoots.forEach(id => {
-          const item = BOOTS.find(b => b.id === id);
-          if (!item) return;
-          const isEquipped = equippedBootId === item.id;
-          const el = document.createElement('div');
-          el.className = `locker-item ${isEquipped ? 'equipped' : ''}`;
-          el.onclick = () => { equippedBootId = isEquipped ? null : item.id; updateUI(); };
-          el.innerHTML = `
-            ${isEquipped ? '<span class="equipped-badge">Надето</span>' : ''}
-            <div class="l-icon">${item.icon}</div>
-            <div class="l-name">${item.name}</div>
-            <div class="l-sub" style="color:${item.colorHex}">${item.subName}</div>
-          `;
-          lockerBootsGrid.appendChild(el);
+        // НАВИГАЦИЯ
+        const pages = {
+            home: document.getElementById('page-home'),
+            radar: document.getElementById('page-radar'),
+            shop: document.getElementById('page-shop'),
+            contact: document.getElementById('page-contact')
+        };
+
+        function navigateTo(pageId) {
+            Object.values(pages).forEach(p => { if (p) p.classList.remove('active'); });
+            if (pages[pageId]) pages[pageId].classList.add('active');
+            
+            document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+                link.classList.toggle('active', link.dataset.page === pageId);
+            });
+            document.getElementById('navLinks').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('[data-page]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(el.dataset.page);
+            });
         });
-      }
 
-      // Джерси
-      lockerJerseysGrid.innerHTML = '';
-      if (collectionJerseys.length === 0) {
-        lockerJerseysGrid.innerHTML = `<div style="grid-column: span 3; color: #6b7280; font-size: 11px; text-align: center;">Нет джерси</div>`;
-      } else {
-        collectionJerseys.forEach(id => {
-          const item = JERSEYS.find(j => j.id === id);
-          if (!item) return;
-          const isEquipped = equippedJerseyId === item.id;
-          const el = document.createElement('div');
-          el.className = `locker-item ${isEquipped ? 'equipped' : ''}`;
-          el.onclick = () => { equippedJerseyId = isEquipped ? null : item.id; updateUI(); };
-          el.innerHTML = `
-            ${isEquipped ? '<span class="equipped-badge">Надето</span>' : ''}
-            <div class="l-icon">${item.icon}</div>
-            <div class="l-name">${item.name}</div>
-            <div class="l-sub" style="color:${item.colorHex}">${item.brand}</div>
-          `;
-          lockerJerseysGrid.appendChild(el);
+        document.getElementById('burger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
         });
-      }
-    }
 
-    // Отрисовка коллекций
-    function renderCollections() {
-      // Бутсы
-      collectionBootsGrid.innerHTML = '';
-      BOOTS.forEach(item => {
-        const isOwned = collectionBoots.includes(item.id);
-        const el = document.createElement('div');
-        el.className = `collection-item ${isOwned ? 'owned ' + item.rarity : ''}`;
-        el.innerHTML = `
-          ${!isOwned ? '<span class="lock-badge">🔒</span>' : ''}
-          <div class="c-icon">${item.icon}</div>
-          <div class="c-name">${item.name}</div>
-          <div class="c-sub" style="${isOwned ? 'color:' + item.colorHex : ''}">${item.subName}</div>
-        `;
-        collectionBootsGrid.appendChild(el);
-      });
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+        });
 
-      // Джерси
-      collectionJerseysGrid.innerHTML = '';
-      JERSEYS.forEach(item => {
-        const isOwned = collectionJerseys.includes(item.id);
-        const el = document.createElement('div');
-        el.className = `collection-item ${isOwned ? 'owned ' + item.rarity : ''}`;
-        el.innerHTML = `
-          ${!isOwned ? '<span class="lock-badge">🔒</span>' : ''}
-          <div class="c-icon">${item.icon}</div>
-          <div class="c-name">${item.name}</div>
-          <div class="c-sub" style="${isOwned ? 'color:' + item.colorHex : ''}">${item.brand}</div>
-        `;
-        collectionJerseysGrid.appendChild(el);
-      });
-    }
-
-    function createCard(item) {
-      const card = document.createElement('div');
-      card.className = `item-card ${item.rarity}`;
-      card.innerHTML = `
-        <div class="brand-tag">${item.brand}</div>
-        <div class="item-icon">${item.icon}</div>
-        <div class="item-name">
-          <span class="color-dot" style="background:${item.colorHex}"></span>${item.name}
-        </div>
-      `;
-      return card;
-    }
-
-    function getRandomItem() {
-      const poolList = activeCaseType === 'boots' ? BOOTS : JERSEYS;
-      const rand = Math.random() * 100;
-      let rarity = "common";
-      if (rand < 50) rarity = "common";
-      else if (rand < 80) rarity = "rare";
-      else if (rand < 95) rarity = "epic";
-      else rarity = "legendary";
-
-      const pool = poolList.filter(i => i.rarity === rarity);
-      return pool[Math.floor(Math.random() * pool.length)];
-    }
-
-    function generateTrack(count = 60) {
-      track.innerHTML = '';
-      const items = [];
-      for (let i = 0; i < count; i++) {
-        const item = getRandomItem();
-        items.push(item);
-        track.appendChild(createCard(item));
-      }
-      return items;
-    }
-
-    let currentItems = generateTrack();
-    updateUI();
-
-    // Открытие кейса
-    openBtn.addEventListener('click', () => {
-      if (balance < CASE_COST || isSpinning) return;
-
-      balance -= CASE_COST;
-      isSpinning = true;
-      resultText.textContent = '';
-      updateUI();
-
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-
-      currentItems = generateTrack(60);
-
-      const targetIndex = 45;
-      const winningItem = currentItems[targetIndex];
-      const cardWidth = 112;
-      const viewportWidth = track.parentElement.clientWidth;
-      
-      const randomOffset = Math.floor(Math.random() * 60) - 30;
-      const targetPos = (targetIndex * cardWidth) - (viewportWidth / 2) + (cardWidth / 2) + randomOffset;
-
-      setTimeout(() => {
-        track.style.transition = 'transform 5s cubic-bezier(0.08, 0.82, 0.17, 0.99)';
-        track.style.transform = `translateX(-${targetPos}px)`;
-      }, 50);
-
-      setTimeout(() => {
-        isSpinning = false;
-        
-        const targetCollection = winningItem.type === 'boot' ? collectionBoots : collectionJerseys;
-        
-        if (targetCollection.includes(winningItem.id)) {
-          // Повторка
-          balance += winningItem.price;
-          resultText.style.color = '#ffcc00';
-          resultText.textContent = `Повторка ${winningItem.name}! +${winningItem.price} ⭐`;
-        } else {
-          // Новая вещь
-          targetCollection.push(winningItem.id);
-          
-          if (winningItem.type === 'boot' && !equippedBootId) equippedBootId = winningItem.id;
-          if (winningItem.type === 'jersey' && !equippedJerseyId) equippedJerseyId = winningItem.id;
-          
-          resultText.style.color = '#00ff66';
-          resultText.textContent = `ВЫПАЛО: ${winningItem.brand} ${winningItem.name}!`;
+        // ЗАГРУЗКА РАДАРА
+        async function fetchRadarOrders() {
+            try {
+                const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
+                radarOrders = await res.json();
+                renderRadar();
+                document.getElementById('radarCount').textContent = radarOrders.length;
+                document.getElementById('statOrdersCount').textContent = radarOrders.length;
+                showToast("⚡ Радар синхронизирован!");
+            } catch (err) {
+                document.getElementById('radarGridContainer').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">⏳</span>
+                        <h4>Загрузка потока заказов...</h4>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">Скрипт проверяет биржи и каналы каждые 30 минут.</p>
+                    </div>
+                `;
+            }
         }
-        
-        updateUI();
-      }, 5100);
-    });
-  </script>
+
+        function renderRadar() {
+            const container = document.getElementById('radarGridContainer');
+            const activeFilter = document.querySelector('#radarFilterGroup .filter-tab.active').dataset.filter;
+            const query = document.getElementById('radarSearchInput').value.toLowerCase().trim();
+
+            let list = radarOrders;
+            if (activeFilter !== 'all') {
+                list = list.filter(o => o.category === activeFilter);
+            }
+            if (query) {
+                list = list.filter(o => o.title.toLowerCase().includes(query));
+            }
+
+            if (!list.length) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">Заказы в выбранной категории пока не найдены.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(o => `
+                <div class="radar-card">
+                    <div>
+                        <div class="radar-top">
+                            <span class="tag-pill">${o.category || 'IT'}</span>
+                            <span class="source-tag">${o.source || 'Прямой контакт'}</span>
+                        </div>
+                        
+                        <h3>${o.title}</h3>
+
+                        ${o.direct_contact ? `
+                            <a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="direct-link">
+                                💬 ЛС заказчика: ${o.direct_contact}
+                            </a>
+                        ` : ''}
+
+                        <div class="radar-meta">
+                            <span>🕒 ${o.published_at || 'Недавно'}</span>
+                            <span style="color: ${o.responses && o.responses.includes('0') ? 'var(--primary)' : 'inherit'};">
+                                👥 ${o.responses || 'В личке'}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="radar-price">${o.price || 'Договорная'}</div>
+                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm btn-secondary" style="width: 100%;">
+                            Открыть задачу ➔
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderRadar();
+            });
+        });
+
+        document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
+        document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
+        setInterval(fetchRadarOrders, 30 * 60 * 1000);
+
+        // МАГАЗИН
+        function renderShop() {
+            const container = document.getElementById('shopGridContainer');
+            const activeFilter = document.querySelector('#shopFilterGroup .filter-tab.active').dataset.filter;
+            const list = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
+
+            if (!list.length) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Товары отсутствуют.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(p => `
+                <div class="shop-card">
+                    <div class="shop-thumb">
+                        ${p.icon || '📦'}
+                        ${p.tag ? `<span class="shop-tag">${p.tag}</span>` : ''}
+                    </div>
+                    <div class="shop-content">
+                        <div>
+                            <h4>${p.name}</h4>
+                            <p>${p.desc}</p>
+                        </div>
+                        <div>
+                            <div class="shop-price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-sm btn-add-cart" data-id="${p.id}" style="flex: 1;">Купить</button>
+                                ${isAdmin ? `<button class="btn btn-sm btn-danger btn-del-product" data-id="${p.id}">✕</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderShop();
+            });
+        });
+
+        document.getElementById('shopGridContainer').addEventListener('click', (e) => {
+            const addBtn = e.target.closest('.btn-add-cart');
+            const delBtn = e.target.closest('.btn-del-product');
+
+            if (addBtn) {
+                const id = parseInt(addBtn.dataset.id);
+                const item = products.find(p => p.id === id);
+                if (item) {
+                    const exist = cart.find(p => p.id === id);
+                    if (exist) exist.qty++;
+                    else cart.push({ ...item, qty: 1 });
+                    saveCart();
+                    showToast(`${item.name} добавлен в корзину`);
+                }
+            } else if (delBtn) {
+                const id = parseInt(delBtn.dataset.id);
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('serjant_products_v3', JSON.stringify(products));
+                renderShop();
+                showToast("Товар удален");
+            }
+        });
+
+        function saveCart() {
+            localStorage.setItem('serjant_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalEl = document.getElementById('cartTotalPrice');
+            const totalBlock = document.getElementById('cartTotalBlock');
+
+            if (!cart.length) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
+                totalBlock.style.display = 'none';
+                return;
+            }
+
+            totalBlock.style.display = 'block';
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-subtle);">
+                        <div>
+                            <div style="font-weight:600; font-size:0.92rem; color:#fff;">${i.name}</div>
+                            <div style="color:var(--text-muted); font-size:0.82rem;">${i.price.toLocaleString('ru-RU')} ₽ × ${i.qty}</div>
+                        </div>
+                        <button class="btn-remove-item" data-id="${i.id}" style="background:none; border:none; color:var(--accent); font-size:1.1rem; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        document.getElementById('cartItemsContainer').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-remove-item');
+            if (btn) {
+                const id = parseInt(btn.dataset.id);
+                cart = cart.filter(i => i.id !== id);
+                saveCart();
+            }
+        });
+
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+
+        document.getElementById('cartToggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        });
+        document.getElementById('cartClose').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        const checkoutModal = document.getElementById('checkoutModal');
+        document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+            checkoutModal.classList.add('show');
+        });
+        document.getElementById('checkoutCancelBtn').addEventListener('click', () => {
+            checkoutModal.classList.remove('show');
+        });
+        document.getElementById('checkoutConfirmBtn').addEventListener('click', async () => {
+            const tg = document.getElementById('checkoutTg').value.trim();
+            if (!tg) {
+                showToast("Укажите ваш контакт в Telegram");
+                return;
+            }
+            const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
+            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            const msg = `🛒 <b>Покупка в магазине:</b>\n👤 <b>Контакт:</b> ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого:</b> ${total.toLocaleString('ru-RU')} ₽`;
+            
+            await sendToTelegram(msg);
+            cart = [];
+            saveCart();
+            checkoutModal.classList.remove('show');
+            showToast("Заказ передан разработчику!");
+        });
+
+        // АДМИНКА
+        const adminPanel = document.getElementById('adminPanel');
+        const passwordModal = document.getElementById('passwordModal');
+
+        document.getElementById('toggleAdminBtn').addEventListener('click', () => {
+            if (isAdmin) {
+                isAdmin = false;
+                adminPanel.style.display = 'none';
+                document.getElementById('toggleAdminBtn').textContent = '⚙️ Панель управления';
+                renderShop();
+                showToast("Админка закрыта");
+                return;
+            }
+            passwordModal.classList.add('show');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        });
+
+        document.getElementById('passwordSubmit').addEventListener('click', () => {
+            const pass = document.getElementById('passwordInput').value.trim();
+            if (pass === ADMIN_PASSWORD) {
+                isAdmin = true;
+                passwordModal.classList.remove('show');
+                adminPanel.style.display = 'block';
+                document.getElementById('toggleAdminBtn').textContent = '✕ Закрыть админку';
+                renderShop();
+                showToast("Доступ подтвержден");
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        });
+
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) passwordModal.classList.remove('show');
+        });
+
+        document.getElementById('adminCloseBtn').addEventListener('click', () => {
+            adminPanel.style.display = 'none';
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('adminName').value.trim(),
+                category: document.getElementById('adminCategory').value,
+                icon: document.getElementById('adminIcon').value.trim() || '📦',
+                price: parseInt(document.getElementById('adminPrice').value),
+                desc: document.getElementById('adminDesc').value.trim(),
+                tag: 'Новинка'
+            };
+            products.push(newItem);
+            localStorage.setItem('serjant_products_v3', JSON.stringify(products));
+            renderShop();
+            document.getElementById('adminForm').reset();
+            showToast("Товар сохранен!");
+        });
+
+        // ФОРМА КОНТАКТОВ
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const tg = document.getElementById('contactTg').value.trim();
+            const service = document.getElementById('contactService').value;
+            const msg = document.getElementById('contactMsg').value.trim();
+
+            const text = `📬 <b>Заявка с сайта!</b>\n\n👤 <b>Клиент:</b> ${name}\n💬 <b>Telegram:</b> ${tg}\n🔧 <b>Услуга:</b> ${service}\n📝 <b>ТЗ:</b> ${msg}`;
+            await sendToTelegram(text);
+            showToast("Заявка успешно отправлена!");
+            document.getElementById('contactForm').reset();
+        });
+
+        // СМЕНА ТЕМЫ И ФОНА
+        const settingsModal = document.getElementById('settingsModal');
+        document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
+        document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
+
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const theme = btn.dataset.theme;
+
+                let p = '#ff3366', s = '#ff9900', glow = 'rgba(255, 51, 102, 0.25)';
+                let bg = '#0f0508', g1 = 'rgba(255, 51, 102, 0.09)', g2 = 'rgba(255, 153, 0, 0.06)';
+                let surf1 = 'rgba(28, 12, 18, 0.75)', surf2 = 'rgba(41, 17, 26, 0.6)';
+                let focus = 'rgba(255, 51, 102, 0.4)';
+
+                if (theme === 'green') { 
+                    p = '#00ff88'; 
+                    s = '#00e5ff'; 
+                    glow = 'rgba(0, 255, 136, 0.25)'; 
+                    bg = '#06070a';
+                    g1 = 'rgba(0, 255, 136, 0.07)';
+                    g2 = 'rgba(0, 229, 255, 0.05)';
+                    surf1 = 'rgba(13, 16, 23, 0.75)';
+                    surf2 = 'rgba(22, 27, 39, 0.6)';
+                    focus = 'rgba(0, 255, 136, 0.4)';
+                } else if (theme === 'blue') { 
+                    p = '#00e5ff'; 
+                    s = '#3b82f6'; 
+                    glow = 'rgba(0, 229, 255, 0.25)'; 
+                    bg = '#050b14';
+                    g1 = 'rgba(0, 229, 255, 0.08)';
+                    g2 = 'rgba(59, 130, 246, 0.08)';
+                    surf1 = 'rgba(10, 20, 36, 0.75)';
+                    surf2 = 'rgba(15, 29, 53, 0.6)';
+                    focus = 'rgba(0, 229, 255, 0.4)';
+                }
+
+                document.documentElement.style.setProperty('--primary', p);
+                document.documentElement.style.setProperty('--secondary', s);
+                document.documentElement.style.setProperty('--primary-glow', glow);
+                document.documentElement.style.setProperty('--bg-base', bg);
+                document.documentElement.style.setProperty('--bg-gradient-1', g1);
+                document.documentElement.style.setProperty('--bg-gradient-2', g2);
+                document.documentElement.style.setProperty('--surface-1', surf1);
+                document.documentElement.style.setProperty('--surface-2', surf2);
+                document.documentElement.style.setProperty('--border-focus', focus);
+
+                showToast("Тема и фон обновлены");
+            });
+        });
+
+        // СТАРТ
+        renderShop();
+        updateCartUI();
+        fetchRadarOrders();
+    </script>
 </body>
 </html>
