@@ -6,80 +6,115 @@ import requests
 from bs4 import BeautifulSoup
 
 # ==========================================
-# 1. ОТКРЫТЫЕ ИСТОЧНИКИ (КАНАЛЫ + БИРЖИ)
+# 1. ТОЛЬКО КАНАЛЫ С ФРИЛАНС-ЗАКАЗАМИ И ПОДРАБОТКОЙ
+# (Убраны каналы поиска сотрудников в штат и IT-агентств)
 # ==========================================
 TG_CHANNELS = [
-    # Боты, Python, Скрипты, TMA
-    "job_python", "py_jobs", "aiogram_jobs", "python_rabota",
-    "it_podrabotka", "zakazy_it", "web_zakazy", "telethon_jobs",
-    "tg_apps_jobs", "python_freelance", "tma_developers",
-    "bot_creators_ru", "bots_orders", "bot_zakazy", "zakaz_na_bota",
+    # Заказы на ботов и Python
+    "zakazy_it",
+    "web_zakazy",
+    "it_podrabotka",
+    "bots_orders",
+    "bot_zakazy",
+    "zakaz_na_bota",
+    "tg_apps_jobs",
+    "tma_developers",
     
-    # Веб-дизайн, Figma, UI/UX
-    "uiux_jobs", "design_zakaz", "webdesign_jobs", "figma_orders",
-    "freelancedesign", "design_podrabotka", "uiux_designer_jobs",
-    "webdesign_freelance", "designers_chat_ru", "freelance_design_ru",
+    # Фриланс по веб-дизайну и сайтам
+    "design_zakaz",
+    "figma_orders",
+    "design_podrabotka",
+    "freelancedesign",
+    "webdesign_jobs",
+    "freelance_design_ru",
     
-    # Сайты, Верстка, Фриланс
-    "freelansim_ru", "freelancehunt_orders", "freelancetavern",
-    "digitaltender", "forfreelance", "it_freelance_zakaz",
-    "work_in_it", "freelance_rabota_rf", "freelance_orders_ru",
-    "it_job_board", "pomogator_freelance", "ru_freelance",
-    "frontend_jobs_ru", "front_jobs", "html_css_jobs", "verstka_jobs"
+    # Открытые ленты фриланс-бирж (только проекты, не вакансии)
+    "freelansim_ru",
+    "freelancehunt_orders",
+    "forfreelance",
+    "it_freelance_zakaz",
+    "freelance_orders_ru",
+    "pomogator_freelance",
+    "verstka_jobs"
 ]
 
 # ==========================================
-# 2. РАСШИРЕННЫЕ КЛЮЧЕВЫЕ СЛОВА
+# 2. МАРКЕРЫ ЗАКАЗА / ПРОЕКТНОЙ РАБОТЫ
 # ==========================================
-TARGET_KEYWORDS = [
+PROJECT_TRIGGERS = [
+    "нужен", "нужно", "требуется", "ищу", "ищем", "заказ", "задача",
+    "проект", "подработка", "сделать", "разработать", "написать",
+    "сверстать", "доработать", "починить", "бюджет", "оплата", "тз"
+]
+
+# ==========================================
+# 3. ЦЕЛЕВЫЕ НАПРАВЛЕНИЯ
+# ==========================================
+SKILL_KEYWORDS = [
     # Telegram боты и TMA
-    "бот", "боты", "бота", "боту", "ботом", "тг бот", "тг-бот", "telegram bot",
-    "aiogram", "telethon", "pyrogram", "mini app", "мини апп", "tma", "webapp", "web app",
+    "бот", "боты", "бота", "боту", "тг бот", "тг-бот", "telegram bot",
+    "aiogram", "telethon", "pyrogram", "mini app", "tma", "webapp",
     
     # Сайты и верстка
-    "сайт", "сайта", "сайты", "верстка", "сверстать", "html", "css", "landing", "лендинг", 
-    "веб-сайт", "web-сайт", "одностраничник", "поправить верстку", "доработать сайт",
+    "сайт", "сайта", "сайты", "верстка", "сверстать", "html", "css",
+    "landing", "лендинг", "одностраничник", "поправить верстку",
     
     # Веб-дизайн и Figma
-    "дизайн", "дизайна", "дизайнер", "ui/ux", "ui-ux", "ui", "ux", "figma", "фигма", 
-    "макет", "макета", "прототип", "редизайн", "оформление сайта",
+    "дизайн", "дизайна", "дизайнер", "ui/ux", "ui-ux", "figma", "фигма",
+    "макет", "прототип", "редизайн сайта", "дизайн сайта", "дизайн лендинга",
     
     # Парсеры и скрипты
-    "парсер", "парсить", "спарсить", "скрипт", "скрипта", "автоматизация", "сбор данных"
+    "парсер", "парсить", "спарсить", "скрипт", "автоматизация"
 ]
 
 # ==========================================
-# 3. ТОЧЕЧНЫЕ СТОП-СЛОВА (БЕЗ ЛОЖНЫХ СРАБАТЫВАНИЙ)
+# 4. СТОП-СЛОВА (ШТАТНЫЕ ВАКАНСИИ, SMM, АРБИТРАЖ, ТЕСТЕРЫ)
 # ==========================================
 STOP_WORDS = [
-    # Платные биржи
-    "kwork.ru", "fl.ru/projects", "freelance.ru/projects",
+    # Корпоративный найм и штатная работа
+    "traffic manager", "media buyer", "lead", "teamlead",
+    "qa automation", "qa engineer", "тестировщик", "manual qa", "aqa",
+    "опыт работы от", "опыт от 3", "опыт от 2", "опыт от 5",
+    "оформление по тк", "в штат", "полная занятость", "фуллтайм", "fulltime",
+    "испытательный срок", "оклад", "зарплата от", "зп от",
+    "middle+", "senior",
     
-    # SMM, маркетинг, контент (не путать с веб-дизайном)
-    "smm", "смм", "smm-специалист", "смм-специалист", "ведение канала",
-    "ведение telegram", "контент-мейкер", "копирайтер", "копирайтинг",
-    "таргетолог", "таргет", "рилс", "reels", "shorts", "монтажер",
-    "сторисмейкер", "закупка рекламы", "трафик", "инвайтинг", "накрутка",
-    "дизайн карточек вайлдберриз", "дизайн карточек wildberries", "дизайн карточек ozon",
+    # Маркетинг, арбитраж, трафик, SMM
+    "google ads", "meta ads", "facebook ads", "арбитраж", "баер",
+    "smm", "смм", "таргет", "таргетолог", "контент", "копирайтер",
+    "рилс", "reels", "shorts", "монтажер", "инвайтинг", "прогрев",
+    "карточек wildberries", "карточек ozon", "вайлдберриз", "wb",
     
-    # Слишком высокий грейд (где требуют 3+ года опыта в компании)
-    "senior", "lead", "teamlead", "руководитель отдела", "арт-директор"
+    # Сложный или неподходящий стек
+    "1с", "1c", "bitrix", "битрикс", "flutter", "react native",
+    "swift", "kotlin", "ios", "android", "c#", "c++", ".net", "java", "golang", "rust"
 ]
 
 def clean_text(text: str) -> str:
     text = re.sub(r"<[^>]+>", "", text)
     return re.sub(r"\s+", " ", text).strip()
 
-def is_matching_skills(text: str) -> bool:
+def is_valid_freelance_order(text: str) -> bool:
     text_lower = text.lower()
     
-    # Отсеиваем только реальный SMM и платные биржи
+    # 1. Отсеиваем любые совпадения по стоп-словам (вакансии, арбитраж, фуллтайм)
     for stop in STOP_WORDS:
         if stop in text_lower:
             return False
             
-    # Проверяем наличие ключевых слов
-    return any(k in text_lower for k in TARGET_KEYWORDS)
+    # 2. Проверяем, что это реальная задача/заказ, а не просто статья или опрос
+    has_trigger = any(t in text_lower for t in PROJECT_TRIGGERS)
+    if not has_trigger:
+        return False
+        
+    # 3. Проверяем наличие целевого стека (бот, сайт, дизайн, парсер)
+    return any(k in text_lower for k in SKILL_KEYWORDS)
+
+def is_fresh_date(dt: datetime) -> bool:
+    now = datetime.now(timezone.utc)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return (now - dt).total_seconds() <= 48 * 3600
 
 def get_category(text: str) -> str:
     text_lower = text.lower()
@@ -92,7 +127,7 @@ def get_category(text: str) -> str:
     return "Веб-сайт"
 
 # ==========================================
-# 4. СБОР С ХАБРА (ДО 10 ОТКЛИКОВ)
+# 5. СБОР С ХАБР ФРИЛАНСА (ПРОЕКТЫ ДО 10 ОТКЛИКОВ)
 # ==========================================
 def parse_habr():
     url = "https://freelance.habr.com/tasks"
@@ -113,10 +148,9 @@ def parse_habr():
                 continue
                 
             title = clean_text(title_el.text)
-            if not is_matching_skills(title):
+            if not is_valid_freelance_order(title):
                 continue
             
-            # До 10 откликов (чтобы не было огромной конкуренции)
             responses_el = card.select_one(".task-params__item_responses")
             responses_count = 0
             if responses_el:
@@ -148,12 +182,12 @@ def parse_habr():
                 "discovered_at": datetime.now(timezone.utc).isoformat()
             })
     except Exception as e:
-        print(f"[!] Ошибка Хабра: {e}")
+        print(f"[!] Хабр ошибка: {e}")
         
     return tasks
 
 # ==========================================
-# 5. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ)
+# 6. СБОР ИЗ TELEGRAM-КАНАЛОВ ФРИЛАНСА
 # ==========================================
 def parse_tg(channel: str):
     url = f"https://t.me/s/{channel}"
@@ -177,7 +211,9 @@ def parse_tg(channel: str):
                 continue
                 
             text = text_el.text.strip()
-            if not is_matching_skills(text):
+            
+            # Строгая фильтрация от штатных вакансий и медиабаеров
+            if not is_valid_freelance_order(text):
                 continue
 
             published_str = "Сегодня"
@@ -190,7 +226,6 @@ def parse_tg(channel: str):
                         dt = dt.replace(tzinfo=timezone.utc)
                     now = datetime.now(timezone.utc)
                     
-                    # Проверяем: не старше 48 часов
                     if (now - dt).total_seconds() > 48 * 3600:
                         continue
                     published_str = dt.strftime("%d.%m %H:%M")
@@ -202,7 +237,6 @@ def parse_tg(channel: str):
             title = (first_line[:95] + "...") if len(first_line) > 95 else first_line
             link = link_el.get("href")
 
-            # Извлечение прямого юзернейма заказчика
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{4,}", text)
             if found_usernames:
@@ -227,7 +261,7 @@ def parse_tg(channel: str):
     return tasks
 
 # ==========================================
-# 6. ХРАНЕНИЕ И АВТООЧИСТКА ЗА 48 ЧАСОВ
+# 7. ХРАНЕНИЕ И ОЧИСТКА СТАРЫХ ВАКАНСИЙ
 # ==========================================
 def load_existing_orders() -> list:
     if not os.path.exists("orders.json"):
@@ -244,7 +278,8 @@ def filter_orders_under_48h(orders: list) -> list:
     fresh_orders = []
 
     for order in orders:
-        if not is_matching_skills(order.get("title", "")):
+        # Автоматически удаляем старый мусор и вакансии из orders.json
+        if not is_valid_freelance_order(order.get("title", "")):
             continue
             
         disc_str = order.get("discovered_at")
@@ -266,7 +301,7 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     
     new_scraped = []
-    print(f"[*] Сбор заказов с {len(TG_CHANNELS)} каналов...")
+    print(f"[*] Сбор заказов с проверенных каналов ({len(TG_CHANNELS)})...")
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
         
@@ -287,4 +322,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(final_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! В базе {len(final_orders)} задач (боты, сайты, веб-дизайн, скрипты).")
+    print(f"[+] Готово! В базе {len(final_orders)} реальных заказов под твои навыки.")
