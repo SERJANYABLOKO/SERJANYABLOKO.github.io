@@ -2,9 +2,9 @@ name: Update Orders
 
 on:
   schedule:
-    # Запуск каждые 30 минут
-    - cron: '*/30 * * * *'
-  workflow_dispatch: # Оставляет кнопку ручного запуска в Actions
+    # Запуск на 7-й и 37-й минутах каждого часа (меньше нагрузка)
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
 
 jobs:
   scrape-and-deploy:
