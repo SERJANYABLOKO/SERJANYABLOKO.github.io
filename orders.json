@@ -1,5 +1,137 @@
 [
   {
+    "title": "Разработка личного кабинета пациента",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522847/razrabotka-lichnogo-kabineta-patsienta-.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.024520+00:00"
+  },
+  {
+    "title": "Разработка безопасного API-слоя — 7 endpoints + 4 webhook (Бюджет: 7 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522759/razrabotka-bezopasnogo-api-sloya--7-endpoints--4-webhook.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.024798+00:00"
+  },
+  {
+    "title": "ИИ-агент для обработки заявок",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522713/ii-agent-dlya-obrabotki-zayavok.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.024911+00:00"
+  },
+  {
+    "title": "Написать бота в Telegram (Бюджет: 5 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522710/napisat-bota-v-telegram-.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.024941+00:00"
+  },
+  {
+    "title": "Необходимо пофиксить парсер сайта на Python (для всех)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522672/neobhodimo-pofiksit-parser-sayta-na-python.html",
+    "category": "Парсеры",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.025084+00:00"
+  },
+  {
+    "title": "технические работы по сайту (для всех)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522629/tehnicheskie-rabotyi-po-saytu.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:45.025129+00:00"
+  },
+  {
+    "title": "риг лица 3D модели (Blend Shapes), липсинк и экспорт в .glb для использования на сайте в браузе...",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522884/rig-litsa-3d-modeli-blend-shapes-lipsink-i-eksport-v-glb-dlya-ispolzovaniya-na-sayte-v-brauzere-.html",
+    "category": "Веб-сайт",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.053931+00:00"
+  },
+  {
+    "title": "Разработать исполнительные чертежи (Бюджет: 20 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522883/razrabotat-ispolnitelnyie-cherteji.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.053965+00:00"
+  },
+  {
+    "title": "Разработка тома ПД ИОС1 (электроснабжение) по 87ПП РФ и РД ЭС (Бюджет: 130 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522872/razrabotka-toma-pd-ios1-elektrosnabjenie-po-87pp-rf-i-rd-es.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.054266+00:00"
+  },
+  {
+    "title": "Нужен дизайнер с опытом ASO для оформления 3 скриншотов приложения в App Store (Бюджет: 5 000 &...",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522870/nujen-dizayner-s-opyitom-aso-dlya-oformleniya-3-skrinshotov-prilojeniya-v-app-store.html",
+    "category": "Дизайн",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.054330+00:00"
+  },
+  {
+    "title": "Ищу ландшафтного дизайнера — проект озеленения участка 10 соток (Московская область)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522869/ischu-landshaftnogo-dizaynera--proekt-ozeleneniya-uchastka-10-sotok-moskovskaya-oblast.html",
+    "category": "Дизайн",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.054369+00:00"
+  },
+  {
+    "title": "Frontend-разработка двухъязычного лендинга по готовой Figma (Бюджет: 100 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522142/frontend-razrabotka-dvuhyyazyichnogo-lendinga-po-gotovoy-figma.html",
+    "category": "Дизайн",
+    "source": "FL (Дизайн сайтов)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T09:30:46.830688+00:00"
+  },
+  {
     "title": "Гейм-дизайнерВ связи с активным развитием и расширением, наша компания объявляет конкурс на вак...",
     "price": "В описании",
     "url": "https://t.me/FreeWorkFeed/3992",
@@ -44,72 +176,6 @@
     "discovered_at": "2026-09-21T17:00:02+00:00"
   },
   {
-    "title": "Разработка личного кабинета пациента",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522847/razrabotka-lichnogo-kabineta-patsienta-.html",
-    "category": "Telegram",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.824782+00:00"
-  },
-  {
-    "title": "Разработка безопасного API-слоя — 7 endpoints + 4 webhook (Бюджет: 7 000 &#8381;)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522759/razrabotka-bezopasnogo-api-sloya--7-endpoints--4-webhook.html",
-    "category": "Telegram",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.825033+00:00"
-  },
-  {
-    "title": "ИИ-агент для обработки заявок",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522713/ii-agent-dlya-obrabotki-zayavok.html",
-    "category": "Telegram",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.825143+00:00"
-  },
-  {
-    "title": "Написать бота в Telegram (Бюджет: 5 000 &#8381;)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522710/napisat-bota-v-telegram-.html",
-    "category": "Telegram",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.825176+00:00"
-  },
-  {
-    "title": "Необходимо пофиксить парсер сайта на Python (для всех)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522672/neobhodimo-pofiksit-parser-sayta-na-python.html",
-    "category": "Парсеры",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.825330+00:00"
-  },
-  {
-    "title": "технические работы по сайту (для всех)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522629/tehnicheskie-rabotyi-po-saytu.html",
-    "category": "Telegram",
-    "source": "FL (Веб-разработка)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:54.825375+00:00"
-  },
-  {
     "title": "Этап 1 — Партнёрская программа и Telegram-бот | 20 000 ₽ (Бюджет: 20 000 &#8381;)",
     "price": "Договорная",
     "url": "https://www.fl.ru/projects/5522595/etap-1--partnrskaya-programma-i-telegram-bot--20-000-.html",
@@ -121,39 +187,6 @@
     "discovered_at": "2026-09-22T08:30:54.825445+00:00"
   },
   {
-    "title": "Разработка тома ПД ИОС1 (электроснабжение) по 87ПП РФ и РД ЭС (Бюджет: 130 000 &#8381;)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522872/razrabotka-toma-pd-ios1-elektrosnabjenie-po-87pp-rf-i-rd-es.html",
-    "category": "Telegram",
-    "source": "FL (Боты и скрипты)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:56.773391+00:00"
-  },
-  {
-    "title": "Нужен дизайнер с опытом ASO для оформления 3 скриншотов приложения в App Store (Бюджет: 5 000 &...",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522870/nujen-dizayner-s-opyitom-aso-dlya-oformleniya-3-skrinshotov-prilojeniya-v-app-store.html",
-    "category": "Дизайн",
-    "source": "FL (Боты и скрипты)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:56.773464+00:00"
-  },
-  {
-    "title": "Ищу ландшафтного дизайнера — проект озеленения участка 10 соток (Московская область)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522869/ischu-landshaftnogo-dizaynera--proekt-ozeleneniya-uchastka-10-sotok-moskovskaya-oblast.html",
-    "category": "Дизайн",
-    "source": "FL (Боты и скрипты)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:56.773506+00:00"
-  },
-  {
     "title": "Сделать сайт",
     "price": "Договорная",
     "url": "https://www.fl.ru/projects/5522865/sdelat-sayt.html",
@@ -163,17 +196,6 @@
     "responses": "Открытый заказ",
     "direct_contact": null,
     "discovered_at": "2026-09-22T08:30:56.773798+00:00"
-  },
-  {
-    "title": "Frontend-разработка двухъязычного лендинга по готовой Figma (Бюджет: 100 000 &#8381;)",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522142/frontend-razrabotka-dvuhyyazyichnogo-lendinga-po-gotovoy-figma.html",
-    "category": "Дизайн",
-    "source": "FL (Дизайн сайтов)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T08:30:57.452431+00:00"
   },
   {
     "title": "Ищу Full-Stack (или No-Code) разработчика для MVP доски объявлений с ИИ",
