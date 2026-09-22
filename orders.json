@@ -1,5 +1,16 @@
 [
   {
+    "title": "Разработка личного кабинета пациента",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522847/razrabotka-lichnogo-kabineta-patsienta-.html",
+    "category": "Telegram",
+    "source": "FL (Веб-разработка)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:58.731804+00:00"
+  },
+  {
     "title": "Разработка безопасного API-слоя — 7 endpoints + 4 webhook (Бюджет: 7 000 &#8381;)",
     "price": "Договорная",
     "url": "https://www.fl.ru/projects/5522759/razrabotka-bezopasnogo-api-sloya--7-endpoints--4-webhook.html",
@@ -8,7 +19,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001196+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732011+00:00"
   },
   {
     "title": "ИИ-агент для обработки заявок",
@@ -19,7 +30,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001384+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732138+00:00"
   },
   {
     "title": "Написать бота в Telegram (Бюджет: 5 000 &#8381;)",
@@ -30,7 +41,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001425+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732163+00:00"
   },
   {
     "title": "Необходимо пофиксить парсер сайта на Python (для всех)",
@@ -41,7 +52,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001570+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732278+00:00"
   },
   {
     "title": "технические работы по сайту (для всех)",
@@ -52,7 +63,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001616+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732314+00:00"
   },
   {
     "title": "Этап 1 — Партнёрская программа и Telegram-бот | 20 000 ₽ (Бюджет: 20 000 &#8381;)",
@@ -63,7 +74,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001687+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732371+00:00"
   },
   {
     "title": "Ищу Full-Stack (или No-Code) разработчика для MVP доски объявлений с ИИ",
@@ -74,7 +85,62 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:48.001718+00:00"
+    "discovered_at": "2026-09-22T05:00:58.732396+00:00"
+  },
+  {
+    "title": "Лендинг для психолога",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522835/lending-dlya-psihologa.html",
+    "category": "Веб-сайт",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:59.961434+00:00"
+  },
+  {
+    "title": "Лендинг для фотографа",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522834/lending-dlya-fotografa.html",
+    "category": "Дизайн",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:59.961462+00:00"
+  },
+  {
+    "title": "Оформление кислородного автомата (Бюджет: 2 000 &#8381;)",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522856/oformlenie-kislorodnogo-avtomata-.html",
+    "category": "Дизайн",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:59.961519+00:00"
+  },
+  {
+    "title": "Бот для обработки заявок в нише остекления и отделки",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522841/bot-dlya-obrabotki-zayavok-v-nishe-ostekleniya-i-otdelki-.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:59.961546+00:00"
+  },
+  {
+    "title": "Инженер конструктор на разработку конструктивного проекта дома 200м2 из газобетона",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522844/injener-konstruktor-na-razrabotku-konstruktivnogo-proekta-doma-200m2-iz-gazobetona.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T05:00:59.961575+00:00"
   },
   {
     "title": "Нужен дизайн лендинга в программе Фигма (для всех)",
@@ -85,51 +151,29 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:49.443844+00:00"
+    "discovered_at": "2026-09-22T05:00:59.961827+00:00"
   },
   {
-    "title": "Картинки категорий для интернет-магазина на главную страницу сайта",
+    "title": "Переработка фундамента готового проекта дома 80 м² — КЖ/КЖ0",
     "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522829/kartinki-kategoriy-dlya-internet-magazina-na-glavnuyu-stranitsu-sayta.html",
+    "url": "https://www.fl.ru/projects/5522848/pererabotka-fundamenta-gotovogo-proekta-doma-80-m--kj-kj0.html",
     "category": "Telegram",
     "source": "FL (Боты и скрипты)",
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:49.444139+00:00"
+    "discovered_at": "2026-09-22T05:00:59.961854+00:00"
   },
   {
-    "title": "Нужен сайт с катологом",
+    "title": "Разработка сайта-каталога с личными кабинетами и модерацией контента",
     "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522830/nujen-sayt-s-katologom.html",
+    "url": "https://www.fl.ru/projects/5522845/razrabotka-sayta-kataloga-s-lichnyimi-kabinetami-i-moderatsiey-kontenta.html",
     "category": "Telegram",
     "source": "FL (Боты и скрипты)",
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:49.444198+00:00"
-  },
-  {
-    "title": "Дизайн для панели управления умным домом",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522823/dizayn-dlya-paneli-upravleniya-umnyim-domom.html",
-    "category": "Дизайн",
-    "source": "FL (Боты и скрипты)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:49.444310+00:00"
-  },
-  {
-    "title": "Скопировать сайт, вставить команду",
-    "price": "Договорная",
-    "url": "https://www.fl.ru/projects/5522815/skopirovat-sayt-vstavit-komandu.html",
-    "category": "Веб-сайт",
-    "source": "FL (Боты и скрипты)",
-    "published_at": "Сегодня",
-    "responses": "Открытый заказ",
-    "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:49.444487+00:00"
+    "discovered_at": "2026-09-22T05:00:59.961882+00:00"
   },
   {
     "title": "Frontend-разработка двухъязычного лендинга по готовой Figma (Бюджет: 100 000 &#8381;)",
@@ -140,7 +184,7 @@
     "published_at": "Сегодня",
     "responses": "Открытый заказ",
     "direct_contact": null,
-    "discovered_at": "2026-09-22T04:30:50.061931+00:00"
+    "discovered_at": "2026-09-22T05:01:00.545609+00:00"
   },
   {
     "title": "Гейм-дизайнерВ связи с активным развитием и расширением, наша компания объявляет конкурс на вак...",
@@ -185,5 +229,49 @@
     "responses": "0–1 чел. (в ЛС)",
     "direct_contact": null,
     "discovered_at": "2026-09-21T17:00:02+00:00"
+  },
+  {
+    "title": "Картинки категорий для интернет-магазина на главную страницу сайта",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522829/kartinki-kategoriy-dlya-internet-magazina-na-glavnuyu-stranitsu-sayta.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T04:30:49.444139+00:00"
+  },
+  {
+    "title": "Нужен сайт с катологом",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522830/nujen-sayt-s-katologom.html",
+    "category": "Telegram",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T04:30:49.444198+00:00"
+  },
+  {
+    "title": "Дизайн для панели управления умным домом",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522823/dizayn-dlya-paneli-upravleniya-umnyim-domom.html",
+    "category": "Дизайн",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T04:30:49.444310+00:00"
+  },
+  {
+    "title": "Скопировать сайт, вставить команду",
+    "price": "Договорная",
+    "url": "https://www.fl.ru/projects/5522815/skopirovat-sayt-vstavit-komandu.html",
+    "category": "Веб-сайт",
+    "source": "FL (Боты и скрипты)",
+    "published_at": "Сегодня",
+    "responses": "Открытый заказ",
+    "direct_contact": null,
+    "discovered_at": "2026-09-22T04:30:49.444487+00:00"
   }
 ]
