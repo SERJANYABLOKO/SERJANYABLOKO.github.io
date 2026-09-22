@@ -7,22 +7,22 @@ from bs4 import BeautifulSoup
 import feedparser
 
 # ==========================================
-# 1. ОТКРЫТЫЕ ИСТОЧНИКИ ДЛЯ РАЗОВЫХ ЗАКАЗОВ
+# 1. ОТКРЫТЫЕ БИРЖИ С БЕСПЛАТНЫМИ ОТКЛИКАМИ
 # ==========================================
 
-# Открытые RSS-ленты бирж (парсятся без регистрации и капчи)
+# Открытые RSS-потоки бирж без платных подписок и без обязательной верификации
 RSS_FEEDS = [
-    # Хабр Фриланс: разработка и дизайн
+    # Хабр Фриланс
     {"url": "https://freelance.habr.com/tasks.rss", "source": "Хабр Фриланс"},
-    # FL.ru: открытые RSS-ленты по направлениям подработки
-    {"url": "https://www.fl.ru/rss/all.xml?category=5", "source": "FL (Веб-разработка)"},
-    {"url": "https://www.fl.ru/rss/all.xml?subcat=38", "source": "FL (Боты и скрипты)"},
-    {"url": "https://www.fl.ru/rss/all.xml?category=1", "source": "FL (Дизайн сайтов)"},
+    # Freelancehunt (открытые проекты по программированию и верстке)
+    {"url": "https://freelancehunt.com/rss/projects", "source": "Freelancehunt"},
+    # Weblancer (открытый поток свежих проектов)
+    {"url": "https://www.weblancer.net/rss/jobs.rss", "source": "Weblancer"}
 ]
 
-# Каналы Telegram с разовыми заказами, проектной работой и подработкой
+# Каналы Telegram с прямыми контактами заказчиков в ЛС (0% биржевых комиссий)
 TG_CHANNELS = [
-    # Боты, Python, Скрипты
+    # Боты, Python, Скрипты, TMA
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
     "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
     "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs",
@@ -39,7 +39,7 @@ TG_CHANNELS = [
 ]
 
 # ==========================================
-# 2. КЛЮЧЕВЫЕ СЛОВА (ТОЛЬКО РАЗОВЫЕ IT И ДИЗАЙН ЗАКАЗЫ)
+# 2. КЛЮЧЕВЫЕ СЛОВА ДЛЯ РАЗОВЫХ ЗАДАЧ
 # ==========================================
 TARGET_KEYWORDS = [
     # Боты и TMA
@@ -59,9 +59,12 @@ TARGET_KEYWORDS = [
 ]
 
 # ==========================================
-# 3. СТОП-СЛОВА (ШТАТ, АРБИТРАЖ, SMM, ВАКАНСИИ)
+# 3. СТОП-СЛОВА (БЛОК FL.RU, KWORK, ВАКАНСИЙ, SMM)
 # ==========================================
 STOP_WORDS = [
+    # Платные биржи (строгая блокировка)
+    "fl.ru", "fl_ru", "freelance.ru", "kwork", "кворк",
+    
     # Штатный найм и вакансии на зарплату
     "traffic manager", "media buyer", "lead", "teamlead",
     "qa automation", "qa engineer", "тестировщик", "manual qa", "aqa",
@@ -88,12 +91,11 @@ def clean_text(text: str) -> str:
 def is_matching(text: str) -> bool:
     text_lower = text.lower()
     
-    # 1. Проверяем стоп-слова
+    # Блокируем FL.ru и другие стоп-слова
     for stop in STOP_WORDS:
         if stop in text_lower:
             return False
             
-    # 2. Проверяем целевые навыки
     return any(k in text_lower for k in TARGET_KEYWORDS)
 
 def get_category(text: str) -> str:
@@ -107,7 +109,7 @@ def get_category(text: str) -> str:
     return "Веб-сайт"
 
 # ==========================================
-# 4. СБОР ИЗ RSS-ЛЕНТ БЕСПЛАТНЫХ БИРЖ
+# 4. СБОР ИЗ ОТКРЫТЫХ RSS БЕСПЛАТНЫХ БИРЖ
 # ==========================================
 def parse_rss_feeds():
     tasks = []
@@ -116,16 +118,17 @@ def parse_rss_feeds():
     for feed_info in RSS_FEEDS:
         try:
             feed = feedparser.parse(feed_info["url"], request_headers=headers)
-            for entry in feed.entries[:20]:
+            for entry in feed.entries[:25]:
                 title = clean_text(entry.title)
                 summary = clean_text(getattr(entry, "summary", ""))
-                full_text = f"{title} {summary}"
-                
-                if not is_matching(full_text):
-                    continue
-                    
                 link = getattr(entry, "link", "")
-                if not link:
+                
+                # Защита от ссылок на платные биржи
+                if "fl.ru" in link.lower() or "kwork" in link.lower():
+                    continue
+                
+                full_text = f"{title} {summary}"
+                if not is_matching(full_text):
                     continue
 
                 tasks.append({
@@ -135,7 +138,7 @@ def parse_rss_feeds():
                     "category": get_category(full_text),
                     "source": feed_info["source"],
                     "published_at": "Сегодня",
-                    "responses": "Открытый заказ",
+                    "responses": "Бесплатный отклик",
                     "direct_contact": None,
                     "discovered_at": datetime.now(timezone.utc).isoformat()
                 })
@@ -145,7 +148,7 @@ def parse_rss_feeds():
     return tasks
 
 # ==========================================
-# 5. СБОР ИЗ TELEGRAM-КАНАЛОВ (С ПРЯМОЙ СВЯЗЬЮ В ЛС)
+# 5. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ В ЛС)
 # ==========================================
 def parse_tg(channel: str):
     url = f"https://t.me/s/{channel}"
@@ -169,6 +172,11 @@ def parse_tg(channel: str):
                 continue
                 
             text = text_el.text.strip()
+            
+            # Блокировка переходов на платные сервисы
+            if "fl.ru" in text.lower() or "kwork" in text.lower():
+                continue
+                
             if not is_matching(text):
                 continue
 
@@ -182,7 +190,6 @@ def parse_tg(channel: str):
                         dt = dt.replace(tzinfo=timezone.utc)
                     now = datetime.now(timezone.utc)
                     
-                    # Заказ не старше 48 часов
                     if (now - dt).total_seconds() > 48 * 3600:
                         continue
                     published_str = dt.strftime("%d.%m %H:%M")
@@ -194,7 +201,6 @@ def parse_tg(channel: str):
             title = (first_line[:95] + "...") if len(first_line) > 95 else first_line
             link = link_el.get("href")
 
-            # Поиск контакта @username заказчика
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{4,}", text)
             if found_usernames:
@@ -236,7 +242,14 @@ def filter_orders_under_48h(orders: list) -> list:
     fresh_orders = []
 
     for order in orders:
-        if not is_matching(order.get("title", "")):
+        url = order.get("url", "").lower()
+        title = order.get("title", "")
+        
+        # Удаляем любые платные биржи из истории
+        if "fl.ru" in url or "kwork" in url:
+            continue
+            
+        if not is_matching(title):
             continue
             
         disc_str = order.get("discovered_at")
@@ -258,10 +271,10 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Сбор заказов из бесплатных RSS бирж...")
+    print("[*] Сбор задач с бесплатных бирж (Хабр, Freelancehunt, Weblancer)...")
     new_scraped.extend(parse_rss_feeds())
     
-    print(f"[*] Сбор заказов из Telegram ({len(TG_CHANNELS)} каналов)...")
+    print(f"[*] Сбор прямых заказов из Telegram ({len(TG_CHANNELS)} каналов)...")
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
         
@@ -279,4 +292,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(final_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! В базе {len(final_orders)} реальных разовых заказов.")
+    print(f"[+] Готово! В базе {len(final_orders)} актуальных заказов с бесплатных бирж и каналов.")
