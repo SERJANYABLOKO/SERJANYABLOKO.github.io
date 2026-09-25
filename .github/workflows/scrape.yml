@@ -2,15 +2,15 @@ name: Update Orders
 
 on:
   schedule:
-    # Запуск на 7-й и 37-й минутах каждого часа (меньше нагрузка)
     - cron: '7,37 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   scrape-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Дает права боту коммитить orders.json
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,5 +33,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add orders.json
-          git commit -m "Автообновление заказов [30 мин]" || exit 0
-          git push
+          # Проверяем, есть ли реальные изменения в orders.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Автообновление заказов"
+            git pull --rebase origin main || true
+            git push origin main
+          else
+            echo "Новых заказов нет, пропускаем коммит."
+          fi
