@@ -51,7 +51,62 @@ TG_CHANNELS = [
     "freeworkfeed", "ru_freelance", "it_job_board", "work_in_it",
     "html_css_jobs", "front_jobs", "frontend_jobs_ru", "webdev_orders",
     "freelance_chat_it", "zakazy_na_sait", "sayty_pod_kluch", "verstka_zakaz",
-    "web_freelance_feed", "it_projects_ru", "freelance_daily_ru"
+    "web_freelance_feed", "it_projects_ru", "freelance_daily_ru",
+    
+    # --- Новые добавленные каналы фриланса ---
+    "freelancebay",            # Бухта Фриланса
+    "Frilanser_100",           # Фрилансеры Онлайн
+    "freelance_birzha",        # Фриланс Биржа
+    "tg_work",                 # Удалённая работа / TGwork
+    "golub_freelance",         # Голубь на Фрилансе
+
+    # --- Дизайн, UI/UX и Figma ---
+    "cgfreelance",             # CG Freelance
+    "designhunters",           # Design Hunters
+    "design_birzha",           # Дизайн-биржа
+    "t_designers",             # ИЩУ_ДИЗАЙНЕРА
+    "job_for_designers",       # Job for Designers
+    "design_zakaz",            # Вакансии и заказы на дизайн
+    "figma_orders",            # Заказы Figma / UI
+    "uiux_jobs",               # UI/UX задачи
+    "webdesign_jobs",          # Web Design
+    "freelance_design_ru",     # Фриланс дизайн
+
+    # --- Боты, TMA, Python и разработка ---
+    "pythonjob",               # Python Job
+    "python_rabota",           # Вакансии для Python-разработчиков
+    "py_jobs",                 # Python разработки
+    "job_python",              # IT подработка Python
+    "javascript_jobs_feed",    # JavaScript Jobs (сайты, фронтенд)
+    "junior_it_vacancies",     # Джуниор Вакансии IT
+    "getit_jobs",              # Get IT
+    "it_jobs_board",           # Вакансии айти IT
+    "aiogram_jobs",            # Боты aiogram
+    "tg_apps_jobs",            # Telegram Mini Apps
+    "tma_developers",          # TMA разработчики
+    "bots_orders",             # Заказы на ботов
+    "zakaz_na_bota",           # Бот-заказы
+    "bot_zakazy",              # Биржа ботов
+    "telethon_jobs",           # Скрипты и юзерботы
+
+    # --- Универсальный фриланс и подработка ---
+    "freeworkfeed",            # FreeWorkFeed
+    "pomogator_freelance",     # ПОМОГАТОР - БИРЖА ФРИЛАНСА
+    "distantsiya_chat",        # Distantsiya
+    "freelance_pigeon",        # Голубь на Фрилансе (резерв)
+    "rabotka_jobs",            # Работка | Вакансии
+    "work_on_feed",            # WORK ON
+    "workzavr",                # Воркзавр
+    "freelansim_ru",           # Хабр лента
+    "freelancehunt_orders",    # Фрилансхант
+    "forfreelance",            # ForFreelance
+    "it_freelance_zakaz",      # IT заказы фриланс
+    "freelance_orders_ru",     # Свежие заказы
+    "verstka_jobs",            # Верстка и лендинги
+    "html_css_jobs",           # HTML / CSS верстка
+    "front_jobs",              # Frontend задачи
+    "zakazy_it",               # IT заказы напрямую
+    "web_zakazy"               # Заказы на сайты
 ]
 
 # ==========================================
