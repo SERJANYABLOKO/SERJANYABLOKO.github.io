@@ -7,79 +7,100 @@ from bs4 import BeautifulSoup
 import feedparser
 
 # ==========================================
-# 1. ОТКРЫТЫЕ БИРЖИ С БЕСПЛАТНЫМИ ОТКЛИКАМИ
+# 1. ОТКРЫТЫЕ БИРЖИ (БЕЗ ПЛАТНЫХ ОТКЛИКОВ)
 # ==========================================
-
-# Открытые RSS-потоки бирж без платных подписок и без обязательной верификации
 RSS_FEEDS = [
-    # Хабр Фриланс
-    {"url": "https://freelance.habr.com/tasks.rss", "source": "Хабр Фриланс"},
-    # Freelancehunt (открытые проекты по программированию и верстке)
-    {"url": "https://freelancehunt.com/rss/projects", "source": "Freelancehunt"},
-    # Weblancer (открытый поток свежих проектов)
-    {"url": "https://www.weblancer.net/rss/jobs.rss", "source": "Weblancer"}
+    # Хабр Фриланс (целевые категории разработки и дизайна)
+    {
+        "url": "https://freelance.habr.com/tasks.rss?categories=development_all_inclusive,development_backend,development_frontend,development_scripts,development_bots,design_websites,design_landings,design_app_interfaces",
+        "source": "Хабр Фриланс"
+    },
+    # Freelancehunt (открытые проекты без PRO)
+    {
+        "url": "https://freelancehunt.com/rss/projects",
+        "source": "Freelancehunt"
+    },
+    # Открытые ленты проектов для фрилансеров
+    {
+        "url": "https://freten.ru/rss/orders",
+        "source": "Freten (Открытая доска)"
+    }
 ]
 
-# Каналы Telegram с прямыми контактами заказчиков в ЛС (0% биржевых комиссий)
+# ==========================================
+# 2. 50+ TELEGRAM-КАНАЛОВ И ЧАТОВ С ПРЯМОЙ СВЯЗЬЮ
+# ==========================================
 TG_CHANNELS = [
-    # Боты, Python, Скрипты, TMA
+    # --- Боты, TMA, Python, Скрипты ---
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
     "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
     "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs",
+    "python_freelance", "python_job_board", "bot_creators_ru",
+    "pydevjob", "it_bot_zakaz", "telegram_bots_order", "py_orders",
+    "script_freelance", "bot_developers_ru",
     
-    # Веб-дизайн, лендинги, Figma, интерфейсы
+    # --- Веб-дизайн, UI/UX, Figma ---
     "design_zakaz", "figma_orders", "design_podrabotka", "freelancedesign",
     "webdesign_jobs", "freelance_design_ru", "uiux_jobs", "webdesign_freelance",
+    "designers_chat_ru", "figma_freelance", "ui_ux_orders", "landing_design_ru",
+    "web_designer_zakaz", "figma_jobs_ru", "design_projects_it",
     
-    # Фриланс, верстка, сайты под ключ
+    # --- Сайты, Верстка, Быстрый фриланс без регистраций ---
     "freelansim_ru", "freelancehunt_orders", "forfreelance", "it_freelance_zakaz",
     "freelance_orders_ru", "pomogator_freelance", "verstka_jobs", "freelancetavern",
     "freeworkfeed", "ru_freelance", "it_job_board", "work_in_it",
-    "html_css_jobs", "front_jobs", "frontend_jobs_ru"
+    "html_css_jobs", "front_jobs", "frontend_jobs_ru", "webdev_orders",
+    "freelance_chat_it", "zakazy_na_sait", "sayty_pod_kluch", "verstka_zakaz",
+    "web_freelance_feed", "it_projects_ru", "freelance_daily_ru"
 ]
 
 # ==========================================
-# 2. КЛЮЧЕВЫЕ СЛОВА ДЛЯ РАЗОВЫХ ЗАДАЧ
+# 3. ТОЧНЫЕ КЛЮЧЕВЫЕ СЛОВА (ТОЛЬКО РЕАЛЬНЫЕ ЗАКАЗЫ)
 # ==========================================
-TARGET_KEYWORDS = [
-    # Боты и TMA
-    "бот", "боты", "бота", "боту", "тг бот", "тг-бот", "telegram bot",
-    "aiogram", "telethon", "pyrogram", "mini app", "tma", "webapp", "кликер",
+TARGET_PHRASES = [
+    # Telegram боты и TMA
+    "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота в тг",
+    "бота для", "написать бота", "сделать бота", "создать бота", "починить бота",
+    "aiogram", "pyrogram", "telethon", "mini app", "tma", "webapp", "кликер",
     
-    # Сайты и верстка
-    "сайт", "сайта", "сайты", "верстка", "сверстать", "html", "css",
-    "landing", "лендинг", "одностраничник", "поправить верстку", "доработать сайт",
+    # Сайты под ключ и верстка
+    "сверстать", "верстка", "лендинг", "landing", "сайт-визитка", "сайт визитка",
+    "сделать сайт", "создать сайт", "разработать сайт", "доработать сайт",
+    "одностраничник", "поправить верстку", "адаптивная верстка", "натянуть верстку",
+    "верстка макета", "сайт под ключ",
     
-    # Дизайн и Figma
-    "дизайн", "дизайна", "дизайнер", "ui/ux", "ui-ux", "figma", "фигма",
-    "макет", "прототип", "баннер", "оформление", "редизайн",
+    # Веб-дизайн и Figma
+    "дизайн сайта", "дизайн лендинга", "макет в figma", "макет сайта",
+    "редизайн сайта", "прототип сайта", "ui/ux", "ui-ux", "дизайн интерфейса",
+    "макет лендинга", "дизайн для сайта", "оформить сайт", "макет страницы",
     
-    # Скрипты и парсеры
-    "парсер", "парсить", "спарсить", "скрипт", "автоматизация", "сбор данных"
+    # Парсеры и скрипты автоматизации
+    "парсер", "написать скрипт", "сделать парсер", "спарсить",
+    "парсер на python", "скрипт на python", "автоматизация"
 ]
 
 # ==========================================
-# 3. СТОП-СЛОВА (БЛОК FL.RU, KWORK, ВАКАНСИЙ, SMM)
+# 4. СТОП-СЛОВА (ШТАТ, SMM, ВАКАНСИИ, FL.RU)
 # ==========================================
 STOP_WORDS = [
-    # Платные биржи (строгая блокировка)
-    "fl.ru", "fl_ru", "freelance.ru", "kwork", "кворк",
+    # Платные биржи (жесткий запрет)
+    "fl.ru", "fl_ru", "kwork", "кворк", "freelance.ru",
     
     # Штатный найм и вакансии на зарплату
-    "traffic manager", "media buyer", "lead", "teamlead",
-    "qa automation", "qa engineer", "тестировщик", "manual qa", "aqa",
     "опыт работы от", "опыт от 3", "опыт от 2", "опыт от 5",
-    "оформление по тк", "в штат", "фуллтайм", "fulltime", "full-time",
+    "в штат", "фуллтайм", "fulltime", "full-time", "оформление по тк",
     "испытательный срок", "оклад", "зарплата от", "зп от",
-    "middle+", "senior",
+    "middle+", "senior", "teamlead", "lead", "руководитель",
+    "qa engineer", "тестировщик", "aqa", "manual qa",
     
-    # Маркетинг, арбитраж, трафик, SMM
-    "google ads", "meta ads", "facebook ads", "арбитраж", "баер",
+    # SMM, маркетинг, тексты
+    "traffic manager", "media buyer", "арбитраж", "баер",
     "smm", "смм", "таргет", "таргетолог", "копирайтер", "копирайтинг",
     "рилс", "reels", "shorts", "монтажер", "инвайтинг", "прогрев",
-    "карточек wildberries", "карточек ozon", "вайлдберриз", "wb",
+    "wildberries", "вайлдберриз", "ozon", "озон", "карточек товара",
+    "закупка рекламы", "контент план", "написание статей",
     
-    # Тяжелый корпоративный стек
+    # Нецелевой тяжелый стек
     "1с", "1c", "bitrix", "битрикс", "flutter", "react native",
     "swift", "kotlin", "ios", "android", "c#", "c++", ".net", "java", "golang", "rust"
 ]
@@ -91,16 +112,17 @@ def clean_text(text: str) -> str:
 def is_matching(text: str) -> bool:
     text_lower = text.lower()
     
-    # Блокируем FL.ru и другие стоп-слова
+    # 1. Отсеиваем спам, вакансии, SMM и платные биржи
     for stop in STOP_WORDS:
         if stop in text_lower:
             return False
             
-    return any(k in text_lower for k in TARGET_KEYWORDS)
+    # 2. Требуем совпадение с целевыми задачами
+    return any(p in text_lower for p in TARGET_PHRASES)
 
 def get_category(text: str) -> str:
     text_lower = text.lower()
-    if any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "ui-ux", "макет", "прототип", "баннер"]):
+    if any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "ui-ux", "макет", "прототип", "редизайн"]):
         return "Дизайн"
     elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "telethon", "mini app"]):
         return "Telegram"
@@ -109,7 +131,7 @@ def get_category(text: str) -> str:
     return "Веб-сайт"
 
 # ==========================================
-# 4. СБОР ИЗ ОТКРЫТЫХ RSS БЕСПЛАТНЫХ БИРЖ
+# 5. СБОР ИЗ ОТКРЫТЫХ RSS-ЛЕНТ
 # ==========================================
 def parse_rss_feeds():
     tasks = []
@@ -123,10 +145,10 @@ def parse_rss_feeds():
                 summary = clean_text(getattr(entry, "summary", ""))
                 link = getattr(entry, "link", "")
                 
-                # Защита от ссылок на платные биржи
+                # Защита от попадания ссылок на платные биржи
                 if "fl.ru" in link.lower() or "kwork" in link.lower():
                     continue
-                
+                    
                 full_text = f"{title} {summary}"
                 if not is_matching(full_text):
                     continue
@@ -138,17 +160,17 @@ def parse_rss_feeds():
                     "category": get_category(full_text),
                     "source": feed_info["source"],
                     "published_at": "Сегодня",
-                    "responses": "Бесплатный отклик",
+                    "responses": "Открытый отклик",
                     "direct_contact": None,
                     "discovered_at": datetime.now(timezone.utc).isoformat()
                 })
-        except Exception as e:
-            print(f"[!] Ошибка RSS {feed_info['source']}: {e}")
+        except Exception:
+            pass
             
     return tasks
 
 # ==========================================
-# 5. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ В ЛС)
+# 6. СБОР ИЗ TELEGRAM (ПРЯМОЙ КОНТАКТ В ЛС)
 # ==========================================
 def parse_tg(channel: str):
     url = f"https://t.me/s/{channel}"
@@ -156,14 +178,14 @@ def parse_tg(channel: str):
     tasks = []
     
     try:
-        res = requests.get(url, headers=headers, timeout=8)
+        res = requests.get(url, headers=headers, timeout=7)
         if res.status_code != 200:
             return tasks
             
         soup = BeautifulSoup(res.text, "html.parser")
         messages = soup.select(".tgme_widget_message")
         
-        for msg in messages[-25:]:
+        for msg in messages[-20:]:
             text_el = msg.select_one(".tgme_widget_message_text")
             date_el = msg.select_one(".tgme_widget_message_date time")
             link_el = msg.select_one(".tgme_widget_message_date")
@@ -173,7 +195,7 @@ def parse_tg(channel: str):
                 
             text = text_el.text.strip()
             
-            # Блокировка переходов на платные сервисы
+            # Отсекаем посты со ссылками на платные биржи
             if "fl.ru" in text.lower() or "kwork" in text.lower():
                 continue
                 
@@ -201,6 +223,7 @@ def parse_tg(channel: str):
             title = (first_line[:95] + "...") if len(first_line) > 95 else first_line
             link = link_el.get("href")
 
+            # Извлечение контакта заказчика в Telegram
             direct_contact = None
             found_usernames = re.findall(r"@[a-zA-Z0-9_]{4,}", text)
             if found_usernames:
@@ -225,7 +248,7 @@ def parse_tg(channel: str):
     return tasks
 
 # ==========================================
-# 6. ХРАНЕНИЕ И АВТООЧИСТКА ЗА 48 ЧАСОВ
+# 7. ХРАНЕНИЕ И АВТООЧИСТКА ЗА 48 ЧАСОВ
 # ==========================================
 def load_existing_orders() -> list:
     if not os.path.exists("orders.json"):
@@ -245,7 +268,7 @@ def filter_orders_under_48h(orders: list) -> list:
         url = order.get("url", "").lower()
         title = order.get("title", "")
         
-        # Удаляем любые платные биржи из истории
+        # Удаляем любые остатки FL.ru
         if "fl.ru" in url or "kwork" in url:
             continue
             
@@ -271,10 +294,10 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Сбор задач с бесплатных бирж (Хабр, Freelancehunt, Weblancer)...")
+    print("[*] Сбор задач с открытых бирж...")
     new_scraped.extend(parse_rss_feeds())
     
-    print(f"[*] Сбор прямых заказов из Telegram ({len(TG_CHANNELS)} каналов)...")
+    print(f"[*] Сбор прямых заказов из {len(TG_CHANNELS)} каналов Telegram...")
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
         
@@ -292,4 +315,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(final_orders, f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! В базе {len(final_orders)} актуальных заказов с бесплатных бирж и каналов.")
+    print(f"[+] Готово! В базе {len(final_orders)} реальных разовых заказов.")
