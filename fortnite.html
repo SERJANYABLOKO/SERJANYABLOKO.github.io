@@ -718,40 +718,61 @@
       }
     }
 
-    /* Только реальные подтвержденные скины с живыми иконками из Fortnite API */
+    // Функция создания надежного резервного SVG-аватара на случай недоступности внешней картинки
+    function makeFallbackSvg(bgTop, bgBot, borderCol, name) {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${bgTop}"/>
+              <stop offset="100%" stop-color="${bgBot}"/>
+            </linearGradient>
+          </defs>
+          <rect width="160" height="160" rx="28" fill="url(#bg)"/>
+          <rect x="2" y="2" width="156" height="156" rx="26" fill="none" stroke="${borderCol}" stroke-width="2" opacity="0.4"/>
+          <circle cx="80" cy="65" r="32" fill="${borderCol}" opacity="0.2"/>
+          <text x="80" y="75" font-family="system-ui,sans-serif" font-weight="900" font-size="28" fill="${borderCol}" text-anchor="middle">FN</text>
+          <rect x="15" y="115" width="130" height="26" rx="8" fill="#000000" opacity="0.6"/>
+          <text x="80" y="131" font-family="system-ui,sans-serif" font-weight="900" font-size="11" fill="#ffffff" text-anchor="middle">${name.toUpperCase()}</text>
+        </svg>
+      `.trim().replace(/\s+/g, ' ');
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
+    // Список скинов со стабильными ссылками и автозаменой при ошибке загрузки
     const SKINS_DB = [
-      { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png' },
-      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png' },
-      { id: 'cid_315_athena_commando_m_teriyakifish', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyakifish/icon.png' },
-      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png' },
-      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png' },
-      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_banana/icon.png' },
-      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png' },
-      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Leader', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png' },
-      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png' },
-      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png' },
-      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png' },
-      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png' },
-      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png' },
-      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png' },
-      { id: 'cid_761_athena_commando_m_cactusjack', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_761_athena_commando_m_cactusjack/icon.png' },
-      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png' },
-      { id: 'cid_399_athena_commando_f_aurora', name: 'Aura', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_399_athena_commando_f_aurora/icon.png' },
-      { id: 'cid_478_athena_commando_f_ashen', name: 'Crystal', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_478_athena_commando_f_ashen/icon.png' },
-      { id: 'cid_048_athena_commando_f_holidayreindeer', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_048_athena_commando_f_holidayreindeer/icon.png' },
-      { id: 'cid_554_athena_commando_f_streetfashionred', name: 'Ruby', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_554_athena_commando_f_streetfashionred/icon.png' },
-      { id: 'cid_047_athena_commando_f_scifi', name: 'Shadow Ops', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_047_athena_commando_f_scifi/icon.png' },
-      { id: 'cid_256_athena_commando_f_darkbomber', name: 'Dark Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_256_athena_commando_f_darkbomber/icon.png' },
-      { id: 'cid_119_athena_commando_m_fishhead', name: 'Leviathan', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_119_athena_commando_m_fishhead/icon.png' },
-      { id: 'cid_207_athena_commando_m_heist', name: 'Wildcard', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_207_athena_commando_m_heist/icon.png' },
-      { id: 'cid_588_athena_commando_m_slurpman', name: 'Chaos Agent', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_588_athena_commando_m_slurpman/icon.png' },
-      { id: 'cid_042_athena_commando_f_disco', name: 'Sparkle Specialist', rarity: 'epic', price: 1600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_042_athena_commando_f_disco/icon.png' },
-      { id: 'cid_295_athena_commando_f_neoncat', name: 'Lynx', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_295_athena_commando_f_neoncat/icon.png' },
-      { id: 'cid_487_athena_commando_f_streetdrifter', name: 'Catalyst', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_487_athena_commando_f_streetdrifter/icon.png' },
-      { id: 'cid_142_athena_commando_m_carbidewhite', name: 'Omega', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_142_athena_commando_m_carbidewhite/icon.png' },
-      { id: 'cid_705_athena_commando_m_chameleon', name: 'Deadpool', rarity: 'legendary', price: 3200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_705_athena_commando_m_chameleon/icon.png' },
-      { id: 'cid_733_athena_commando_m_ravenquill', name: 'Ravenpool', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_733_athena_commando_m_ravenquill/icon.png' },
-      { id: 'cid_a_292_athena_commando_m_spider', name: 'Spider-Man', rarity: 'mythic', price: 7500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_a_292_athena_commando_m_spider/icon.png' }
+      { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png', fallback: makeFallbackSvg('#1b3a1b', '#0a1a0a', '#4ade80', 'Jonesy') },
+      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png', fallback: makeFallbackSvg('#1e1b4b', '#0f0a2a', '#38bdf8', 'Brite Bomber') },
+      { id: 'cid_315_athena_commando_m_teriyakifish', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyakifish/icon.png', fallback: makeFallbackSvg('#163344', '#081721', '#00f0ff', 'Fishstick') },
+      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png', fallback: makeFallbackSvg('#2e1047', '#12041d', '#c084fc', 'Ghoul') },
+      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png', fallback: makeFallbackSvg('#220c38', '#0c0217', '#a855f7', 'Skull') },
+      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_banana/icon.png', fallback: makeFallbackSvg('#331f05', '#140b01', '#facc15', 'Peely') },
+      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png', fallback: makeFallbackSvg('#38093d', '#140117', '#ff007f', 'Drift') },
+      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Leader', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png', fallback: makeFallbackSvg('#3b0922', '#14010a', '#fb7185', 'Cuddle Leader') },
+      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png', fallback: makeFallbackSvg('#110c26', '#05030f', '#818cf8', 'Raven') },
+      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png', fallback: makeFallbackSvg('#241503', '#0d0701', '#fb923c', 'The Reaper') },
+      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png', fallback: makeFallbackSvg('#330a0a', '#120202', '#f87171', 'Red Knight') },
+      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png', fallback: makeFallbackSvg('#332403', '#120c01', '#fbbf24', 'Midas') },
+      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png', fallback: makeFallbackSvg('#1c0505', '#080101', '#ea580c', 'Black Knight') },
+      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png', fallback: makeFallbackSvg('#2b1305', '#0d0501', '#f97316', 'Renegade') },
+      { id: 'cid_761_athena_commando_m_cactusjack', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_761_athena_commando_m_cactusjack/icon.png', fallback: makeFallbackSvg('#332604', '#120d01', '#fde047', 'Travis Scott') },
+      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png', fallback: makeFallbackSvg('#130630', '#050112', '#a855f7', 'Galaxy') },
+      { id: 'cid_399_athena_commando_f_aurora', name: 'Aura', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_399_athena_commando_f_aurora/icon.png', fallback: makeFallbackSvg('#112918', '#05120a', '#86efac', 'Aura') },
+      { id: 'cid_478_athena_commando_f_ashen', name: 'Crystal', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_478_athena_commando_f_ashen/icon.png', fallback: makeFallbackSvg('#0b2920', '#03120d', '#5eead4', 'Crystal') },
+      { id: 'cid_048_athena_commando_f_holidayreindeer', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_048_athena_commando_f_holidayreindeer/icon.png', fallback: makeFallbackSvg('#2b0c0c', '#0f0202', '#fca5a5', 'Nog Ops') },
+      { id: 'cid_554_athena_commando_f_streetfashionred', name: 'Ruby', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_554_athena_commando_f_streetfashionred/icon.png', fallback: makeFallbackSvg('#330a10', '#120205', '#f43f5e', 'Ruby') },
+      { id: 'cid_047_athena_commando_f_scifi', name: 'Shadow Ops', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_047_athena_commando_f_scifi/icon.png', fallback: makeFallbackSvg('#170d26', '#06020d', '#c084fc', 'Shadow Ops') },
+      { id: 'cid_256_athena_commando_f_darkbomber', name: 'Dark Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_256_athena_commando_f_darkbomber/icon.png', fallback: makeFallbackSvg('#220a36', '#090112', '#a855f7', 'Dark Bomber') },
+      { id: 'cid_119_athena_commando_m_fishhead', name: 'Leviathan', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_119_athena_commando_m_fishhead/icon.png', fallback: makeFallbackSvg('#082433', '#010d14', '#38bdf8', 'Leviathan') },
+      { id: 'cid_207_athena_commando_m_heist', name: 'Wildcard', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_207_athena_commando_m_heist/icon.png', fallback: makeFallbackSvg('#2e1404', '#0d0400', '#f97316', 'Wildcard') },
+      { id: 'cid_588_athena_commando_m_slurpman', name: 'Chaos Agent', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_588_athena_commando_m_slurpman/icon.png', fallback: makeFallbackSvg('#1c0929', '#08010d', '#d946ef', 'Chaos Agent') },
+      { id: 'cid_042_athena_commando_f_disco', name: 'Sparkle Specialist', rarity: 'epic', price: 1600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_042_athena_commando_f_disco/icon.png', fallback: makeFallbackSvg('#2e0c38', '#0d0112', '#e879f9', 'Sparkle') },
+      { id: 'cid_295_athena_commando_f_neoncat', name: 'Lynx', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_295_athena_commando_f_neoncat/icon.png', fallback: makeFallbackSvg('#2e0618', '#0d0107', '#fb7185', 'Lynx') },
+      { id: 'cid_487_athena_commando_f_streetdrifter', name: 'Catalyst', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_487_athena_commando_f_streetdrifter/icon.png', fallback: makeFallbackSvg('#260d36', '#0a0112', '#c084fc', 'Catalyst') },
+      { id: 'cid_142_athena_commando_m_carbidewhite', name: 'Omega', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_142_athena_commando_m_carbidewhite/icon.png', fallback: makeFallbackSvg('#2b0505', '#0d0101', '#ef4444', 'Omega') },
+      { id: 'cid_705_athena_commando_m_chameleon', name: 'Deadpool', rarity: 'legendary', price: 3200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_705_athena_commando_m_chameleon/icon.png', fallback: makeFallbackSvg('#33080c', '#0f0103', '#f43f5e', 'Deadpool') },
+      { id: 'cid_733_athena_commando_m_ravenquill', name: 'Ravenpool', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_733_athena_commando_m_ravenquill/icon.png', fallback: makeFallbackSvg('#2b040e', '#0d0103', '#fb7185', 'Ravenpool') },
+      { id: 'cid_a_292_athena_commando_m_spider', name: 'Spider-Man', rarity: 'mythic', price: 7500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_a_292_athena_commando_m_spider/icon.png', fallback: makeFallbackSvg('#36090e', '#120204', '#f87171', 'Spider-Man') }
     ];
 
     const CASES_DATA = [
@@ -820,6 +841,12 @@
       }
     ];
 
+    function handleImgError(imgEl, fallbackUrl) {
+      if (imgEl && fallbackUrl && imgEl.src !== fallbackUrl) {
+        imgEl.src = fallbackUrl;
+      }
+    }
+
     function createSkinCardHTML(skin, isRoulette = false) {
       if (!skin) return '';
       return `
@@ -827,6 +854,7 @@
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <div class="relative w-full flex items-center justify-center my-1">
             <img src="${skin.img}" 
+                 onerror="handleImgError(this, '${skin.fallback}')" 
                  alt="${skin.name}" 
                  class="h-24 w-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] transform hover:scale-105 transition-transform">
           </div>
@@ -863,7 +891,7 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v6');
+          const saved = localStorage.getItem('serjan_fndrop_data_v7');
           if (saved) {
             const data = JSON.parse(saved);
             this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
@@ -876,7 +904,7 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v6', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v7', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
             usedPromoCodes: this.usedPromoCodes,
@@ -1209,7 +1237,7 @@
         wonGrid.innerHTML = newlyAdded.map(item => `
           <div class="inline-flex flex-col items-center p-4 rounded-3xl border-2 bg-fn-${item.rarity} w-40 sm:w-44 shadow-2xl animate-win">
             <span class="text-[9px] uppercase font-extrabold px-2.5 py-0.5 rounded-full badge-${item.rarity} mb-2 shadow">${item.rarity}</span>
-            <img src="${item.img}" class="w-24 h-24 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.7)]">
+            <img src="${item.img}" onerror="handleImgError(this, '${item.fallback}')" class="w-24 h-24 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.7)]">
             <h4 class="text-xs font-black text-white mt-2 truncate w-full text-center">${item.name}</h4>
             <span class="text-xs font-mono text-yellow-300 font-extrabold mt-1">${item.price.toLocaleString()} V-B</span>
           </div>
@@ -1301,7 +1329,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleImgError(this, '${skin.fallback}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1333,7 +1361,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleImgError(this, '${skin.fallback}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1504,6 +1532,7 @@
         <div class="relative overflow-hidden rounded-2xl p-2.5 flex flex-col justify-between items-center text-center bg-fn-${skin.rarity} border-2 group hover:-translate-y-1 transition-all shadow-md">
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <img src="${skin.img}" 
+               onerror="handleImgError(this, '${skin.fallback}')" 
                alt="${skin.name}" 
                class="w-20 h-20 object-contain my-2 group-hover:scale-105 transition-transform filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
           <div class="w-full">
@@ -1529,7 +1558,7 @@
 
       preview.innerHTML = `
         <div class="w-16 h-16 rounded-xl bg-fn-${skin.rarity} border p-1 flex items-center justify-center flex-shrink-0">
-          <img src="${skin.img}" class="w-12 h-12 object-contain">
+          <img src="${skin.img}" onerror="handleImgError(this, '${skin.fallback}')" class="w-12 h-12 object-contain">
         </div>
         <div>
           <h4 class="text-xs font-black text-white">${skin.name}</h4>
@@ -1612,6 +1641,7 @@
               ${isOwned ? `<span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 border border-emerald-400/40">x${count}</span>` : '<span class="text-xs">🔒</span>'}
             </div>
             <img src="${skin.img}" 
+                 onerror="handleImgError(this, '${skin.fallback}')" 
                  alt="${skin.name}" 
                  class="w-20 h-20 object-contain my-2 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
             <div class="w-full">
@@ -1707,7 +1737,7 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v6');
+        localStorage.removeItem('serjan_fndrop_data_v7');
         
         AppState.vbucks = 500;
         AppState.inventory = [];
