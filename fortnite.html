@@ -237,7 +237,7 @@
     <section id="tab-cases" class="space-y-8">
       <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-8 border border-white/15 bg-gradient-to-r from-blue-900/30 via-purple-900/25 to-pink-900/20">
         <div class="max-w-2xl space-y-3 relative z-10">
-          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">32 Официальных скина</span>
+          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">32 Кастомных Аватара</span>
           <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase italic">
             Кейсы <span class="bg-gradient-to-r from-yellow-300 to-amber-500 bg-clip-text text-transparent">Fortnite</span>
           </h1>
@@ -247,7 +247,7 @@
         </div>
       </div>
 
-      <!-- Case Open Modal (с удобным выходом) -->
+      <!-- Case Open Modal -->
       <div id="case-opening-modal" onclick="handleCaseBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
         <div class="w-full max-w-4xl glass-panel rounded-3xl p-6 border border-white/20 relative shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
           <div class="flex justify-between items-center pb-4 border-b border-white/10">
@@ -255,7 +255,6 @@
               <span id="modal-case-title" class="text-2xl font-black uppercase text-amber-300">Название кейса</span>
               <p class="text-xs text-slate-400">Испытай свою удачу прямо сейчас (Esc — закрыть)</p>
             </div>
-            <!-- Кнопка ✕ ВСЕГДА видна и доступна -->
             <button onclick="closeCaseModal()" id="btn-close-modal" title="Закрыть кейс (Esc)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/30 hover:text-rose-300 border border-white/10 text-slate-200 flex items-center justify-center transition-all font-black text-lg active:scale-90">
               ✕
             </button>
@@ -286,7 +285,7 @@
             </div>
           </div>
 
-          <!-- Панель управления кейсом: Крутить + Выйти -->
+          <!-- Controls -->
           <div id="modal-spin-controls" class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button id="btn-confirm-spin" onclick="executeCaseSpin()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-lg tracking-wider shadow-xl shadow-yellow-500/20 active:scale-95 transition-all">
               КРУТИТЬ РУЛЕТКУ
@@ -485,7 +484,7 @@
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="font-bold text-slate-200">FN DROP CASINO</span>
         <span>•</span>
-        <span>32 Скина Fortnite</span>
+        <span>32 Векторных Аватара Fortnite</span>
       </div>
       <div class="flex items-center gap-2">
         <span>Сделано для</span>
@@ -585,8 +584,29 @@
       }
     }
 
-    function generateThemedSvg(icon, bg1, bg2, accent, name) {
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${encodeURIComponent(bg1)}"/><stop offset="100%" stop-color="${encodeURIComponent(bg2)}"/></linearGradient></defs><rect width="160" height="160" rx="24" fill="url(%23g)"/><circle cx="80" cy="72" r="42" fill="${encodeURIComponent(accent)}" opacity="0.2"/><circle cx="80" cy="72" r="41" stroke="${encodeURIComponent(accent)}" stroke-width="2" stroke-dasharray="6,4" fill="none"/><text x="80" y="86" font-size="46" text-anchor="middle">${encodeURIComponent(icon)}</text><text x="80" y="136" font-family="system-ui,sans-serif" font-weight="900" font-size="11" fill="%23ffffff" text-anchor="middle" letter-spacing="0.5">${encodeURIComponent(name.toUpperCase())}</text></svg>`;
+    /* Генератор детальных векторных аватаров для скинов */
+    function makeSvgAvatar(bgTop, bgBot, borderCol, name, shapes) {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${bgTop}"/>
+              <stop offset="100%" stop-color="${bgBot}"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="160" height="160" rx="28" fill="url(#bg)"/>
+          <rect x="2" y="2" width="156" height="156" rx="26" fill="none" stroke="${borderCol}" stroke-width="2" opacity="0.4"/>
+          <circle cx="80" cy="72" r="48" fill="${borderCol}" opacity="0.12"/>
+          <g filter="url(#glow)">${shapes}</g>
+          <rect x="20" y="130" width="120" height="20" rx="10" fill="#000000" opacity="0.6"/>
+          <text x="80" y="144" font-family="system-ui,sans-serif" font-weight="900" font-size="10" fill="#ffffff" text-anchor="middle" letter-spacing="1">${name.toUpperCase()}</text>
+        </svg>
+      `.trim().replace(/\s+/g, ' ');
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
     }
 
     function handleSkinImgError(imgEl, skinId) {
@@ -597,46 +617,449 @@
       }
     }
 
-    /* Полная база: 32 скина с автономными SVG */
+    /* База данных 32 скинов с кастомными SVG-аватарами */
     const SKINS_DB = [
-      // 1-16 (Базовые)
-      { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png', backupSvg: generateThemedSvg('👱‍♂️', '#1e3a1e', '#0b1f0e', '#4ade80', 'Jonesy') },
-      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png', backupSvg: generateThemedSvg('🦄', '#1a2754', '#081026', '#38bdf8', 'Brite Bomber') },
-      { id: 'cid_315_athena_commando_m_teriyakifish', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyakifish/icon.png', backupSvg: generateThemedSvg('🐟', '#0f3854', '#051829', '#00f0ff', 'Fishstick') },
-      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png', backupSvg: generateThemedSvg('🧟‍♀️', '#391459', '#150624', '#c084fc', 'Ghoul') },
-      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png', backupSvg: generateThemedSvg('💀', '#311054', '#10031f', '#a855f7', 'Skull') },
-      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_banana/icon.png', backupSvg: generateThemedSvg('🍌', '#382005', '#170c01', '#facc15', 'Peely') },
-      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png', backupSvg: generateThemedSvg('🦊', '#420f4d', '#18031c', '#f43f5e', 'Drift') },
-      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Leader', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png', backupSvg: generateThemedSvg('🧸', '#52132e', '#1c040f', '#fb7185', 'Cuddle Bear') },
-      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png', backupSvg: generateThemedSvg('🦅', '#1c133b', '#080514', '#818cf8', 'Raven') },
-      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png', backupSvg: generateThemedSvg('🕶️', '#2e1d05', '#120b02', '#fb923c', 'The Reaper') },
-      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png', backupSvg: generateThemedSvg('🛡️', '#420e0e', '#170303', '#f87171', 'Red Knight') },
-      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png', backupSvg: generateThemedSvg('👑', '#3d2d06', '#171001', '#fbbf24', 'Midas') },
-      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png', backupSvg: generateThemedSvg('⚔️', '#260a0a', '#0d0202', '#ea580c', 'Black Knight') },
-      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png', backupSvg: generateThemedSvg('🪓', '#3b1d0a', '#170902', '#f97316', 'Renegade') },
-      { id: 'cid_761_athena_commando_m_cactusjack', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_761_athena_commando_m_cactusjack/icon.png', backupSvg: generateThemedSvg('🎤', '#473605', '#1a1301', '#fde047', 'Travis Scott') },
-      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png', backupSvg: generateThemedSvg('🌌', '#1e0c45', '#08011c', '#a855f7', 'Galaxy') },
-
-      // 17-32 (Новые скины)
-      { id: 'cid_399_athena_commando_f_aurora', name: 'Aura', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_399_athena_commando_f_aurora/icon.png', backupSvg: generateThemedSvg('✨', '#1f3323', '#0a170d', '#86efac', 'Aura') },
-      { id: 'cid_478_athena_commando_f_ashen', name: 'Crystal', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_478_athena_commando_f_ashen/icon.png', backupSvg: generateThemedSvg('💎', '#143026', '#061711', '#5eead4', 'Crystal') },
-      { id: 'cid_048_athena_commando_f_holidayreindeer', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_048_athena_commando_f_holidayreindeer/icon.png', backupSvg: generateThemedSvg('🎄', '#381616', '#140505', '#fca5a5', 'Nog Ops') },
-      { id: 'cid_554_athena_commando_f_streetfashionred', name: 'Ruby', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_554_athena_commando_f_streetfashionred/icon.png', backupSvg: generateThemedSvg('🔴', '#401118', '#1c0307', '#f43f5e', 'Ruby') },
-      { id: 'cid_047_athena_commando_f_scifi', name: 'Shadow Ops', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_047_athena_commando_f_scifi/icon.png', backupSvg: generateThemedSvg('👤', '#221538', '#0c0517', '#c084fc', 'Shadow Ops') },
-      { id: 'cid_256_athena_commando_f_darkbomber', name: 'Dark Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_256_athena_commando_f_darkbomber/icon.png', backupSvg: generateThemedSvg('🔮', '#2e1247', '#10031c', '#a855f7', 'Dark Bomber') },
-      { id: 'cid_119_athena_commando_m_fishhead', name: 'Leviathan', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_119_athena_commando_m_fishhead/icon.png', backupSvg: generateThemedSvg('🛸', '#0d3247', '#03141f', '#38bdf8', 'Leviathan') },
-      { id: 'cid_207_athena_commando_m_heist', name: 'Wildcard', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_207_athena_commando_m_heist/icon.png', backupSvg: generateThemedSvg('🃏', '#3b1c09', '#170902', '#f97316', 'Wildcard') },
-      { id: 'cid_588_athena_commando_m_slurpman', name: 'Chaos Agent', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_588_athena_commando_m_slurpman/icon.png', backupSvg: generateThemedSvg('🦹', '#2b103d', '#11031c', '#d946ef', 'Chaos Agent') },
-      { id: 'cid_042_athena_commando_f_disco', name: 'Sparkle Specialist', rarity: 'epic', price: 1600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_042_athena_commando_f_disco/icon.png', backupSvg: generateThemedSvg('🪩', '#3d164d', '#170421', '#e879f9', 'Sparkle') },
-      { id: 'cid_295_athena_commando_f_neoncat', name: 'Lynx', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_295_athena_commando_f_neoncat/icon.png', backupSvg: generateThemedSvg('🐱', '#380e22', '#17030c', '#fb7185', 'Lynx') },
-      { id: 'cid_487_athena_commando_f_streetdrifter', name: 'Catalyst', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_487_athena_commando_f_streetdrifter/icon.png', backupSvg: generateThemedSvg('⚡', '#361847', '#13041c', '#c084fc', 'Catalyst') },
-      { id: 'cid_142_athena_commando_m_carbidewhite', name: 'Omega', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_142_athena_commando_m_carbidewhite/icon.png', backupSvg: generateThemedSvg('🤖', '#380b0b', '#170202', '#ef4444', 'Omega') },
-      { id: 'cid_705_athena_commando_m_chameleon', name: 'Deadpool', rarity: 'legendary', price: 3200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_705_athena_commando_m_chameleon/icon.png', backupSvg: generateThemedSvg('⚔️', '#420f14', '#1c0305', '#f43f5e', 'Deadpool') },
-      { id: 'cid_733_athena_commando_m_ravenquill', name: 'Ravenpool', rarity: 'legendary', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_733_athena_commando_m_ravenquill/icon.png', backupSvg: generateThemedSvg('🦅', '#330814', '#140106', '#fb7185', 'Ravenpool') },
-      { id: 'cid_a_292_athena_commando_m_spider', name: 'Spider-Man', rarity: 'mythic', price: 7500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_a_292_athena_commando_m_spider/icon.png', backupSvg: generateThemedSvg('🕷️', '#4a151b', '#1c0407', '#f87171', 'Spider-Man') }
+      {
+        id: 'cid_001_athena_commando_m_default',
+        name: 'Recruit Jonesy',
+        rarity: 'uncommon',
+        price: 600,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png',
+        backupSvg: makeSvgAvatar('#1b3a1b', '#0a1a0a', '#4ade80', 'Jonesy', `
+          <path d="M55 45 Q80 25 105 45 Q115 70 105 85 Q80 100 55 85 Z" fill="#ffd166"/>
+          <circle cx="70" cy="65" r="5" fill="#1b2a47"/><circle cx="90" cy="65" r="5" fill="#1b2a47"/>
+          <path d="M50 90 L110 90 L115 125 L45 125 Z" fill="#2d6a4f"/>
+          <rect x="75" y="90" width="10" height="35" fill="#d8f3dc"/>
+        `)
+      },
+      {
+        id: 'cid_044_athena_commando_f_scifi',
+        name: 'Brite Bomber',
+        rarity: 'rare',
+        price: 1200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png',
+        backupSvg: makeSvgAvatar('#1e1b4b', '#0f0a2a', '#38bdf8', 'Brite Bomber', `
+          <path d="M50 45 Q80 15 110 45 Q120 85 80 95 Q40 85 50 45" fill="#f43f5e"/>
+          <circle cx="80" cy="65" r="24" fill="#ffd166"/>
+          <path d="M60 62 Q70 56 80 62 Q90 56 100 62" stroke="#9333ea" stroke-width="4" fill="none"/>
+          <path d="M65 100 L95 100 L105 125 L55 125 Z" fill="#38bdf8"/>
+          <path d="M72 110 Q80 102 88 110" stroke="#f43f5e" stroke-width="3" fill="none"/>
+        `)
+      },
+      {
+        id: 'cid_315_athena_commando_m_teriyakifish',
+        name: 'Fishstick',
+        rarity: 'rare',
+        price: 1200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyakifish/icon.png',
+        backupSvg: makeSvgAvatar('#163344', '#081721', '#00f0ff', 'Fishstick', `
+          <circle cx="80" cy="70" r="34" fill="#f97316"/>
+          <circle cx="62" cy="62" r="10" fill="#ffffff"/><circle cx="62" cy="62" r="5" fill="#000000"/>
+          <circle cx="98" cy="62" r="10" fill="#ffffff"/><circle cx="98" cy="62" r="5" fill="#000000"/>
+          <path d="M70 85 Q80 95 90 85" stroke="#7c2d12" stroke-width="5" fill="none"/>
+          <path d="M60 38 L100 38 L95 50 L65 50 Z" fill="#155e75"/>
+        `)
+      },
+      {
+        id: 'cid_029_athena_commando_f_halloween',
+        name: 'Ghoul Trooper',
+        rarity: 'epic',
+        price: 1500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png',
+        backupSvg: makeSvgAvatar('#2e1047', '#12041d', '#c084fc', 'Ghoul', `
+          <circle cx="80" cy="68" r="30" fill="#2dd4bf"/>
+          <circle cx="70" cy="65" r="6" fill="#042f2e"/><circle cx="90" cy="65" r="6" fill="#042f2e"/>
+          <path d="M65 85 L95 85" stroke="#042f2e" stroke-width="4" stroke-dasharray="3,3"/>
+          <path d="M50 45 Q80 20 110 45" fill="#1e1b4b"/>
+          <path d="M65 42 L65 60" stroke="#f43f5e" stroke-width="3"/>
+        `)
+      },
+      {
+        id: 'cid_030_athena_commando_m_skeleton',
+        name: 'Skull Trooper',
+        rarity: 'epic',
+        price: 1500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png',
+        backupSvg: makeSvgAvatar('#220c38', '#0c0217', '#a855f7', 'Skull', `
+          <path d="M52 65 Q52 35 80 35 Q108 35 108 65 Q108 90 95 95 L95 105 L65 105 L65 95 Q52 90 52 65" fill="#f8fafc"/>
+          <circle cx="68" cy="65" r="9" fill="#0f172a"/><circle cx="92" cy="65" r="9" fill="#0f172a"/>
+          <path d="M76 80 L84 80 L80 72 Z" fill="#0f172a"/>
+          <path d="M68 96 L92 96" stroke="#0f172a" stroke-width="3" stroke-dasharray="4,2"/>
+        `)
+      },
+      {
+        id: 'cid_342_athena_commando_m_banana',
+        name: 'Peely',
+        rarity: 'epic',
+        price: 1500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_banana/icon.png',
+        backupSvg: makeSvgAvatar('#331f05', '#140b01', '#facc15', 'Peely', `
+          <path d="M70 25 Q110 50 95 125 Q75 128 65 125 Q60 65 70 25" fill="#fde047"/>
+          <circle cx="78" cy="60" r="4" fill="#000000"/><circle cx="92" cy="62" r="4" fill="#000000"/>
+          <path d="M80 75 Q86 82 92 77" stroke="#713f12" stroke-width="3" fill="none"/>
+          <circle cx="68" cy="24" r="5" fill="#4d7c0f"/>
+        `)
+      },
+      {
+        id: 'cid_161_athena_commando_m_drift',
+        name: 'Drift',
+        rarity: 'epic',
+        price: 1800,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png',
+        backupSvg: makeSvgAvatar('#38093d', '#140117', '#ff007f', 'Drift', `
+          <path d="M50 40 L65 70 L95 70 L110 40 L95 95 L80 115 L65 95 Z" fill="#ffffff" stroke="#ff007f" stroke-width="4"/>
+          <path d="M65 65 L78 72 L68 76 Z" fill="#ff007f"/>
+          <path d="M95 65 L82 72 L92 76 Z" fill="#ff007f"/>
+          <circle cx="80" cy="52" r="6" fill="#eab308"/>
+          <path d="M60 42 L70 55 M100 42 L90 55" stroke="#eab308" stroke-width="3"/>
+        `)
+      },
+      {
+        id: 'cid_069_athena_commando_f_pinkbear',
+        name: 'Cuddle Leader',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png',
+        backupSvg: makeSvgAvatar('#3b0922', '#14010a', '#fb7185', 'Cuddle Leader', `
+          <circle cx="55" cy="45" r="14" fill="#ec4899"/><circle cx="105" cy="45" r="14" fill="#ec4899"/>
+          <circle cx="80" cy="75" r="38" fill="#f472b6"/>
+          <circle cx="70" cy="68" r="6" fill="#000000"/><circle cx="90" cy="68" r="6" fill="#000000"/>
+          <ellipse cx="80" cy="85" rx="14" ry="10" fill="#ffffff"/>
+          <polygon points="76,82 84,82 80,87" fill="#000000"/>
+          <path d="M60 55 L75 75 M75 55 L60 75" stroke="#1f2937" stroke-width="3"/>
+        `)
+      },
+      {
+        id: 'cid_102_athena_commando_m_raven',
+        name: 'Raven',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png',
+        backupSvg: makeSvgAvatar('#110c26', '#05030f', '#818cf8', 'Raven', `
+          <path d="M45 100 Q80 25 115 100 Z" fill="#1e1b4b"/>
+          <path d="M58 85 Q80 50 102 85 Z" fill="#020617"/>
+          <circle cx="72" cy="78" r="4" fill="#67e8f9" filter="url(#glow)"/>
+          <circle cx="88" cy="78" r="4" fill="#67e8f9" filter="url(#glow)"/>
+          <path d="M50 100 L80 125 L110 100 Z" fill="#312e81"/>
+        `)
+      },
+      {
+        id: 'cid_081_athena_commando_m_assassin',
+        name: 'The Reaper',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png',
+        backupSvg: makeSvgAvatar('#241503', '#0d0701', '#fb923c', 'The Reaper', `
+          <path d="M55 40 Q80 20 105 40 L105 85 Q80 105 55 85 Z" fill="#fed7aa"/>
+          <path d="M50 40 Q80 25 110 40 L112 60 L104 60 L104 46 Q80 32 56 46 L48 60 Z" fill="#0f172a"/>
+          <rect x="60" y="58" width="18" height="8" rx="2" fill="#000000"/>
+          <rect x="82" y="58" width="18" height="8" rx="2" fill="#000000"/>
+          <line x1="78" y1="62" x2="82" y2="62" stroke="#000" stroke-width="2"/>
+          <path d="M50 92 L80 100 L110 92 L115 125 L45 125 Z" fill="#0f172a"/>
+          <polygon points="80,102 75,125 85,125" fill="#000000"/>
+        `)
+      },
+      {
+        id: 'cid_034_athena_commando_f_medieval',
+        name: 'Red Knight',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png',
+        backupSvg: makeSvgAvatar('#330a0a', '#120202', '#f87171', 'Red Knight', `
+          <path d="M52 45 Q80 25 108 45 L108 90 Q80 115 52 90 Z" fill="#1e293b"/>
+          <path d="M60 62 L100 62 L96 75 L64 75 Z" fill="#dc2626"/>
+          <line x1="80" y1="45" x2="80" y2="95" stroke="#dc2626" stroke-width="3"/>
+          <circle cx="70" cy="68" r="3" fill="#fecaca"/><circle cx="90" cy="68" r="3" fill="#fecaca"/>
+        `)
+      },
+      {
+        id: 'cid_694_athena_commando_m_catburglar',
+        name: 'Midas',
+        rarity: 'legendary',
+        price: 2200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png',
+        backupSvg: makeSvgAvatar('#332403', '#120c01', '#fbbf24', 'Midas', `
+          <circle cx="80" cy="68" r="30" fill="#fef08a"/>
+          <path d="M52 50 Q80 30 108 45 L104 60 Q80 40 56 55 Z" fill="#0f172a"/>
+          <path d="M88 52 L94 80" stroke="#ca8a04" stroke-width="3"/>
+          <circle cx="72" cy="68" r="4" fill="#000000"/><circle cx="88" cy="68" r="4" fill="#ca8a04"/>
+          <path d="M55 100 L105 100 L110 125 L50 125 Z" fill="#020617"/>
+          <polygon points="80,102 75,125 85,125" fill="#ca8a04"/>
+        `)
+      },
+      {
+        id: 'cid_035_athena_commando_m_medieval',
+        name: 'Black Knight',
+        rarity: 'legendary',
+        price: 3500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png',
+        backupSvg: makeSvgAvatar('#1c0505', '#080101', '#ea580c', 'Black Knight', `
+          <path d="M50 45 Q80 20 110 45 L110 90 Q80 118 50 90 Z" fill="#09090b" stroke="#3f3f46" stroke-width="2"/>
+          <path d="M60 62 L100 62 L95 72 L65 72 Z" fill="#b91c1c"/>
+          <line x1="80" y1="42" x2="80" y2="98" stroke="#3f3f46" stroke-width="3"/>
+          <circle cx="70" cy="67" r="3" fill="#ef4444"/><circle cx="90" cy="67" r="3" fill="#ef4444"/>
+        `)
+      },
+      {
+        id: 'cid_028_athena_commando_f',
+        name: 'Renegade Raider',
+        rarity: 'legendary',
+        price: 4200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png',
+        backupSvg: makeSvgAvatar('#2b1305', '#0d0501', '#f97316', 'Renegade', `
+          <path d="M55 50 Q80 30 105 50 L105 85 Q80 105 55 85 Z" fill="#fed7aa"/>
+          <path d="M50 45 L110 45 L106 35 L54 35 Z" fill="#78350f"/>
+          <circle cx="68" cy="45" r="10" fill="#3b2f2f" stroke="#d97706" stroke-width="2"/>
+          <circle cx="92" cy="45" r="10" fill="#3b2f2f" stroke="#d97706" stroke-width="2"/>
+          <path d="M60 75 L75 80 L65 85 M100 75 L85 80 L95 85" stroke="#78350f" stroke-width="2"/>
+        `)
+      },
+      {
+        id: 'cid_761_athena_commando_m_cactusjack',
+        name: 'Travis Scott',
+        rarity: 'mythic',
+        price: 6500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_761_athena_commando_m_cactusjack/icon.png',
+        backupSvg: makeSvgAvatar('#332604', '#120d01', '#fde047', 'Travis Scott', `
+          <circle cx="80" cy="70" r="30" fill="#a16207"/>
+          <path d="M50 48 Q80 25 110 48" stroke="#1c1917" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="70" cy="68" r="4" fill="#000"/><circle cx="90" cy="68" r="4" fill="#000"/>
+          <path d="M65 100 L95 100 L95 125 L65 125 Z" fill="#1c1917"/>
+          <line x1="72" y1="102" x2="88" y2="102" stroke="#facc15" stroke-width="4"/>
+        `)
+      },
+      {
+        id: 'cid_175_athena_commando_m_celestial',
+        name: 'Galaxy',
+        rarity: 'mythic',
+        price: 8500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png',
+        backupSvg: makeSvgAvatar('#130630', '#050112', '#a855f7', 'Galaxy', `
+          <circle cx="80" cy="68" r="32" fill="#3b0764"/>
+          <circle cx="70" cy="65" r="5" fill="#38bdf8" filter="url(#glow)"/>
+          <circle cx="90" cy="65" r="5" fill="#38bdf8" filter="url(#glow)"/>
+          <circle cx="65" cy="50" r="2" fill="#fff"/><circle cx="95" cy="52" r="1.5" fill="#fff"/>
+          <circle cx="80" cy="40" r="2" fill="#fff"/><circle cx="78" cy="85" r="1.5" fill="#fff"/>
+          <path d="M55 100 Q80 85 105 100 L110 125 L50 125 Z" fill="#1e1b4b"/>
+        `)
+      },
+      {
+        id: 'cid_399_athena_commando_f_aurora',
+        name: 'Aura',
+        rarity: 'uncommon',
+        price: 800,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_399_athena_commando_f_aurora/icon.png',
+        backupSvg: makeSvgAvatar('#112918', '#05120a', '#86efac', 'Aura', `
+          <circle cx="80" cy="70" r="28" fill="#fed7aa"/>
+          <path d="M52 50 L108 50 L100 40 L60 40 Z" fill="#eab308"/>
+          <circle cx="70" cy="68" r="4" fill="#000"/><circle cx="90" cy="68" r="4" fill="#000"/>
+          <path d="M58 98 L102 98 L105 125 L55 125 Z" fill="#15803d"/>
+          <circle cx="80" cy="110" r="5" fill="#facc15"/>
+        `)
+      },
+      {
+        id: 'cid_478_athena_commando_f_ashen',
+        name: 'Crystal',
+        rarity: 'uncommon',
+        price: 800,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_478_athena_commando_f_ashen/icon.png',
+        backupSvg: makeSvgAvatar('#0b2920', '#03120d', '#5eead4', 'Crystal', `
+          <circle cx="80" cy="70" r="28" fill="#fed7aa"/>
+          <rect x="62" y="62" width="14" height="8" rx="2" fill="none" stroke="#000" stroke-width="2"/>
+          <rect x="84" y="62" width="14" height="8" rx="2" fill="none" stroke="#000" stroke-width="2"/>
+          <line x1="76" y1="66" x2="84" y2="66" stroke="#000" stroke-width="2"/>
+          <path d="M50 48 Q80 20 110 48" fill="#451a03"/>
+        `)
+      },
+      {
+        id: 'cid_048_athena_commando_f_holidayreindeer',
+        name: 'Nog Ops',
+        rarity: 'uncommon',
+        price: 800,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_048_athena_commando_f_holidayreindeer/icon.png',
+        backupSvg: makeSvgAvatar('#2b0c0c', '#0f0202', '#fca5a5', 'Nog Ops', `
+          <circle cx="80" cy="75" r="28" fill="#fed7aa"/>
+          <path d="M50 55 L110 55 L80 20 Z" fill="#dc2626"/>
+          <rect x="46" y="52" width="68" height="10" rx="5" fill="#f8fafc"/>
+          <circle cx="80" cy="18" r="6" fill="#f8fafc"/>
+          <circle cx="70" cy="72" r="4" fill="#000"/><circle cx="90" cy="72" r="4" fill="#000"/>
+        `)
+      },
+      {
+        id: 'cid_554_athena_commando_f_streetfashionred',
+        name: 'Ruby',
+        rarity: 'rare',
+        price: 1200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_554_athena_commando_f_streetfashionred/icon.png',
+        backupSvg: makeSvgAvatar('#330a10', '#120205', '#f43f5e', 'Ruby', `
+          <circle cx="80" cy="70" r="28" fill="#fed7aa"/>
+          <path d="M52 45 L108 45 L102 30 L58 30 Z" fill="#e11d48"/>
+          <circle cx="70" cy="68" r="4" fill="#000"/><circle cx="90" cy="68" r="4" fill="#000"/>
+          <path d="M55 98 L105 98 L108 125 L52 125 Z" fill="#e11d48"/>
+        `)
+      },
+      {
+        id: 'cid_047_athena_commando_f_scifi',
+        name: 'Shadow Ops',
+        rarity: 'epic',
+        price: 1500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_047_athena_commando_f_scifi/icon.png',
+        backupSvg: makeSvgAvatar('#170d26', '#06020d', '#c084fc', 'Shadow Ops', `
+          <circle cx="80" cy="70" r="28" fill="#fed7aa"/>
+          <path d="M50 40 Q80 20 110 40 L110 75 Q100 60 80 60 Q60 60 50 75 Z" fill="#0f172a"/>
+          <path d="M60 80 L70 80 M90 80 L100 80" stroke="#10b981" stroke-width="3"/>
+          <circle cx="70" cy="68" r="4" fill="#000"/><circle cx="90" cy="68" r="4" fill="#000"/>
+        `)
+      },
+      {
+        id: 'cid_256_athena_commando_f_darkbomber',
+        name: 'Dark Bomber',
+        rarity: 'rare',
+        price: 1200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_256_athena_commando_f_darkbomber/icon.png',
+        backupSvg: makeSvgAvatar('#220a36', '#090112', '#a855f7', 'Dark Bomber', `
+          <path d="M50 45 Q80 15 110 45 Q120 85 80 95 Q40 85 50 45" fill="#581c87"/>
+          <circle cx="80" cy="65" r="24" fill="#94a3b8"/>
+          <polygon points="80,50 84,60 95,60 86,67 90,78 80,72 70,78 74,67 65,60 76,60" fill="#c084fc"/>
+          <path d="M65 100 L95 100 L105 125 L55 125 Z" fill="#3b0764"/>
+        `)
+      },
+      {
+        id: 'cid_119_athena_commando_m_fishhead',
+        name: 'Leviathan',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_119_athena_commando_m_fishhead/icon.png',
+        backupSvg: makeSvgAvatar('#082433', '#010d14', '#38bdf8', 'Leviathan', `
+          <circle cx="80" cy="65" r="35" fill="#38bdf8" opacity="0.3" stroke="#e0f2fe" stroke-width="4"/>
+          <ellipse cx="80" cy="65" rx="18" ry="12" fill="#14b8a6"/>
+          <circle cx="72" cy="62" r="3" fill="#000"/><circle cx="88" cy="62" r="3" fill="#000"/>
+          <rect x="55" y="98" width="50" height="27" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="3"/>
+        `)
+      },
+      {
+        id: 'cid_207_athena_commando_m_heist',
+        name: 'Wildcard',
+        rarity: 'legendary',
+        price: 2000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_207_athena_commando_m_heist/icon.png',
+        backupSvg: makeSvgAvatar('#2e1404', '#0d0400', '#f97316', 'Wildcard', `
+          <path d="M52 45 Q80 25 108 45 L108 90 Q80 115 52 90 Z" fill="#ffffff"/>
+          <polygon points="80,55 88,68 80,80 72,68" fill="#dc2626"/>
+          <circle cx="68" cy="68" r="5" fill="#000000"/><circle cx="92" cy="68" r="5" fill="#000000"/>
+          <path d="M55 100 L105 100 L110 125 L50 125 Z" fill="#ffffff"/>
+          <polygon points="80,102 76,125 84,125" fill="#000000"/>
+        `)
+      },
+      {
+        id: 'cid_588_athena_commando_m_slurpman',
+        name: 'Chaos Agent',
+        rarity: 'epic',
+        price: 1500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_588_athena_commando_m_slurpman/icon.png',
+        backupSvg: makeSvgAvatar('#1c0929', '#08010d', '#d946ef', 'Chaos Agent', `
+          <path d="M55 45 Q80 25 105 45 L105 90 Q80 115 55 90 Z" fill="#09090b"/>
+          <circle cx="70" cy="65" r="9" fill="#e11d48"/><circle cx="90" cy="65" r="9" fill="#e11d48"/>
+          <circle cx="70" cy="65" r="4" fill="#000"/><circle cx="90" cy="65" r="4" fill="#000"/>
+          <path d="M55 100 L105 100 L110 125 L50 125 Z" fill="#09090b"/>
+          <polygon points="80,102 77,125 83,125" fill="#e11d48"/>
+        `)
+      },
+      {
+        id: 'cid_042_athena_commando_f_disco',
+        name: 'Sparkle Specialist',
+        rarity: 'epic',
+        price: 1600,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_042_athena_commando_f_disco/icon.png',
+        backupSvg: makeSvgAvatar('#2e0c38', '#0d0112', '#e879f9', 'Sparkle', `
+          <circle cx="80" cy="70" r="28" fill="#fed7aa"/>
+          <path d="M50 45 Q80 20 110 45" stroke="#38bdf8" stroke-width="6"/>
+          <polygon points="80,50 83,58 92,58 85,63 88,72 80,67 72,72 75,63 68,58 77,58" fill="#facc15"/>
+          <path d="M55 98 L105 98 L108 125 L52 125 Z" fill="#475569"/>
+        `)
+      },
+      {
+        id: 'cid_295_athena_commando_f_neoncat',
+        name: 'Lynx',
+        rarity: 'legendary',
+        price: 2200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_295_athena_commando_f_neoncat/icon.png',
+        backupSvg: makeSvgAvatar('#2e0618', '#0d0107', '#fb7185', 'Lynx', `
+          <path d="M55 45 L65 25 L80 45 L95 25 L105 45 L105 90 Q80 115 55 90 Z" fill="#0f172a"/>
+          <polygon points="65,65 78,72 68,75" fill="#06b6d4"/>
+          <polygon points="95,65 82,72 92,75" fill="#06b6d4"/>
+          <circle cx="80" cy="85" r="3" fill="#ec4899"/>
+        `)
+      },
+      {
+        id: 'cid_487_athena_commando_f_streetdrifter',
+        name: 'Catalyst',
+        rarity: 'legendary',
+        price: 2200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_487_athena_commando_f_streetdrifter/icon.png',
+        backupSvg: makeSvgAvatar('#260d36', '#0a0112', '#c084fc', 'Catalyst', `
+          <path d="M50 40 L65 70 L95 70 L110 40 L95 95 L80 115 L65 95 Z" fill="#18181b" stroke="#a855f7" stroke-width="4"/>
+          <path d="M65 65 L78 72 L68 76 Z" fill="#a855f7"/>
+          <path d="M95 65 L82 72 L92 76 Z" fill="#a855f7"/>
+          <circle cx="80" cy="52" r="5" fill="#a855f7"/>
+        `)
+      },
+      {
+        id: 'cid_142_athena_commando_m_carbidewhite',
+        name: 'Omega',
+        rarity: 'legendary',
+        price: 3000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_142_athena_commando_m_carbidewhite/icon.png',
+        backupSvg: makeSvgAvatar('#2b0505', '#0d0101', '#ef4444', 'Omega', `
+          <path d="M52 40 L108 40 L112 85 L80 115 L48 85 Z" fill="#09090b" stroke="#ef4444" stroke-width="2"/>
+          <path d="M60 62 L100 62 L95 72 L65 72 Z" fill="#ef4444" filter="url(#glow)"/>
+          <polygon points="80,82 72,95 88,95" fill="#ef4444"/>
+        `)
+      },
+      {
+        id: 'cid_705_athena_commando_m_chameleon',
+        name: 'Deadpool',
+        rarity: 'legendary',
+        price: 3200,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_705_athena_commando_m_chameleon/icon.png',
+        backupSvg: makeSvgAvatar('#33080c', '#0f0103', '#f43f5e', 'Deadpool', `
+          <circle cx="80" cy="68" r="34" fill="#dc2626"/>
+          <ellipse cx="66" cy="68" rx="10" ry="16" fill="#000000"/>
+          <ellipse cx="94" cy="68" rx="10" ry="16" fill="#000000"/>
+          <circle cx="68" cy="68" r="4" fill="#ffffff"/><circle cx="92" cy="68" r="4" fill="#ffffff"/>
+          <path d="M52 100 L108 100 L112 125 L48 125 Z" fill="#dc2626"/>
+        `)
+      },
+      {
+        id: 'cid_733_athena_commando_m_ravenquill',
+        name: 'Ravenpool',
+        rarity: 'legendary',
+        price: 3000,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_733_athena_commando_m_ravenquill/icon.png',
+        backupSvg: makeSvgAvatar('#2b040e', '#0d0103', '#fb7185', 'Ravenpool', `
+          <path d="M45 100 Q80 25 115 100 Z" fill="#991b1b"/>
+          <path d="M58 85 Q80 50 102 85 Z" fill="#020617"/>
+          <circle cx="72" cy="78" r="4" fill="#f43f5e" filter="url(#glow)"/>
+          <circle cx="88" cy="78" r="4" fill="#f43f5e" filter="url(#glow)"/>
+          <path d="M50 100 L80 125 L110 100 Z" fill="#450a0a"/>
+        `)
+      },
+      {
+        id: 'cid_a_292_athena_commando_m_spider',
+        name: 'Spider-Man',
+        rarity: 'mythic',
+        price: 7500,
+        img: 'https://fortnite-api.com/images/cosmetics/br/cid_a_292_athena_commando_m_spider/icon.png',
+        backupSvg: makeSvgAvatar('#36090e', '#120204', '#f87171', 'Spider-Man', `
+          <path d="M50 65 Q50 30 80 30 Q110 30 110 65 Q110 100 80 105 Q50 100 50 65" fill="#dc2626"/>
+          <line x1="80" y1="30" x2="80" y2="105" stroke="#000" stroke-width="2"/>
+          <line x1="50" y1="65" x2="110" y2="65" stroke="#000" stroke-width="2"/>
+          <polygon points="56,60 76,68 58,74" fill="#ffffff" stroke="#000" stroke-width="3"/>
+          <polygon points="104,60 84,68 102,74" fill="#ffffff" stroke="#000" stroke-width="3"/>
+        `)
+      }
     ];
 
-    /* 4 кейса с расширенным пулом скинов */
     const CASES_DATA = [
       {
         id: 'starter_drop',
@@ -991,9 +1414,8 @@
       selectUpgradeBet(latestSkin);
     }
 
-    /* Удобное закрытие окна кейса */
     function closeCaseModal() {
-      if (AppState.isRolling) return; // Во время вращения не закрываем
+      if (AppState.isRolling) return;
       document.getElementById('case-opening-modal').classList.add('hidden');
     }
 
@@ -1385,7 +1807,7 @@
       renderInventory();
       renderProfile();
 
-      // Закрытие модалок по Escape
+      // Закрытие модальных окон по Escape
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeCaseModal();
