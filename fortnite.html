@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="referrer" content="no-referrer">
   <title>FN Drop & Upgrade | serjantyabloko</title>
-  
-  <link rel="preconnect" href="https://fortnite-api.com">
-  <link rel="preconnect" href="https://fngg.b-cdn.net">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -219,7 +215,7 @@
     </div>
   </header>
 
-  <!-- Mobile Bar -->
+  <!-- Mobile Navigation Bar -->
   <div class="md:hidden glass-panel border-b border-white/10 flex justify-around py-2 px-1 text-xs">
     <button onclick="switchTab('cases')" id="mob-cases" class="flex flex-col items-center py-1 px-3 rounded-lg text-cyan-400 font-bold">
       <span class="text-base">📦</span> Кейсы
@@ -584,26 +580,9 @@
       }
     }
 
-    /* Интеллектуальный ротатор зеркал картинок */
-    function handleSkinImgError(imgEl, skinId, skinName, rarity) {
-      const step = parseInt(imgEl.dataset.tryStep || '0', 10);
-      const cleanId = skinId.toLowerCase();
-
-      // Массив зеркал и разных расширений официальных источников
-      const fallbackUrls = [
-        `https://fortnite-api.com/images/cosmetics/br/${cleanId}/smallicon.png`,
-        `https://fortnite-api.com/images/cosmetics/br/${cleanId}/featured.png`,
-        `https://fngg.b-cdn.net/images/cosmetics/br/${cleanId}/icon.png`,
-        `https://media.fortniteapi.io/images/cosmetics/${cleanId}/icon.png`
-      ];
-
-      if (step < fallbackUrls.length) {
-        imgEl.dataset.tryStep = (step + 1).toString();
-        imgEl.src = fallbackUrls[step];
-        return;
-      }
-
-      // Если все зеркала недоступны, отрисовываем фирменную заглушку
+    /* Безопасная заглушка без зацикливания */
+    function handleSkinImgError(imgEl, skinName, rarity) {
+      imgEl.onerror = null; // Отключаем повторный вызов
       const rarityColors = {
         uncommon: '#22c55e',
         rare: '#0284c7',
@@ -612,10 +591,11 @@
         mythic: '#eab308'
       };
       const col = rarityColors[rarity] || '#00F0FF';
-      imgEl.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" rx="16" fill="%230b0e1b"/><circle cx="70" cy="55" r="32" fill="${encodeURIComponent(col)}" opacity="0.3"/><text x="70" y="65" font-family="sans-serif" font-weight="900" font-size="24" fill="${encodeURIComponent(col)}" text-anchor="middle">${encodeURIComponent(skinName.slice(0, 2).toUpperCase())}</text><text x="70" y="112" font-family="sans-serif" font-weight="bold" font-size="11" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(skinName)}</text></svg>`;
+      const initials = (skinName || 'FN').slice(0, 2).toUpperCase();
+      imgEl.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" rx="16" fill="%230b0e1b"/><circle cx="70" cy="55" r="32" fill="${encodeURIComponent(col)}" opacity="0.25"/><text x="70" y="64" font-family="sans-serif" font-weight="900" font-size="24" fill="${encodeURIComponent(col)}" text-anchor="middle">${encodeURIComponent(initials)}</text><text x="70" y="112" font-family="sans-serif" font-weight="bold" font-size="11" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(skinName)}</text></svg>`;
     }
 
-    /* 16 скинов со стандартизированными путями в lowercase */
+    /* 16 скинов с проверенными прямыми путями */
     const SKINS_DB = [
       { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png' },
       { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png' },
@@ -693,15 +673,14 @@
     ];
 
     function createSkinCardHTML(skin, isRoulette = false) {
+      if (!skin) return '';
       return `
         <div class="relative overflow-hidden rounded-2xl p-2.5 flex flex-col items-center justify-between border-2 bg-fn-${skin.rarity} shadow-lg text-center ${isRoulette ? 'w-36 h-44 flex-shrink-0' : 'w-full h-full'}">
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <div class="relative w-full flex items-center justify-center my-1">
             <img src="${skin.img}" 
-                 alt="${skin.name}"
-                 data-try-step="0"
-                 loading="lazy"
-                 onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" 
+                 alt="${skin.name}" 
+                 onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" 
                  class="h-24 w-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] transform hover:scale-105 transition-transform">
           </div>
           <div class="w-full">
@@ -816,7 +795,8 @@
     }
 
     function getSkinById(id) {
-      return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase());
+      if (!id) return null;
+      return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase()) || null;
     }
 
     function renderCases() {
@@ -887,7 +867,7 @@
             break;
           }
         }
-        items.push(chosenSkin);
+        items.push(chosenSkin || SKINS_DB[0]);
       }
 
       AppState.winningIndex = 48;
@@ -954,7 +934,7 @@
         wonCard.className = `mt-3 inline-flex flex-col items-center p-5 rounded-3xl border-2 bg-fn-${wonSkin.rarity} max-w-xs shadow-2xl`;
         wonCard.innerHTML = `
           <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${wonSkin.rarity} mb-2 shadow">${wonSkin.rarity}</span>
-          <img src="${wonSkin.img}" data-try-step="0" onerror="handleSkinImgError(this, '${wonSkin.id}', '${wonSkin.name}', '${wonSkin.rarity}')" class="w-32 h-32 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
+          <img src="${wonSkin.img}" onerror="handleSkinImgError(this, '${wonSkin.name}', '${wonSkin.rarity}')" class="w-32 h-32 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
           <h4 class="text-lg font-black text-white mt-2">${wonSkin.name}</h4>
           <span class="text-xs font-mono text-yellow-300 font-extrabold mt-1">${wonSkin.price.toLocaleString()} V-Bucks</span>
         `;
@@ -1038,7 +1018,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" data-try-step="0" onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1070,7 +1050,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" data-try-step="0" onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1236,9 +1216,7 @@
         <div class="relative overflow-hidden rounded-2xl p-2.5 flex flex-col justify-between items-center text-center bg-fn-${skin.rarity} border-2 group hover:-translate-y-1 transition-all shadow-md">
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <img src="${skin.img}" 
-               data-try-step="0"
-               loading="lazy" 
-               onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" 
+               onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" 
                alt="${skin.name}" 
                class="w-20 h-20 object-contain my-2 group-hover:scale-105 transition-transform filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
           <div class="w-full">
