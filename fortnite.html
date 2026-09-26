@@ -943,7 +943,6 @@
       return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase()) || null;
     }
 
-    /* Рендер витрины кейсов с быстрыми кнопками множителя */
     function renderCases() {
       const grid = document.getElementById('cases-grid');
       if (!grid) return;
@@ -1033,7 +1032,7 @@
       strip.style.transition = 'none';
       strip.style.transform = 'translateX(0px)';
 
-      // Генерируем рулетку
+      // Генерируем рулетку визуально
       const pool = currentCase.pool;
       let totalWeight = pool.reduce((acc, i) => acc + i.weight, 0);
       const items = [];
@@ -1055,13 +1054,30 @@
       AppState.winningIndex = 48;
       AppState.rouletteItems = items;
 
-      // Генерируем результаты для выбранного количества открытий (1-5)
-      AppState.currentWonSkins = [];
-      // Первый предмет совпадает со стрелкой рулетки
-      AppState.currentWonSkins.push(items[AppState.winningIndex]);
+      strip.innerHTML = items.map(skin => createSkinCardHTML(skin, true)).join('');
+      modal.classList.remove('hidden');
+    }
 
-      // Остальные предметы роллим независимо из пула кейса
-      for (let k = 1; k < AppState.openMultiplier; k++) {
+    function executeCaseSpin() {
+      if (AppState.isRolling || !AppState.currentActiveCase) return;
+      const count = AppState.openMultiplier;
+      const totalCost = AppState.currentActiveCase.price * count;
+
+      if (AppState.vbucks < totalCost) {
+        showCustomAlert("Недостаточно V-Bucks!");
+        return;
+      }
+
+      // Генерация выигрыша СТРОГО в момент спина по актуальному count
+      const pool = AppState.currentActiveCase.pool;
+      let totalWeight = pool.reduce((acc, i) => acc + i.weight, 0);
+      AppState.currentWonSkins = [];
+
+      // Первый скин совпадает со стрелкой рулетки
+      AppState.currentWonSkins.push(AppState.rouletteItems[AppState.winningIndex]);
+
+      // Остальные генерируются по вероятности
+      for (let k = 1; k < count; k++) {
         let rand = Math.random() * totalWeight;
         let cumulative = 0;
         let won = getSkinById(pool[0].skinId);
@@ -1075,21 +1091,9 @@
         AppState.currentWonSkins.push(won || SKINS_DB[0]);
       }
 
-      strip.innerHTML = items.map(skin => createSkinCardHTML(skin, true)).join('');
-      modal.classList.remove('hidden');
-    }
-
-    function executeCaseSpin() {
-      if (AppState.isRolling || !AppState.currentActiveCase) return;
-      const totalCost = AppState.currentActiveCase.price * AppState.openMultiplier;
-
-      if (AppState.vbucks < totalCost) {
-        showCustomAlert("Недостаточно V-Bucks!");
-        return;
-      }
-
+      // Списание V-Bucks и добавление точной статистики
       AppState.vbucks -= totalCost;
-      AppState.stats.casesOpened += AppState.openMultiplier;
+      AppState.stats.casesOpened += count;
       updateHeaderBalance();
       AppState.save();
 
@@ -1138,12 +1142,12 @@
         AppState.save();
         updateHeaderBalance();
 
-        // Скрываем ленту и отображаем выигрышные карточки
+        // Отображение выигрыша
         document.getElementById('roulette-container').classList.add('hidden');
         document.getElementById('modal-won-display').classList.remove('hidden');
         document.getElementById('won-skin-price').innerText = totalWonPrice.toLocaleString();
-        document.getElementById('modal-won-title').innerText = AppState.openMultiplier > 1 
-          ? `Вы выиграли ${AppState.openMultiplier} скинов!` 
+        document.getElementById('modal-won-title').innerText = count > 1 
+          ? `Вы выиграли ${count} скинов!` 
           : 'Вы выиграли скин!';
 
         const wonGrid = document.getElementById('modal-won-grid');
@@ -1159,14 +1163,12 @@
       }, 5300);
     }
 
-    /* Продать все только что выбитые скины из мульти-пака */
     function sellJustWonSkin() {
       if (!AppState.currentWonSkins || AppState.currentWonSkins.length === 0) return;
       
       let sumPrice = 0;
       const count = AppState.currentWonSkins.length;
       
-      // Удаляем последние count предметов из инвентаря
       for (let i = 0; i < count; i++) {
         const item = AppState.inventory.pop();
         if (item) sumPrice += item.price;
