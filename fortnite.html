@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FN Drop & Upgrade | serjantyabloko</title>
   
-  <!-- Preconnect to primary & fallback CDNs -->
-  <link rel="preconnect" href="https://fortnite-api.com" crossorigin>
-  <link rel="dns-prefetch" href="https://fortnite-api.com">
+  <link rel="preconnect" href="https://fortnite-api.com">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -68,7 +66,6 @@
       border: 1px solid var(--card-border);
     }
 
-    /* Authentic Fortnite Card Radial Backdrops */
     .bg-fn-uncommon {
       background: radial-gradient(circle at center, #2e7d32 0%, #144018 70%, #0a1f0c 100%);
       border-color: #4ade80 !important;
@@ -96,12 +93,10 @@
     .badge-legendary { background-color: #ea580c; color: #fff; }
     .badge-mythic { background-color: #eab308; color: #000; }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
     ::-webkit-scrollbar-thumb { background: #3b4261; border-radius: 4px; }
 
-    /* Case Roulette Pointer */
     .roulette-pointer {
       position: absolute;
       top: 0;
@@ -183,7 +178,6 @@
 
     <!-- Top Status & Currency -->
     <div class="flex items-center space-x-3">
-      <!-- V-Bucks Counter -->
       <div class="flex items-center bg-slate-950/80 border border-cyan-500/40 rounded-2xl px-4 py-1.5 shadow-inner">
         <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2 shadow-sm">V</div>
         <div class="flex flex-col text-right">
@@ -195,7 +189,6 @@
         </button>
       </div>
 
-      <!-- Theme Switcher -->
       <div class="relative">
         <button onclick="toggleThemeMenu()" class="w-10 h-10 rounded-xl glass-panel hover:border-cyan-400 flex items-center justify-center text-slate-300 hover:text-white transition-all">
           🎨
@@ -242,7 +235,7 @@
 
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-    <!-- ================= CASES TAB ================= -->
+    <!-- CASES TAB -->
     <section id="tab-cases" class="space-y-8">
       <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-8 border border-white/15 bg-gradient-to-r from-blue-900/30 via-purple-900/25 to-pink-900/20">
         <div class="max-w-2xl space-y-3 relative z-10">
@@ -269,7 +262,7 @@
             </button>
           </div>
 
-          <!-- Horizontal Roulette -->
+          <!-- Roulette -->
           <div class="relative my-8 overflow-hidden rounded-2xl glass-panel border border-white/20 h-52 bg-slate-950/80 shadow-inner flex items-center">
             <div class="roulette-pointer"></div>
             <div id="roulette-strip" class="flex items-center gap-3 px-4 transition-transform duration-[5500ms] will-change-transform ease-[cubic-bezier(0.12,0.8,0.22,1)]" style="transform: translateX(0px);">
@@ -294,7 +287,6 @@
             </div>
           </div>
 
-          <!-- Spin Action Control Button -->
           <div id="modal-spin-controls" class="text-center pt-2">
             <button id="btn-confirm-spin" onclick="executeCaseSpin()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-lg tracking-wider shadow-xl shadow-yellow-500/20 active:scale-95 transition-all">
               КРУТИТЬ РУЛЕТКУ
@@ -303,7 +295,6 @@
         </div>
       </div>
 
-      <!-- Cases Grid -->
       <div>
         <h2 class="text-xl sm:text-2xl font-black uppercase tracking-wide text-white mb-6 flex items-center gap-2">
           <span>📦</span> Доступные паки
@@ -313,7 +304,7 @@
       </div>
     </section>
 
-    <!-- ================= UPGRADE TAB (RUSTGRADE) ================= -->
+    <!-- UPGRADE TAB -->
     <section id="tab-upgrade" class="hidden space-y-6">
       <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15 shadow-xl">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-white/10">
@@ -330,13 +321,11 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <!-- Bet Skin (Left) -->
+          <!-- Bet Skin -->
           <div class="lg:col-span-4 flex flex-col items-center">
             <h3 class="text-sm font-bold uppercase text-slate-400 mb-3 tracking-wider">Ваша ставка (из инвентаря)</h3>
             <div id="upgrade-bet-slot" onclick="openSkinSelectModal('bet')" class="w-full max-w-[270px] h-[330px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-cyan-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group shadow-xl">
-              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-cyan-300 transition-colors mb-3 text-2xl font-bold">
-                +
-              </div>
+              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-cyan-300 transition-colors mb-3 text-2xl font-bold">+</div>
               <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите скин</p>
               <p class="text-xs text-slate-500 mt-1">Нажмите для выбора из инвентаря</p>
             </div>
@@ -345,7 +334,7 @@
             </button>
           </div>
 
-          <!-- Spinner Wheel (Center) -->
+          <!-- Spinner Wheel -->
           <div class="lg:col-span-4 flex flex-col items-center justify-center py-4">
             <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
               <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
@@ -354,12 +343,10 @@
                   stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="round" class="transition-all duration-300 ease-out" />
               </svg>
 
-              <!-- Rotating Arrow / Pointer Needle -->
               <div id="upgrade-needle" class="absolute w-full h-full flex items-center justify-center pointer-events-none will-change-transform" style="transform: rotate(0deg); transition: transform 4.5s cubic-bezier(0.12, 0.8, 0.22, 1);">
                 <div class="absolute top-2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[24px] border-b-yellow-400 filter drop-shadow-[0_0_8px_rgba(255,232,83,0.8)]"></div>
               </div>
 
-              <!-- Inner Hub -->
               <div class="absolute w-36 h-36 rounded-full glass-panel border border-white/20 flex flex-col items-center justify-center text-center p-2 shadow-2xl">
                 <span id="upgrade-multiplier" class="text-xs font-bold text-slate-400 font-mono">0.0x</span>
                 <span id="upgrade-chance-center" class="text-2xl font-black text-white font-mono my-0.5">0%</span>
@@ -372,13 +359,11 @@
             </button>
           </div>
 
-          <!-- Target Skin (Right) -->
+          <!-- Target Skin -->
           <div class="lg:col-span-4 flex flex-col items-center">
             <h3 class="text-sm font-bold uppercase text-slate-400 mb-3 tracking-wider">Желаемый скин (Цель)</h3>
             <div id="upgrade-target-slot" onclick="openSkinSelectModal('target')" class="w-full max-w-[270px] h-[330px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-amber-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group shadow-xl">
-              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-300 transition-colors mb-3 text-2xl font-bold">
-                🎯
-              </div>
+              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-300 transition-colors mb-3 text-2xl font-bold">🎯</div>
               <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите цель</p>
               <p class="text-xs text-slate-500 mt-1">Каталог скинов игры</p>
             </div>
@@ -392,7 +377,7 @@
       </div>
     </section>
 
-    <!-- ================= INVENTORY TAB ================= -->
+    <!-- INVENTORY TAB -->
     <section id="tab-inventory" class="hidden space-y-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 glass-panel p-6 rounded-3xl border border-white/15">
         <div>
@@ -432,7 +417,7 @@
       </div>
     </section>
 
-    <!-- ================= PROFILE TAB ================= -->
+    <!-- PROFILE TAB -->
     <section id="tab-profile" class="hidden space-y-6">
       <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15">
         <div class="flex flex-col sm:flex-row items-center gap-6 pb-8 border-b border-white/10">
@@ -512,7 +497,6 @@
   </footer>
 
   <script>
-    /* Robust Audio Synthesizer with zero external assets */
     const AudioEngine = {
       ctx: null,
       enabled: true,
@@ -573,7 +557,6 @@
       }
     };
 
-    /* Inlined confetti */
     function launchConfetti() {
       const colors = ['#00F0FF', '#FFE853', '#9d4edd', '#10b981', '#f43f5e'];
       for (let i = 0; i < 40; i++) {
@@ -587,7 +570,6 @@
         p.style.borderRadius = '2px';
         p.style.zIndex = '9999';
         p.style.pointerEvents = 'none';
-        p.style.transform = `translate3d(0,0,0)`;
         document.body.appendChild(p);
 
         const xSpeed = (Math.random() - 0.5) * 650;
@@ -603,14 +585,8 @@
       }
     }
 
-    /* Fallback image handler: tries fallback CDN or high-fidelity Fortnite themed SVG */
-    function handleSkinImgError(imgEl, skinId, skinName, rarity) {
-      if (!imgEl.dataset.triedFallback) {
-        imgEl.dataset.triedFallback = "true";
-        // Fallback endpoint to direct cdn asset
-        imgEl.src = `https://fortnite-api.com/images/cosmetics/br/${skinId}/icon.png`;
-        return;
-      }
+    /* Fallback аватарка при проблемах с сетью */
+    function handleSkinImgError(imgEl, skinName, rarity) {
       const rarityColors = {
         uncommon: '#22c55e',
         rare: '#0284c7',
@@ -619,30 +595,51 @@
         mythic: '#eab308'
       };
       const col = rarityColors[rarity] || '#00F0FF';
-      imgEl.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" rx="16" fill="%230b0e1b"/><circle cx="70" cy="55" r="32" fill="${encodeURIComponent(col)}" opacity="0.3"/><text x="70" y="65" font-family="sans-serif" font-weight="900" font-size="28" fill="${encodeURIComponent(col)}" text-anchor="middle">${encodeURIComponent(skinName.slice(0, 2).toUpperCase())}</text><text x="70" y="112" font-family="sans-serif" font-weight="bold" font-size="12" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(skinName)}</text></svg>`;
+      imgEl.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" rx="16" fill="%230b0e1b"/><circle cx="70" cy="55" r="32" fill="${encodeURIComponent(col)}" opacity="0.3"/><text x="70" y="65" font-family="sans-serif" font-weight="900" font-size="24" fill="${encodeURIComponent(col)}" text-anchor="middle">${encodeURIComponent(skinName.slice(0, 2).toUpperCase())}</text><text x="70" y="112" font-family="sans-serif" font-weight="bold" font-size="11" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(skinName)}</text></svg>`;
     }
 
-    /* 16 verified, official Fortnite skins with verified IDs & icon.png endpoints */
+    /* Точные CDN-ссылки на иконки скинов */
     const SKINS_DB = [
-      { id: 'cid_001_athena_commando_m_default', name: 'Jonesy Recruit', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commando_m_default/icon.png' },
-      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png' },
-      { id: 'cid_315_athena_commando_m_teriyaki', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyaki/icon.png' },
-      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png' },
-      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png' },
-      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_banana/icon.png' },
-      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png' },
-      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Team Leader', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png' },
-      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png' },
-      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper (John Wick)', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png' },
-      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png' },
-      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png' },
-      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png' },
-      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png' },
-      { id: 'cid_761_athena_commando_m_cactustag', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_761_athena_commando_m_cactustag/icon.png' },
-      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png' }
+      { id: 'CID_001_Athena_Commando_M_Default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://fortnite-api.com/images/cosmetics/br/CID_001_Athena_Commando_M_Default/smallicon.png' },
+      { id: 'CID_044_Athena_Commando_F_Scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/CID_044_Athena_Commando_F_Scifi/smallicon.png' },
+      { id: 'CID_315_Athena_Commando_M_Teriyaki', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/CID_315_Athena_Commando_M_Teriyaki/smallicon.png' },
+      { id: 'CID_029_Athena_Commando_F_Halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_029_Athena_Commando_F_Halloween/smallicon.png' },
+      { id: 'CID_030_Athena_Commando_M_Skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_030_Athena_Commando_M_Skeleton/smallicon.png' },
+      { id: 'CID_342_Athena_Commando_M_Banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_342_Athena_Commando_M_Banana/smallicon.png' },
+      { id: 'CID_161_Athena_Commando_M_Drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/CID_161_Athena_Commando_M_Drift/smallicon.png' },
+      { id: 'CID_069_Athena_Commando_F_PinkBear', name: 'Cuddle Team Leader', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/CID_069_Athena_Commando_F_PinkBear/smallicon.png' },
+      { id: 'CID_102_Athena_Commando_M_Raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/CID_102_Athena_Commando_M_Raven/smallicon.png' },
+      { id: 'CID_081_Athena_Commando_M_Assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/CID_081_Athena_Commando_M_Assassin/smallicon.png' },
+      { id: 'CID_034_Athena_Commando_F_Medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/CID_034_Athena_Commando_F_Medieval/smallicon.png' },
+      { id: 'CID_694_Athena_Commando_M_CatBurglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://fortnite-api.com/images/cosmetics/br/CID_694_Athena_Commando_M_CatBurglar/smallicon.png' },
+      { id: 'CID_035_Athena_Commando_M_Medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_035_Athena_Commando_M_Medieval/smallicon.png' },
+      { id: 'CID_028_Athena_Commando_F', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/CID_028_Athena_Commando_F/smallicon.png' },
+      { id: 'CID_761_Athena_Commando_M_CactusTag', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_761_Athena_Commando_M_CactusTag/smallicon.png' },
+      { id: 'CID_175_Athena_Commando_M_Celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://fortnite-api.com/images/cosmetics/br/CID_175_Athena_Commando_M_Celestial/smallicon.png' }
     ];
 
-    /* 4 cases */
+    /* Подгрузка свежих картинок прямо из Fortnite-API для 100% совместимости */
+    async function syncSkinsWithApi() {
+      try {
+        const res = await fetch('https://fortnite-api.com/v2/cosmetics/br?type=outfit');
+        const json = await res.json();
+        if (json.status === 200 && Array.isArray(json.data)) {
+          const apiMap = new Map();
+          json.data.forEach(item => {
+            apiMap.set(item.id.toLowerCase(), item.images.icon || item.images.smallIcon);
+          });
+          SKINS_DB.forEach(skin => {
+            const apiImg = apiMap.get(skin.id.toLowerCase());
+            if (apiImg) skin.img = apiImg;
+          });
+          renderCases();
+          renderInventory();
+        }
+      } catch (err) {
+        console.warn('Работаем на встроенном кэше скинов:', err);
+      }
+    }
+
     const CASES_DATA = [
       {
         id: 'starter_drop',
@@ -651,10 +648,10 @@
         desc: 'Классический пак для новичка: Jonesy, Fishstick и Brite Bomber.',
         color: 'from-emerald-500 to-teal-700',
         pool: [
-          { skinId: 'cid_001_athena_commando_m_default', weight: 55 },
-          { skinId: 'cid_044_athena_commando_f_scifi', weight: 25 },
-          { skinId: 'cid_315_athena_commando_m_teriyaki', weight: 15 },
-          { skinId: 'cid_342_athena_commando_m_banana', weight: 5 }
+          { skinId: 'CID_001_Athena_Commando_M_Default', weight: 55 },
+          { skinId: 'CID_044_Athena_Commando_F_Scifi', weight: 25 },
+          { skinId: 'CID_315_Athena_Commando_M_Teriyaki', weight: 15 },
+          { skinId: 'CID_342_Athena_Commando_M_Banana', weight: 5 }
         ]
       },
       {
@@ -664,11 +661,11 @@
         desc: 'Хиты боевого пропуска: Банан Peely, Skull Trooper и Ghoul Trooper.',
         color: 'from-purple-600 to-indigo-800',
         pool: [
-          { skinId: 'cid_315_athena_commando_m_teriyaki', weight: 35 },
-          { skinId: 'cid_342_athena_commando_m_banana', weight: 30 },
-          { skinId: 'cid_030_athena_commando_m_skeleton', weight: 18 },
-          { skinId: 'cid_029_athena_commando_f_halloween', weight: 12 },
-          { skinId: 'cid_161_athena_commando_m_drift', weight: 5 }
+          { skinId: 'CID_315_Athena_Commando_M_Teriyaki', weight: 35 },
+          { skinId: 'CID_342_Athena_Commando_M_Banana', weight: 30 },
+          { skinId: 'CID_030_Athena_Commando_M_Skeleton', weight: 18 },
+          { skinId: 'CID_029_Athena_Commando_F_Halloween', weight: 12 },
+          { skinId: 'CID_161_Athena_Commando_M_Drift', weight: 5 }
         ]
       },
       {
@@ -678,11 +675,11 @@
         desc: 'Золотые легенды: Midas, Raven, Red Knight и The Reaper.',
         color: 'from-amber-400 to-orange-600',
         pool: [
-          { skinId: 'cid_161_athena_commando_m_drift', weight: 35 },
-          { skinId: 'cid_069_athena_commando_f_pinkbear', weight: 25 },
-          { skinId: 'cid_102_athena_commando_m_raven', weight: 20 },
-          { skinId: 'cid_081_athena_commando_m_assassin', weight: 12 },
-          { skinId: 'cid_694_athena_commando_m_catburglar', weight: 8 }
+          { skinId: 'CID_161_Athena_Commando_M_Drift', weight: 35 },
+          { skinId: 'CID_069_Athena_Commando_F_PinkBear', weight: 25 },
+          { skinId: 'CID_102_Athena_Commando_M_Raven', weight: 20 },
+          { skinId: 'CID_081_Athena_Commando_M_Assassin', weight: 12 },
+          { skinId: 'CID_694_Athena_Commando_M_CatBurglar', weight: 8 }
         ]
       },
       {
@@ -692,15 +689,14 @@
         desc: 'Культовые реликвии: Travis Scott, Galaxy, Renegade Raider и Black Knight.',
         color: 'from-pink-600 via-rose-600 to-yellow-500',
         pool: [
-          { skinId: 'cid_035_athena_commando_m_medieval', weight: 45 },
-          { skinId: 'cid_028_athena_commando_f', weight: 30 },
-          { skinId: 'cid_761_athena_commando_m_cactustag', weight: 18 },
-          { skinId: 'cid_175_athena_commando_m_celestial', weight: 7 }
+          { skinId: 'CID_035_Athena_Commando_M_Medieval', weight: 45 },
+          { skinId: 'CID_028_Athena_Commando_F', weight: 30 },
+          { skinId: 'CID_761_Athena_Commando_M_CactusTag', weight: 18 },
+          { skinId: 'CID_175_Athena_Commando_M_Celestial', weight: 7 }
         ]
       }
     ];
 
-    // Helper to render card HTML
     function createSkinCardHTML(skin, isRoulette = false) {
       return `
         <div class="relative overflow-hidden rounded-2xl p-2.5 flex flex-col items-center justify-between border-2 bg-fn-${skin.rarity} shadow-lg text-center ${isRoulette ? 'w-36 h-44 flex-shrink-0' : 'w-full h-full'}">
@@ -708,10 +704,8 @@
           <div class="relative w-full flex items-center justify-center my-1">
             <img src="${skin.img}" 
                  alt="${skin.name}"
-                 referrerpolicy="no-referrer"
-                 crossorigin="anonymous"
                  loading="lazy"
-                 onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" 
+                 onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" 
                  class="h-24 w-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] transform hover:scale-105 transition-transform">
           </div>
           <div class="w-full">
@@ -826,7 +820,7 @@
     }
 
     function getSkinById(id) {
-      return SKINS_DB.find(s => s.id === id);
+      return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase());
     }
 
     function renderCases() {
@@ -867,7 +861,7 @@
       if (!currentCase) return;
 
       if (AppState.vbucks < currentCase.price) {
-        showCustomAlert("Недостаточно V-Bucks! Заберите ежедневный бонус.");
+        showCustomAlert("Недостаточно V-Bucks! Заберите бонус.");
         return;
       }
 
@@ -964,7 +958,7 @@
         wonCard.className = `mt-3 inline-flex flex-col items-center p-5 rounded-3xl border-2 bg-fn-${wonSkin.rarity} max-w-xs shadow-2xl`;
         wonCard.innerHTML = `
           <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${wonSkin.rarity} mb-2 shadow">${wonSkin.rarity}</span>
-          <img src="${wonSkin.img}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="handleSkinImgError(this, '${wonSkin.id}', '${wonSkin.name}', '${wonSkin.rarity}')" class="w-32 h-32 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
+          <img src="${wonSkin.img}" onerror="handleSkinImgError(this, '${wonSkin.name}', '${wonSkin.rarity}')" class="w-32 h-32 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
           <h4 class="text-lg font-black text-white mt-2">${wonSkin.name}</h4>
           <span class="text-xs font-mono text-yellow-300 font-extrabold mt-1">${wonSkin.price.toLocaleString()} V-Bucks</span>
         `;
@@ -997,11 +991,8 @@
       document.getElementById('case-opening-modal').classList.add('hidden');
     }
 
-    let currentSelectMode = 'bet';
-
     function openSkinSelectModal(mode) {
       if (AppState.isUpgrading) return;
-      currentSelectMode = mode;
       const modal = document.getElementById('skin-selection-modal');
       const title = document.getElementById('select-modal-title');
       const subtitle = document.getElementById('select-modal-subtitle');
@@ -1051,7 +1042,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1083,7 +1074,7 @@
       slot.className = `w-full max-w-[270px] h-[330px] rounded-3xl border-2 bg-fn-${skin.rarity} shadow-2xl flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
-        <img src="${skin.img}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
+        <img src="${skin.img}" onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" class="w-28 h-28 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)]">
         <div>
           <h4 class="text-base font-black text-white drop-shadow">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1124,7 +1115,6 @@
         return;
       }
 
-      // Classic Rustgrade formula: (Bet / Target) * 95%
       const ratio = AppState.upgradeBetSkin.price / AppState.upgradeTargetSkin.price;
       let chance = Math.min(ratio * 95, 95);
       if (chance <= 0) chance = 1;
@@ -1250,10 +1240,8 @@
         <div class="relative overflow-hidden rounded-2xl p-2.5 flex flex-col justify-between items-center text-center bg-fn-${skin.rarity} border-2 group hover:-translate-y-1 transition-all shadow-md">
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <img src="${skin.img}" 
-               referrerpolicy="no-referrer"
-               crossorigin="anonymous"
                loading="lazy" 
-               onerror="handleSkinImgError(this, '${skin.id}', '${skin.name}', '${skin.rarity}')" 
+               onerror="handleSkinImgError(this, '${skin.name}', '${skin.rarity}')" 
                alt="${skin.name}" 
                class="w-20 h-20 object-contain my-2 group-hover:scale-105 transition-transform filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
           <div class="w-full">
@@ -1385,6 +1373,7 @@
       renderCases();
       renderInventory();
       renderProfile();
+      syncSkinsWithApi();
 
       document.addEventListener('click', (e) => {
         const themeBtn = e.target.closest('button[onclick="toggleThemeMenu()"]');
