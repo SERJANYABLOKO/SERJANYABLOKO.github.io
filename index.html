@@ -311,11 +311,11 @@
 
         /* HERO */
         .hero {
-            min-height: 80vh;
+            min-height: 75vh;
             display: flex;
             align-items: center;
             position: relative;
-            padding-bottom: 60px;
+            padding-bottom: 40px;
         }
 
         .hero .container {
@@ -449,9 +449,9 @@
         .c-blue { color: #00ccff; }
         .c-pink { color: var(--primary); }
 
-        /* БЛОК БИО / ОБ АВТОРЕ НА ГЛАВНОЙ */
+        /* БЛОК БИО НА ГЛАВНОЙ */
         .bio-section {
-            padding: 60px 0;
+            padding: 40px 0 80px;
             border-top: 1px solid var(--border-subtle);
         }
 
@@ -461,7 +461,7 @@
             border-radius: 24px;
             padding: 36px;
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 260px 1fr;
             gap: 36px;
             align-items: center;
             backdrop-filter: blur(12px);
@@ -1135,7 +1135,7 @@
         </div>
     </div>
 
-    <!-- 1. СТРАНИЦА: ГЛАВНАЯ (ПРОЛИСТЫВАЕТСЯ ВНИЗ) -->
+    <!-- 1. СТРАНИЦА: ГЛАВНАЯ (HERO + БЛОК БИО) -->
     <div class="page active" id="page-home">
         <!-- БЛОК HERO -->
         <section class="hero">
@@ -1154,7 +1154,7 @@
                     </p>
                     <div class="hero-actions">
                         <a class="btn" data-page="radar">⚡ Открыть радар</a>
-                        <a class="btn btn-secondary" href="#home-portfolio">Кейсы работ ↓</a>
+                        <a class="btn btn-secondary" data-page="portfolio">Портфолио ➔</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat-card">
@@ -1217,80 +1217,6 @@
                             <div class="bio-skill-item">🎮 Разработка 3D Игр</div>
                             <div class="bio-skill-item">⚡ Парсеры & Автоматизация</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ПОРТФОЛИО КЕЙСОВ ПРЯМО НА ГЛАВНОЙ (ПРОЛИСТАТЬ ВНИЗ) -->
-        <section class="container" id="home-portfolio" style="padding-top: 40px; padding-bottom: 80px;">
-            <div class="section-header">
-                <h2 class="section-title">Избранные Кейсы</h2>
-                <p class="section-subtitle">Реализованные проекты, архитектура ботов и интерактивные решения</p>
-            </div>
-
-            <div class="cards-grid">
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">🛍️</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>CyberShop Mini App</h4>
-                            <p>E-commerce внутри Telegram: каталог, интерактивная корзина, анимация и моментальный чекаут заказчику.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">HTML5/CSS3</span>
-                                <span class="stack-tag">JavaScript</span>
-                                <span class="stack-tag">Telegram WebApp</span>
-                            </div>
-                        </div>
-                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">🤖</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>AI-Moderator & Sender Bot</h4>
-                            <p>Бот для модерации сообществ, фильтрации спама, сбора заявок и безопасной массовой рассылки.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">Python 3.11</span>
-                                <span class="stack-tag">aiogram 3</span>
-                                <span class="stack-tag">SQLite</span>
-                            </div>
-                        </div>
-                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">🌐</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>Neon Studio Landing Page</h4>
-                            <p>Адаптивный промо-сайт в темном неоновом стиле с высокой скоростью загрузки и плавной анимацией.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">Figma UI/UX</span>
-                                <span class="stack-tag">Адаптивная верстка</span>
-                                <span class="stack-tag">Glassmorphism</span>
-                            </div>
-                        </div>
-                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">⚡</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>Radar Scraper Engine</h4>
-                            <p>Автономный парсер 50+ каналов и открытых RSS-лент с дедупликацией и фильтрацией задач без API-лимитов.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">Python</span>
-                                <span class="stack-tag">BeautifulSoup4</span>
-                                <span class="stack-tag">GitHub Actions</span>
-                            </div>
-                        </div>
-                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
                     </div>
                 </div>
             </div>
@@ -1387,87 +1313,110 @@
         </div>
     </div>
 
-    <!-- 4. СТРАНИЦА: ПОРТФОЛИО (КАТАЛОГ ВЕБ-САЙТОВ И ССЫЛОК) -->
+    <!-- 4. СТРАНИЦА: ПОРТФОЛИО (ОРИГИНАЛЬНЫЙ РАЗДЕЛ С КЕЙСАМИ И ССЫЛКАМИ) -->
     <div class="page" id="page-portfolio">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
-                <h2 class="section-title">Каталог Веб-Сайтов</h2>
-                <p class="section-subtitle">Интерактивные веб-проекты, демо-лендинги и открытые репозитории</p>
+                <h2 class="section-title">Портфолио Кейсов</h2>
+                <p class="section-subtitle">Примеры разработанных Telegram Mini Apps, ботов, сайтов и UI/UX концептов</p>
             </div>
 
-            <div class="cards-grid">
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">🚀</div>
+            <div class="radar-bar" style="justify-content: center; margin-bottom: 30px;">
+                <div class="filter-tabs" id="portfolioFilterGroup">
+                    <button class="filter-tab active" data-pfilter="all">Все проекты</button>
+                    <button class="filter-tab" data-pfilter="telegram">🤖 Telegram / TMA</button>
+                    <button class="filter-tab" data-pfilter="web">🌐 Веб-сайты</button>
+                    <button class="filter-tab" data-pfilter="design">🎨 UI/UX & Скрипты</button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="portfolioGrid">
+                <div class="portfolio-card" data-pcat="telegram">
+                    <div class="portfolio-banner">🛍️</div>
                     <div class="portfolio-body">
                         <div>
-                            <h4>SerjantDev Digital Hub</h4>
-                            <p>Официальный сайт студии с темным неоновым дизайном, витриной товаров, корзиной заказов и парсер-радаром.</p>
+                            <h4>CyberShop Mini App</h4>
+                            <p>Интерактивный магазин внутри Telegram: корзина, синхронизация с базой SQLite и моментальный чекаут.</p>
                             <div class="stack-list">
-                                <span class="stack-tag">HTML5</span>
-                                <span class="stack-tag">CSS3 Grid</span>
-                                <span class="stack-tag">Telegram API</span>
+                                <span class="stack-tag">HTML5/CSS3</span>
+                                <span class="stack-tag">JavaScript</span>
+                                <span class="stack-tag">Telegram WebApp</span>
                             </div>
                         </div>
                         <div style="display:flex; gap:8px;">
-                            <a href="https://serjantyabloko.github.io/my-site/" target="_blank" class="btn btn-sm" style="flex:1;">Открыть сайт ↗</a>
-                            <a href="https://github.com/SERJANYABLOKO/my-site" target="_blank" class="btn btn-sm btn-secondary">GitHub</a>
+                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">📱</div>
+                <div class="portfolio-card" data-pcat="telegram">
+                    <div class="portfolio-banner">🤖</div>
                     <div class="portfolio-body">
                         <div>
-                            <h4>CyberStore TMA WebApp</h4>
-                            <p>Демо-версия магазина для Telegram с поддержкой тактильного интерфейса, каталога и синхронизацией товаров.</p>
+                            <h4>AI-Moderator & Sender Bot</h4>
+                            <p>Telegram-бот для автоматической фильтрации спама в группах, сбора заявок и рассылки уведомлений.</p>
                             <div class="stack-list">
-                                <span class="stack-tag">Telegram TMA</span>
-                                <span class="stack-tag">Vanilla JS</span>
-                                <span class="stack-tag">REST API</span>
+                                <span class="stack-tag">Python 3.11</span>
+                                <span class="stack-tag">aiogram 3</span>
+                                <span class="stack-tag">Asyncio</span>
                             </div>
                         </div>
                         <div style="display:flex; gap:8px;">
-                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm" style="flex:1;">Демо в Telegram ↗</a>
-                            <a href="https://github.com/SERJANYABLOKO" target="_blank" class="btn btn-sm btn-secondary">Код</a>
+                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="portfolio-card">
+                <div class="portfolio-card" data-pcat="web">
+                    <div class="portfolio-banner">🌐</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>Neon Studio Landing Page</h4>
+                            <p>Адаптивный промо-сайт в темном неоновом стиле с высокой скоростью загрузки и плавной анимацией.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">Figma UI/UX</span>
+                                <span class="stack-tag">Адаптивная верстка</span>
+                                <span class="stack-tag">Glassmorphism</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" data-pcat="design">
                     <div class="portfolio-banner">🎨</div>
                     <div class="portfolio-body">
                         <div>
-                            <h4>Neon Portfolio Concept</h4>
-                            <p>Концепт минималистичного сайта-портфолио с неоновыми градиентами, адаптивной сеткой и быстрой загрузкой.</p>
+                            <h4>UI/UX Dashboard & Radar</h4>
+                            <p>Интерфейс аналитической панели управления и сканирования заказов в киберпанк стилистике.</p>
                             <div class="stack-list">
-                                <span class="stack-tag">Figma UI Kit</span>
-                                <span class="stack-tag">CSS Keyframes</span>
-                                <span class="stack-tag">Responsive</span>
+                                <span class="stack-tag">Figma</span>
+                                <span class="stack-tag">UI Kit</span>
+                                <span class="stack-tag">Design System</span>
                             </div>
                         </div>
                         <div style="display:flex; gap:8px;">
-                            <a href="https://serjantyabloko.github.io/my-site/" target="_blank" class="btn btn-sm" style="flex:1;">Смотреть демо ↗</a>
-                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Макет</a>
+                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="portfolio-card">
+                <div class="portfolio-card" data-pcat="design">
                     <div class="portfolio-banner">⚡</div>
                     <div class="portfolio-body">
                         <div>
-                            <h4>Freelance Lead Radar</h4>
-                            <p>Автоматизированная платформа фильтрации и мониторинга заказов с бирж и 50+ каналов Telegram.</p>
+                            <h4>Radar Scraper Engine</h4>
+                            <p>Автономный парсер 50+ каналов и открытых RSS-лент с дедупликацией и фильтрацией задач без API-лимитов.</p>
                             <div class="stack-list">
-                                <span class="stack-tag">Python 3.11</span>
+                                <span class="stack-tag">Python</span>
+                                <span class="stack-tag">BeautifulSoup4</span>
                                 <span class="stack-tag">GitHub Actions</span>
-                                <span class="stack-tag">JSON Stream</span>
                             </div>
                         </div>
                         <div style="display:flex; gap:8px;">
-                            <a data-page="radar" class="btn btn-sm" style="flex:1; cursor:pointer;">В радар ➔</a>
-                            <a href="https://github.com/SERJANYABLOKO/my-site" target="_blank" class="btn btn-sm btn-secondary">Воркфлоу</a>
+                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                         </div>
                     </div>
                 </div>
@@ -1751,6 +1700,23 @@
             navigator.clipboard.writeText(pitchTextarea.value);
             showToast("📋 Отклик скопирован в буфер!");
             pitchModal.classList.remove('show');
+        });
+
+        // ФИЛЬТРАЦИЯ ВО ВКЛАДКЕ ПОРТФОЛИО
+        document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const pcat = btn.dataset.pfilter;
+
+                document.querySelectorAll('#portfolioGrid .portfolio-card').forEach(card => {
+                    if (pcat === 'all' || card.dataset.pcat === pcat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
         });
 
         // МАГАЗИН
