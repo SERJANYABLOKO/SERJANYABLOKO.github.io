@@ -187,7 +187,7 @@
         <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2 shadow-sm">V</div>
         <div class="flex flex-col text-right">
           <span class="text-[10px] font-semibold text-cyan-300 uppercase leading-none">V-Bucks</span>
-          <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">500</span>
+          <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">50000</span>
         </div>
       </div>
 
@@ -385,14 +385,14 @@
               ✕ Сбросить цель
             </button>
           </div>
-        </div>
-
-        <div id="upgrade-result-banner" class="hidden mt-6 p-4 rounded-2xl border text-center animate-win"></div>
       </div>
-    </section>
 
-    <!-- INVENTORY TAB -->
-    <section id="tab-inventory" class="hidden space-y-6">
+      <div id="upgrade-result-banner" class="hidden mt-6 p-4 rounded-2xl border text-center animate-win"></div>
+    </div>
+  </section>
+
+  <!-- INVENTORY TAB -->
+  <section id="tab-inventory" class="hidden space-y-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 glass-panel p-6 rounded-3xl border border-white/15">
         <div>
           <h2 class="text-2xl font-black uppercase text-white flex items-center gap-3">
@@ -803,7 +803,7 @@
     }
 
     const AppState = {
-      vbucks: 500,
+      vbucks: 50000,
       inventory: [],
       usedPromoCodes: [],
       stats: {
@@ -829,7 +829,7 @@
           const saved = localStorage.getItem('serjan_fndrop_data_v4');
           if (saved) {
             const data = JSON.parse(saved);
-            this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
+            this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 50000;
             this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
             this.usedPromoCodes = Array.isArray(data.usedPromoCodes) ? data.usedPromoCodes : [];
             this.stats = data.stats || this.stats;
@@ -1582,7 +1582,7 @@
       confirmBanner.innerHTML = `
         <div class="glass-panel p-6 rounded-3xl max-w-sm w-full text-center border border-white/20 shadow-2xl">
           <p class="font-bold text-white text-base mb-2">Сбросить весь прогресс?</p>
-          <p class="text-xs text-slate-400 mb-5">Баланс станет 500 V-B, инвентарь очистится, а промокод FREE можно будет ввести снова!</p>
+          <p class="text-xs text-slate-400 mb-5">Баланс станет 50,000 V-B, инвентарь очистится, а промокод FREE можно будет ввести снова!</p>
           <div class="flex justify-center gap-3">
             <button id="btn-confirm-reset" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 rounded-xl text-xs font-black transition-all">Сбросить</button>
             <button id="btn-cancel-reset" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold transition-all">Отмена</button>
@@ -1595,7 +1595,7 @@
         confirmBanner.remove();
         localStorage.removeItem('serjan_fndrop_data_v4');
         
-        AppState.vbucks = 500;
+        AppState.vbucks = 50000;
         AppState.inventory = [];
         AppState.usedPromoCodes = [];
         AppState.stats = { casesOpened: 0, upgradesPlayed: 0, upgradesWon: 0, vbucksEarned: 0 };
