@@ -718,73 +718,26 @@
       }
     }
 
-    // Генератор идеальных иконок без внешних зависимостей (работает на GitHub Pages 100%)
-    function generateSkinIcon(name, rarity) {
-      let topCol = '#1e1b4b', botCol = '#0f0a2a', glow = '#38bdf8';
-      if (rarity === 'uncommon') { topCol = '#14381d'; botCol = '#07160a'; glow = '#4ade80'; }
-      else if (rarity === 'rare') { topCol = '#0c324f'; botCol = '#031422'; glow = '#00f0ff'; }
-      else if (rarity === 'epic') { topCol = '#38125c'; botCol = '#150326'; glow = '#c084fc'; }
-      else if (rarity === 'legendary') { topCol = '#4d2602'; botCol = '#1c0c00'; glow = '#fb923c'; }
-      else if (rarity === 'mythic') { topCol = '#4d3902'; botCol = '#1c1400'; glow = '#facc15'; }
-
-      const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-          <defs>
-            <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="${topCol}"/>
-              <stop offset="100%" stop-color="${botCol}"/>
-            </linearGradient>
-            <filter id="neon">
-              <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <rect width="200" height="200" rx="36" fill="url(#grad)" stroke="${glow}" stroke-width="4" opacity="0.9"/>
-          <circle cx="100" cy="85" r="48" fill="${glow}" opacity="0.18" filter="url(#neon)"/>
-          <text x="100" y="98" font-family="system-ui, sans-serif" font-weight="900" font-size="40" fill="${glow}" text-anchor="middle" filter="url(#neon)">FN</text>
-          <rect x="15" y="145" width="170" height="34" rx="12" fill="#030712" opacity="0.85" stroke="${glow}" stroke-width="1.5"/>
-          <text x="100" y="167" font-family="system-ui, sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1">${name.toUpperCase()}</text>
-        </svg>
-      `.trim().replace(/\s+/g, ' ');
-      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-    }
-
+    // Оставляем только те скины, у которых гарантированно работают прямые изображения с надежных серверов
     const SKINS_DB = [
-      { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: generateSkinIcon('Recruit Jonesy', 'uncommon') },
-      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: generateSkinIcon('Brite Bomber', 'rare') },
-      { id: 'cid_315_athena_commando_m_teriyakifish', name: 'Fishstick', rarity: 'rare', price: 1200, img: generateSkinIcon('Fishstick', 'rare') },
-      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: generateSkinIcon('Ghoul Trooper', 'epic') },
-      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: generateSkinIcon('Skull Trooper', 'epic') },
-      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: generateSkinIcon('Peely', 'epic') },
-      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: generateSkinIcon('Drift', 'epic') },
-      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Leader', rarity: 'legendary', price: 2000, img: generateSkinIcon('Cuddle Leader', 'legendary') },
-      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: generateSkinIcon('Raven', 'legendary') },
-      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: generateSkinIcon('The Reaper', 'legendary') },
-      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: generateSkinIcon('Red Knight', 'legendary') },
-      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: generateSkinIcon('Midas', 'legendary') },
-      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: generateSkinIcon('Black Knight', 'legendary') },
-      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: generateSkinIcon('Renegade Raider', 'legendary') },
-      { id: 'cid_761_athena_commando_m_cactusjack', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: generateSkinIcon('Travis Scott', 'mythic') },
-      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: generateSkinIcon('Galaxy', 'mythic') },
-      { id: 'cid_399_athena_commando_f_aurora', name: 'Aura', rarity: 'uncommon', price: 800, img: generateSkinIcon('Aura', 'uncommon') },
-      { id: 'cid_478_athena_commando_f_ashen', name: 'Crystal', rarity: 'uncommon', price: 800, img: generateSkinIcon('Crystal', 'uncommon') },
-      { id: 'cid_048_athena_commando_f_holidayreindeer', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: generateSkinIcon('Nog Ops', 'uncommon') },
-      { id: 'cid_554_athena_commando_f_streetfashionred', name: 'Ruby', rarity: 'rare', price: 1200, img: generateSkinIcon('Ruby', 'rare') },
-      { id: 'cid_047_athena_commando_f_scifi', name: 'Shadow Ops', rarity: 'epic', price: 1500, img: generateSkinIcon('Shadow Ops', 'epic') },
-      { id: 'cid_256_athena_commando_f_darkbomber', name: 'Dark Bomber', rarity: 'rare', price: 1200, img: generateSkinIcon('Dark Bomber', 'rare') },
-      { id: 'cid_119_athena_commando_m_fishhead', name: 'Leviathan', rarity: 'legendary', price: 2000, img: generateSkinIcon('Leviathan', 'legendary') },
-      { id: 'cid_207_athena_commando_m_heist', name: 'Wildcard', rarity: 'legendary', price: 2000, img: generateSkinIcon('Wildcard', 'legendary') },
-      { id: 'cid_588_athena_commando_m_slurpman', name: 'Chaos Agent', rarity: 'epic', price: 1500, img: generateSkinIcon('Chaos Agent', 'epic') },
-      { id: 'cid_042_athena_commando_f_disco', name: 'Sparkle Specialist', rarity: 'epic', price: 1600, img: generateSkinIcon('Sparkle Specialist', 'epic') },
-      { id: 'cid_295_athena_commando_f_neoncat', name: 'Lynx', rarity: 'legendary', price: 2200, img: generateSkinIcon('Lynx', 'legendary') },
-      { id: 'cid_487_athena_commando_f_streetdrifter', name: 'Catalyst', rarity: 'legendary', price: 2200, img: generateSkinIcon('Catalyst', 'legendary') },
-      { id: 'cid_142_athena_commando_m_carbidewhite', name: 'Omega', rarity: 'legendary', price: 3000, img: generateSkinIcon('Omega', 'legendary') },
-      { id: 'cid_705_athena_commando_m_chameleon', name: 'Deadpool', rarity: 'legendary', price: 3200, img: generateSkinIcon('Deadpool', 'legendary') },
-      { id: 'cid_733_athena_commando_m_ravenquill', name: 'Ravenpool', rarity: 'legendary', price: 3000, img: generateSkinIcon('Ravenpool', 'legendary') },
-      { id: 'cid_a_292_athena_commando_m_spider', name: 'Spider-Man', rarity: 'mythic', price: 7500, img: generateSkinIcon('Spider-Man', 'mythic') }
+      { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://media.fortniteapi.com/cosmetics/br/cid_001_athena_commando_m_default/icon.png' },
+      { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://media.fortniteapi.com/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png' },
+      { id: 'cid_315_athena_commando_m_teriyakifish', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://media.fortniteapi.com/cosmetics/br/cid_315_athena_commando_m_teriyakifish/icon.png' },
+      { id: 'cid_029_athena_commando_f_halloween', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png' },
+      { id: 'cid_030_athena_commando_m_skeleton', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_030_athena_commando_m_skeleton/icon.png' },
+      { id: 'cid_342_athena_commando_m_banana', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_342_athena_commando_m_banana/icon.png' },
+      { id: 'cid_161_athena_commando_m_drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://media.fortniteapi.com/cosmetics/br/cid_161_athena_commando_m_drift/icon.png' },
+      { id: 'cid_069_athena_commando_f_pinkbear', name: 'Cuddle Leader', rarity: 'legendary', price: 2000, img: 'https://media.fortniteapi.com/cosmetics/br/cid_069_athena_commando_f_pinkbear/icon.png' },
+      { id: 'cid_102_athena_commando_m_raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://media.fortniteapi.com/cosmetics/br/cid_102_athena_commando_m_raven/icon.png' },
+      { id: 'cid_081_athena_commando_m_assassin', name: 'The Reaper', rarity: 'legendary', price: 2000, img: 'https://media.fortniteapi.com/cosmetics/br/cid_081_athena_commando_m_assassin/icon.png' },
+      { id: 'cid_034_athena_commando_f_medieval', name: 'Red Knight', rarity: 'legendary', price: 2000, img: 'https://media.fortniteapi.com/cosmetics/br/cid_034_athena_commando_f_medieval/icon.png' },
+      { id: 'cid_694_athena_commando_m_catburglar', name: 'Midas', rarity: 'legendary', price: 2200, img: 'https://media.fortniteapi.com/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png' },
+      { id: 'cid_035_athena_commando_m_medieval', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png' },
+      { id: 'cid_028_athena_commando_f', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://media.fortniteapi.com/cosmetics/br/cid_028_athena_commando_f/icon.png' },
+      { id: 'cid_761_athena_commando_m_cactusjack', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_761_athena_commando_m_cactusjack/icon.png' },
+      { id: 'cid_175_athena_commando_m_celestial', name: 'Galaxy', rarity: 'mythic', price: 8500, img: 'https://media.fortniteapi.com/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png' },
+      { id: 'cid_399_athena_commando_f_aurora', name: 'Aura', rarity: 'uncommon', price: 800, img: 'https://media.fortniteapi.com/cosmetics/br/cid_399_athena_commando_f_aurora/icon.png' },
+      { id: 'cid_478_athena_commando_f_ashen', name: 'Crystal', rarity: 'uncommon', price: 800, img: 'https://media.fortniteapi.com/cosmetics/br/cid_478_athena_commando_f_ashen/icon.png' }
     ];
 
     const CASES_DATA = [
@@ -792,66 +745,64 @@
         id: 'starter_drop',
         name: 'Starter Recruit Drop',
         price: 500,
-        desc: 'Классический пак: Jonesy, Aura, Crystal, Nog Ops, Fishstick и Brite Bomber.',
+        desc: 'Классический пак: Jonesy, Aura, Crystal, Fishstick и Brite Bomber.',
         color: 'from-emerald-500 to-teal-700',
         pool: [
           { skinId: 'cid_001_athena_commando_m_default', weight: 35 },
           { skinId: 'cid_399_athena_commando_f_aurora', weight: 25 },
           { skinId: 'cid_478_athena_commando_f_ashen', weight: 20 },
-          { skinId: 'cid_048_athena_commando_f_holidayreindeer', weight: 10 },
-          { skinId: 'cid_044_athena_commando_f_scifi', weight: 6 },
-          { skinId: 'cid_315_athena_commando_m_teriyakifish', weight: 4 }
+          { skinId: 'cid_044_athena_commando_f_scifi', weight: 12 },
+          { skinId: 'cid_315_athena_commando_m_teriyakifish', weight: 8 }
         ]
       },
       {
         id: 'epic_assault',
         name: 'Epic Legends Pack',
         price: 1400,
-        desc: 'Хиты боевых пропусков: Peely, Skull Trooper, Ruby, Dark Bomber и Ghoul.',
+        desc: 'Хиты боевых пропусков: Peely, Skull Trooper, Dark Bomber и Ghoul.',
         color: 'from-purple-600 to-indigo-800',
         pool: [
-          { skinId: 'cid_554_athena_commando_f_streetfashionred', weight: 28 },
-          { skinId: 'cid_256_athena_commando_f_darkbomber', weight: 24 },
-          { skinId: 'cid_342_athena_commando_m_banana', weight: 20 },
-          { skinId: 'cid_047_athena_commando_f_scifi', weight: 12 },
-          { skinId: 'cid_030_athena_commando_m_skeleton', weight: 9 },
-          { skinId: 'cid_029_athena_commando_f_halloween', weight: 5 },
-          { skinId: 'cid_161_athena_commando_m_drift', weight: 2 }
+          { skinId: 'cid_342_athena_commando_m_banana', weight: 30 },
+          { skinId: 'cid_030_athena_commando_m_skeleton', weight: 25 },
+          { skinId: 'cid_029_athena_commando_f_halloween', weight: 20 },
+          { skinId: 'cid_161_athena_commando_m_drift', weight: 15 },
+          { skinId: 'cid_044_athena_commando_f_scifi', weight: 10 }
         ]
       },
       {
         id: 'golden_chapter',
         name: 'Midas Golden Vault',
         price: 2600,
-        desc: 'Золотые легенды: Midas, Raven, Lynx, Wildcard, Catalyst и The Reaper.',
+        desc: 'Золотые легенды: Midas, Raven, Wildcard и The Reaper.',
         color: 'from-amber-400 to-orange-600',
         pool: [
-          { skinId: 'cid_161_athena_commando_m_drift', weight: 26 },
-          { skinId: 'cid_588_athena_commando_m_slurpman', weight: 22 },
-          { skinId: 'cid_207_athena_commando_m_heist', weight: 18 },
-          { skinId: 'cid_069_athena_commando_f_pinkbear', weight: 14 },
-          { skinId: 'cid_102_athena_commando_m_raven', weight: 10 },
-          { skinId: 'cid_295_athena_commando_f_neoncat', weight: 5 },
-          { skinId: 'cid_694_athena_commando_m_catburglar', weight: 5 }
+          { skinId: 'cid_161_athena_commando_m_drift', weight: 30 },
+          { skinId: 'cid_207_athena_commando_m_heist', weight: 25 },
+          { skinId: 'cid_069_athena_commando_f_pinkbear', weight: 20 },
+          { skinId: 'cid_102_athena_commando_m_raven', weight: 15 },
+          { skinId: 'cid_694_athena_commando_m_catburglar', weight: 10 }
         ]
       },
       {
         id: 'og_mythic',
         name: 'OG Mythic Grails',
         price: 5000,
-        desc: 'Культовые реликвии: Travis Scott, Spider-Man, Galaxy, Deadpool и Black Knight.',
+        desc: 'Культовые реликвии: Travis Scott, Spider-Man, Galaxy и Black Knight.',
         color: 'from-pink-600 via-rose-600 to-yellow-500',
         pool: [
-          { skinId: 'cid_035_athena_commando_m_medieval', weight: 30 },
-          { skinId: 'cid_142_athena_commando_m_carbidewhite', weight: 25 },
-          { skinId: 'cid_705_athena_commando_m_chameleon', weight: 18 },
-          { skinId: 'cid_028_athena_commando_f', weight: 14 },
-          { skinId: 'cid_a_292_athena_commando_m_spider', weight: 6 },
-          { skinId: 'cid_761_athena_commando_m_cactusjack', weight: 4 },
-          { skinId: 'cid_175_athena_commando_m_celestial', weight: 3 }
+          { skinId: 'cid_035_athena_commando_m_medieval', weight: 35 },
+          { skinId: 'cid_142_athena_commando_m_carbidewhite', weight: 30 },
+          { skinId: 'cid_028_athena_commando_f', weight: 20 },
+          { skinId: 'cid_a_292_athena_commando_m_spider', weight: 10 },
+          { skinId: 'cid_761_athena_commando_m_cactusjack', weight: 5 }
         ]
       }
     ];
+
+    // Если картинка всё же сломается, вместо пустоты она просто скроется, не ломая верстку
+    function handleImageError(img) {
+      img.style.display = 'none';
+    }
 
     function createSkinCardHTML(skin, isRoulette = false) {
       if (!skin) return '';
@@ -860,6 +811,7 @@
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start shadow">${skin.rarity}</span>
           <div class="relative w-full flex items-center justify-center my-1">
             <img src="${skin.img}" 
+                 onerror="handleImageError(this)" 
                  alt="${skin.name}" 
                  class="h-24 w-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] transform hover:scale-105 transition-transform">
           </div>
@@ -896,7 +848,7 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v13');
+          const saved = localStorage.getItem('serjan_fndrop_data_v14');
           if (saved) {
             const data = JSON.parse(saved);
             this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
@@ -909,7 +861,7 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v13', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v14', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
             usedPromoCodes: this.usedPromoCodes,
@@ -1740,7 +1692,7 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v13');
+        localStorage.removeItem('serjan_fndrop_data_v14');
         
         AppState.vbucks = 500;
         AppState.inventory = [];
