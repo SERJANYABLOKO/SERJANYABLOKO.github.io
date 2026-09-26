@@ -159,26 +159,32 @@
 
     <!-- Navigation Tabs -->
     <nav class="hidden md:flex items-center space-x-1 glass-panel p-1 rounded-2xl border border-white/5">
-      <button onclick="switchTab('cases')" id="nav-cases" class="px-5 py-2 rounded-xl text-sm font-bold transition-all bg-white/15 text-white shadow-inner flex items-center gap-2">
+      <button onclick="switchTab('cases')" id="nav-cases" class="px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white/15 text-white shadow-inner flex items-center gap-1.5">
         <span>📦</span> Кейсы
       </button>
-      <button onclick="switchTab('upgrade')" id="nav-upgrade" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
+      <button onclick="switchTab('upgrade')" id="nav-upgrade" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
         <span>⚡</span> Апгрейдер
       </button>
-      <button onclick="switchTab('inventory')" id="nav-inventory" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
+      <button onclick="switchTab('inventory')" id="nav-inventory" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
         <span>🎒</span> Инвентарь
         <span id="nav-inv-count" class="bg-purple-500/30 text-purple-300 text-xs px-2 py-0.5 rounded-full font-mono">0</span>
       </button>
-      <button onclick="switchTab('profile')" id="nav-profile" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
+      <button onclick="switchTab('collection')" id="nav-collection" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
+        <span>🏆</span> Коллекция
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
         <span>👤</span> Профиль
       </button>
     </nav>
 
     <!-- Top Status & Currency -->
-    <div class="flex items-center space-x-3">
-      <!-- V-Bucks Counter (без кнопки +1000) -->
-      <div class="flex items-center bg-slate-950/80 border border-cyan-500/40 rounded-2xl px-4 py-1.5 shadow-inner">
-        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2.5 shadow-sm">V</div>
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <button onclick="openPromoModal()" title="Активировать промокод" class="px-3 py-1.5 rounded-2xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 font-extrabold text-xs transition-all active:scale-95 flex items-center gap-1.5 shadow-md">
+        <span>🎟️</span> <span class="hidden sm:inline">Промокод</span>
+      </button>
+
+      <div class="flex items-center bg-slate-950/80 border border-cyan-500/40 rounded-2xl px-3.5 py-1.5 shadow-inner">
+        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2 shadow-sm">V</div>
         <div class="flex flex-col text-right">
           <span class="text-[10px] font-semibold text-cyan-300 uppercase leading-none">V-Bucks</span>
           <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">500</span>
@@ -215,16 +221,19 @@
 
   <!-- Mobile Bar -->
   <div class="md:hidden glass-panel border-b border-white/10 flex justify-around py-2 px-1 text-xs">
-    <button onclick="switchTab('cases')" id="mob-cases" class="flex flex-col items-center py-1 px-3 rounded-lg text-cyan-400 font-bold">
+    <button onclick="switchTab('cases')" id="mob-cases" class="flex flex-col items-center py-1 px-2 rounded-lg text-cyan-400 font-bold">
       <span class="text-base">📦</span> Кейсы
     </button>
-    <button onclick="switchTab('upgrade')" id="mob-upgrade" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+    <button onclick="switchTab('upgrade')" id="mob-upgrade" class="flex flex-col items-center py-1 px-2 rounded-lg text-slate-400 font-bold">
       <span class="text-base">⚡</span> Апгрейд
     </button>
-    <button onclick="switchTab('inventory')" id="mob-inventory" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+    <button onclick="switchTab('inventory')" id="mob-inventory" class="flex flex-col items-center py-1 px-2 rounded-lg text-slate-400 font-bold">
       <span class="text-base">🎒</span> Инвентарь
     </button>
-    <button onclick="switchTab('profile')" id="mob-profile" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+    <button onclick="switchTab('collection')" id="mob-collection" class="flex flex-col items-center py-1 px-2 rounded-lg text-slate-400 font-bold">
+      <span class="text-base">🏆</span> Музей
+    </button>
+    <button onclick="switchTab('profile')" id="mob-profile" class="flex flex-col items-center py-1 px-2 rounded-lg text-slate-400 font-bold">
       <span class="text-base">👤</span> Профиль
     </button>
   </div>
@@ -235,12 +244,12 @@
     <section id="tab-cases" class="space-y-8">
       <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-8 border border-white/15 bg-gradient-to-r from-blue-900/30 via-purple-900/25 to-pink-900/20">
         <div class="max-w-2xl space-y-3 relative z-10">
-          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">32 Официальных скина</span>
+          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">Мульти-открытие 1-5 кейсов</span>
           <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase italic">
             Кейсы <span class="bg-gradient-to-r from-yellow-300 to-amber-500 bg-clip-text text-transparent">Fortnite</span>
           </h1>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Открывайте паки с реальными скинами игры, выбивайте мифики и испытайте фортуну в Rustgrade-апгрейдере!
+            Открывайте паки от 1 до 5 штук разом, выбивайте мифики и испытайте фортуну в Rustgrade-апгрейдере!
           </p>
         </div>
       </div>
@@ -248,34 +257,42 @@
       <!-- Case Open Modal -->
       <div id="case-opening-modal" onclick="handleCaseBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
         <div class="w-full max-w-4xl glass-panel rounded-3xl p-6 border border-white/20 relative shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
-          <div class="flex justify-between items-center pb-4 border-b border-white/10">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-white/10">
             <div>
               <span id="modal-case-title" class="text-2xl font-black uppercase text-amber-300">Название кейса</span>
-              <p class="text-xs text-slate-400">Испытай свою удачу прямо сейчас (Esc — закрыть)</p>
+              <p class="text-xs text-slate-400">Выберите количество и испытайте удачу (Esc — закрыть)</p>
             </div>
-            <button onclick="closeCaseModal()" id="btn-close-modal" title="Закрыть кейс (Esc)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/30 hover:text-rose-300 border border-white/10 text-slate-200 flex items-center justify-center transition-all font-black text-lg active:scale-90">
-              ✕
-            </button>
+
+            <!-- Селектор количества в модалке -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-400">Открыть:</span>
+              <div id="modal-multiplier-btns" class="flex rounded-xl bg-slate-900 p-1 border border-white/10">
+                <button onclick="setModalOpenCount(1)" id="open-count-1" class="px-2.5 py-1 rounded-lg text-xs font-black transition-all bg-cyan-500 text-slate-950">x1</button>
+                <button onclick="setModalOpenCount(2)" id="open-count-2" class="px-2.5 py-1 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white">x2</button>
+                <button onclick="setModalOpenCount(3)" id="open-count-3" class="px-2.5 py-1 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white">x3</button>
+                <button onclick="setModalOpenCount(4)" id="open-count-4" class="px-2.5 py-1 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white">x4</button>
+                <button onclick="setModalOpenCount(5)" id="open-count-5" class="px-2.5 py-1 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white">x5</button>
+              </div>
+              <button onclick="closeCaseModal()" id="btn-close-modal" title="Закрыть кейс (Esc)" class="w-9 h-9 rounded-full bg-white/10 hover:bg-rose-500/30 hover:text-rose-300 border border-white/10 text-slate-200 flex items-center justify-center transition-all font-black text-base active:scale-90 ml-1">
+                ✕
+              </button>
+            </div>
           </div>
 
           <!-- Roulette -->
-          <div class="relative my-8 overflow-hidden rounded-2xl glass-panel border border-white/20 h-52 bg-slate-950/80 shadow-inner flex items-center">
+          <div id="roulette-container" class="relative my-6 overflow-hidden rounded-2xl glass-panel border border-white/20 h-52 bg-slate-950/80 shadow-inner flex items-center">
             <div class="roulette-pointer"></div>
             <div id="roulette-strip" class="flex items-center gap-3 px-4 transition-transform duration-[5500ms] will-change-transform ease-[cubic-bezier(0.12,0.8,0.22,1)]" style="transform: translateX(0px);">
             </div>
           </div>
 
-          <!-- Won Item Display -->
-          <div id="modal-won-display" class="hidden text-center py-4 animate-win">
-            <span class="text-xs uppercase font-extrabold text-emerald-400 tracking-wider">Вы выиграли скин!</span>
-            <div id="modal-won-skin-card" class="mt-3 inline-flex flex-col items-center p-5 rounded-3xl border-2 max-w-xs shadow-2xl">
-            </div>
+          <!-- Won Items Display (Мульти-выигрыш) -->
+          <div id="modal-won-display" class="hidden text-center py-2 animate-win">
+            <span id="modal-won-title" class="text-xs uppercase font-extrabold text-emerald-400 tracking-wider">Вы выиграли!</span>
+            <div id="modal-won-grid" class="mt-3 flex flex-wrap justify-center gap-3 max-h-[38vh] overflow-y-auto pr-1"></div>
             <div class="mt-5 flex flex-wrap justify-center gap-3">
               <button onclick="sellJustWonSkin()" id="btn-sell-won" class="px-5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-300 font-bold text-sm transition-all flex items-center gap-2">
-                💰 Продать за <span id="won-skin-price">0</span> V-B
-              </button>
-              <button onclick="sendWonToUpgrade()" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2">
-                ⚡ В апгрейдер
+                💰 Продать всё за <span id="won-skin-price">0</span> V-B
               </button>
               <button onclick="closeCaseModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 font-bold text-sm transition-all">
                 Оставить в инвентаре
@@ -286,7 +303,7 @@
           <!-- Controls -->
           <div id="modal-spin-controls" class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button id="btn-confirm-spin" onclick="executeCaseSpin()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-lg tracking-wider shadow-xl shadow-yellow-500/20 active:scale-95 transition-all">
-              КРУТИТЬ РУЛЕТКУ
+              КРУТИТЬ РУЛЕТКУ (<span id="spin-btn-price">500</span> V-B)
             </button>
             <button onclick="closeCaseModal()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-slate-300 font-bold text-sm transition-all">
               Отмена
@@ -333,7 +350,6 @@
             </button>
           </div>
 
-          <!-- Spinner Wheel: Острые концы (butt) БЕЗ жёлтой полоски -->
           <div class="lg:col-span-4 flex flex-col items-center justify-center py-4">
             <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
               <svg class="w-full h-full -rotate-90 transform overflow-visible" viewBox="0 0 100 100">
@@ -342,12 +358,10 @@
                   stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="butt" class="transition-all duration-300 ease-out" />
               </svg>
 
-              <!-- Острая стрелка -->
               <div id="upgrade-needle" class="absolute w-full h-full flex items-center justify-center pointer-events-none will-change-transform" style="transform: rotate(0deg);">
                 <div class="absolute top-1.5 w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-b-[26px] border-b-yellow-400 filter drop-shadow-[0_0_10px_rgba(255,232,83,0.9)]"></div>
               </div>
 
-              <!-- Центральный хаб -->
               <div class="absolute w-36 h-36 rounded-full glass-panel border border-white/20 flex flex-col items-center justify-center text-center p-2 shadow-2xl">
                 <span id="upgrade-multiplier" class="text-xs font-bold text-slate-400 font-mono">0.0x</span>
                 <span id="upgrade-chance-center" class="text-2xl font-black text-white font-mono my-0.5">0%</span>
@@ -417,6 +431,29 @@
       </div>
     </section>
 
+    <!-- COLLECTION TAB -->
+    <section id="tab-collection" class="hidden space-y-6">
+      <div class="glass-panel p-6 rounded-3xl border border-white/15 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-2xl font-black uppercase text-white flex items-center gap-3">
+            <span>🏆</span> Зал Славы (Все 32 Скина)
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Открывайте кейсы и улучшайте скины, чтобы заполнить всю коллекцию!</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block font-semibold">Собрано</span>
+            <span id="collection-ratio" class="text-2xl font-black text-cyan-300 font-mono">0 / 32</span>
+          </div>
+          <div class="w-24 bg-slate-900 rounded-full h-3 overflow-hidden border border-white/20">
+            <div id="collection-progress-bar" class="bg-gradient-to-r from-cyan-400 to-purple-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="collection-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+    </section>
+
     <!-- PROFILE TAB -->
     <section id="tab-profile" class="hidden space-y-6">
       <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15">
@@ -463,6 +500,33 @@
 
   </main>
 
+  <!-- PROMO CODE MODAL -->
+  <div id="promo-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" onclick="closePromoModal()">
+    <div class="w-full max-w-sm glass-panel rounded-3xl p-6 border border-white/20 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex justify-between items-center pb-3 border-b border-white/10">
+        <h3 class="text-lg font-black text-white uppercase flex items-center gap-2">
+          <span>🎟️</span> Промокод
+        </h3>
+        <button onclick="closePromoModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center font-bold">
+          ✕
+        </button>
+      </div>
+      <div class="my-5">
+        <label for="promo-input" class="text-xs text-slate-400 block mb-2 font-semibold">Введите секретный код:</label>
+        <input type="text" id="promo-input" placeholder="Например: free" class="w-full bg-slate-900 border border-cyan-500/40 rounded-xl px-4 py-3 text-sm text-yellow-300 font-mono font-bold uppercase tracking-wider outline-none focus:border-cyan-400 transition-all shadow-inner">
+      </div>
+      <div class="flex gap-2">
+        <button onclick="claimPromoCode()" class="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg active:scale-95">
+          Активировать
+        </button>
+        <button onclick="closePromoModal()" class="px-4 py-3 bg-white/10 hover:bg-white/20 text-slate-300 font-bold rounded-xl text-xs transition-all">
+          Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKIN SELECT MODAL FOR UPGRADE -->
   <div id="skin-selection-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4" onclick="closeSkinSelectModal()">
     <div class="w-full max-w-4xl glass-panel rounded-3xl p-6 border border-white/20 shadow-2xl flex flex-col max-h-[85vh]" onclick="event.stopPropagation()">
       <div class="flex justify-between items-center pb-4 border-b border-white/10">
@@ -485,7 +549,7 @@
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="font-bold text-slate-200">FN DROP CASINO</span>
         <span>•</span>
-        <span>Начальный баланс: 500 V-B</span>
+        <span>Открытие 1-5 кейсов</span>
       </div>
       <div class="flex items-center gap-2">
         <span>Сделано для</span>
@@ -739,8 +803,9 @@
     }
 
     const AppState = {
-      vbucks: 500, // Начальный баланс 500
+      vbucks: 500,
       inventory: [],
+      usedPromoCodes: [],
       stats: {
         casesOpened: 0,
         upgradesPlayed: 0,
@@ -749,10 +814,11 @@
       },
       theme: 'fn-classic',
       currentActiveCase: null,
+      openMultiplier: 1, // Количество открываемых кейсов (1-5)
       rouletteItems: [],
       winningIndex: 0,
       isRolling: false,
-      currentWonSkin: null,
+      currentWonSkins: [], // Массив выбитых скинов при мульти-открытии
       upgradeBetSkin: null,
       upgradeTargetSkin: null,
       isUpgrading: false,
@@ -760,11 +826,12 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v3');
+          const saved = localStorage.getItem('serjan_fndrop_data_v4');
           if (saved) {
             const data = JSON.parse(saved);
             this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
             this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
+            this.usedPromoCodes = Array.isArray(data.usedPromoCodes) ? data.usedPromoCodes : [];
             this.stats = data.stats || this.stats;
             this.theme = data.theme || 'fn-classic';
           }
@@ -772,9 +839,10 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v3', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v4', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
+            usedPromoCodes: this.usedPromoCodes,
             stats: this.stats,
             theme: this.theme
           }));
@@ -790,7 +858,7 @@
     }
 
     function switchTab(tabId) {
-      ['cases', 'upgrade', 'inventory', 'profile'].forEach(tab => {
+      ['cases', 'upgrade', 'inventory', 'collection', 'profile'].forEach(tab => {
         const section = document.getElementById(`tab-${tab}`);
         const navBtn = document.getElementById(`nav-${tab}`);
         const mobBtn = document.getElementById(`mob-${tab}`);
@@ -809,6 +877,7 @@
         }
       });
       if (tabId === 'inventory') renderInventory();
+      if (tabId === 'collection') renderCollection();
       if (tabId === 'profile') renderProfile();
     }
 
@@ -828,11 +897,53 @@
       if (enabled) AudioEngine.init();
     }
 
+    function openPromoModal() {
+      const modal = document.getElementById('promo-modal');
+      const input = document.getElementById('promo-input');
+      input.value = '';
+      modal.classList.remove('hidden');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closePromoModal() {
+      document.getElementById('promo-modal').classList.add('hidden');
+    }
+
+    function claimPromoCode() {
+      const input = document.getElementById('promo-input');
+      const code = input.value.trim().toLowerCase();
+
+      if (!code) {
+        showCustomAlert("Введите промокод!");
+        return;
+      }
+
+      if (code === 'free') {
+        if (AppState.usedPromoCodes.includes('free')) {
+          showCustomAlert("Вы уже активировали промокод FREE!");
+          return;
+        }
+
+        AudioEngine.init();
+        AppState.vbucks += 1000;
+        AppState.usedPromoCodes.push('free');
+        AppState.save();
+        updateHeaderBalance();
+        AudioEngine.playWin();
+        launchConfetti();
+        closePromoModal();
+        showCustomAlert("Успешно! Начислено +1,000 V-Bucks! 🎉");
+      } else {
+        showCustomAlert("Неверный промокод!");
+      }
+    }
+
     function getSkinById(id) {
       if (!id) return null;
       return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase()) || null;
     }
 
+    /* Рендер витрины кейсов с быстрыми кнопками множителя */
     function renderCases() {
       const grid = document.getElementById('cases-grid');
       if (!grid) return;
@@ -853,38 +964,76 @@
               }).join('')}
             </div>
           </div>
-          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-            <div class="text-yellow-300 font-extrabold text-base font-mono">
-              ${c.price.toLocaleString()} V-B
+          <div class="mt-6 pt-4 border-t border-white/10 flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-semibold">Цена за 1 шт:</span>
+              <div class="text-yellow-300 font-extrabold text-base font-mono">
+                ${c.price.toLocaleString()} V-B
+              </div>
             </div>
-            <button onclick="prepareCaseOpen('${c.id}')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-cyan-500 hover:text-slate-950 font-black text-xs uppercase tracking-wider transition-all">
-              Открыть
-            </button>
+            <div class="flex items-center gap-1.5">
+              <button onclick="prepareCaseOpen('${c.id}', 1)" class="flex-1 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-95">
+                Открыть
+              </button>
+              <button onclick="prepareCaseOpen('${c.id}', 3)" title="Открыть сразу 3 шт" class="px-2.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-300 font-black text-xs transition-all">
+                x3
+              </button>
+              <button onclick="prepareCaseOpen('${c.id}', 5)" title="Открыть сразу 5 шт" class="px-2.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 font-black text-xs transition-all">
+                x5
+              </button>
+            </div>
           </div>
         </div>
       `).join('');
     }
 
-    function prepareCaseOpen(caseId) {
+    /* Установка количества открытий (1-5) */
+    function setModalOpenCount(count) {
+      if (AppState.isRolling) return;
+      AppState.openMultiplier = Math.max(1, Math.min(5, count));
+
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`open-count-${i}`);
+        if (btn) {
+          const isActive = i === AppState.openMultiplier;
+          btn.className = isActive
+            ? "px-2.5 py-1 rounded-lg text-xs font-black transition-all bg-cyan-500 text-slate-950 shadow"
+            : "px-2.5 py-1 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white";
+        }
+      }
+
+      if (AppState.currentActiveCase) {
+        const totalPrice = AppState.currentActiveCase.price * AppState.openMultiplier;
+        const btnPrice = document.getElementById('spin-btn-price');
+        if (btnPrice) btnPrice.innerText = totalPrice.toLocaleString();
+      }
+    }
+
+    function prepareCaseOpen(caseId, count = 1) {
       AudioEngine.init();
       const currentCase = CASES_DATA.find(c => c.id === caseId);
       if (!currentCase) return;
 
-      if (AppState.vbucks < currentCase.price) {
-        showCustomAlert("Недостаточно V-Bucks!");
+      AppState.currentActiveCase = currentCase;
+      setModalOpenCount(count);
+
+      const totalPrice = currentCase.price * AppState.openMultiplier;
+      if (AppState.vbucks < totalPrice) {
+        showCustomAlert("Недостаточно V-Bucks на открытие!");
         return;
       }
 
-      AppState.currentActiveCase = currentCase;
       const modal = document.getElementById('case-opening-modal');
       document.getElementById('modal-case-title').innerText = currentCase.name;
       document.getElementById('modal-won-display').classList.add('hidden');
+      document.getElementById('roulette-container').classList.remove('hidden');
       document.getElementById('modal-spin-controls').classList.remove('hidden');
 
       const strip = document.getElementById('roulette-strip');
       strip.style.transition = 'none';
       strip.style.transform = 'translateX(0px)';
 
+      // Генерируем рулетку
       const pool = currentCase.pool;
       let totalWeight = pool.reduce((acc, i) => acc + i.weight, 0);
       const items = [];
@@ -905,7 +1054,26 @@
 
       AppState.winningIndex = 48;
       AppState.rouletteItems = items;
-      AppState.currentWonSkin = items[AppState.winningIndex];
+
+      // Генерируем результаты для выбранного количества открытий (1-5)
+      AppState.currentWonSkins = [];
+      // Первый предмет совпадает со стрелкой рулетки
+      AppState.currentWonSkins.push(items[AppState.winningIndex]);
+
+      // Остальные предметы роллим независимо из пула кейса
+      for (let k = 1; k < AppState.openMultiplier; k++) {
+        let rand = Math.random() * totalWeight;
+        let cumulative = 0;
+        let won = getSkinById(pool[0].skinId);
+        for (const item of pool) {
+          cumulative += item.weight;
+          if (rand <= cumulative) {
+            won = getSkinById(item.skinId);
+            break;
+          }
+        }
+        AppState.currentWonSkins.push(won || SKINS_DB[0]);
+      }
 
       strip.innerHTML = items.map(skin => createSkinCardHTML(skin, true)).join('');
       modal.classList.remove('hidden');
@@ -913,13 +1081,15 @@
 
     function executeCaseSpin() {
       if (AppState.isRolling || !AppState.currentActiveCase) return;
-      if (AppState.vbucks < AppState.currentActiveCase.price) {
+      const totalCost = AppState.currentActiveCase.price * AppState.openMultiplier;
+
+      if (AppState.vbucks < totalCost) {
         showCustomAlert("Недостаточно V-Bucks!");
         return;
       }
 
-      AppState.vbucks -= AppState.currentActiveCase.price;
-      AppState.stats.casesOpened++;
+      AppState.vbucks -= totalCost;
+      AppState.stats.casesOpened += AppState.openMultiplier;
       updateHeaderBalance();
       AppState.save();
 
@@ -951,39 +1121,65 @@
         AudioEngine.playWin();
         launchConfetti();
 
-        const wonSkin = {
-          ...AppState.currentWonSkin,
-          instanceId: Date.now() + Math.random().toString(36).substr(2, 4)
-        };
-        AppState.inventory.push(wonSkin);
+        // Добавляем все выбитые предметы в инвентарь
+        const newlyAdded = [];
+        let totalWonPrice = 0;
+
+        AppState.currentWonSkins.forEach(skin => {
+          const instance = {
+            ...skin,
+            instanceId: Date.now() + Math.random().toString(36).substr(2, 6)
+          };
+          AppState.inventory.push(instance);
+          newlyAdded.push(instance);
+          totalWonPrice += instance.price;
+        });
+
         AppState.save();
         updateHeaderBalance();
 
+        // Скрываем ленту и отображаем выигрышные карточки
+        document.getElementById('roulette-container').classList.add('hidden');
         document.getElementById('modal-won-display').classList.remove('hidden');
-        document.getElementById('won-skin-price').innerText = wonSkin.price.toLocaleString();
-        
-        const wonCard = document.getElementById('modal-won-skin-card');
-        wonCard.className = `mt-3 inline-flex flex-col items-center p-5 rounded-3xl border-2 bg-fn-${wonSkin.rarity} max-w-xs shadow-2xl`;
-        wonCard.innerHTML = `
-          <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${wonSkin.rarity} mb-2 shadow">${wonSkin.rarity}</span>
-          <img src="${wonSkin.img}" onerror="handleSkinImgError(this, '${wonSkin.id}')" class="w-32 h-32 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)]">
-          <h4 class="text-lg font-black text-white mt-2">${wonSkin.name}</h4>
-          <span class="text-xs font-mono text-yellow-300 font-extrabold mt-1">${wonSkin.price.toLocaleString()} V-Bucks</span>
-        `;
+        document.getElementById('won-skin-price').innerText = totalWonPrice.toLocaleString();
+        document.getElementById('modal-won-title').innerText = AppState.openMultiplier > 1 
+          ? `Вы выиграли ${AppState.openMultiplier} скинов!` 
+          : 'Вы выиграли скин!';
+
+        const wonGrid = document.getElementById('modal-won-grid');
+        wonGrid.innerHTML = newlyAdded.map(item => `
+          <div class="inline-flex flex-col items-center p-4 rounded-3xl border-2 bg-fn-${item.rarity} w-40 sm:w-44 shadow-2xl animate-win">
+            <span class="text-[9px] uppercase font-extrabold px-2.5 py-0.5 rounded-full badge-${item.rarity} mb-2 shadow">${item.rarity}</span>
+            <img src="${item.img}" onerror="handleSkinImgError(this, '${item.id}')" class="w-24 h-24 object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.7)]">
+            <h4 class="text-xs font-black text-white mt-2 truncate w-full text-center">${item.name}</h4>
+            <span class="text-xs font-mono text-yellow-300 font-extrabold mt-1">${item.price.toLocaleString()} V-B</span>
+          </div>
+        `).join('');
+
       }, 5300);
     }
 
+    /* Продать все только что выбитые скины из мульти-пака */
     function sellJustWonSkin() {
-      if (!AppState.currentWonSkin) return;
-      const price = AppState.currentWonSkin.price;
-      AppState.inventory.pop();
-      AppState.vbucks += price;
-      AppState.stats.vbucksEarned += price;
+      if (!AppState.currentWonSkins || AppState.currentWonSkins.length === 0) return;
+      
+      let sumPrice = 0;
+      const count = AppState.currentWonSkins.length;
+      
+      // Удаляем последние count предметов из инвентаря
+      for (let i = 0; i < count; i++) {
+        const item = AppState.inventory.pop();
+        if (item) sumPrice += item.price;
+      }
+
+      AppState.vbucks += sumPrice;
+      AppState.stats.vbucksEarned += sumPrice;
+      AppState.currentWonSkins = [];
       AppState.save();
       updateHeaderBalance();
       AudioEngine.playTick();
       closeCaseModal();
-      showCustomAlert(`Продано за +${price} V-Bucks!`);
+      showCustomAlert(`Продано за +${sumPrice.toLocaleString()} V-Bucks!`);
     }
 
     function sendWonToUpgrade() {
@@ -1166,7 +1362,7 @@
 
       const needle = document.getElementById('upgrade-needle');
       const currentMod = AppState.currentRotationAngle % 360;
-      const fullRotations = 1800; // 5 быстрых полных оборотов
+      const fullRotations = 1800;
       const angleDelta = (stopAngle - currentMod + 360) % 360;
       AppState.currentRotationAngle += fullRotations + angleDelta;
 
@@ -1278,6 +1474,50 @@
       `).join('');
     }
 
+    function renderCollection() {
+      const grid = document.getElementById('collection-grid');
+      const ratioEl = document.getElementById('collection-ratio');
+      const barEl = document.getElementById('collection-progress-bar');
+      if (!grid) return;
+
+      const ownedMap = new Map();
+      AppState.inventory.forEach(item => {
+        ownedMap.set(item.id.toLowerCase(), (ownedMap.get(item.id.toLowerCase()) || 0) + 1);
+      });
+
+      const uniqueOwnedCount = ownedMap.size;
+      const totalSkinsCount = SKINS_DB.length;
+      const percent = Math.round((uniqueOwnedCount / totalSkinsCount) * 100);
+
+      ratioEl.innerText = `${uniqueOwnedCount} / ${totalSkinsCount} (${percent}%)`;
+      barEl.style.width = `${percent}%`;
+
+      grid.innerHTML = SKINS_DB.map(skin => {
+        const count = ownedMap.get(skin.id.toLowerCase()) || 0;
+        const isOwned = count > 0;
+
+        return `
+          <div class="relative overflow-hidden rounded-2xl p-3 flex flex-col justify-between items-center text-center border-2 transition-all shadow-md ${isOwned ? `bg-fn-${skin.rarity} border-white/30` : 'glass-panel border-white/10 opacity-40 grayscale'}">
+            <div class="w-full flex justify-between items-center">
+              <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} shadow">${skin.rarity}</span>
+              ${isOwned ? `<span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 border border-emerald-400/40">x${count}</span>` : '<span class="text-xs">🔒</span>'}
+            </div>
+            <img src="${skin.img}" 
+                 onerror="handleSkinImgError(this, '${skin.id}')" 
+                 alt="${skin.name}" 
+                 class="w-20 h-20 object-contain my-2 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
+            <div class="w-full">
+              <h4 class="text-xs font-black text-white truncate drop-shadow">${skin.name}</h4>
+              <span class="text-[10px] font-mono text-yellow-300 font-extrabold">${skin.price.toLocaleString()} V-B</span>
+            </div>
+            <div class="mt-2 text-[10px] font-bold ${isOwned ? 'text-emerald-300' : 'text-slate-500'}">
+              ${isOwned ? '✓ В шкафчике' : 'Не найдено'}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     function sellInventoryItem(instanceId) {
       const idx = AppState.inventory.findIndex(s => s.instanceId === instanceId);
       if (idx === -1) return;
@@ -1343,7 +1583,7 @@
       confirmBanner.className = "fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4";
       confirmBanner.innerHTML = `
         <div class="glass-panel p-6 rounded-3xl max-w-sm w-full text-center border border-white/20">
-          <p class="font-bold text-white text-base mb-4">Сбросить весь прогресс и инвентарь?</p>
+          <p class="font-bold text-white text-base mb-4">Сбросить весь прогресс, промокоды и инвентарь?</p>
           <div class="flex justify-center gap-3">
             <button id="btn-confirm-reset" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 rounded-xl text-xs font-bold">Сбросить</button>
             <button id="btn-cancel-reset" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold">Отмена</button>
@@ -1354,9 +1594,10 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v3');
+        localStorage.removeItem('serjan_fndrop_data_v4');
         AppState.vbucks = 500;
         AppState.inventory = [];
+        AppState.usedPromoCodes = [];
         AppState.stats = { casesOpened: 0, upgradesPlayed: 0, upgradesWon: 0, vbucksEarned: 0 };
         AppState.currentRotationAngle = 0;
         AppState.save();
@@ -1397,6 +1638,7 @@
         if (e.key === 'Escape') {
           closeCaseModal();
           closeSkinSelectModal();
+          closePromoModal();
         }
       });
 
