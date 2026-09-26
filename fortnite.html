@@ -4,32 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FN Drop & Upgrade | serjantyabloko</title>
+  <!-- Preconnect to image CDN for lightning-fast skin asset fetches -->
+  <link rel="preconnect" href="https://fortnite-api.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fortnite-api.com">
+
+  <!-- Lightweight, zero-render-blocking Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Burbank+Big+Condensed:wght@700&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            fn: ['"Montserrat"', 'sans-serif'],
-            display: ['"Montserrat"', 'sans-serif']
-          },
           colors: {
             fnGold: '#FFE853',
             fnCyan: '#00F0FF',
             fnPurple: '#9d4edd',
-            fnPink: '#ff007f',
-            rarityUncommon: '#5bb82a',
-            rarityRare: '#2bb7e5',
-            rarityEpic: '#a335ee',
-            rarityLegendary: '#ff8800',
-            rarityMythic: '#edc428'
+            fnPink: '#ff007f'
           }
         }
       }
@@ -37,68 +28,64 @@
   </script>
 
   <style>
-    /* Theme definitions */
-    :root[data-theme="fn-classic"] {
-      --bg-gradient: radial-gradient(circle at 50% 20%, #1c1d42 0%, #0d0f22 60%, #060710 100%);
-      --card-bg: rgba(22, 25, 54, 0.75);
-      --card-border: rgba(90, 105, 200, 0.25);
-      --accent: #00F0FF;
-      --accent-glow: rgba(0, 240, 255, 0.4);
-    }
-    :root[data-theme="midas-gold"] {
-      --bg-gradient: radial-gradient(circle at 50% 20%, #2f2508 0%, #151104 60%, #070601 100%);
-      --card-bg: rgba(38, 30, 10, 0.85);
-      --card-border: rgba(255, 215, 0, 0.35);
-      --accent: #ffd700;
-      --accent-glow: rgba(255, 215, 0, 0.45);
-    }
-    :root[data-theme="cyber-neon"] {
-      --bg-gradient: radial-gradient(circle at 50% 20%, #240046 0%, #10002b 60%, #030008 100%);
-      --card-bg: rgba(36, 0, 70, 0.7);
-      --card-border: rgba(255, 0, 127, 0.3);
-      --accent: #ff007f;
-      --accent-glow: rgba(255, 0, 127, 0.45);
-    }
-    :root[data-theme="stealth-dark"] {
-      --bg-gradient: radial-gradient(circle at 50% 20%, #1e1e24 0%, #111114 60%, #08080a 100%);
-      --card-bg: rgba(26, 26, 32, 0.85);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --accent: #a0a0b0;
-      --accent-glow: rgba(255, 255, 255, 0.15);
+    /* System fonts for zero-latency font loading */
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      user-select: none;
+      background: var(--bg-gradient);
     }
 
-    body {
-      background: var(--bg-gradient);
-      min-height: 100vh;
-      font-family: 'Montserrat', sans-serif;
-      user-select: none;
+    /* Fast Theme definitions */
+    :root[data-theme="fn-classic"], :root {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #191c3d 0%, #0d0f22 65%, #05060e 100%);
+      --card-bg: rgba(20, 24, 52, 0.82);
+      --card-border: rgba(90, 115, 220, 0.28);
+      --accent: #00F0FF;
+    }
+    :root[data-theme="midas-gold"] {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #2a2106 0%, #131003 65%, #050401 100%);
+      --card-bg: rgba(36, 29, 9, 0.88);
+      --card-border: rgba(255, 215, 0, 0.35);
+      --accent: #ffd700;
+    }
+    :root[data-theme="cyber-neon"] {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #230043 0%, #0f0028 65%, #030008 100%);
+      --card-bg: rgba(34, 0, 65, 0.82);
+      --card-border: rgba(255, 0, 127, 0.32);
+      --accent: #ff007f;
+    }
+    :root[data-theme="stealth-dark"] {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #1f2026 0%, #121215 65%, #08080a 100%);
+      --card-bg: rgba(26, 26, 33, 0.88);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --accent: #9ca3af;
     }
 
     .glass-panel {
       background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
     }
 
     /* Rarity Glow Classes */
-    .border-uncommon { border-color: #5bb82a; box-shadow: 0 0 14px rgba(91, 184, 42, 0.25); }
-    .border-rare { border-color: #2bb7e5; box-shadow: 0 0 14px rgba(43, 183, 229, 0.25); }
-    .border-epic { border-color: #a335ee; box-shadow: 0 0 16px rgba(163, 53, 238, 0.3); }
-    .border-legendary { border-color: #ff8800; box-shadow: 0 0 20px rgba(255, 136, 0, 0.35); }
-    .border-mythic { border-color: #ffd700; box-shadow: 0 0 24px rgba(255, 215, 0, 0.45); }
+    .border-uncommon { border-color: #4ade80; box-shadow: 0 0 10px rgba(74, 222, 128, 0.2); }
+    .border-rare { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+    .border-epic { border-color: #c084fc; box-shadow: 0 0 12px rgba(192, 132, 252, 0.25); }
+    .border-legendary { border-color: #fb923c; box-shadow: 0 0 16px rgba(251, 146, 60, 0.3); }
+    .border-mythic { border-color: #facc15; box-shadow: 0 0 20px rgba(250, 204, 21, 0.4); }
 
-    .badge-uncommon { background-color: #5bb82a; }
-    .badge-rare { background-color: #2bb7e5; }
-    .badge-epic { background-color: #a335ee; }
-    .badge-legendary { background-color: #ff8800; }
-    .badge-mythic { background-color: #edc428; color: #000; }
+    .badge-uncommon { background-color: #22c55e; color: #fff; }
+    .badge-rare { background-color: #0284c7; color: #fff; }
+    .badge-epic { background-color: #9333ea; color: #fff; }
+    .badge-legendary { background-color: #ea580c; color: #fff; }
+    .badge-mythic { background-color: #eab308; color: #000; }
 
     /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
     ::-webkit-scrollbar-thumb { background: #3b4261; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #565f89; }
 
     /* Case Roulette Pointer */
     .roulette-pointer {
@@ -118,9 +105,9 @@
       top: -1px;
       left: 50%;
       transform: translateX(-50%);
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 12px solid #FFE853;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 11px solid #FFE853;
     }
     .roulette-pointer::after {
       content: '';
@@ -128,22 +115,22 @@
       bottom: -1px;
       left: 50%;
       transform: translateX(-50%);
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 12px solid #FFE853;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 11px solid #FFE853;
     }
 
-    /* Pulse animation for wins */
     @keyframes winPulse {
-      0% { transform: scale(0.96); opacity: 0.8; }
-      50% { transform: scale(1.04); opacity: 1; }
+      0% { transform: scale(0.97); opacity: 0.85; }
+      50% { transform: scale(1.03); opacity: 1; }
       100% { transform: scale(1); opacity: 1; }
     }
     .animate-win {
-      animation: winPulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: winPulse 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
   </style>
 </head>
+
 <body class="text-slate-100 flex flex-col min-h-screen">
 
   <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3 flex items-center justify-between shadow-2xl">
@@ -153,11 +140,12 @@
       </div>
       <div>
         <div class="flex items-center space-x-2">
-          <span class="font-extrabold text-xl tracking-wide bg-gradient-to-r from-cyan-300 via-purple-300 to-amber-300 bg-clip-text text-transparent">FORTDROP</span>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-widest">Upgrade</span>
+          <span class="font-black text-xl tracking-wide bg-gradient-to-r from-cyan-300 via-purple-300 to-amber-300 bg-clip-text text-transparent">FORTDROP</span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-widest">Rustgrade</span>
         </div>
-        <a href="https://serjantyabloko.github.io" target="_blank" class="text-xs text-slate-400 hover:text-cyan-300 transition-colors flex items-center gap-1">
-          <i class="fab fa-github"></i> serjantyabloko.github.io
+        <a href="https://serjantyabloko.github.io" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 font-medium">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          serjantyabloko.github.io
         </a>
       </div>
     </div>
@@ -165,56 +153,56 @@
     <!-- Navigation Tabs -->
     <nav class="hidden md:flex items-center space-x-1 glass-panel p-1 rounded-2xl border border-white/5">
       <button onclick="switchTab('cases')" id="nav-cases" class="px-5 py-2 rounded-xl text-sm font-bold transition-all bg-white/15 text-white shadow-inner flex items-center gap-2">
-        <i class="fas fa-box-open"></i> Кейсы
+        <span>📦</span> Кейсы
       </button>
       <button onclick="switchTab('upgrade')" id="nav-upgrade" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
-        <i class="fas fa-bolt text-amber-400"></i> Апгрейдер (Rustgrade)
+        <span>⚡</span> Апгрейдер
       </button>
       <button onclick="switchTab('inventory')" id="nav-inventory" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
-        <i class="fas fa-layer-group text-purple-400"></i> Инвентарь
-        <span id="nav-inv-count" class="bg-purple-500/30 text-purple-300 text-xs px-2 py-0.2 rounded-full font-mono">0</span>
+        <span>🎒</span> Инвентарь
+        <span id="nav-inv-count" class="bg-purple-500/30 text-purple-300 text-xs px-2 py-0.5 rounded-full font-mono">0</span>
       </button>
       <button onclick="switchTab('profile')" id="nav-profile" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-300 hover:text-white transition-all flex items-center gap-2">
-        <i class="fas fa-user-ninja text-emerald-400"></i> Профиль
+        <span>👤</span> Профиль
       </button>
     </nav>
 
     <!-- Top Status & Currency -->
     <div class="flex items-center space-x-3">
       <!-- V-Bucks Counter -->
-      <div class="flex items-center bg-slate-900/80 border border-cyan-500/40 rounded-2xl px-4 py-1.5 shadow-inner">
-        <img src="https://media.fortniteapi.io/images/84bc783e4a9e5db4d156aa41c6f37803/transparent.png" onerror="this.src='https://placehold.co/32x32/00f0ff/000?text=V'" alt="V-Bucks" class="w-6 h-6 mr-2 drop-shadow-md">
+      <div class="flex items-center bg-slate-950/80 border border-cyan-500/40 rounded-2xl px-4 py-1.5 shadow-inner">
+        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2 shadow-sm">V</div>
         <div class="flex flex-col text-right">
-          <span class="text-xs font-semibold text-cyan-300 leading-none">V-Bucks</span>
+          <span class="text-[10px] font-semibold text-cyan-300 uppercase leading-none">V-Bucks</span>
           <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">10,000</span>
         </div>
         <button onclick="claimDailyBonus()" id="btn-daily-bonus" title="Получить бесплатные V-Bucks" class="ml-3 px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md active:scale-95 flex items-center gap-1">
-          <i class="fas fa-gift"></i> <span class="hidden sm:inline">+1000</span>
+          <span>🎁</span> <span class="hidden sm:inline">+1000</span>
         </button>
       </div>
 
       <!-- Theme Switcher Dropdown -->
       <div class="relative">
         <button onclick="toggleThemeMenu()" class="w-10 h-10 rounded-xl glass-panel hover:border-cyan-400 flex items-center justify-center text-slate-300 hover:text-white transition-all">
-          <i class="fas fa-palette"></i>
+          🎨
         </button>
-        <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-48 glass-panel bg-slate-900/95 border border-white/20 rounded-2xl shadow-2xl p-2 z-50">
+        <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-52 glass-panel bg-slate-950/95 border border-white/20 rounded-2xl shadow-2xl p-2 z-50">
           <div class="text-[11px] font-bold text-slate-400 px-3 py-1 uppercase tracking-wider">Тема оформления</div>
           <button onclick="setTheme('fn-classic')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold hover:bg-white/10 flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_8px_#00F0FF]"></span> Fortnite Classic
+            <span class="w-3 h-3 rounded-full bg-cyan-400"></span> Fortnite Classic
           </button>
           <button onclick="setTheme('midas-gold')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold hover:bg-white/10 flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-amber-400 shadow-[0_0_8px_#FFD700]"></span> Midas Touch (Gold)
+            <span class="w-3 h-3 rounded-full bg-amber-400"></span> Midas Gold
           </button>
           <button onclick="setTheme('cyber-neon')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold hover:bg-white/10 flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-pink-500 shadow-[0_0_8px_#ff007f]"></span> Neon Cyberpunk
+            <span class="w-3 h-3 rounded-full bg-pink-500"></span> Cyber Neon
           </button>
           <button onclick="setTheme('stealth-dark')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold hover:bg-white/10 flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-slate-500"></span> Stealth Dark
           </button>
           <div class="border-t border-white/10 my-1"></div>
           <div class="flex items-center justify-between px-3 py-1.5">
-            <span class="text-xs text-slate-300">Звук</span>
+            <span class="text-xs text-slate-300">Звуковые эффекты</span>
             <input type="checkbox" id="sound-toggle" checked onchange="toggleSound(this.checked)" class="accent-cyan-400 cursor-pointer">
           </div>
         </div>
@@ -224,17 +212,17 @@
 
   <!-- Mobile Navigation Bar -->
   <div class="md:hidden glass-panel border-b border-white/10 flex justify-around py-2 px-1 text-xs">
-    <button onclick="switchTab('cases')" class="flex flex-col items-center py-1 px-3 rounded-lg text-cyan-400 font-bold">
-      <i class="fas fa-box-open mb-1"></i> Кейсы
+    <button onclick="switchTab('cases')" id="mob-cases" class="flex flex-col items-center py-1 px-3 rounded-lg text-cyan-400 font-bold">
+      <span class="text-base">📦</span> Кейсы
     </button>
-    <button onclick="switchTab('upgrade')" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
-      <i class="fas fa-bolt mb-1"></i> Апгрейд
+    <button onclick="switchTab('upgrade')" id="mob-upgrade" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+      <span class="text-base">⚡</span> Апгрейд
     </button>
-    <button onclick="switchTab('inventory')" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
-      <i class="fas fa-layer-group mb-1"></i> Инвентарь
+    <button onclick="switchTab('inventory')" id="mob-inventory" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+      <span class="text-base">🎒</span> Инвентарь
     </button>
-    <button onclick="switchTab('profile')" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
-      <i class="fas fa-user-ninja mb-1"></i> Профиль
+    <button onclick="switchTab('profile')" id="mob-profile" class="flex flex-col items-center py-1 px-3 rounded-lg text-slate-400 font-bold">
+      <span class="text-base">👤</span> Профиль
     </button>
   </div>
 
@@ -242,39 +230,36 @@
 
     <!-- ================= CASES TAB ================= -->
     <section id="tab-cases" class="space-y-8">
-      <!-- Banner / Announcement -->
-      <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-10 border border-white/15 bg-gradient-to-r from-blue-900/40 via-purple-900/30 to-pink-900/20">
+      <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-8 border border-white/15 bg-gradient-to-r from-blue-900/30 via-purple-900/25 to-pink-900/20">
         <div class="max-w-2xl space-y-3 relative z-10">
-          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">Сезон дропов открыт</span>
+          <span class="inline-block px-3 py-1 text-xs font-black tracking-widest bg-cyan-500/20 border border-cyan-400/40 rounded-full text-cyan-300 uppercase">Мгновенный отклик</span>
           <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase italic">
-            Открывай паки со скинами <span class="bg-gradient-to-r from-yellow-300 to-amber-500 bg-clip-text text-transparent">Fortnite</span>
+            Кейсы со скинами <span class="bg-gradient-to-r from-yellow-300 to-amber-500 bg-clip-text text-transparent">Fortnite</span>
           </h1>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Выбивай легендарные и мифические скины: Travis Scott, Black Knight, Renegade Raider. Улучшай их в казино-апгрейдере или продавай за V-Bucks!
+            Открывайте паки, выбивайте культовые скины и испытайте удачу в апгрейдере с шансами как на Rustgrade.
           </p>
         </div>
-        <div class="absolute right-0 bottom-0 top-0 w-1/3 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-400 via-transparent to-transparent"></div>
       </div>
 
-      <!-- Case Open Modal / Stage (Hidden until opened) -->
+      <!-- Case Open Modal / Stage -->
       <div id="case-opening-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
         <div class="w-full max-w-4xl glass-panel rounded-3xl p-6 border border-white/20 relative shadow-2xl overflow-hidden">
           <div class="flex justify-between items-center pb-4 border-b border-white/10">
             <div>
               <span id="modal-case-title" class="text-2xl font-black uppercase text-amber-300">Название кейса</span>
-              <p class="text-xs text-slate-400">Крутится рулетка... Удачи!</p>
+              <p class="text-xs text-slate-400">Крутится рулетка...</p>
             </div>
-            <button onclick="closeCaseModal()" id="btn-close-modal" class="hidden w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center transition-all">
-              <i class="fas fa-times"></i>
+            <button onclick="closeCaseModal()" id="btn-close-modal" class="hidden w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center transition-all font-bold">
+              ✕
             </button>
           </div>
 
           <!-- Horizontal Roulette Container -->
           <div class="relative my-8 overflow-hidden rounded-2xl glass-panel border border-white/20 h-48 bg-slate-950/70 shadow-inner flex items-center">
             <div class="roulette-pointer"></div>
-            <!-- The Strip that translates -->
-            <div id="roulette-strip" class="flex items-center gap-3 px-4 transition-transform duration-[6000ms] will-change-transform ease-[cubic-bezier(0.12,0.8,0.22,1)]" style="transform: translateX(0px);">
-              <!-- Rendered items in JS -->
+            <!-- Strip translated via JS -->
+            <div id="roulette-strip" class="flex items-center gap-3 px-4 transition-transform duration-[5500ms] will-change-transform ease-[cubic-bezier(0.12,0.8,0.22,1)]" style="transform: translateX(0px);">
             </div>
           </div>
 
@@ -282,14 +267,13 @@
           <div id="modal-won-display" class="hidden text-center py-4 animate-win">
             <span class="text-xs uppercase font-extrabold text-emerald-400 tracking-wider">Вы выиграли скин!</span>
             <div id="modal-won-skin-card" class="mt-3 inline-flex flex-col items-center glass-panel p-4 rounded-2xl border-2 max-w-xs shadow-2xl">
-              <!-- Injected by JS -->
             </div>
-            <div class="mt-5 flex justify-center gap-4">
+            <div class="mt-5 flex flex-wrap justify-center gap-3">
               <button onclick="sellJustWonSkin()" id="btn-sell-won" class="px-5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-300 font-bold text-sm transition-all flex items-center gap-2">
-                <i class="fas fa-coins"></i> Продать за <span id="won-skin-price">0</span> V-B
+                💰 Продать за <span id="won-skin-price">0</span> V-B
               </button>
               <button onclick="sendWonToUpgrade()" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2">
-                <i class="fas fa-bolt"></i> В апгрейдер
+                ⚡ В апгрейдер
               </button>
               <button onclick="closeCaseModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 font-bold text-sm transition-all">
                 Оставить в инвентаре
@@ -297,7 +281,7 @@
             </div>
           </div>
 
-          <!-- Spin Action Control Button in Modal -->
+          <!-- Spin Action Control Button -->
           <div id="modal-spin-controls" class="text-center pt-2">
             <button id="btn-confirm-spin" onclick="executeCaseSpin()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-lg tracking-wider shadow-xl shadow-yellow-500/20 active:scale-95 transition-all">
               КРУТИТЬ РУЛЕТКУ
@@ -309,10 +293,9 @@
       <!-- Cases Grid -->
       <div>
         <h2 class="text-xl sm:text-2xl font-black uppercase tracking-wide text-white mb-6 flex items-center gap-2">
-          <i class="fas fa-layer-group text-cyan-400"></i> Доступные паки
+          <span>📦</span> Доступные паки
         </h2>
         <div id="cases-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Cases injected via JS -->
         </div>
       </div>
     </section>
@@ -323,9 +306,9 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-white/10">
           <div>
             <h2 class="text-2xl sm:text-3xl font-black uppercase text-white flex items-center gap-3">
-              <i class="fas fa-bolt text-amber-400"></i> Казино Апгрейдер <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/30 font-mono">Rustgrade Mode</span>
+              <span>⚡</span> Казино Апгрейдер <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/30 font-mono">Rustgrade Mode</span>
             </h2>
-            <p class="text-sm text-slate-400 mt-1">Поставьте скин из инвентаря, выберите желанную цель и попытайтесь умножить стоимость!</p>
+            <p class="text-sm text-slate-400 mt-1">Поставьте скин из инвентаря, выберите цель и улучшите скин!</p>
           </div>
           <div class="text-right glass-panel px-4 py-2 rounded-2xl border border-white/10">
             <span class="text-xs text-slate-400 block">Шанс успеха</span>
@@ -333,34 +316,29 @@
           </div>
         </div>
 
-        <!-- Upgrade Arena -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
           <!-- Bet Skin (Left) -->
           <div class="lg:col-span-4 flex flex-col items-center">
             <h3 class="text-sm font-bold uppercase text-slate-400 mb-3 tracking-wider">Ваша ставка (из инвентаря)</h3>
             <div id="upgrade-bet-slot" onclick="openSkinSelectModal('bet')" class="w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-cyan-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group">
-              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-500 group-hover:text-cyan-300 transition-colors mb-3">
-                <i class="fas fa-plus text-2xl"></i>
+              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-cyan-300 transition-colors mb-3 text-2xl font-bold">
+                +
               </div>
               <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите скин</p>
-              <p class="text-xs text-slate-500 mt-1">Нажмите, чтобы выбрать из инвентаря</p>
+              <p class="text-xs text-slate-500 mt-1">Нажмите для выбора из инвентаря</p>
             </div>
             <button onclick="clearUpgradeBet()" id="btn-clear-bet" class="hidden mt-3 text-xs text-rose-400 hover:text-rose-300 transition-colors">
-              <i class="fas fa-times-circle mr-1"></i> Сбросить выбор
+              ✕ Сбросить выбор
             </button>
           </div>
 
           <!-- Spinner Wheel (Center) -->
           <div class="lg:col-span-4 flex flex-col items-center justify-center py-4">
             <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
-              <!-- SVG Radial Meter -->
               <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
-                <!-- Background Circle (Lose - Red) -->
-                <circle cx="50" cy="50" r="42" stroke="#dc2626" stroke-width="11" fill="transparent" opacity="0.3" />
-                <!-- Win Arc Circle (Green) -->
+                <circle cx="50" cy="50" r="42" stroke="#dc2626" stroke-width="11" fill="transparent" opacity="0.35" />
                 <circle id="upgrade-svg-arc" cx="50" cy="50" r="42" stroke="#10b981" stroke-width="11" fill="transparent"
-                  stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="round" class="transition-all duration-500 ease-out" />
+                  stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="round" class="transition-all duration-300 ease-out" />
               </svg>
 
               <!-- Rotating Arrow / Pointer Needle -->
@@ -368,15 +346,14 @@
                 <div class="absolute top-2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[24px] border-b-yellow-400 filter drop-shadow-[0_0_8px_rgba(255,232,83,0.8)]"></div>
               </div>
 
-              <!-- Inner Center Info Hub -->
+              <!-- Inner Hub -->
               <div class="absolute w-36 h-36 rounded-full glass-panel border border-white/20 flex flex-col items-center justify-center text-center p-2 shadow-2xl">
-                <span id="upgrade-multiplier" class="text-xs font-bold text-slate-400 font-mono">Множитель 0.0x</span>
+                <span id="upgrade-multiplier" class="text-xs font-bold text-slate-400 font-mono">0.0x</span>
                 <span id="upgrade-chance-center" class="text-2xl font-black text-white font-mono my-0.5">0%</span>
                 <span id="upgrade-state-label" class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-white/10 text-cyan-300">Ожидание</span>
               </div>
             </div>
 
-            <!-- Action Button -->
             <button id="btn-roll-upgrade" onclick="executeUpgradeRoll()" disabled class="mt-6 w-full max-w-xs py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 disabled:opacity-40 disabled:cursor-not-allowed hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-base uppercase tracking-wider shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
               УЛУЧШИТЬ СКИН
             </button>
@@ -386,38 +363,19 @@
           <div class="lg:col-span-4 flex flex-col items-center">
             <h3 class="text-sm font-bold uppercase text-slate-400 mb-3 tracking-wider">Желаемый скин (Цель)</h3>
             <div id="upgrade-target-slot" onclick="openSkinSelectModal('target')" class="w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-amber-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group">
-              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-500 group-hover:text-amber-300 transition-colors mb-3">
-                <i class="fas fa-crosshairs text-2xl"></i>
+              <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-300 transition-colors mb-3 text-2xl font-bold">
+                🎯
               </div>
               <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите цель</p>
-              <p class="text-xs text-slate-500 mt-1">Кликните для каталога скинов</p>
+              <p class="text-xs text-slate-500 mt-1">Каталог всех скинов игры</p>
             </div>
             <button onclick="clearUpgradeTarget()" id="btn-clear-target" class="hidden mt-3 text-xs text-rose-400 hover:text-rose-300 transition-colors">
-              <i class="fas fa-times-circle mr-1"></i> Сбросить цель
+              ✕ Сбросить цель
             </button>
           </div>
         </div>
 
-        <!-- Upgrade Result Notification -->
-        <div id="upgrade-result-banner" class="hidden mt-6 p-4 rounded-2xl border text-center animate-win">
-          <!-- Text rendered dynamically -->
-        </div>
-      </div>
-
-      <!-- Quick Tips -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-400">
-        <div class="glass-panel p-4 rounded-2xl border border-white/10 flex items-center gap-3">
-          <i class="fas fa-calculator text-cyan-400 text-xl"></i>
-          <span>Шанс рассчитывается математически честно: <code>(Цена ставки / Цена цели) × 95%</code>.</span>
-        </div>
-        <div class="glass-panel p-4 rounded-2xl border border-white/10 flex items-center gap-3">
-          <i class="fas fa-shield-alt text-amber-400 text-xl"></i>
-          <span>Если стрелка останавливается в зелёном секторе — вы получаете целевой скин!</span>
-        </div>
-        <div class="glass-panel p-4 rounded-2xl border border-white/10 flex items-center gap-3">
-          <i class="fas fa-skull text-rose-400 text-xl"></i>
-          <span>Красный сектор означает потерю выставленного скина. Рискуйте с умом!</span>
-        </div>
+        <div id="upgrade-result-banner" class="hidden mt-6 p-4 rounded-2xl border text-center animate-win"></div>
       </div>
     </section>
 
@@ -426,11 +384,10 @@
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 glass-panel p-6 rounded-3xl border border-white/15">
         <div>
           <h2 class="text-2xl font-black uppercase text-white flex items-center gap-3">
-            <i class="fas fa-layer-group text-purple-400"></i> Моя коллекция
+            <span>🎒</span> Моя коллекция
           </h2>
-          <p class="text-xs text-slate-400 mt-1">Всего предметов: <span id="inv-count-badge" class="font-bold text-white">0</span> • Общая стоимость: <span id="inv-total-value" class="font-bold text-yellow-300 font-mono">0 V-B</span></p>
+          <p class="text-xs text-slate-400 mt-1">Всего предметов: <span id="inv-count-badge" class="font-bold text-white">0</span> • Стоимость: <span id="inv-total-value" class="font-bold text-yellow-300 font-mono">0 V-B</span></p>
         </div>
-        <!-- Actions & Filters -->
         <div class="flex flex-wrap items-center gap-3">
           <select id="filter-rarity" onchange="renderInventory()" class="bg-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-semibold text-slate-200 outline-none">
             <option value="all">Все редкости</option>
@@ -446,19 +403,16 @@
             <option value="newest">Сначала новые</option>
           </select>
           <button onclick="sellAllInventoryDuplicates()" class="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1.5">
-            <i class="fas fa-dumpster"></i> Продать дубликаты
+            ♻️ Продать дубликаты
           </button>
         </div>
       </div>
 
-      <!-- Inventory Grid -->
-      <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <!-- Rendered items in JS -->
-      </div>
+      <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
       <div id="inventory-empty" class="hidden text-center py-16 glass-panel rounded-3xl border border-white/10">
-        <i class="fas fa-box-open text-5xl text-slate-600 mb-3"></i>
+        <span class="text-5xl block mb-3">📦</span>
         <h3 class="text-lg font-bold text-slate-300">Ваш инвентарь пуст</h3>
-        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Откройте кейсы во вкладке "Кейсы", чтобы пополнить свой шкафчик крутыми скинами!</p>
+        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Откройте кейсы, чтобы выбить первые скины!</p>
         <button onclick="switchTab('cases')" class="mt-4 px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all">
           Перейти к кейсам
         </button>
@@ -470,8 +424,8 @@
       <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15">
         <div class="flex flex-col sm:flex-row items-center gap-6 pb-8 border-b border-white/10">
           <div class="w-24 h-24 rounded-3xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-amber-400 p-1 shadow-2xl flex-shrink-0">
-            <div class="w-full h-full bg-slate-950 rounded-[22px] flex items-center justify-center">
-              <i class="fas fa-user-ninja text-4xl text-cyan-300"></i>
+            <div class="w-full h-full bg-slate-950 rounded-[22px] flex items-center justify-center text-4xl">
+              🥷
             </div>
           </div>
           <div class="text-center sm:text-left flex-1">
@@ -482,13 +436,12 @@
             <p class="text-xs text-slate-400 mt-1">Клиент проекта serjantyabloko.github.io • Доступ открыт</p>
             <div class="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
               <button onclick="resetAccountData()" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-rose-300 border border-white/10 hover:border-rose-500/30 text-xs font-semibold transition-all">
-                <i class="fas fa-redo-alt mr-1"></i> Сбросить весь прогресс
+                🔄 Сбросить прогресс
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Statistics Tiles -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
           <div class="glass-panel p-4 rounded-2xl border border-white/10">
             <span class="text-xs text-slate-400 font-semibold block">Открыто кейсов</span>
@@ -503,22 +456,8 @@
             <span id="stat-upgrades-winrate" class="text-2xl font-black text-emerald-400 font-mono mt-1 block">0%</span>
           </div>
           <div class="glass-panel p-4 rounded-2xl border border-white/10">
-            <span class="text-xs text-slate-400 font-semibold block">Продано скинов на сумму</span>
+            <span class="text-xs text-slate-400 font-semibold block">Продано на сумму</span>
             <span id="stat-vbucks-earned" class="text-2xl font-black text-yellow-300 font-mono mt-1 block">0 V-B</span>
-          </div>
-        </div>
-
-        <!-- Best skin showcase -->
-        <div class="mt-8 pt-8 border-t border-white/10">
-          <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 mb-4">Самый ценный скин в инвентаре</h3>
-          <div id="stat-best-skin" class="flex items-center gap-4 glass-panel p-4 rounded-2xl border border-white/10 max-w-md">
-            <div class="w-16 h-16 rounded-xl bg-slate-900 flex items-center justify-center p-1">
-              <i class="fas fa-gem text-amber-400 text-2xl"></i>
-            </div>
-            <div>
-              <h4 class="text-base font-bold text-white">Пока пусто</h4>
-              <p class="text-xs text-slate-400">Откройте кейс или выиграйте апгрейд!</p>
-            </div>
           </div>
         </div>
       </div>
@@ -526,7 +465,7 @@
 
   </main>
 
-  <!-- Target / Bet Selection Modal for Upgrader -->
+  <!-- Modal for selecting bet or target skin -->
   <div id="skin-selection-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="w-full max-w-3xl glass-panel rounded-3xl p-6 border border-white/20 shadow-2xl flex flex-col max-h-[85vh]">
       <div class="flex justify-between items-center pb-4 border-b border-white/10">
@@ -534,46 +473,41 @@
           <h3 id="select-modal-title" class="text-lg font-black text-white uppercase">Выбор скина</h3>
           <p id="select-modal-subtitle" class="text-xs text-slate-400">Выберите подходящий предмет из списка</p>
         </div>
-        <button onclick="closeSkinSelectModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center">
-          <i class="fas fa-times"></i>
+        <button onclick="closeSkinSelectModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center font-bold">
+          ✕
         </button>
       </div>
       <div id="select-modal-grid" class="flex-1 overflow-y-auto grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 pr-1">
-        <!-- Rendered items here -->
       </div>
     </div>
   </div>
 
-  <footer class="mt-auto border-t border-white/10 glass-panel py-6 px-4">
+  <footer class="mt-auto border-t border-white/10 glass-panel py-5 px-4">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <div class="flex items-center space-x-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="font-bold text-slate-200">FN DROP CASINO</span>
         <span>•</span>
-        <span>Симуляция открытия кейсов и казино скинов</span>
+        <span>Оптимизированная быстрая версия</span>
       </div>
       <div class="flex items-center gap-2">
         <span>Сделано для</span>
-        <a href="https://serjantyabloko.github.io" target="_blank" class="px-3 py-1 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold transition-all flex items-center gap-1.5 shadow-sm">
-          <i class="fab fa-github"></i> serjantyabloko
+        <a href="https://serjantyabloko.github.io" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold transition-all flex items-center gap-1.5 shadow-sm">
+          serjantyabloko
         </a>
       </div>
     </div>
   </footer>
 
   <script>
-    /* =========================================================
-       AUDIO SYNTHESIZER (Web Audio API - No external sounds)
-       ========================================================= */
+    /* Ultra-lightweight Web Audio synthesizer (0 external sound dependencies) */
     const AudioEngine = {
       ctx: null,
       enabled: true,
       init() {
         if (!this.ctx) {
           const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) {
-            this.ctx = new AudioContext();
-          }
+          if (AudioContext) this.ctx = new AudioContext();
         }
       },
       playTick() {
@@ -582,31 +516,30 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(400, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.04);
-          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+          osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.03);
+          gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.03);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start();
-          osc.stop(this.ctx.currentTime + 0.04);
+          osc.stop(this.ctx.currentTime + 0.03);
         } catch (e) {}
       },
       playWin() {
         if (!this.enabled || !this.ctx) return;
         try {
-          const notes = [261.63, 329.63, 392.00, 523.25];
-          notes.forEach((freq, idx) => {
+          [261.63, 329.63, 392.00, 523.25].forEach((freq, idx) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.08);
-            gain.gain.setValueAtTime(0.12, this.ctx.currentTime + idx * 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.08 + 0.4);
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.07);
+            gain.gain.setValueAtTime(0.08, this.ctx.currentTime + idx * 0.07);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.07 + 0.35);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
-            osc.start(this.ctx.currentTime + idx * 0.08);
-            osc.stop(this.ctx.currentTime + idx * 0.08 + 0.45);
+            osc.start(this.ctx.currentTime + idx * 0.07);
+            osc.stop(this.ctx.currentTime + idx * 0.07 + 0.4);
           });
         } catch (e) {}
       },
@@ -616,42 +549,79 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(140, this.ctx.currentTime);
-          osc.frequency.linearRampToValueAtTime(60, this.ctx.currentTime + 0.35);
-          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+          osc.frequency.setValueAtTime(130, this.ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(55, this.ctx.currentTime + 0.28);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.28);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start();
-          osc.stop(this.ctx.currentTime + 0.35);
+          osc.stop(this.ctx.currentTime + 0.28);
         } catch (e) {}
       }
     };
 
+    /* Inlined lightweight confetti (No external CDN script needed) */
+    function launchConfetti() {
+      const colors = ['#00F0FF', '#FFE853', '#9d4edd', '#10b981', '#f43f5e'];
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.style.position = 'fixed';
+        p.style.width = Math.random() * 8 + 6 + 'px';
+        p.style.height = Math.random() * 8 + 6 + 'px';
+        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        p.style.left = '50%';
+        p.style.top = '40%';
+        p.style.borderRadius = '2px';
+        p.style.zIndex = '9999';
+        p.style.pointerEvents = 'none';
+        p.style.transform = `translate3d(0,0,0)`;
+        document.body.appendChild(p);
+
+        const xSpeed = (Math.random() - 0.5) * 650;
+        const ySpeed = (Math.random() - 0.8) * 650;
+
+        p.animate([
+          { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
+          { transform: `translate(${xSpeed}px, ${ySpeed + 350}px) scale(0.3) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+        ], {
+          duration: 1000 + Math.random() * 500,
+          easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)'
+        }).onfinish = () => p.remove();
+      }
+    }
+
+    /* Fallback SVG generation for instant zero-lag rendering */
+    function getSkinSvgFallback(name, rarity) {
+      const colors = {
+        uncommon: '#22c55e',
+        rare: '#0284c7',
+        epic: '#9333ea',
+        legendary: '#ea580c',
+        mythic: '#eab308'
+      };
+      const col = colors[rarity] || '#38bdf8';
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="16" fill="%23111424"/><circle cx="50" cy="40" r="22" fill="${encodeURIComponent(col)}" opacity="0.3"/><text x="50" y="47" font-family="sans-serif" font-weight="900" font-size="20" fill="${encodeURIComponent(col)}" text-anchor="middle">${encodeURIComponent(name.slice(0, 2).toUpperCase())}</text><text x="50" y="80" font-family="sans-serif" font-weight="bold" font-size="9" fill="%2394a3b8" text-anchor="middle">${encodeURIComponent(rarity.toUpperCase())}</text></svg>`;
+    }
+
     const SKINS_DB = [
-      // Uncommon
-      { id: 'bullseye', name: 'Bullseye', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_282_athena_commando_f_bullseye/icon.png' },
-      { id: 'nog_ops', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_046_athena_commando_f_holidaysweater/icon.png' },
-      { id: 'whiplash', name: 'Whiplash', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_106_athena_commando_f_racer/icon.png' },
-      // Rare
-      { id: 'fishstick', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyaki/icon.png' },
-      { id: 'recon_expert', name: 'Recon Expert', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_022_athena_commando_f/icon.png' },
-      { id: 'chaos_agent', name: 'Chaos Agent', rarity: 'rare', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_562_athena_commando_m_oilhead/icon.png' },
-      // Epic
-      { id: 'peely', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_363_athena_commando_m_banana/icon.png' },
-      { id: 'skull_trooper', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_halloween/icon.png' },
-      { id: 'ghoul_trooper', name: 'Ghoul Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_f_halloween/icon.png' },
-      { id: 'drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/icon.png' },
-      { id: 'midas', name: 'Midas', rarity: 'epic', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/icon.png' },
-      // Legendary
-      { id: 'john_wick', name: 'John Wick', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_407_athena_commando_m_assassin/icon.png' },
-      { id: 'raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/icon.png' },
-      { id: 'black_knight', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/icon.png' },
-      { id: 'renegade_raider', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png' },
-      // Mythic / Exclusive
-      { id: 'travis_scott', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_745_athena_commando_m_cyclone/icon.png' },
-      { id: 'galaxy', name: 'Galaxy', rarity: 'mythic', price: 8000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png' },
-      { id: 'ikonik', name: 'iKONIK', rarity: 'mythic', price: 9500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_358_athena_commando_m_kpopfashion/icon.png' }
+      { id: 'bullseye', name: 'Bullseye', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_282_athena_commando_f_bullseye/smallicon.png' },
+      { id: 'nog_ops', name: 'Nog Ops', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_046_athena_commando_f_holidaysweater/smallicon.png' },
+      { id: 'whiplash', name: 'Whiplash', rarity: 'uncommon', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_106_athena_commando_f_racer/smallicon.png' },
+      { id: 'fishstick', name: 'Fishstick', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_315_athena_commando_m_teriyaki/smallicon.png' },
+      { id: 'recon_expert', name: 'Recon Expert', rarity: 'rare', price: 1200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_022_athena_commando_f/smallicon.png' },
+      { id: 'chaos_agent', name: 'Chaos Agent', rarity: 'rare', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_562_athena_commando_m_oilhead/smallicon.png' },
+      { id: 'peely', name: 'Peely', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_363_athena_commando_m_banana/smallicon.png' },
+      { id: 'skull_trooper', name: 'Skull Trooper', rarity: 'epic', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_halloween/smallicon.png' },
+      { id: 'drift', name: 'Drift', rarity: 'epic', price: 1800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_161_athena_commando_m_drift/smallicon.png' },
+      { id: 'midas', name: 'Midas', rarity: 'epic', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_694_athena_commando_m_catburglar/smallicon.png' },
+      { id: 'john_wick', name: 'John Wick', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_407_athena_commando_m_assassin/smallicon.png' },
+      { id: 'raven', name: 'Raven', rarity: 'legendary', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_102_athena_commando_m_raven/smallicon.png' },
+      { id: 'black_knight', name: 'Black Knight', rarity: 'legendary', price: 3500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commando_m_medieval/smallicon.png' },
+      { id: 'renegade_raider', name: 'Renegade Raider', rarity: 'legendary', price: 4200, img: 'https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/smallicon.png' },
+      { id: 'travis_scott', name: 'Travis Scott', rarity: 'mythic', price: 6500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_745_athena_commando_m_cyclone/smallicon.png' },
+      { id: 'galaxy', name: 'Galaxy', rarity: 'mythic', price: 8000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/smallicon.png' },
+      { id: 'ikonik', name: 'iKONIK', rarity: 'mythic', price: 9500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_358_athena_commando_m_kpopfashion/smallicon.png' }
     ];
 
     const CASES_DATA = [
@@ -660,7 +630,6 @@
         name: 'Starter Recruit Drop',
         price: 500,
         desc: 'Отличный пак для старта. Необычные и редкие скины.',
-        icon: 'fa-shield-halved',
         color: 'from-emerald-500 to-teal-700',
         pool: [
           { skinId: 'bullseye', weight: 45 },
@@ -674,7 +643,6 @@
         name: 'Epic Legends Pack',
         price: 1400,
         desc: 'Популярные герои и эпические классические скины.',
-        icon: 'fa-crown',
         color: 'from-purple-600 to-indigo-800',
         pool: [
           { skinId: 'fishstick', weight: 35 },
@@ -689,7 +657,6 @@
         name: 'Midas Golden Vault',
         price: 2600,
         desc: 'Топовые легендарные скины и сокровища Мидаса.',
-        icon: 'fa-trophy',
         color: 'from-amber-400 to-orange-600',
         pool: [
           { skinId: 'drift', weight: 35 },
@@ -703,8 +670,7 @@
         id: 'og_mythic',
         name: 'OG Mythic Grails',
         price: 5000,
-        desc: 'Только самый редкий эксклюзив: Travis Scott, Galaxy, Renegade Raider.',
-        icon: 'fa-fire-alt',
+        desc: 'Редчайшие эксклюзивы: Travis Scott, Galaxy, Renegade Raider.',
         color: 'from-pink-600 via-rose-600 to-yellow-500',
         pool: [
           { skinId: 'black_knight', weight: 40 },
@@ -731,31 +697,31 @@
       winningIndex: 0,
       isRolling: false,
       currentWonSkin: null,
-
-      // Upgrader Selection State
       upgradeBetSkin: null,
       upgradeTargetSkin: null,
       isUpgrading: false,
 
       load() {
-        const saved = localStorage.getItem('serjant_fndrop_data');
-        if (saved) {
-          try {
+        try {
+          const saved = localStorage.getItem('serjant_fndrop_data');
+          if (saved) {
             const data = JSON.parse(saved);
-            this.vbucks = data.vbucks ?? 10000;
-            this.inventory = data.inventory ?? [];
-            this.stats = data.stats ?? this.stats;
-            this.theme = data.theme ?? 'fn-classic';
-          } catch(e) {}
-        }
+            this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 10000;
+            this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
+            this.stats = data.stats || this.stats;
+            this.theme = data.theme || 'fn-classic';
+          }
+        } catch (e) {}
       },
       save() {
-        localStorage.setItem('serjant_fndrop_data', JSON.stringify({
-          vbucks: this.vbucks,
-          inventory: this.inventory,
-          stats: this.stats,
-          theme: this.theme
-        }));
+        try {
+          localStorage.setItem('serjant_fndrop_data', JSON.stringify({
+            vbucks: this.vbucks,
+            inventory: this.inventory,
+            stats: this.stats,
+            theme: this.theme
+          }));
+        } catch (e) {}
       }
     };
 
@@ -768,17 +734,21 @@
 
     function switchTab(tabId) {
       ['cases', 'upgrade', 'inventory', 'profile'].forEach(tab => {
-        const section = document.getElementById(`tab-tab` || `tab-${tab}`);
+        const section = document.getElementById(`tab-${tab}`);
         const navBtn = document.getElementById(`nav-${tab}`);
-        if (section) section.classList.toggle('hidden', tab !== tabId);
+        const mobBtn = document.getElementById(`mob-${tab}`);
+        const isActive = tab === tabId;
+
+        if (section) section.classList.toggle('hidden', !isActive);
         if (navBtn) {
-          if (tab === tabId) {
-            navBtn.classList.add('bg-white/15', 'text-white', 'shadow-inner');
-            navBtn.classList.remove('text-slate-300');
-          } else {
-            navBtn.classList.remove('bg-white/15', 'text-white', 'shadow-inner');
-            navBtn.classList.add('text-slate-300');
-          }
+          navBtn.classList.toggle('bg-white/15', isActive);
+          navBtn.classList.toggle('text-white', isActive);
+          navBtn.classList.toggle('shadow-inner', isActive);
+          navBtn.classList.toggle('text-slate-300', !isActive);
+        }
+        if (mobBtn) {
+          mobBtn.classList.toggle('text-cyan-400', isActive);
+          mobBtn.classList.toggle('text-slate-400', !isActive);
         }
       });
       if (tabId === 'inventory') renderInventory();
@@ -786,8 +756,7 @@
     }
 
     function toggleThemeMenu() {
-      const menu = document.getElementById('theme-dropdown');
-      menu.classList.toggle('hidden');
+      document.getElementById('theme-dropdown').classList.toggle('hidden');
     }
 
     function setTheme(themeName) {
@@ -808,12 +777,12 @@
       AppState.save();
       updateHeaderBalance();
       AudioEngine.playWin();
-      confetti({ particleCount: 50, spread: 60, origin: { y: 0.2 } });
+      launchConfetti();
       const btn = document.getElementById('btn-daily-bonus');
-      btn.innerHTML = '<i class="fas fa-check"></i> +1000 V-B!';
+      btn.innerHTML = '<span>✅</span> <span class="hidden sm:inline">+1000</span>';
       setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-gift"></i> <span class="hidden sm:inline">+1000</span>';
-      }, 1500);
+        btn.innerHTML = '<span>🎁</span> <span class="hidden sm:inline">+1000</span>';
+      }, 1400);
     }
 
     function getSkinById(id) {
@@ -824,12 +793,9 @@
       const grid = document.getElementById('cases-grid');
       if (!grid) return;
       grid.innerHTML = CASES_DATA.map(c => `
-        <div class="glass-panel rounded-3xl p-5 border border-white/15 hover:border-cyan-400/50 transition-all flex flex-col justify-between group shadow-xl hover:-translate-y-1 duration-200">
+        <div class="glass-panel rounded-3xl p-5 border border-white/15 hover:border-cyan-400/50 transition-all flex flex-col justify-between group shadow-xl">
           <div>
-            <div class="h-36 rounded-2xl bg-gradient-to-tr ${c.color} p-4 flex flex-col justify-between relative overflow-hidden shadow-lg">
-              <div class="absolute -right-4 -bottom-4 opacity-25 text-8xl text-white">
-                <i class="fas ${c.icon}"></i>
-              </div>
+            <div class="h-32 rounded-2xl bg-gradient-to-tr ${c.color} p-4 flex flex-col justify-between relative overflow-hidden shadow-lg">
               <span class="text-xs font-black tracking-widest text-white/80 uppercase">Loot Case</span>
               <div class="z-10">
                 <h3 class="text-xl font-black uppercase text-white drop-shadow">${c.name}</h3>
@@ -839,13 +805,13 @@
             <div class="mt-4 flex flex-wrap gap-1.5">
               ${c.pool.map(p => {
                 const skin = getSkinById(p.skinId);
-                return `<span class="text-[10px] px-2 py-0.5 rounded-md font-bold badge-${skin.rarity} text-white">${skin.name}</span>`;
+                return `<span class="text-[10px] px-2 py-0.5 rounded-md font-bold badge-${skin.rarity}">${skin.name}</span>`;
               }).join('')}
             </div>
           </div>
           <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-            <div class="flex items-center text-yellow-300 font-extrabold text-base font-mono">
-              <i class="fas fa-coins mr-1.5 text-xs"></i> ${c.price.toLocaleString()} V-B
+            <div class="text-yellow-300 font-extrabold text-base font-mono">
+              ${c.price.toLocaleString()} V-B
             </div>
             <button onclick="prepareCaseOpen('${c.id}')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-cyan-500 hover:text-slate-950 font-black text-xs uppercase tracking-wider transition-all">
               Открыть
@@ -861,7 +827,7 @@
       if (!currentCase) return;
 
       if (AppState.vbucks < currentCase.price) {
-        showCustomAlert("Недостаточно V-Bucks! Заберите ежедневный бонус или продайте ненужные скины.");
+        showCustomAlert("Недостаточно V-Bucks! Заберите бонус или продайте скины.");
         return;
       }
 
@@ -872,16 +838,15 @@
       document.getElementById('btn-close-modal').classList.add('hidden');
       document.getElementById('modal-spin-controls').classList.remove('hidden');
 
-      // Pre-fill roulette strip with 60 randomized items based on weights
       const strip = document.getElementById('roulette-strip');
       strip.style.transition = 'none';
       strip.style.transform = 'translateX(0px)';
 
-      const items = [];
       const pool = currentCase.pool;
       let totalWeight = pool.reduce((acc, i) => acc + i.weight, 0);
+      const items = [];
 
-      for (let i = 0; i < 65; i++) {
+      for (let i = 0; i < 60; i++) {
         let rand = Math.random() * totalWeight;
         let cumulative = 0;
         let chosenSkin = getSkinById(pool[0].skinId);
@@ -895,15 +860,14 @@
         items.push(chosenSkin);
       }
 
-      // Pre-select winning index around position 50
-      AppState.winningIndex = 50;
+      AppState.winningIndex = 48;
       AppState.rouletteItems = items;
       AppState.currentWonSkin = items[AppState.winningIndex];
 
-      strip.innerHTML = items.map((skin, idx) => `
-        <div class="flex-shrink-0 w-36 h-40 glass-panel rounded-2xl p-2.5 flex flex-col items-center justify-between border-2 border-${skin.rarity} bg-slate-900/90 text-center">
+      strip.innerHTML = items.map(skin => `
+        <div class="flex-shrink-0 w-36 h-40 glass-panel rounded-2xl p-2 flex flex-col items-center justify-between border-2 border-${skin.rarity} bg-slate-900/90 text-center">
           <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full badge-${skin.rarity}">${skin.rarity}</span>
-          <img src="${skin.img}" alt="${skin.name}" onerror="this.src='https://placehold.co/100x100/1e293b/fff?text=${skin.name}'" class="w-20 h-20 object-contain drop-shadow">
+          <img src="${skin.img}" loading="lazy" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" alt="${skin.name}" class="w-16 h-16 object-contain">
           <span class="text-xs font-bold text-slate-200 truncate w-full">${skin.name}</span>
         </div>
       `).join('');
@@ -918,7 +882,6 @@
         return;
       }
 
-      // Deduct V-Bucks
       AppState.vbucks -= AppState.currentActiveCase.price;
       AppState.stats.casesOpened++;
       updateHeaderBalance();
@@ -928,33 +891,30 @@
       document.getElementById('modal-spin-controls').classList.add('hidden');
 
       const strip = document.getElementById('roulette-strip');
-      const itemWidth = 144 + 12; // width + gap
-      const offsetVariation = (Math.random() * 80) - 40; // slight random center offset
+      const itemWidth = 144 + 12;
+      const offsetVariation = (Math.random() * 60) - 30;
       const targetTranslate = -((AppState.winningIndex * itemWidth) - (window.innerWidth < 640 ? 120 : 380) + offsetVariation);
 
-      strip.style.transition = 'transform 5.5s cubic-bezier(0.12, 0.8, 0.22, 1)';
+      strip.style.transition = 'transform 5.2s cubic-bezier(0.12, 0.8, 0.22, 1)';
       strip.style.transform = `translateX(${targetTranslate}px)`;
 
-      // Audio tick intervals during spinning
       let tickInterval = 60;
       let tickTimer;
       const playSpinTicks = () => {
         AudioEngine.playTick();
-        tickInterval *= 1.07;
-        if (tickInterval < 550) {
+        tickInterval *= 1.08;
+        if (tickInterval < 500) {
           tickTimer = setTimeout(playSpinTicks, tickInterval);
         }
       };
       playSpinTicks();
 
-      // On roulette stop
       setTimeout(() => {
         clearTimeout(tickTimer);
         AppState.isRolling = false;
         AudioEngine.playWin();
-        confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+        launchConfetti();
 
-        // Add to inventory
         const wonSkin = {
           ...AppState.currentWonSkin,
           instanceId: Date.now() + Math.random().toString(36).substr(2, 4)
@@ -963,23 +923,21 @@
         AppState.save();
         updateHeaderBalance();
 
-        // Show won skin card
         document.getElementById('modal-won-display').classList.remove('hidden');
         document.getElementById('btn-close-modal').classList.remove('hidden');
         document.getElementById('won-skin-price').innerText = wonSkin.price.toLocaleString();
         document.getElementById('modal-won-skin-card').innerHTML = `
           <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${wonSkin.rarity} mb-2">${wonSkin.rarity}</span>
-          <img src="${wonSkin.img}" class="w-32 h-32 object-contain drop-shadow-2xl">
+          <img src="${wonSkin.img}" onerror="this.src='${getSkinSvgFallback(wonSkin.name, wonSkin.rarity)}'" class="w-28 h-28 object-contain">
           <h4 class="text-lg font-black text-white mt-2">${wonSkin.name}</h4>
           <span class="text-xs font-mono text-yellow-300 font-bold mt-1">${wonSkin.price.toLocaleString()} V-Bucks</span>
         `;
-      }, 5600);
+      }, 5300);
     }
 
     function sellJustWonSkin() {
       if (!AppState.currentWonSkin) return;
       const price = AppState.currentWonSkin.price;
-      // Remove latest added instance
       AppState.inventory.pop();
       AppState.vbucks += price;
       AppState.stats.vbucksEarned += price;
@@ -987,7 +945,7 @@
       updateHeaderBalance();
       AudioEngine.playTick();
       closeCaseModal();
-      showCustomAlert(`Вы продали ${AppState.currentWonSkin.name} за +${price} V-Bucks!`);
+      showCustomAlert(`Продано за +${price} V-Bucks!`);
     }
 
     function sendWonToUpgrade() {
@@ -1003,7 +961,7 @@
       document.getElementById('case-opening-modal').classList.add('hidden');
     }
 
-    let currentSelectMode = 'bet'; // 'bet' or 'target'
+    let currentSelectMode = 'bet';
 
     function openSkinSelectModal(mode) {
       if (AppState.isUpgrading) return;
@@ -1014,31 +972,30 @@
       const grid = document.getElementById('select-modal-grid');
 
       if (mode === 'bet') {
-        title.innerText = "Выберите скин для ставки";
-        subtitle.innerText = "Предметы из вашего личного инвентаря";
+        title.innerText = "Выберите ставку";
+        subtitle.innerText = "Ваши скины из инвентаря";
         if (AppState.inventory.length === 0) {
           grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400">Инвентарь пуст. Сначала откройте кейс!</div>`;
         } else {
           grid.innerHTML = AppState.inventory.map(skin => `
             <div onclick="selectUpgradeBetByInstance('${skin.instanceId}')" class="glass-panel p-3 rounded-2xl border border-white/10 hover:border-cyan-400 cursor-pointer flex flex-col items-center justify-between text-center group">
               <span class="text-[9px] uppercase font-bold px-2 py-0.5 rounded badge-${skin.rarity}">${skin.rarity}</span>
-              <img src="${skin.img}" class="w-16 h-16 object-contain my-2 group-hover:scale-105 transition-transform">
+              <img src="${skin.img}" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" class="w-16 h-16 object-contain my-2 group-hover:scale-105 transition-transform">
               <span class="text-xs font-bold text-white truncate w-full">${skin.name}</span>
               <span class="text-[11px] font-mono text-yellow-300 font-bold">${skin.price} V-B</span>
             </div>
           `).join('');
         }
       } else {
-        title.innerText = "Выберите целевой скин (Target)";
-        subtitle.innerText = "Скин, который хотите выиграть из магазина";
-        // Show skins that are more expensive than bet (if bet exists)
+        title.innerText = "Выберите целевой скин";
+        subtitle.innerText = "Скин, который хотите выиграть";
         const minPrice = AppState.upgradeBetSkin ? AppState.upgradeBetSkin.price : 0;
         const availableSkins = SKINS_DB.filter(s => s.price > minPrice);
 
         grid.innerHTML = availableSkins.map(skin => `
           <div onclick="selectUpgradeTarget('${skin.id}')" class="glass-panel p-3 rounded-2xl border border-white/10 hover:border-amber-400 cursor-pointer flex flex-col items-center justify-between text-center group">
             <span class="text-[9px] uppercase font-bold px-2 py-0.5 rounded badge-${skin.rarity}">${skin.rarity}</span>
-            <img src="${skin.img}" class="w-16 h-16 object-contain my-2 group-hover:scale-105 transition-transform">
+            <img src="${skin.img}" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" class="w-16 h-16 object-contain my-2 group-hover:scale-105 transition-transform">
             <span class="text-xs font-bold text-white truncate w-full">${skin.name}</span>
             <span class="text-[11px] font-mono text-yellow-300 font-bold">${skin.price} V-B</span>
           </div>
@@ -1064,7 +1021,7 @@
       slot.className = `w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-${skin.rarity} glass-panel flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity}">${skin.rarity}</span>
-        <img src="${skin.img}" class="w-32 h-32 object-contain drop-shadow">
+        <img src="${skin.img}" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" class="w-28 h-28 object-contain">
         <div>
           <h4 class="text-base font-bold text-white">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1080,11 +1037,9 @@
       const slot = document.getElementById('upgrade-bet-slot');
       slot.className = "w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-cyan-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group";
       slot.innerHTML = `
-        <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-500 group-hover:text-cyan-300 transition-colors mb-3">
-          <i class="fas fa-plus text-2xl"></i>
-        </div>
+        <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-cyan-300 transition-colors mb-3 text-2xl font-bold">+</div>
         <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите скин</p>
-        <p class="text-xs text-slate-500 mt-1">Нажмите, чтобы выбрать из инвентаря</p>
+        <p class="text-xs text-slate-500 mt-1">Нажмите для выбора из инвентаря</p>
       `;
       document.getElementById('btn-clear-bet').classList.add('hidden');
       recalculateUpgradeOdds();
@@ -1098,7 +1053,7 @@
       slot.className = `w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-${skin.rarity} glass-panel flex flex-col items-center justify-between p-5 text-center`;
       slot.innerHTML = `
         <span class="text-xs uppercase font-extrabold px-3 py-1 rounded-full badge-${skin.rarity}">${skin.rarity}</span>
-        <img src="${skin.img}" class="w-32 h-32 object-contain drop-shadow">
+        <img src="${skin.img}" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" class="w-28 h-28 object-contain">
         <div>
           <h4 class="text-base font-bold text-white">${skin.name}</h4>
           <p class="text-xs font-mono text-yellow-300 font-extrabold mt-0.5">${skin.price.toLocaleString()} V-Bucks</p>
@@ -1115,11 +1070,9 @@
       const slot = document.getElementById('upgrade-target-slot');
       slot.className = "w-full max-w-[260px] h-[310px] rounded-3xl border-2 border-dashed border-white/20 glass-panel hover:border-amber-400/60 transition-all cursor-pointer flex flex-col items-center justify-center p-4 text-center group";
       slot.innerHTML = `
-        <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-500 group-hover:text-amber-300 transition-colors mb-3">
-          <i class="fas fa-crosshairs text-2xl"></i>
-        </div>
+        <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-300 transition-colors mb-3 text-2xl font-bold">🎯</div>
         <p class="text-sm font-bold text-slate-300 group-hover:text-white">Выберите цель</p>
-        <p class="text-xs text-slate-500 mt-1">Кликните для каталога скинов</p>
+        <p class="text-xs text-slate-500 mt-1">Каталог всех скинов игры</p>
       `;
       document.getElementById('btn-clear-target').classList.add('hidden');
       recalculateUpgradeOdds();
@@ -1136,26 +1089,23 @@
         btn.disabled = true;
         chanceText.innerText = "0.00%";
         centerChance.innerText = "0%";
-        multiplierText.innerText = "Множитель 0.0x";
-        svgArc.style.strokeDashoffset = "263.89"; // Full circumference of radius 42 is 2*pi*42 ~= 263.89
+        multiplierText.innerText = "0.0x";
+        svgArc.style.strokeDashoffset = "263.89";
         return;
       }
 
-      // Classic Rustgrade formula: (Bet Value / Target Value) * 95% (5% house edge)
+      // Classic Rustgrade formula: (Bet / Target) * 95%
       const ratio = AppState.upgradeBetSkin.price / AppState.upgradeTargetSkin.price;
-      let chance = Math.min(ratio * 95, 95); // Max 95% cap
+      let chance = Math.min(ratio * 95, 95);
       if (chance <= 0) chance = 1;
 
       const multiplier = (AppState.upgradeTargetSkin.price / AppState.upgradeBetSkin.price).toFixed(2);
-      multiplierText.innerText = `Множитель ${multiplier}x`;
+      multiplierText.innerText = `${multiplier}x`;
       chanceText.innerText = `${chance.toFixed(2)}%`;
       centerChance.innerText = `${chance.toFixed(1)}%`;
 
-      // Update SVG green arc stroke dashoffset
       const totalCircumference = 263.89;
-      const offset = totalCircumference - (totalCircumference * (chance / 100));
-      svgArc.style.strokeDashoffset = offset;
-
+      svgArc.style.strokeDashoffset = totalCircumference - (totalCircumference * (chance / 100));
       btn.disabled = false;
     }
 
@@ -1173,31 +1123,17 @@
       const targetSkin = AppState.upgradeTargetSkin;
       const ratio = betSkin.price / targetSkin.price;
       const winProbability = Math.min(ratio * 0.95, 0.95);
-
-      // Random outcome check
       const isWin = Math.random() < winProbability;
 
-      // Needle calculations:
-      // In our circle: Green sector covers angle from 0 deg up to (winProbability * 360) deg.
-      // Red sector covers from (winProbability * 360) deg up to 360 deg.
       const winDegrees = winProbability * 360;
-      let finalTargetDeg = 0;
+      let finalTargetDeg = isWin
+        ? Math.random() * (winDegrees - 6) + 3
+        : winDegrees + (Math.random() * (360 - winDegrees - 6)) + 3;
 
-      if (isWin) {
-        // Landing inside the green zone (margin of 4 deg to look clean)
-        finalTargetDeg = Math.random() * (winDegrees - 6) + 3;
-      } else {
-        // Landing inside the red zone
-        finalTargetDeg = winDegrees + (Math.random() * (360 - winDegrees - 6)) + 3;
-      }
-
-      // Add 5 full spins (1800 deg) for dramatic suspense
-      const totalRotation = 1800 + finalTargetDeg;
       const needle = document.getElementById('upgrade-needle');
       needle.style.transition = 'transform 4.5s cubic-bezier(0.12, 0.8, 0.22, 1)';
-      needle.style.transform = `rotate(${totalRotation}deg)`;
+      needle.style.transform = `rotate(${1800 + finalTargetDeg}deg)`;
 
-      // Audio tick intervals during roll
       let tickInterval = 50;
       let tickTimer;
       const playUpgradeTicks = () => {
@@ -1209,25 +1145,18 @@
       };
       playUpgradeTicks();
 
-      // Resolve result after spin finishes
       setTimeout(() => {
         clearTimeout(tickTimer);
         AppState.isUpgrading = false;
         AppState.stats.upgradesPlayed++;
 
-        // Remove the bet skin from inventory
         const betIndex = AppState.inventory.findIndex(s => s.instanceId === betSkin.instanceId);
-        if (betIndex !== -1) {
-          AppState.inventory.splice(betIndex, 1);
-        }
+        if (betIndex !== -1) AppState.inventory.splice(betIndex, 1);
 
         if (isWin) {
-          // Player won
           AppState.stats.upgradesWon++;
           AudioEngine.playWin();
-          confetti({ particleCount: 90, spread: 80, origin: { y: 0.5 } });
-
-          // Add target skin
+          launchConfetti();
           AppState.inventory.push({
             ...targetSkin,
             instanceId: Date.now() + Math.random().toString(36).substr(2, 4)
@@ -1235,21 +1164,20 @@
 
           resultBanner.className = "mt-6 p-4 rounded-2xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 text-center animate-win block";
           resultBanner.innerHTML = `
-            <div class="font-black text-xl uppercase tracking-wider flex items-center justify-center gap-2">
-              <i class="fas fa-check-circle"></i> УСПЕХ! ВЫ ВЫИГРАЛИ ${targetSkin.name}!
+            <div class="font-black text-xl uppercase tracking-wider">
+              ✅ УСПЕХ! ВЫ ПОЛУЧИЛИ ${targetSkin.name}!
             </div>
-            <p class="text-xs text-slate-300 mt-1">Скин успешно добавлен в ваш шкафчик (+${targetSkin.price} V-Bucks ценности).</p>
+            <p class="text-xs text-slate-300 mt-1">+${targetSkin.price} V-Bucks ценности в шкафчик.</p>
           `;
           document.getElementById('upgrade-state-label').innerText = "ВЫИГРЫШ";
         } else {
-          // Player lost
           AudioEngine.playBust();
           resultBanner.className = "mt-6 p-4 rounded-2xl border border-rose-500/50 bg-rose-500/10 text-rose-300 text-center animate-win block";
           resultBanner.innerHTML = `
-            <div class="font-black text-xl uppercase tracking-wider flex items-center justify-center gap-2">
-              <i class="fas fa-skull"></i> НЕУДАЧА! СТАВКА СГОРЕЛА
+            <div class="font-black text-xl uppercase tracking-wider">
+              ❌ НЕУДАЧА! СТАВКА СГОРЕЛА
             </div>
-            <p class="text-xs text-slate-300 mt-1">Стрелка попала в красный сектор. Попробуйте еще раз с другим скином!</p>
+            <p class="text-xs text-slate-300 mt-1">Стрелка остановилась на красном секторе.</p>
           `;
           document.getElementById('upgrade-state-label').innerText = "ПРОИГРЫШ";
         }
@@ -1278,33 +1206,30 @@
       }
       emptyView.classList.add('hidden');
 
-      // Filters
       const rarityFilter = document.getElementById('filter-rarity').value;
       const sortFilter = document.getElementById('filter-sort').value;
 
       let items = [...AppState.inventory];
-      if (rarityFilter !== 'all') {
-        items = items.filter(i => i.rarity === rarityFilter);
-      }
+      if (rarityFilter !== 'all') items = items.filter(i => i.rarity === rarityFilter);
 
       if (sortFilter === 'price-desc') items.sort((a, b) => b.price - a.price);
       else if (sortFilter === 'price-asc') items.sort((a, b) => a.price - b.price);
       else if (sortFilter === 'newest') items.reverse();
 
       grid.innerHTML = items.map(skin => `
-        <div class="glass-panel p-3.5 rounded-2xl border-2 border-${skin.rarity} flex flex-col justify-between items-center text-center group hover:-translate-y-1 transition-all shadow-md">
+        <div class="glass-panel p-3 rounded-2xl border-2 border-${skin.rarity} flex flex-col justify-between items-center text-center group hover:-translate-y-1 transition-all shadow-md">
           <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full badge-${skin.rarity} self-start">${skin.rarity}</span>
-          <img src="${skin.img}" alt="${skin.name}" onerror="this.src='https://placehold.co/120x120/1e293b/fff?text=${skin.name}'" class="w-24 h-24 object-contain my-2 group-hover:scale-110 transition-transform">
+          <img src="${skin.img}" loading="lazy" onerror="this.src='${getSkinSvgFallback(skin.name, skin.rarity)}'" alt="${skin.name}" class="w-20 h-20 object-contain my-2 group-hover:scale-105 transition-transform">
           <div class="w-full">
             <h4 class="text-xs font-bold text-white truncate">${skin.name}</h4>
             <span class="text-[11px] font-mono text-yellow-300 font-extrabold">${skin.price.toLocaleString()} V-B</span>
           </div>
           <div class="mt-3 w-full flex gap-1.5 pt-2 border-t border-white/10">
-            <button onclick="sellInventoryItem('${skin.instanceId}')" title="Продать за V-Bucks" class="flex-1 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[11px] font-bold transition-all">
-              <i class="fas fa-coins"></i>
+            <button onclick="sellInventoryItem('${skin.instanceId}')" title="Продать за V-Bucks" class="flex-1 py-1 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[11px] font-bold transition-all">
+              💰
             </button>
-            <button onclick="sendInventoryToUpgrade('${skin.instanceId}')" title="Отправить в апгрейдер" class="flex-1 py-1.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-[11px] font-bold transition-all">
-              <i class="fas fa-bolt"></i>
+            <button onclick="sendInventoryToUpgrade('${skin.instanceId}')" title="В апгрейдер" class="flex-1 py-1 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-[11px] font-bold transition-all">
+              ⚡
             </button>
           </div>
         </div>
@@ -1347,7 +1272,7 @@
       }
 
       if (earned === 0) {
-        showCustomAlert("У вас нет дубликатов скинов для продажи.");
+        showCustomAlert("У вас нет дубликатов скинов.");
         return;
       }
 
@@ -1358,7 +1283,7 @@
       updateHeaderBalance();
       AudioEngine.playWin();
       renderInventory();
-      showCustomAlert(`Продано дубликатов на сумму +${earned.toLocaleString()} V-Bucks!`);
+      showCustomAlert(`Продано дубликатов на +${earned.toLocaleString()} V-Bucks!`);
     }
 
     function renderProfile() {
@@ -1369,28 +1294,24 @@
         : 0;
       document.getElementById('stat-upgrades-winrate').innerText = `${winrate}% (${AppState.stats.upgradesWon}W)`;
       document.getElementById('stat-vbucks-earned').innerText = `${AppState.stats.vbucksEarned.toLocaleString()} V-B`;
-
-      // Most valuable skin
-      const bestSkinDisplay = document.getElementById('stat-best-skin');
-      if (AppState.inventory.length > 0) {
-        const best = [...AppState.inventory].sort((a,b) => b.price - a.price)[0];
-        bestSkinDisplay.innerHTML = `
-          <div class="w-16 h-16 rounded-xl bg-slate-900 border border-${best.rarity} flex items-center justify-center p-1">
-            <img src="${best.img}" class="w-14 h-14 object-contain">
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h4 class="text-base font-bold text-white">${best.name}</h4>
-              <span class="text-[9px] uppercase font-bold px-2 py-0.5 rounded badge-${best.rarity}">${best.rarity}</span>
-            </div>
-            <p class="text-xs text-yellow-300 font-mono font-bold mt-0.5">${best.price.toLocaleString()} V-Bucks</p>
-          </div>
-        `;
-      }
     }
 
     function resetAccountData() {
-      if (confirm("Вы уверены, что хотите сбросить весь прогресс и инвентарь?")) {
+      const confirmBanner = document.createElement('div');
+      confirmBanner.className = "fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4";
+      confirmBanner.innerHTML = `
+        <div class="glass-panel p-6 rounded-3xl max-w-sm w-full text-center border border-white/20">
+          <p class="font-bold text-white text-base mb-4">Сбросить весь прогресс и инвентарь?</p>
+          <div class="flex justify-center gap-3">
+            <button id="btn-confirm-reset" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 rounded-xl text-xs font-bold">Сбросить</button>
+            <button id="btn-cancel-reset" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold">Отмена</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(confirmBanner);
+
+      document.getElementById('btn-confirm-reset').onclick = () => {
+        confirmBanner.remove();
         localStorage.removeItem('serjant_fndrop_data');
         AppState.vbucks = 10000;
         AppState.inventory = [];
@@ -1401,24 +1322,27 @@
         renderProfile();
         clearUpgradeBet();
         clearUpgradeTarget();
-        showCustomAlert("Прогресс сброшен до начального состояния.");
-      }
+        showCustomAlert("Прогресс сброшен.");
+      };
+
+      document.getElementById('btn-cancel-reset').onclick = () => {
+        confirmBanner.remove();
+      };
     }
 
-    /* Modal Alert replacement */
     function showCustomAlert(msg) {
       const banner = document.createElement('div');
-      banner.className = "fixed bottom-6 right-6 z-50 glass-panel bg-slate-900/95 border border-cyan-400 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-win";
-      banner.innerHTML = `<i class="fas fa-info-circle text-cyan-400 text-base"></i> <span>${msg}</span>`;
+      banner.className = "fixed bottom-6 right-6 z-50 glass-panel bg-slate-950/95 border border-cyan-400 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-win";
+      banner.innerHTML = `<span>ℹ️</span> <span>${msg}</span>`;
       document.body.appendChild(banner);
       setTimeout(() => {
         banner.style.opacity = '0';
-        banner.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => banner.remove(), 500);
-      }, 3200);
+        banner.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => banner.remove(), 300);
+      }, 2600);
     }
 
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', () => {
       AppState.load();
       document.documentElement.setAttribute('data-theme', AppState.theme);
       updateHeaderBalance();
@@ -1426,7 +1350,6 @@
       renderInventory();
       renderProfile();
 
-      // Close dropdowns on outside click
       document.addEventListener('click', (e) => {
         const themeBtn = e.target.closest('button[onclick="toggleThemeMenu()"]');
         const themeDrop = document.getElementById('theme-dropdown');
@@ -1434,7 +1357,7 @@
           themeDrop.classList.add('hidden');
         }
       });
-    };
+    });
   </script>
 </body>
 </html>
