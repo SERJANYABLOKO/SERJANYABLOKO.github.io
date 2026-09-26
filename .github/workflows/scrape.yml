@@ -2,6 +2,7 @@ name: Update Orders
 
 on:
   schedule:
+    # Запуск на 7-й и 37-й минутах каждого часа без очередей
     - cron: '7,37 * * * *'
   workflow_dispatch:
 
@@ -33,7 +34,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add orders.json
-          # Проверяем, есть ли реальные изменения в orders.json
           if ! git diff --staged --quiet; then
             git commit -m "Автообновление заказов"
             git pull --rebase origin main || true
