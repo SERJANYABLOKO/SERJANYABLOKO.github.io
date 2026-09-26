@@ -11,17 +11,21 @@
     
     <style>
         :root {
+            /* Базовая тема (Красный неон) */
             --primary: #ff3366;
-            --primary-glow: rgba(255, 51, 102, 0.25);
+            --primary-glow: rgba(255, 51, 102, 0.28);
             --secondary: #ff9900;
             --accent: #ff3366;
-            --bg-base: #0f0508;
-            --bg-gradient-1: rgba(255, 51, 102, 0.09);
+            --bg-base: #0c0407;
+            --navbar-bg: rgba(15, 5, 8, 0.88);
+            --navbar-scrolled: rgba(12, 4, 7, 0.98);
+            --bg-gradient-1: rgba(255, 51, 102, 0.1);
             --bg-gradient-2: rgba(255, 153, 0, 0.06);
-            --surface-1: rgba(28, 12, 18, 0.75);
-            --surface-2: rgba(41, 17, 26, 0.6);
+            --surface-1: rgba(28, 12, 18, 0.78);
+            --surface-2: rgba(41, 17, 26, 0.65);
+            --surface-input: rgba(18, 7, 12, 0.85);
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(255, 51, 102, 0.4);
+            --border-focus: rgba(255, 51, 102, 0.45);
             --text-main: #f8fafc;
             --text-muted: #8b9bb4;
             --font-display: 'Space Grotesk', sans-serif;
@@ -50,7 +54,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            transition: background-color 0.4s ease, background-image 0.4s ease;
+            transition: background-color 0.35s ease, background-image 0.35s ease;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -73,7 +77,7 @@
             top: 0; left: 0; right: 0;
             z-index: 1000;
             padding: 18px 0;
-            background: rgba(15, 5, 8, 0.85);
+            background: var(--navbar-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
@@ -82,9 +86,9 @@
 
         .navbar.scrolled {
             padding: 12px 0;
-            background: rgba(15, 5, 8, 0.96);
+            background: var(--navbar-scrolled);
             border-bottom: 1px solid var(--border-focus);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
         }
 
         .navbar .container {
@@ -139,7 +143,7 @@
             bottom: 0; left: 0;
             width: 0; height: 2px;
             background: var(--primary);
-            box-shadow: 0 0 8px var(--primary);
+            box-shadow: 0 0 10px var(--primary);
             transition: width 0.25s ease;
             border-radius: 2px;
         }
@@ -158,7 +162,11 @@
             vertical-align: middle;
         }
 
-        .radar-badge { background: rgba(255, 153, 0, 0.15); color: var(--secondary); border: 1px solid rgba(255, 153, 0, 0.3); }
+        .radar-badge { 
+            background: rgba(255, 153, 0, 0.15); 
+            color: var(--secondary); 
+            border: 1px solid rgba(255, 153, 0, 0.35); 
+        }
 
         .nav-actions {
             display: flex;
@@ -226,7 +234,7 @@
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px var(--primary-glow);
-            filter: brightness(1.05);
+            filter: brightness(1.08);
         }
 
         .btn:active { transform: translateY(0); }
@@ -240,7 +248,7 @@
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--border-focus);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
@@ -251,7 +259,7 @@
         }
 
         .btn-outline-glow {
-            background: rgba(255, 51, 102, 0.08);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-focus);
             color: var(--primary) !important;
         }
@@ -259,6 +267,7 @@
         .btn-outline-glow:hover {
             background: var(--primary);
             color: #fff !important;
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         .btn-danger {
@@ -413,7 +422,7 @@
         }
 
         .hero-terminal {
-            background: rgba(0, 0, 0, 0.55);
+            background: var(--surface-1);
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
@@ -445,8 +454,8 @@
         }
 
         .c-muted { color: #5b687c; }
-        .c-green { color: #00ff88; }
-        .c-blue { color: #00ccff; }
+        .c-green { color: var(--primary); }
+        .c-blue { color: var(--secondary); }
         .c-pink { color: var(--primary); }
 
         /* БЛОК БИО НА ГЛАВНОЙ */
@@ -468,7 +477,7 @@
         }
 
         .bio-avatar-box {
-            background: linear-gradient(135deg, rgba(255,51,102,0.15), rgba(255,153,0,0.1));
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
             border: 1px solid var(--border-focus);
             border-radius: 20px;
             padding: 30px 20px;
@@ -777,7 +786,7 @@
             align-items: center;
             justify-content: center;
             font-size: 3.8rem;
-            background: linear-gradient(135deg, rgba(255, 51, 102, 0.12), rgba(255, 153, 0, 0.08));
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
             border-bottom: 1px solid var(--border-subtle);
         }
 
@@ -850,7 +859,7 @@
         .form-control {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.35);
+            background: var(--surface-input);
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             color: #fff;
@@ -878,7 +887,7 @@
         }
 
         select.form-control option {
-            background: #14080c;
+            background: var(--bg-base);
             color: #fff;
             padding: 10px;
         }
@@ -954,7 +963,7 @@
         .cart-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(8px);
             z-index: 1999;
             display: none;
@@ -964,7 +973,7 @@
         .modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.82);
             backdrop-filter: blur(10px);
             z-index: 3000;
             display: none;
@@ -1112,7 +1121,7 @@
             <div style="display: flex; gap: 8px; margin-bottom: 20px;">
                 <button class="filter-tab theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
                 <button class="filter-tab theme-btn" data-theme="blue" style="flex: 1; border: 1px solid var(--border-subtle);">🔵 Кибер-синий</button>
-                <button class="filter-tab active theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
+                <button class="filter-tab theme-btn" data-theme="red" style="flex: 1; border: 1px solid var(--border-subtle);">🔴 Неон-красный</button>
             </div>
             <button class="btn btn-secondary btn-sm" style="width: 100%;" id="settingsClose">Закрыть</button>
         </div>
@@ -1313,7 +1322,7 @@
         </div>
     </div>
 
-    <!-- 4. СТРАНИЦА: ПОРТФОЛИО (ОРИГИНАЛЬНЫЙ РАЗДЕЛ С КЕЙСАМИ И ССЫЛКАМИ) -->
+    <!-- 4. СТРАНИЦА: ПОРТФОЛИО -->
     <div class="page" id="page-portfolio">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
@@ -1941,59 +1950,83 @@
             document.getElementById('contactForm').reset();
         });
 
-        // СМЕНА ТЕМЫ И ФОНА
+        // ПОЛНАЯ СИСТЕМА СМЕНЫ ТЕМ (ВСЕ ЭЛЕМЕНТЫ + АВТОСОХРАНЕНИЕ)
+        const themes = {
+            green: {
+                '--primary': '#00ff88',
+                '--primary-glow': 'rgba(0, 255, 136, 0.28)',
+                '--secondary': '#00e5ff',
+                '--accent': '#00ff88',
+                '--bg-base': '#040d08',
+                '--navbar-bg': 'rgba(5, 16, 10, 0.88)',
+                '--navbar-scrolled': 'rgba(4, 13, 8, 0.98)',
+                '--bg-gradient-1': 'rgba(0, 255, 136, 0.08)',
+                '--bg-gradient-2': 'rgba(0, 229, 255, 0.05)',
+                '--surface-1': 'rgba(8, 25, 16, 0.78)',
+                '--surface-2': 'rgba(12, 38, 24, 0.65)',
+                '--surface-input': 'rgba(6, 18, 12, 0.85)',
+                '--border-subtle': 'rgba(255, 255, 255, 0.08)',
+                '--border-focus': 'rgba(0, 255, 136, 0.45)'
+            },
+            blue: {
+                '--primary': '#00e5ff',
+                '--primary-glow': 'rgba(0, 229, 255, 0.28)',
+                '--secondary': '#3b82f6',
+                '--accent': '#00e5ff',
+                '--bg-base': '#040913',
+                '--navbar-bg': 'rgba(5, 12, 24, 0.88)',
+                '--navbar-scrolled': 'rgba(4, 9, 19, 0.98)',
+                '--bg-gradient-1': 'rgba(0, 229, 255, 0.08)',
+                '--bg-gradient-2': 'rgba(59, 130, 246, 0.07)',
+                '--surface-1': 'rgba(8, 20, 40, 0.78)',
+                '--surface-2': 'rgba(12, 30, 60, 0.65)',
+                '--surface-input': 'rgba(5, 14, 28, 0.85)',
+                '--border-subtle': 'rgba(255, 255, 255, 0.08)',
+                '--border-focus': 'rgba(0, 229, 255, 0.45)'
+            },
+            red: {
+                '--primary': '#ff3366',
+                '--primary-glow': 'rgba(255, 51, 102, 0.28)',
+                '--secondary': '#ff9900',
+                '--accent': '#ff3366',
+                '--bg-base': '#0c0407',
+                '--navbar-bg': 'rgba(15, 5, 8, 0.88)',
+                '--navbar-scrolled': 'rgba(12, 4, 7, 0.98)',
+                '--bg-gradient-1': 'rgba(255, 51, 102, 0.1)',
+                '--bg-gradient-2': 'rgba(255, 153, 0, 0.06)',
+                '--surface-1': 'rgba(28, 12, 18, 0.78)',
+                '--surface-2': 'rgba(41, 17, 26, 0.65)',
+                '--surface-input': 'rgba(18, 7, 12, 0.85)',
+                '--border-subtle': 'rgba(255, 255, 255, 0.08)',
+                '--border-focus': 'rgba(255, 51, 102, 0.45)'
+            }
+        };
+
+        function applyTheme(themeName) {
+            const config = themes[themeName] || themes.red;
+            for (const [prop, val] of Object.entries(config)) {
+                document.documentElement.style.setProperty(prop, val);
+            }
+            localStorage.setItem('serjant_selected_theme', themeName);
+            document.querySelectorAll('.theme-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.theme === themeName);
+            });
+        }
+
         const settingsModal = document.getElementById('settingsModal');
         document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
         document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
 
         document.querySelectorAll('.theme-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const theme = btn.dataset.theme;
-
-                let p = '#ff3366', s = '#ff9900', glow = 'rgba(255, 51, 102, 0.25)';
-                let bg = '#0f0508', g1 = 'rgba(255, 51, 102, 0.09)', g2 = 'rgba(255, 153, 0, 0.06)';
-                let surf1 = 'rgba(28, 12, 18, 0.75)', surf2 = 'rgba(41, 17, 26, 0.6)';
-                let focus = 'rgba(255, 51, 102, 0.4)';
-
-                if (theme === 'green') { 
-                    p = '#00ff88'; 
-                    s = '#00e5ff'; 
-                    glow = 'rgba(0, 255, 136, 0.25)'; 
-                    bg = '#06070a';
-                    g1 = 'rgba(0, 255, 136, 0.07)';
-                    g2 = 'rgba(0, 229, 255, 0.05)';
-                    surf1 = 'rgba(13, 16, 23, 0.75)';
-                    surf2 = 'rgba(22, 27, 39, 0.6)';
-                    focus = 'rgba(0, 255, 136, 0.4)';
-                } else if (theme === 'blue') { 
-                    p = '#00e5ff'; 
-                    s = '#3b82f6'; 
-                    glow = 'rgba(0, 229, 255, 0.25)'; 
-                    bg = '#050b14';
-                    g1 = 'rgba(0, 229, 255, 0.08)';
-                    g2 = 'rgba(59, 130, 246, 0.08)';
-                    surf1 = 'rgba(10, 20, 36, 0.75)';
-                    surf2 = 'rgba(15, 29, 53, 0.6)';
-                    focus = 'rgba(0, 229, 255, 0.4)';
-                }
-
-                document.documentElement.style.setProperty('--primary', p);
-                document.documentElement.style.setProperty('--secondary', s);
-                document.documentElement.style.setProperty('--primary-glow', glow);
-                document.documentElement.style.setProperty('--bg-base', bg);
-                document.documentElement.style.setProperty('--bg-gradient-1', g1);
-                document.documentElement.style.setProperty('--bg-gradient-2', g2);
-                document.documentElement.style.setProperty('--surface-1', surf1);
-                document.documentElement.style.setProperty('--surface-2', surf2);
-                document.documentElement.style.setProperty('--border-focus', focus);
-
-                showToast("Тема и фон обновлены");
+                applyTheme(btn.dataset.theme);
+                showToast("Тема и оформление применены ко всем элементам");
             });
         });
 
         // СТАРТ
+        const savedTheme = localStorage.getItem('serjant_selected_theme') || 'red';
+        applyTheme(savedTheme);
         renderShop();
         updateCartUI();
         fetchRadarOrders();
