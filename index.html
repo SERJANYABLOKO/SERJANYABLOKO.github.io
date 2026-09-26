@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-
-
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SerjantDev | IT Radar & Digital Studio</title>
+    <title>SerjantDev | IT Radar, Студия & Магазин</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,7 +73,7 @@
             top: 0; left: 0; right: 0;
             z-index: 1000;
             padding: 18px 0;
-            background: rgba(15, 5, 8, 0.75);
+            background: rgba(15, 5, 8, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
@@ -84,7 +82,7 @@
 
         .navbar.scrolled {
             padding: 12px 0;
-            background: rgba(15, 5, 8, 0.94);
+            background: rgba(15, 5, 8, 0.96);
             border-bottom: 1px solid var(--border-focus);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
@@ -115,7 +113,7 @@
 
         .nav-links {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             list-style: none;
             align-items: center;
         }
@@ -210,7 +208,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 12px 26px;
+            padding: 12px 24px;
             background: var(--primary);
             color: #fff !important;
             font-weight: 700;
@@ -437,14 +435,11 @@
         .c-green { color: var(--primary); }
         .c-blue { color: var(--secondary); }
 
-        /* РАДАР */
-        .radar-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 30px;
+        /* СЕТКИ ДЛЯ КАРТОЧЕК */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
         }
 
         .filter-tabs {
@@ -474,6 +469,15 @@
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .radar-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
         }
 
         .search-bar {
@@ -506,12 +510,7 @@
             font-size: 0.85rem;
         }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px;
-        }
-
+        /* КАРТОЧКА РАДАРА */
         .radar-card {
             background: var(--surface-1);
             border: 1px solid var(--border-subtle);
@@ -528,13 +527,6 @@
             transform: translateY(-4px);
             border-color: var(--border-focus);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
-
-        .radar-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
         }
 
         .tag-pill {
@@ -557,7 +549,7 @@
             font-size: 1.08rem;
             font-weight: 600;
             line-height: 1.45;
-            margin-bottom: 14px;
+            margin: 14px 0;
             color: #fff;
         }
 
@@ -602,7 +594,7 @@
             margin-bottom: 16px;
         }
 
-        /* МАГАЗИН */
+        /* КАРТОЧКА МАГАЗИНА */
         .shop-card {
             background: var(--surface-1);
             border: 1px solid var(--border-subtle);
@@ -671,7 +663,72 @@
             margin-bottom: 16px;
         }
 
-        /* КОНТАКТЫ & СТИЛИЗАЦИЯ ПОЛЕЙ */
+        /* КАРТОЧКА ПОРТФОЛИО */
+        .portfolio-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-focus);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-banner {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.12), rgba(255, 153, 0, 0.08));
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .portfolio-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .portfolio-body h4 {
+            font-size: 1.15rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .portfolio-body p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .stack-list {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .stack-tag {
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: #cbd5e1;
+            font-family: var(--font-mono);
+        }
+
+        /* КОНТАКТЫ */
         .contact-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -699,7 +756,6 @@
             margin-bottom: 8px;
         }
 
-        /* ПОЛЯ ВВОДА И ВЫПАДАЮЩИЙ СПИСОК */
         .form-control {
             width: 100%;
             padding: 12px 16px;
@@ -903,6 +959,7 @@
                     </a>
                 </li>
                 <li><a data-page="shop">Магазин</a></li>
+                <li><a data-page="portfolio">Портфолио</a></li>
                 <li><a data-page="contact">Контакты</a></li>
             </ul>
             <div class="nav-actions">
@@ -930,7 +987,7 @@
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
             <h3 style="font-family: var(--font-display); margin-bottom: 8px;">📦 Оформление заказа</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы забрать товар</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы получить товар</p>
             <input type="text" class="form-control" id="checkoutTg" placeholder="@username" style="margin-bottom: 16px;" required />
             <div style="display: flex; gap: 10px;">
                 <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Отправить</button>
@@ -983,11 +1040,11 @@
                         <span>IT-Радар фриланса</span>
                     </h1>
                     <p>
-                        Telegram-боты, Mini Apps, веб-ресурсы, скрипты и автономный перехват свежих задач (до 10 откликов) без биржевых комиссий.
+                        Создание ботов, Mini Apps, сайтов, UI/UX макетов и автономный перехват заказов без скрытых комиссий и посредников.
                     </p>
                     <div class="hero-actions">
                         <a class="btn" data-page="radar">⚡ Открыть радар</a>
-                        <a class="btn btn-secondary" data-page="contact">Обсудить проект</a>
+                        <a class="btn btn-secondary" data-page="portfolio">Кейсы работ</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat-card">
@@ -1016,10 +1073,10 @@
                         <div><span class="c-muted">02</span> </div>
                         <div><span class="c-muted">03</span> engine = StreamEngine(channels_count=<span class="c-green">55</span>)</div>
                         <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">10</span>)</div>
-                        <div><span class="c-muted">05</span> engine.block_keywords([<span class="c-green">"smm"</span>, <span class="c-green">"reels"</span>])</div>
+                        <div><span class="c-muted">05</span> engine.block_keywords([<span class="c-green">"fl.ru"</span>, <span class="c-green">"smm"</span>])</div>
                         <div><span class="c-muted">06</span> </div>
                         <div><span class="c-muted">07</span> <span class="c-green">> [OK] 0% биржевых комиссий</span></div>
-                        <div><span class="c-muted">08</span> <span class="c-green">> [OK] Прямая связь в Telegram</span></div>
+                        <div><span class="c-muted">08</span> <span class="c-green">> [OK] Прямая связь с заказчиками</span></div>
                     </div>
                 </div>
             </div>
@@ -1031,7 +1088,7 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Радар IT-Заказов</h2>
-                <p class="section-subtitle">Парсинг 50+ открытых каналов и Хабра (строго до 10 откликов, без SMM)</p>
+                <p class="section-subtitle">Парсинг 50+ открытых каналов и Хабра (строго до 10 откликов, без SMM и FL.ru)</p>
             </div>
 
             <div class="radar-bar">
@@ -1039,12 +1096,13 @@
                     <button class="filter-tab active" data-filter="all">Все потоки</button>
                     <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
                     <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
-                    <button class="filter-tab" data-filter="Парсеры">⚡ Скрипты / Парсеры</button>
+                    <button class="filter-tab" data-filter="Дизайн">🎨 Web-Дизайн / UI</button>
+                    <button class="filter-tab" data-filter="Парсеры">⚡ Скрипты</button>
                 </div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div class="search-bar">
                         <span class="search-icon">🔍</span>
-                        <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по стеку или задаче..." />
+                        <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по задачам..." />
                     </div>
                     <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
                 </div>
@@ -1058,8 +1116,8 @@
     <div class="page" id="page-shop">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
-                <h2 class="section-title">Цифровые решения</h2>
-                <p class="section-subtitle">Готовые Mini Apps, боты, веб-шаблоны, хостинги и парсеры</p>
+                <h2 class="section-title">Цифровой Магазин</h2>
+                <p class="section-subtitle">Готовые исходники Mini Apps, Telegram-ботов, сайтов и скриптов</p>
             </div>
 
             <div class="radar-bar">
@@ -1068,8 +1126,8 @@
                     <button class="filter-tab" data-filter="miniapp">📱 Mini Apps</button>
                     <button class="filter-tab" data-filter="bot">🤖 TG Боты</button>
                     <button class="filter-tab" data-filter="site">🌐 Сайты</button>
+                    <button class="filter-tab" data-filter="design">🎨 UI/UX Макеты</button>
                     <button class="filter-tab" data-filter="hosting">☁️ Хостинги</button>
-                    <button class="filter-tab" data-filter="parser">⚡ Парсеры</button>
                 </div>
                 <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель управления</button>
             </div>
@@ -1087,6 +1145,7 @@
                             <option value="miniapp">📱 Mini Apps</option>
                             <option value="bot">🤖 TG Боты</option>
                             <option value="site">🌐 Сайты</option>
+                            <option value="design">🎨 UI/UX Макеты</option>
                             <option value="hosting">☁️ Хостинги</option>
                             <option value="parser">⚡ Парсеры</option>
                         </select>
@@ -1114,12 +1173,88 @@
         </div>
     </div>
 
-    <!-- 4. СТРАНИЦА: КОНТАКТЫ -->
+    <!-- 4. СТРАНИЦА: ПОРТФОЛИО -->
+    <div class="page" id="page-portfolio">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">Портфолио Кейсов</h2>
+                <p class="section-subtitle">Примеры разработанных Telegram Mini Apps, ботов, сайтов и UI/UX концептов</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-banner">🛍️</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>CyberShop Mini App</h4>
+                            <p>Интерактивный магазин внутри Telegram: корзина, синхронизация с базой SQLite и моментальный чекаут.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">HTML5/CSS3</span>
+                                <span class="stack-tag">JavaScript</span>
+                                <span class="stack-tag">Telegram WebApp</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-banner">🤖</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>AI-Moderator & Sender Bot</h4>
+                            <p>Telegram-бот для автоматической фильтрации спама в группах, сбора заявок и рассылки уведомлений.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">Python 3.11</span>
+                                <span class="stack-tag">aiogram 3</span>
+                                <span class="stack-tag">Asyncio</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-banner">🎨</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>Neon Studio Landing Page</h4>
+                            <p>Адаптивный промо-сайт в темном неоновом стиле с высокой скоростью загрузки и плавной анимацией.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">Figma UI/UX</span>
+                                <span class="stack-tag">Адаптивная верстка</span>
+                                <span class="stack-tag">Glassmorphism</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-banner">⚡</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>Radar Scraper Engine</h4>
+                            <p>Автономный парсер 50+ каналов и открытых RSS-лент с дедупликацией и фильтрацией задач без API-лимитов.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">Python</span>
+                                <span class="stack-tag">BeautifulSoup4</span>
+                                <span class="stack-tag">GitHub Actions</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. СТРАНИЦА: КОНТАКТЫ -->
     <div class="page" id="page-contact">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Связь & Заказ</h2>
-                <p class="section-subtitle">Опишите задачу — я оперативно сориентирую по срокам и стоимости реализации</p>
+                <p class="section-subtitle">Опишите задачу — сориентирую по срокам и стоимости реализации</p>
             </div>
 
             <div class="contact-layout">
@@ -1135,18 +1270,18 @@
                             <input type="text" class="form-control" id="contactTg" placeholder="@username" required />
                         </div>
                         <div class="form-group">
-                            <label>Тип разработки</label>
+                            <label>Тип задачи</label>
                             <select class="form-control" id="contactService">
                                 <option value="Telegram Mini App">📱 Telegram Mini App (TMA, WebApp)</option>
                                 <option value="Telegram Бот">🤖 Telegram-бот (aiogram, SQLite, API)</option>
+                                <option value="Web-Дизайн / Figma">🎨 Web-Дизайн & UI/UX (Figma, прототипы)</option>
                                 <option value="Сайт / Верстка">🌐 Сайт / Лендинг под ключ</option>
-                                <option value="Хостинг / Сервер">☁️ Настройка хостинга & 24/7 Сервера</option>
                                 <option value="Парсер / Скрипт">⚡ Python-парсер / Автоматизация</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Суть проекта</label>
-                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Что должен делать бот, сайт или скрипт?..." required></textarea>
+                            <textarea class="form-control" id="contactMsg" rows="4" placeholder="Опишите, какой бот, сайт или дизайн вам нужен..." required></textarea>
                         </div>
                         <button type="submit" class="btn" style="width: 100%;">Отправить запрос ➔</button>
                     </form>
@@ -1170,7 +1305,7 @@
                     <div class="stat-card" style="margin-top: 10px;">
                         <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: #fff;">💡 Условия сотрудничества</h4>
                         <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
-                            Работаю по понятному ТЗ, поэтапно демонстрирую прогресс и помогаю с размещением на хостинге или сервере.
+                            Работаю по понятному ТЗ, показываю макеты в Figma и поэтапный код, помогаю с хостингом и запуском 24/7.
                         </p>
                     </div>
                 </div>
@@ -1189,12 +1324,12 @@
         const defaultProducts = [
             { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
             { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' },
-            { id: 103, name: 'Сайт-портфолио IT', category: 'site', icon: '🌐', desc: 'Адаптивный современный одностраничник с темной темой и анимацией.', price: 4500, tag: '' },
-            { id: 104, name: 'Облачный хостинг под ключ', category: 'hosting', icon: '☁️', desc: 'Настройка VPS Linux, SSL-сертификатов, автозапуска ботов 24/7.', price: 2900, tag: 'Услуга' },
-            { id: 105, name: 'Парсер каналов & чатов', category: 'parser', icon: '⚡', desc: 'Мгновенный сбор контактов и заказов по ключевым словам на Python.', price: 3200, tag: 'Новинка' }
+            { id: 103, name: 'UI/UX Макет Лендинга (Figma)', category: 'design', icon: '🎨', desc: 'Современный прототип и адаптивный дизайн в темных неоновых тонах.', price: 3900, tag: 'Новинка' },
+            { id: 104, name: 'Сайт-портфолио IT', category: 'site', icon: '🌐', desc: 'Адаптивный современный одностраничник с темной темой и анимацией.', price: 4500, tag: '' },
+            { id: 105, name: 'Облачный хостинг под ключ', category: 'hosting', icon: '☁️', desc: 'Настройка VPS Linux, SSL-сертификатов, автозапуска ботов 24/7.', price: 2900, tag: 'Услуга' }
         ];
 
-        let products = JSON.parse(localStorage.getItem('serjant_products_v2')) || defaultProducts;
+        let products = JSON.parse(localStorage.getItem('serjant_products_v4')) || defaultProducts;
         let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
         let radarOrders = [];
         let isAdmin = false;
@@ -1223,6 +1358,7 @@
             home: document.getElementById('page-home'),
             radar: document.getElementById('page-radar'),
             shop: document.getElementById('page-shop'),
+            portfolio: document.getElementById('page-portfolio'),
             contact: document.getElementById('page-contact')
         };
 
@@ -1266,7 +1402,7 @@
                     <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">
                         <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">⏳</span>
                         <h4>Загрузка потока заказов...</h4>
-                        <p style="font-size: 0.85rem; margin-top: 4px;">Скрипт проверяет биржи и каналы каждые 30 минут.</p>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">Скрипт проверяет каналы и открытые биржи каждые 30 минут.</p>
                     </div>
                 `;
             }
@@ -1293,7 +1429,7 @@
             container.innerHTML = list.map(o => `
                 <div class="radar-card">
                     <div>
-                        <div class="radar-top">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span class="tag-pill">${o.category || 'IT'}</span>
                             <span class="source-tag">${o.source || 'Прямой контакт'}</span>
                         </div>
@@ -1394,7 +1530,7 @@
             } else if (delBtn) {
                 const id = parseInt(delBtn.dataset.id);
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('serjant_products_v2', JSON.stringify(products));
+                localStorage.setItem('serjant_products_v4', JSON.stringify(products));
                 renderShop();
                 showToast("Товар удален");
             }
@@ -1537,7 +1673,7 @@
                 tag: 'Новинка'
             };
             products.push(newItem);
-            localStorage.setItem('serjant_products_v2', JSON.stringify(products));
+            localStorage.setItem('serjant_products_v4', JSON.stringify(products));
             renderShop();
             document.getElementById('adminForm').reset();
             showToast("Товар сохранен!");
