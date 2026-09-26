@@ -250,6 +250,17 @@
             border-radius: 8px;
         }
 
+        .btn-outline-glow {
+            background: rgba(255, 51, 102, 0.08);
+            border: 1px solid var(--border-focus);
+            color: var(--primary) !important;
+        }
+
+        .btn-outline-glow:hover {
+            background: var(--primary);
+            color: #fff !important;
+        }
+
         .btn-danger {
             background: rgba(255, 51, 102, 0.15);
             color: var(--accent) !important;
@@ -401,7 +412,7 @@
         }
 
         .hero-terminal {
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.55);
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
@@ -414,11 +425,11 @@
             padding: 12px 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             border-bottom: 1px solid var(--border-subtle);
         }
 
-        .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .t-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .t-red { background: #ff5f56; }
         .t-yellow { background: #ffbd2e; }
         .t-green { background: #27c93f; }
@@ -429,11 +440,13 @@
             font-size: 0.85rem;
             line-height: 1.8;
             color: #cbd5e1;
+            min-height: 220px;
         }
 
         .c-muted { color: #5b687c; }
-        .c-green { color: var(--primary); }
-        .c-blue { color: var(--secondary); }
+        .c-green { color: #00ff88; }
+        .c-blue { color: #00ccff; }
+        .c-pink { color: var(--primary); }
 
         /* СЕТКИ ДЛЯ КАРТОЧЕК */
         .cards-grid {
@@ -592,6 +605,11 @@
             font-weight: 700;
             color: #fff;
             margin-bottom: 16px;
+        }
+
+        .radar-card-actions {
+            display: flex;
+            gap: 8px;
         }
 
         /* КАРТОЧКА МАГАЗИНА */
@@ -887,7 +905,7 @@
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             padding: 32px;
-            max-width: 420px;
+            max-width: 480px;
             width: 90%;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
@@ -996,6 +1014,24 @@
         </div>
     </div>
 
+    <!-- МОДАЛКА ГЕНЕРАТОРА ОТКЛИКА (AI PITCH) -->
+    <div class="modal" id="pitchModal">
+        <div class="modal-content" style="text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #fff;">⚡ Быстрый отклик заказчику</h3>
+                <button style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;" id="pitchClose">✕</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px;">
+                Готовый продающий текст под задачу. Скопируйте и отправьте заказчику в личные сообщения:
+            </p>
+            <textarea id="pitchTextarea" class="form-control" rows="6" style="margin-bottom: 16px; font-size: 0.85rem; line-height: 1.5; resize: none;"></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="flex: 1;" id="copyPitchBtn">📋 Скопировать отклик</button>
+                <button class="btn btn-secondary btn-sm" id="closePitchBtn">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
     <!-- МОДАЛКА НАСТРОЕК ТЕМЫ -->
     <div class="modal" id="settingsModal">
         <div class="modal-content">
@@ -1063,20 +1099,22 @@
                 </div>
                 <div class="hero-terminal">
                     <div class="terminal-header">
-                        <span class="t-dot t-red"></span>
-                        <span class="t-dot t-yellow"></span>
-                        <span class="t-dot t-green"></span>
-                        <span style="margin-left: 10px; font-size: 0.75rem; color: #5b687c; font-family: var(--font-mono);">serjant_radar.py</span>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span class="t-dot t-red"></span>
+                            <span class="t-dot t-yellow"></span>
+                            <span class="t-dot t-green"></span>
+                            <span style="margin-left: 10px; font-size: 0.75rem; color: #5b687c; font-family: var(--font-mono);">serjant_radar.py</span>
+                        </div>
+                        <button class="btn-sm btn-outline-glow" id="testPingBtn" style="cursor: pointer; padding: 4px 10px; font-size: 0.72rem;">▶ Тестовый пинг</button>
                     </div>
-                    <div class="terminal-body">
+                    <div class="terminal-body" id="terminalLog">
                         <div><span class="c-muted">01</span> <span class="c-blue">from</span> radar.core <span class="c-blue">import</span> StreamEngine</div>
-                        <div><span class="c-muted">02</span> </div>
-                        <div><span class="c-muted">03</span> engine = StreamEngine(channels_count=<span class="c-green">55</span>)</div>
-                        <div><span class="c-muted">04</span> engine.filter_responses(max_limit=<span class="c-green">10</span>)</div>
-                        <div><span class="c-muted">05</span> engine.block_keywords([<span class="c-green">"fl.ru"</span>, <span class="c-green">"smm"</span>])</div>
-                        <div><span class="c-muted">06</span> </div>
-                        <div><span class="c-muted">07</span> <span class="c-green">> [OK] 0% биржевых комиссий</span></div>
-                        <div><span class="c-muted">08</span> <span class="c-green">> [OK] Прямая связь с заказчиками</span></div>
+                        <div><span class="c-muted">02</span> engine = StreamEngine(channels_count=<span class="c-green">55</span>)</div>
+                        <div><span class="c-muted">03</span> engine.filter_responses(max_limit=<span class="c-green">10</span>)</div>
+                        <div><span class="c-muted">04</span> engine.block_keywords([<span class="c-pink">"fl.ru"</span>, <span class="c-pink">"smm"</span>])</div>
+                        <div><span class="c-muted">05</span> </div>
+                        <div><span class="c-muted">06</span> <span class="c-green">> [SYSTEM] Радар заказов готов к перехвату</span></div>
+                        <div><span class="c-muted">07</span> <span class="c-blue">> [CHANNELS] 55+ прямых чатов подключены</span></div>
                     </div>
                 </div>
             </div>
@@ -1181,8 +1219,18 @@
                 <p class="section-subtitle">Примеры разработанных Telegram Mini Apps, ботов, сайтов и UI/UX концептов</p>
             </div>
 
-            <div class="cards-grid">
-                <div class="portfolio-card">
+            <!-- Внутренние фильтры портфолио -->
+            <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+                <div class="filter-tabs" id="portfolioFilterGroup">
+                    <button class="filter-tab active" data-pfilter="all">Все проекты</button>
+                    <button class="filter-tab" data-pfilter="telegram">🤖 Telegram / TMA</button>
+                    <button class="filter-tab" data-pfilter="web">🌐 Веб-сайты</button>
+                    <button class="filter-tab" data-pfilter="design">🎨 UI/UX & Скрипты</button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="portfolioGrid">
+                <div class="portfolio-card" data-pcat="telegram">
                     <div class="portfolio-banner">🛍️</div>
                     <div class="portfolio-body">
                         <div>
@@ -1198,7 +1246,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card">
+                <div class="portfolio-card" data-pcat="telegram">
                     <div class="portfolio-banner">🤖</div>
                     <div class="portfolio-body">
                         <div>
@@ -1214,8 +1262,8 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card">
-                    <div class="portfolio-banner">🎨</div>
+                <div class="portfolio-card" data-pcat="web">
+                    <div class="portfolio-banner">🌐</div>
                     <div class="portfolio-body">
                         <div>
                             <h4>Neon Studio Landing Page</h4>
@@ -1230,7 +1278,23 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card">
+                <div class="portfolio-card" data-pcat="design">
+                    <div class="portfolio-banner">🎨</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>UI/UX Dashboard & Radar</h4>
+                            <p>Интерфейс аналитической панели управления и сканирования заказов в киберпанк стилистике.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">Figma</span>
+                                <span class="stack-tag">UI Kit</span>
+                                <span class="stack-tag">Design System</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать аналог</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" data-pcat="design">
                     <div class="portfolio-banner">⚡</div>
                     <div class="portfolio-body">
                         <div>
@@ -1388,6 +1452,20 @@
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
         });
 
+        // ИНТЕРАКТИВНЫЙ ТЕСТОВЫЙ ПИНГ ТЕРМИНАЛА
+        document.getElementById('testPingBtn').addEventListener('click', () => {
+            const log = document.getElementById('terminalLog');
+            const now = new Date().toLocaleTimeString();
+            const newLines = [
+                `<div><span class="c-muted">>> [${now}] Пинг 55 каналов...</span></div>`,
+                `<div><span class="c-green">>> [OK] Задержка: 34ms | Соединение стабильно</span></div>`,
+                `<div><span class="c-pink">>> [RADAR] Готов к приему новых задач</span></div>`
+            ];
+            log.innerHTML += newLines.join('');
+            log.scrollTop = log.scrollHeight;
+            showToast("⚡ Симуляция пинга завершена!");
+        });
+
         // ЗАГРУЗКА РАДАРА
         async function fetchRadarOrders() {
             try {
@@ -1451,9 +1529,14 @@
                     </div>
                     <div>
                         <div class="radar-price">${o.price || 'Договорная'}</div>
-                        <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm btn-secondary" style="width: 100%;">
-                            Открыть задачу ➔
-                        </a>
+                        <div class="radar-card-actions">
+                            <a href="${o.url}" target="_blank" rel="noopener" class="btn btn-sm btn-secondary" style="flex: 1;">
+                                Открыть задачу ➔
+                            </a>
+                            <button class="btn btn-sm btn-outline-glow btn-gen-pitch" data-title="${encodeURIComponent(o.title)}" data-cat="${encodeURIComponent(o.category || 'IT')}" title="Сгенерировать отклик">
+                                ⚡ Отклик
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -1470,6 +1553,60 @@
         document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
         document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
         setInterval(fetchRadarOrders, 30 * 60 * 1000);
+
+        // ГЕНЕРАТОР ОТКЛИКА ДЛЯ ЗАКАЗА (AI PITCH MODAL)
+        const pitchModal = document.getElementById('pitchModal');
+        const pitchTextarea = document.getElementById('pitchTextarea');
+
+        document.getElementById('radarGridContainer').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-gen-pitch');
+            if (btn) {
+                const title = decodeURIComponent(btn.dataset.title);
+                const cat = decodeURIComponent(btn.dataset.cat);
+                
+                let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\n\n`;
+                if (cat === 'Telegram') {
+                    pitch += `Специализируюсь на Telegram-ботах (aiogram 3, SQLite/PostgreSQL) и Mini Apps (TMA WebApp). Реализую чистую логику, подключу платежи или авто-рассылку. Сделаю работу под ключ с развертыванием на сервере 24/7.`;
+                } else if (cat === 'Дизайн') {
+                    pitch += `Занимаюсь веб-дизайном и UI/UX в Figma. Сделаю современный, продуманный и адаптивный макет с UI-китом и компонентами, готовый к передаче разработчикам.`;
+                } else if (cat === 'Парсеры') {
+                    pitch += `Пишу парсеры и скрипты автоматизации на Python (BeautifulSoup, Requests, Asyncio). Быстро соберу данные в Excel/JSON/Базу данных без дубликатов и с обходом блокировок.`;
+                } else {
+                    pitch += `Занимаюсь качественной адаптивной версткой и созданием сайтов под ключ (HTML5/CSS3/JavaScript). Код чистый, сайт будет быстро открываться на любых устройствах.`;
+                }
+                pitch += `\n\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
+                
+                pitchTextarea.value = pitch;
+                pitchModal.classList.add('show');
+            }
+        });
+
+        document.getElementById('pitchClose').addEventListener('click', () => pitchModal.classList.remove('show'));
+        document.getElementById('closePitchBtn').addEventListener('click', () => pitchModal.classList.remove('show'));
+
+        document.getElementById('copyPitchBtn').addEventListener('click', () => {
+            pitchTextarea.select();
+            navigator.clipboard.writeText(pitchTextarea.value);
+            showToast("📋 Отклик скопирован в буфер!");
+            pitchModal.classList.remove('show');
+        });
+
+        // ФИЛЬТРЫ ПОРТФОЛИО
+        document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const pcat = btn.dataset.pfilter;
+
+                document.querySelectorAll('#portfolioGrid .portfolio-card').forEach(card => {
+                    if (pcat === 'all' || card.dataset.pcat === pcat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
 
         // МАГАЗИН
         function renderShop() {
