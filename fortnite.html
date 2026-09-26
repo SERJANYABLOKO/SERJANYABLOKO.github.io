@@ -718,7 +718,6 @@
       }
     }
 
-    // Надежная база скинов со ссылками на официальный CDN (Epic / Fortnite.gg)
     const SKINS_DB = [
       { id: 'cid_001_athena_commando_m_default', name: 'Recruit Jonesy', rarity: 'uncommon', price: 600, img: 'https://media.fortniteapi.com/cosmetics/br/cid_001_athena_commando_m_default/icon.png' },
       { id: 'cid_044_athena_commando_f_scifi', name: 'Brite Bomber', rarity: 'rare', price: 1200, img: 'https://media.fortniteapi.com/cosmetics/br/cid_044_athena_commando_f_scifi/icon.png' },
@@ -863,7 +862,7 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v8');
+          const saved = localStorage.getItem('serjan_fndrop_data_v9');
           if (saved) {
             const data = JSON.parse(saved);
             this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
@@ -876,7 +875,7 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v8', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v9', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
             usedPromoCodes: this.usedPromoCodes,
@@ -1707,7 +1706,7 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v8');
+        localStorage.removeItem('serjan_fndrop_data_v9');
         
         AppState.vbucks = 500;
         AppState.inventory = [];
