@@ -718,7 +718,7 @@
       }
     }
 
-    // Встроенный надежный генератор картинок с красивым оформлением под каждую редкость
+    // Генератор идеальных иконок без внешних зависимостей (работает на GitHub Pages 100%)
     function generateSkinIcon(name, rarity) {
       let topCol = '#1e1b4b', botCol = '#0f0a2a', glow = '#38bdf8';
       if (rarity === 'uncommon') { topCol = '#14381d'; botCol = '#07160a'; glow = '#4ade80'; }
@@ -896,7 +896,7 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v12');
+          const saved = localStorage.getItem('serjan_fndrop_data_v13');
           if (saved) {
             const data = JSON.parse(saved);
             this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
@@ -909,7 +909,7 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v12', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v13', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
             usedPromoCodes: this.usedPromoCodes,
@@ -1740,7 +1740,7 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v12');
+        localStorage.removeItem('serjan_fndrop_data_v13');
         
         AppState.vbucks = 500;
         AppState.inventory = [];
