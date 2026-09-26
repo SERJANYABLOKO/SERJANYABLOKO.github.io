@@ -176,15 +176,13 @@
 
     <!-- Top Status & Currency -->
     <div class="flex items-center space-x-3">
+      <!-- V-Bucks Counter (без кнопки +1000) -->
       <div class="flex items-center bg-slate-950/80 border border-cyan-500/40 rounded-2xl px-4 py-1.5 shadow-inner">
-        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2 shadow-sm">V</div>
+        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-xs mr-2.5 shadow-sm">V</div>
         <div class="flex flex-col text-right">
           <span class="text-[10px] font-semibold text-cyan-300 uppercase leading-none">V-Bucks</span>
-          <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">10,000</span>
+          <span id="balance-display" class="font-extrabold text-base text-yellow-300 font-mono tracking-tight">500</span>
         </div>
-        <button onclick="claimDailyBonus()" id="btn-daily-bonus" title="Получить бонус" class="ml-3 px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md active:scale-95 flex items-center gap-1">
-          <span>🎁</span> <span class="hidden sm:inline">+1000</span>
-        </button>
       </div>
 
       <div class="relative">
@@ -339,9 +337,7 @@
           <div class="lg:col-span-4 flex flex-col items-center justify-center py-4">
             <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
               <svg class="w-full h-full -rotate-90 transform overflow-visible" viewBox="0 0 100 100">
-                <!-- Красный фон (сектор поражения) с острым срезом -->
                 <circle cx="50" cy="50" r="42" stroke="#dc2626" stroke-width="12" fill="transparent" opacity="0.45" stroke-linecap="butt" />
-                <!-- Зелёный сектор выигрыша с острыми концами butt (без скруглений) -->
                 <circle id="upgrade-svg-arc" cx="50" cy="50" r="42" stroke="#10b981" stroke-width="12" fill="transparent"
                   stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="butt" class="transition-all duration-300 ease-out" />
               </svg>
@@ -489,7 +485,7 @@
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="font-bold text-slate-200">FN DROP CASINO</span>
         <span>•</span>
-        <span>Острые грани & Быстрая анимация</span>
+        <span>Начальный баланс: 500 V-B</span>
       </div>
       <div class="flex items-center gap-2">
         <span>Сделано для</span>
@@ -743,7 +739,7 @@
     }
 
     const AppState = {
-      vbucks: 10000,
+      vbucks: 500, // Начальный баланс 500
       inventory: [],
       stats: {
         casesOpened: 0,
@@ -764,10 +760,10 @@
 
       load() {
         try {
-          const saved = localStorage.getItem('serjan_fndrop_data_v2');
+          const saved = localStorage.getItem('serjan_fndrop_data_v3');
           if (saved) {
             const data = JSON.parse(saved);
-            this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 10000;
+            this.vbucks = typeof data.vbucks === 'number' ? data.vbucks : 500;
             this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
             this.stats = data.stats || this.stats;
             this.theme = data.theme || 'fn-classic';
@@ -776,7 +772,7 @@
       },
       save() {
         try {
-          localStorage.setItem('serjan_fndrop_data_v2', JSON.stringify({
+          localStorage.setItem('serjan_fndrop_data_v3', JSON.stringify({
             vbucks: this.vbucks,
             inventory: this.inventory,
             stats: this.stats,
@@ -832,20 +828,6 @@
       if (enabled) AudioEngine.init();
     }
 
-    function claimDailyBonus() {
-      AudioEngine.init();
-      AppState.vbucks += 1000;
-      AppState.save();
-      updateHeaderBalance();
-      AudioEngine.playWin();
-      launchConfetti();
-      const btn = document.getElementById('btn-daily-bonus');
-      btn.innerHTML = '<span>✅</span> <span class="hidden sm:inline">+1000</span>';
-      setTimeout(() => {
-        btn.innerHTML = '<span>🎁</span> <span class="hidden sm:inline">+1000</span>';
-      }, 1400);
-    }
-
     function getSkinById(id) {
       if (!id) return null;
       return SKINS_DB.find(s => s.id.toLowerCase() === id.toLowerCase()) || null;
@@ -889,7 +871,7 @@
       if (!currentCase) return;
 
       if (AppState.vbucks < currentCase.price) {
-        showCustomAlert("Недостаточно V-Bucks! Заберите бонус.");
+        showCustomAlert("Недостаточно V-Bucks!");
         return;
       }
 
@@ -1372,8 +1354,8 @@
 
       document.getElementById('btn-confirm-reset').onclick = () => {
         confirmBanner.remove();
-        localStorage.removeItem('serjan_fndrop_data_v2');
-        AppState.vbucks = 10000;
+        localStorage.removeItem('serjan_fndrop_data_v3');
+        AppState.vbucks = 500;
         AppState.inventory = [];
         AppState.stats = { casesOpened: 0, upgradesPlayed: 0, upgradesWon: 0, vbucksEarned: 0 };
         AppState.currentRotationAngle = 0;
