@@ -45,7 +45,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            transition: background-color 0.35s ease, background-image 0.35s ease;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -242,30 +241,15 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ОФОРМЛЕНИЯ -->
+    <!-- МОДАЛКА ОФОРМЛЕНИЯ КОРЗИНЫ -->
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
             <h3 style="font-family: var(--font-display); margin-bottom: 8px;">📦 Оформление заказа</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы получить товар</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram для получения товара</p>
             <input type="text" class="form-control" id="checkoutTg" placeholder="@username" style="margin-bottom: 16px;" required />
             <div style="display: flex; gap: 10px;">
                 <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Отправить</button>
                 <button class="btn btn-secondary btn-sm" id="checkoutCancelBtn">Отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ОТКЛИКА -->
-    <div class="modal" id="pitchModal">
-        <div class="modal-content" style="text-align: left;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #fff;">⚡ Быстрый отклик заказчику</h3>
-                <button style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;" id="pitchClose">✕</button>
-            </div>
-            <textarea id="pitchTextarea" class="form-control" rows="6" style="margin-bottom: 16px; font-size: 0.85rem;"></textarea>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn" style="flex: 1;" id="copyPitchBtn">📋 Скопировать отклик</button>
-                <button class="btn btn-secondary btn-sm" id="closePitchBtn">Закрыть</button>
             </div>
         </div>
     </div>
@@ -283,6 +267,7 @@
         </div>
     </div>
 
+    <!-- КОРЗИНА -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
@@ -310,50 +295,6 @@
                     <div class="hero-actions">
                         <a class="btn" data-page="radar">⚡ Открыть радар</a>
                         <a class="btn btn-secondary" data-page="portfolio">Портфолио ➔</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat-card"><div class="num" id="statOrdersCount">0</div><div class="desc">Задач в сети</div></div>
-                        <div class="stat-card"><div class="num">30 мин</div><div class="desc">Интервал цикла</div></div>
-                        <div class="stat-card"><div class="num">48 ч</div><div class="desc">Срок жизни задач</div></div>
-                    </div>
-                </div>
-                <div class="hero-terminal">
-                    <div class="terminal-header">
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span>
-                            <span style="margin-left: 10px; font-size: 0.75rem; color: #5b687c; font-family: var(--font-mono);">serjant_radar.py</span>
-                        </div>
-                        <button class="btn-sm btn-outline-glow" id="testPingBtn" style="cursor: pointer; padding: 4px 10px; font-size: 0.72rem;">▶ Тестовый пинг</button>
-                    </div>
-                    <div class="terminal-body" id="terminalLog">
-                        <div><span class="c-muted">01</span> <span class="c-blue">from</span> radar.core <span class="c-blue">import</span> StreamEngine</div>
-                        <div><span class="c-muted">02</span> engine = StreamEngine(track_pc_builds=<span class="c-green">True</span>)</div>
-                        <div><span class="c-muted">03</span> <span class="c-green">> [SYSTEM] Радар IT-заказов, FL.ru и сборки ПК запущен</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="bio-section">
-            <div class="container">
-                <div class="bio-card">
-                    <div class="bio-avatar-box">
-                        <span class="bio-avatar-emoji">👨‍💻</span>
-                        <div style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff;">Serjant</div>
-                        <div style="font-size: 0.75rem; color: var(--primary); font-weight: 600; margin-top: 4px;">Python & Hardware Dev</div>
-                    </div>
-                    <div class="bio-info">
-                        <h3>Разработчик IT-решений & Сборщик ПК</h3>
-                        <div class="bio-tagline">Telegram Bots • Mini Apps • Сайты • Сборка ПК • 3D Игры</div>
-                        <p>Создаю ботов на Python (aiogram), Telegram Mini Apps, сайты и занимаюсь подбором комплектующих, апгрейдом и сборкой мощных ПК с нуля.</p>
-                        <div class="bio-skills-grid">
-                            <div class="bio-skill-item">🐍 Python & aiogram 3</div>
-                            <div class="bio-skill-item">📱 Telegram Mini Apps</div>
-                            <div class="bio-skill-item">💻 Сборка ПК & Подбор железа</div>
-                            <div class="bio-skill-item">🌐 HTML5 / CSS3 / Figma</div>
-                            <div class="bio-skill-item">🎮 Разработка 3D Игр</div>
-                            <div class="bio-skill-item">⚡ Парсеры данных</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -391,20 +332,22 @@
         </div>
     </div>
 
-    <!-- 3. МАГАЗИН -->
+    <!-- 3. МАГАЗИН (КЛИКАБЕЛЬНЫЙ + СБОРКА ПК, ХОСТИНГ, САЙТ, ТГ БОТЫ, ПРИЛОЖЕНИЯ) -->
     <div class="page" id="page-shop">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Цифровой Магазин</h2>
-                <p class="section-subtitle">Готовые исходники Mini Apps, ботов и скриптов</p>
+                <p class="section-subtitle">Готовые IT-услуги, боты, сайты, приложения и сборка ПК</p>
             </div>
 
             <div class="radar-bar">
                 <div class="filter-tabs" id="shopFilterGroup">
                     <button class="filter-tab active" data-filter="all">Все</button>
-                    <button class="filter-tab" data-filter="miniapp">📱 Mini Apps</button>
-                    <button class="filter-tab" data-filter="bot">🤖 TG Боты</button>
-                    <button class="filter-tab" data-filter="site">🌐 Сайты</button>
+                    <button class="filter-tab" data-filter="pc">💻 Сборка ПК</button>
+                    <button class="filter-tab" data-filter="bot">🤖 ТГ Бот</button>
+                    <button class="filter-tab" data-filter="app">📱 Приложение</button>
+                    <button class="filter-tab" data-filter="site">🌐 Сайт</button>
+                    <button class="filter-tab" data-filter="hosting">☁️ Хостинг</button>
                 </div>
                 <button class="btn btn-sm btn-secondary" id="toggleAdminBtn">⚙️ Панель управления</button>
             </div>
@@ -414,7 +357,13 @@
                 <form id="adminForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                     <div><label style="font-size:0.8rem; color:var(--text-muted);">Название</label><input type="text" class="form-control" id="adminName" required /></div>
                     <div><label style="font-size:0.8rem; color:var(--text-muted);">Категория</label>
-                        <select class="form-control" id="adminCategory"><option value="miniapp">📱 Mini Apps</option><option value="bot">🤖 TG Боты</option><option value="site">🌐 Сайты</option></select>
+                        <select class="form-control" id="adminCategory">
+                            <option value="pc">💻 Сборка ПК</option>
+                            <option value="bot">🤖 ТГ Бот</option>
+                            <option value="app">📱 Приложение</option>
+                            <option value="site">🌐 Сайт</option>
+                            <option value="hosting">☁️ Хостинг</option>
+                        </select>
                     </div>
                     <div><label style="font-size:0.8rem; color:var(--text-muted);">Эмодзи</label><input type="text" class="form-control" id="adminIcon" value="📦" required /></div>
                     <div><label style="font-size:0.8rem; color:var(--text-muted);">Цена (₽)</label><input type="number" class="form-control" id="adminPrice" required /></div>
@@ -432,50 +381,21 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Портфолио Кейсов</h2>
-                <p class="section-subtitle">Примеры разработанных проектов, игр и веб-приложений</p>
+                <p class="section-subtitle">Примеры разработанных проектов и игр</p>
             </div>
 
             <div class="cards-grid" id="portfolioGrid">
-                <!-- Фортнайт Казик -->
                 <div class="portfolio-card" data-pcat="web">
                     <div class="portfolio-banner">🎰</div>
                     <div class="portfolio-body">
                         <div>
                             <h4>Фортнайт Казик</h4>
-                            <p>Интерактивный развлекательный веб-проект в стиле Fortnite с игровыми механиками и стильным интерфейсом.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">HTML5/CSS3</span>
-                                <span class="stack-tag">JavaScript</span>
-                                <span class="stack-tag">Game UI</span>
-                            </div>
+                            <p>Интерактивный развлекательный веб-проект в стиле Fortnite с игровыми механиками и интерфейсом[cite: 1].</p>
+                            <div class="stack-list"><span class="stack-tag">HTML5/CSS3</span><span class="stack-tag">JavaScript</span></div>
                         </div>
                         <div style="display:flex; gap:8px;">
                             <a href="https://serjanyabloko.github.io/fortnite" target="_blank" class="btn btn-sm" style="flex:1;">Открыть проект ➔</a>
                         </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" data-pcat="telegram">
-                    <div class="portfolio-banner">🛍️</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>CyberShop Mini App</h4>
-                            <p>Интерактивный магазин внутри Telegram: корзина, синхронизация с БД и чекаут.</p>
-                            <div class="stack-list"><span class="stack-tag">Telegram WebApp</span><span class="stack-tag">JS</span></div>
-                        </div>
-                        <div style="display:flex; gap:8px;"><a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a></div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" data-pcat="telegram">
-                    <div class="portfolio-banner">🤖</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>AI-Moderator & Sender Bot</h4>
-                            <p>Telegram-бот для автоматической фильтрации спама, сбора заявок и рассылок.</p>
-                            <div class="stack-list"><span class="stack-tag">Python 3.11</span><span class="stack-tag">aiogram 3</span></div>
-                        </div>
-                        <div style="display:flex; gap:8px;"><a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a></div>
                     </div>
                 </div>
             </div>
@@ -485,33 +405,15 @@
     <!-- 5. КОНТАКТЫ -->
     <div class="page" id="page-contact">
         <div class="container" style="padding-bottom: 80px;">
-            <div class="section-header">
-                <h2 class="section-title">Связь & Заказ</h2>
-                <p class="section-subtitle">Опишите задачу — сориентирую по срокам и стоимости</p>
-            </div>
-
+            <div class="section-header"><h2 class="section-title">Связь & Заказ</h2></div>
             <div class="contact-layout">
                 <div class="contact-card">
                     <form id="contactForm">
-                        <div class="form-group"><label>Ваше имя</label><input type="text" class="form-control" id="contactName" placeholder="Александр" required /></div>
-                        <div class="form-group"><label>Telegram для связи</label><input type="text" class="form-control" id="contactTg" placeholder="@username" required /></div>
-                        <div class="form-group"><label>Тип задачи</label>
-                            <select class="form-control" id="contactService">
-                                <option value="Сборка ПК / Подбор железа">💻 Сборка ПК / Подбор комплектующих</option>
-                                <option value="Telegram Mini App">📱 Telegram Mini App (TMA)</option>
-                                <option value="Telegram Бот">🤖 Telegram-бот (aiogram)</option>
-                                <option value="Сайт / Верстка">🌐 Сайт / Лендинг под ключ</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Суть проекта</label><textarea class="form-control" id="contactMsg" rows="4" placeholder="Опишите задачу..." required></textarea></div>
+                        <div class="form-group"><label>Ваше имя</label><input type="text" class="form-control" id="contactName" required /></div>
+                        <div class="form-group"><label>Telegram</label><input type="text" class="form-control" id="contactTg" placeholder="@username" required /></div>
+                        <div class="form-group"><label>Задача</label><textarea class="form-control" id="contactMsg" rows="4" required></textarea></div>
                         <button type="submit" class="btn" style="width: 100%;">Отправить запрос ➔</button>
                     </form>
-                </div>
-                <div class="direct-contacts">
-                    <a href="https://t.me/serjantyabloko" target="_blank" class="direct-item">
-                        <div class="direct-icon">💬</div>
-                        <div class="direct-info"><h5>Telegram канал & ЛС</h5><span>@serjantyabloko</span></div>
-                    </a>
                 </div>
             </div>
         </div>
@@ -524,12 +426,16 @@
         const CHAT_ID = '8673619246';
         const ADMIN_PASSWORD = 'admin123';
 
+        // Товары в магазине с категориями (Сборка ПК, Бот, Приложение, Сайт, Хостинг)
         const defaultProducts = [
-            { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'E-commerce внутри Telegram.', price: 7900, tag: 'Хит' },
-            { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с админкой для рассылок.', price: 3500, tag: 'Топ' }
+            { id: 101, name: 'Сборка мощного ПК под ключ', category: 'pc', icon: '💻', desc: 'Подбор комплектующих по вашему бюджету, проверка совместимости и полная сборка.', price: 4900, tag: 'Топ' },
+            { id: 102, name: 'Telegram Бот (aiogram 3)', category: 'bot', icon: '🤖', desc: 'Разработка функционального бота с админкой и базой данных.', price: 3500, tag: 'Хит' },
+            { id: 103, name: 'Telegram Mini App (Приложение)', category: 'app', icon: '📱', desc: 'Интерактивное веб-приложение внутри Telegram с адаптивным интерфейсом.', price: 7900, tag: 'Новинка' },
+            { id: 104, name: 'Сайт-Лендинг под ключ', category: 'site', icon: '🌐', desc: 'Современный адаптивный сайт с уникальным дизайном и анимацией.', price: 4500, tag: '' },
+            { id: 105, name: 'Настройка Хостинга и VPS', category: 'hosting', icon: '☁️', desc: 'Установка Linux, привязка домена, SSL и запуск ваших проектов 24/7.', price: 2500, tag: 'Услуга' }
         ];
 
-        let products = JSON.parse(localStorage.getItem('serjant_products_v5')) || defaultProducts;
+        let products = JSON.parse(localStorage.getItem('serjant_products_v6')) || defaultProducts;
         let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
         let radarOrders = [];
         let isAdmin = false;
@@ -565,7 +471,6 @@
             document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
                 link.classList.toggle('active', link.dataset.page === pageId);
             });
-            document.getElementById('navLinks').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -573,18 +478,194 @@
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo(el.dataset.page); });
         });
 
-        document.getElementById('burger').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('active');
+        // ИНТЕРАКТИВНЫЙ МАГАЗИН И КОРЗИНА
+        function renderShop() {
+            const container = document.getElementById('shopGridContainer');
+            const activeFilter = document.querySelector('#shopFilterGroup .filter-tab.active').dataset.filter;
+            const list = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
+
+            if (!list.length) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Товары отсутствуют.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(p => `
+                <div class="shop-card">
+                    <div class="shop-thumb">${p.icon || '📦'} ${p.tag ? `<span class="shop-tag">${p.tag}</span>` : ''}</div>
+                    <div class="shop-content">
+                        <div><h4>${p.name}</h4><p>${p.desc}</p></div>
+                        <div>
+                            <div class="shop-price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-sm btn-add-cart" data-id="${p.id}" style="flex: 1;">Купить</button>
+                                ${isAdmin ? `<button class="btn btn-sm btn-danger btn-del-product" data-id="${p.id}">✕</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#shopFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderShop();
+            });
         });
 
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+        document.getElementById('shopGridContainer').addEventListener('click', (e) => {
+            const addBtn = e.target.closest('.btn-add-cart');
+            const delBtn = e.target.closest('.btn-del-product');
+
+            if (addBtn) {
+                const id = parseInt(addBtn.dataset.id);
+                const item = products.find(p => p.id === id);
+                if (item) {
+                    const exist = cart.find(p => p.id === id);
+                    if (exist) exist.qty++;
+                    else cart.push({ ...item, qty: 1 });
+                    saveCart();
+                    showToast(`${item.name} добавлен в корзину!`);
+                }
+            } else if (delBtn) {
+                const id = parseInt(delBtn.dataset.id);
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('serjant_products_v6', JSON.stringify(products));
+                renderShop();
+                showToast("Товар удален");
+            }
         });
 
-        document.getElementById('testPingBtn').addEventListener('click', () => {
-            showToast("⚡ Симуляция пинга завершена!");
+        function saveCart() {
+            localStorage.setItem('serjant_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalEl = document.getElementById('cartTotalPrice');
+            const totalBlock = document.getElementById('cartTotalBlock');
+
+            if (!cart.length) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
+                totalBlock.style.display = 'none';
+                return;
+            }
+
+            totalBlock.style.display = 'block';
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-subtle);">
+                        <div>
+                            <div style="font-weight:600; font-size:0.92rem; color:#fff;">${i.name}</div>
+                            <div style="color:var(--text-muted); font-size:0.82rem;">${i.price.toLocaleString('ru-RU')} ₽ × ${i.qty}</div>
+                        </div>
+                        <button class="btn-remove-item" data-id="${i.id}" style="background:none; border:none; color:var(--accent); font-size:1.1rem; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        document.getElementById('cartItemsContainer').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-remove-item');
+            if (btn) {
+                const id = parseInt(btn.dataset.id);
+                cart = cart.filter(i => i.id !== id);
+                saveCart();
+            }
         });
 
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+
+        document.getElementById('cartToggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        });
+        document.getElementById('cartClose').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        const checkoutModal = document.getElementById('checkoutModal');
+        document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+            checkoutModal.classList.add('show');
+        });
+        document.getElementById('checkoutCancelBtn').addEventListener('click', () => {
+            checkoutModal.classList.remove('show');
+        });
+        document.getElementById('checkoutConfirmBtn').addEventListener('click', async () => {
+            const tg = document.getElementById('checkoutTg').value.trim();
+            if (!tg) {
+                showToast("Укажите ваш Telegram");
+                return;
+            }
+            const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
+            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            await sendToTelegram(`🛒 <b>Покупка в магазине:</b>\n👤 <b>Контакт:</b> ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого:</b> ${total.toLocaleString('ru-RU')} ₽`);
+            cart = [];
+            saveCart();
+            checkoutModal.classList.remove('show');
+            showToast("Заказ успешно отправлен!");
+        });
+
+        // АДМИНКА МАГАЗИНА
+        const adminPanel = document.getElementById('adminPanel');
+        const passwordModal = document.getElementById('passwordModal');
+
+        document.getElementById('toggleAdminBtn').addEventListener('click', () => {
+            if (isAdmin) {
+                isAdmin = false;
+                adminPanel.style.display = 'none';
+                document.getElementById('toggleAdminBtn').textContent = '⚙️ Панель управления';
+                renderShop();
+                return;
+            }
+            passwordModal.classList.add('show');
+        });
+
+        document.getElementById('passwordSubmit').addEventListener('click', () => {
+            if (document.getElementById('passwordInput').value.trim() === ADMIN_PASSWORD) {
+                isAdmin = true;
+                passwordModal.classList.remove('show');
+                adminPanel.style.display = 'block';
+                document.getElementById('toggleAdminBtn').textContent = '✕ Закрыть админку';
+                renderShop();
+                showToast("Доступ разрешен");
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            products.push({
+                id: Date.now(),
+                name: document.getElementById('adminName').value.trim(),
+                category: document.getElementById('adminCategory').value,
+                icon: document.getElementById('adminIcon').value.trim() || '📦',
+                price: parseInt(document.getElementById('adminPrice').value),
+                desc: document.getElementById('adminDesc').value.trim(),
+                tag: 'Новинка'
+            });
+            localStorage.setItem('serjant_products_v6', JSON.stringify(products));
+            renderShop();
+            document.getElementById('adminForm').reset();
+            showToast("Товар добавлен!");
+        });
+
+        // ЗАГРУЗКА РАДАРА
         async function fetchRadarOrders() {
             try {
                 const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
@@ -592,14 +673,7 @@
                 renderRadar();
                 document.getElementById('radarCount').textContent = radarOrders.length;
                 document.getElementById('statOrdersCount').textContent = radarOrders.length;
-                showToast("⚡ Радар синхронизирован!");
-            } catch (err) {
-                document.getElementById('radarGridContainer').innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">
-                        <h4>Загрузка потока заказов...</h4>
-                    </div>
-                `;
-            }
+            } catch (err) { console.error(err); }
         }
 
         function renderRadar() {
@@ -616,7 +690,7 @@
             }
 
             if (!list.length) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-muted);">Заказы в выбранной категории пока не найдены.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-muted);">Заказы в категории пока не найдены. После запуска парсера на GitHub они появятся здесь.</div>`;
                 return;
             }
 
@@ -628,7 +702,6 @@
                             <span class="source-tag">${o.source || 'Прямой контакт'}</span>
                         </div>
                         <h3>${o.title}</h3>
-                        ${o.direct_contact ? `<a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="direct-link">💬 ЛС: ${o.direct_contact}</a>` : ''}
                         <div class="radar-meta"><span>🕒 ${o.published_at || 'Недавно'}</span></div>
                     </div>
                     <div>
@@ -652,31 +725,8 @@
         document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
         document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
 
-        function renderShop() {
-            const container = document.getElementById('shopGridContainer');
-            container.innerHTML = products.map(p => `
-                <div class="shop-card">
-                    <div class="shop-thumb">${p.icon || '📦'}</div>
-                    <div class="shop-content">
-                        <div><h4>${p.name}</h4><p>${p.desc}</p></div>
-                        <div><div class="shop-price">${p.price.toLocaleString('ru-RU')} ₽</div></div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('contactName').value.trim();
-            const tg = document.getElementById('contactTg').value.trim();
-            const service = document.getElementById('contactService').value;
-            const msg = document.getElementById('contactMsg').value.trim();
-            await sendToTelegram(`📬 <b>Заявка с сайта!</b>\n👤 ${name}\n💬 ${tg}\n🔧 ${service}\n📝 ${msg}`);
-            showToast("Заявка успешно отправлена!");
-            document.getElementById('contactForm').reset();
-        });
-
         renderShop();
+        updateCartUI();
         fetchRadarOrders();
     </script>
 </body>
