@@ -22,16 +22,12 @@ RSS_FEEDS = [
         "url": "https://freten.ru/rss/orders",
         "source": "Freten (Доска)"
     },
-    # Добавили RSS FL.ru для стабильного потока заказов
     {
         "url": "https://www.fl.ru/rss/all.rss?category=4",
         "source": "FL.ru"
     }
 ]
 
-# ==========================================
-# 2. КАНАЛЫ TELEGRAM
-# ==========================================
 TG_CHANNELS = [
     "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
@@ -40,35 +36,19 @@ TG_CHANNELS = [
     "python_freelance", "python_job_board", "bot_creators_ru",
     "pydevjob", "it_bot_zakaz", "telegram_bots_order", "py_orders",
     "script_freelance", "bot_developers_ru",
-    "design_zakaz", "figma_orders", "design_podrabotka", "freelancedesign",
-    "webdesign_jobs", "freelance_design_ru", "uiux_jobs", "webdesign_freelance",
-    "designers_chat_ru", "figma_freelance", "ui_ux_orders", "landing_design_ru",
-    "web_designer_zakaz", "figma_jobs_ru", "design_projects_it",
-    "freelansim_ru", "freelancehunt_orders", "forfreelance", "it_freelance_zakaz",
-    "freelance_orders_ru", "pomogator_freelance", "verstka_jobs", "freelancetavern",
-    "freeworkfeed", "ru_freelance", "it_job_board", "work_in_it",
-    "html_css_jobs", "front_jobs", "frontend_jobs_ru", "webdev_orders",
-    "freelance_chat_it", "zakazy_na_sait", "sayty_pod_kluch", "verstka_zakaz",
-    "web_freelance_feed", "it_projects_ru", "freelance_daily_ru",
-    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_chat"
+    "pc_builds", "iron_chat", "sbor_pc", "komp_help"
 ]
 
-# ==========================================
-# 3. КЛЮЧЕВЫЕ СЛОВА
-# ==========================================
 TARGET_PHRASES = [
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота в тг",
-    "написать бота", "сделать бота", "создать бота", "aiogram", "pyrogram", "mini app", "tma", "webapp",
-    "сверстать", "верстка", "лендинг", "landing", "сайт-визитка", "сделать сайт", "создать сайт", "разработать сайт",
-    "дизайн сайта", "дизайн лендинга", "макет в figma", "макет сайта", "ui/ux", "дизайн интерфейса",
-    "парсер", "написать скрипт", "сделать скрипт", "спарсить", "парсер на python", "автоматизация",
+    "написать бота", "сделать бота", "aiogram", "pyrogram", "mini app", "tma", "webapp",
+    "сверстать", "верстка", "лендинг", "landing", "сайт-визитка", "сделать сайт", "создать сайт",
+    "дизайн сайта", "дизайн лендинга", "макет в figma", "макет сайта", "ui/ux",
+    "парсер", "написать скрипт", "сделать скрипт", "спарсить", "автоматизация",
     "сборка пк", "собрать пк", "апгрейд пк", "компьютер", "подбор комплектующих"
 ]
 
-# Минимальные стоп-слова (исключаем только откровенный спам)
-STOP_WORDS = [
-    "опыт работы от 5", "в штат", "фуллтайм", "full-time", "оформление по тк"
-]
+STOP_WORDS = ["опыт работы от 5", "в штат", "фуллтайм", "full-time", "оформление по тк"]
 
 def clean_text(text: str) -> str:
     text = re.sub(r"<[^>]+>", "", text)
@@ -79,12 +59,13 @@ def is_matching(text: str) -> bool:
     for stop in STOP_WORDS:
         if stop in text_lower:
             return False
-    # Если текста мало или нет ключевых, но это FL.ru или биржа — пропускаем, чтобы не было пусто
     return True
 
 def get_category(text: str, source: str) -> str:
+    # Жесткое разделение: если источник FL.ru, то категория строго FL.ru
     if "FL.ru" in source:
         return "FL.ru"
+        
     text_lower = text.lower()
     if any(k in text_lower for k in ["сборка", "апгрейд", "пк", "компьютер", "детал"]):
         return "Железо / ПК"
@@ -110,7 +91,7 @@ def parse_rss_feeds():
                 
                 tasks.append({
                     "title": title[:95] + "..." if len(title) > 95 else title,
-                    "price": getattr(entry, "price", "Договорная"),
+                    "price": "Договорная",
                     "url": link,
                     "category": get_category(full_text, feed_info["source"]),
                     "source": feed_info["source"],
@@ -195,11 +176,9 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Сбор задач с бирж (Хабр, Freelancehunt, FL.ru)...")
+    print("[*] Сбор задач...")
     new_scraped.extend(parse_rss_feeds())
-    
-    print(f"[*] Сбор прямых заказов из каналов Telegram...")
-    for ch in TG_CHANNELS[:15]: # Берем основные для скорости
+    for ch in TG_CHANNELS[:15]:
         new_scraped.extend(parse_tg(ch))
         
     combined_orders = []
@@ -213,4 +192,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(combined_orders[:100], f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! В базе {len(combined_orders[:100])} актуальных заказов.")
+    print(f"[+] Готово! В базе {len(combined_orders[:100])} заказов.")
