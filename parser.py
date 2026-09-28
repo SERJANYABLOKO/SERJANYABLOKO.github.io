@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import feedparser
 
 # ==========================================
-# 1. ОТКРЫТЫЕ БИРЖИ (БЕЗ ПЛАТНЫХ ОТКЛИКОВ)
+# 1. ОТКРЫТЫЕ БИРЖИ И ПОИСКОВЫЕ ЛЕНТЫ
 # ==========================================
 RSS_FEEDS = [
     {
@@ -20,14 +20,20 @@ RSS_FEEDS = [
     },
     {
         "url": "https://freten.ru/rss/orders",
-        "source": "Freten (Открытая доска)"
+        "source": "Freten (Доска)"
+    },
+    # Дополнительные поисковые RSS-потоки по сборке ПК и железу
+    {
+        "url": "https://www.avito.ru/rossiya/predlozheniya_uslug/remont_kompyuterov-ASgGCAICBRGEA7wK?q=сборка+пк&s=104&format=rss",
+        "source": "Авито (Сборка ПК)"
     }
 ]
 
 # ==========================================
-# 2. КАНАЛЫ TELEGRAM С ПРЯМОЙ СВЯЗЬЮ В ЛС
+# 2. РАСШИРЕННЫЕ КАНАЛЫ TELEGRAM (ИТ + ЖЕЛЕЗО И СБОРКА ПК)
 # ==========================================
 TG_CHANNELS = [
+    # Фриланс и IT общий
     "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
     "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
@@ -45,12 +51,15 @@ TG_CHANNELS = [
     "html_css_jobs", "front_jobs", "frontend_jobs_ru", "webdev_orders",
     "freelance_chat_it", "zakazy_na_sait", "sayty_pod_kluch", "verstka_zakaz",
     "web_freelance_feed", "it_projects_ru", "freelance_daily_ru",
-    # Чаты по железу и сборке ПК
-    "pc_builds", "iron_chat", "sbor_pc", "komp_help"
+    
+    # Сборка ПК, апгрейд и компьютерная помощь
+    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_chat",
+    "pc_help_chat", "kompyuternaya_pomosh", "sborka_kompyuterov",
+    " железо_чат", "iron_board", "pc_market_chat"
 ]
 
 # ==========================================
-# 3. ТОЧНЫЕ КЛЮЧЕВЫЕ СЛОВА (IT + СБОРКА ПК)
+# 3. ТОЧНЫЕ КЛЮЧЕВЫЕ СЛОВА
 # ==========================================
 TARGET_PHRASES = [
     # Telegram боты и TMA
@@ -73,10 +82,11 @@ TARGET_PHRASES = [
     "парсер", "написать скрипт", "сделать парсер", "спарсить",
     "парсер на python", "скрипт на python", "автоматизация",
 
-    # Сборка ПК и подбор комплектующих
+    # Сборка ПК и комплектующие
     "сборка пк", "собрать пк", "апгрейд пк", "апгрейд компьютера",
     "создать пк с 0", "сборка компьютера", "подбор деталей", "подбор комплектующих",
-    "подобрать комплектующие", "помощь со сборкой пк", "комплектующие для пк"
+    "подобрать комплектующие", "помощь со сборкой пк", "комплектующие для пк",
+    "собрать компьютер", "помочь с пк"
 ]
 
 # ==========================================
@@ -251,7 +261,7 @@ def filter_orders_under_48h(orders: list) -> list:
 if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
-    print("[*] Сбор задач с открытых бирж...")
+    print("[*] Сбор задач с открытых бирж и Авито (RSS)...")
     new_scraped.extend(parse_rss_feeds())
     print(f"[*] Сбор прямых заказов из {len(TG_CHANNELS)} каналов Telegram...")
     for ch in TG_CHANNELS:
