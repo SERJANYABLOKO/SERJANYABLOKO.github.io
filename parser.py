@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import feedparser
 
 # ==========================================
-# 1. ОТКРЫТЫЕ БИРЖИ И ПОИСКОВЫЕ ЛЕНТЫ
+# 1. РАБОЧИЕ RSS-ЛЕНТЫ (ВКЛЮЧАЯ IT-КАТЕГОРИИ FL.RU)
 # ==========================================
 RSS_FEEDS = [
     {
@@ -22,8 +22,9 @@ RSS_FEEDS = [
         "url": "https://freten.ru/rss/orders",
         "source": "Freten (Доска)"
     },
+    # Официальный RSS ленты IT-разделов FL.ru
     {
-        "url": "https://www.fl.ru/rss/all.rss?category=4",
+        "url": "https://www.fl.ru/rss/all.rss?specs=1",
         "source": "FL.ru"
     }
 ]
@@ -62,7 +63,7 @@ def is_matching(text: str) -> bool:
     return True
 
 def get_category(text: str, source: str) -> str:
-    # Жесткое разделение: если источник FL.ru, то категория строго FL.ru
+    # Заказы с FL.ru идут строго в свою категорию
     if "FL.ru" in source:
         return "FL.ru"
         
@@ -83,23 +84,25 @@ def parse_rss_feeds():
     for feed_info in RSS_FEEDS:
         try:
             feed = feedparser.parse(feed_info["url"], request_headers=headers)
-            for entry in feed.entries[:30]:
+            for entry in feed.entries[:35]:
                 title = clean_text(entry.title)
                 summary = clean_text(getattr(entry, "summary", ""))
                 link = getattr(entry, "link", "")
                 full_text = f"{title} {summary}"
                 
-                tasks.append({
-                    "title": title[:95] + "..." if len(title) > 95 else title,
-                    "price": "Договорная",
-                    "url": link,
-                    "category": get_category(full_text, feed_info["source"]),
-                    "source": feed_info["source"],
-                    "published_at": "Сегодня",
-                    "responses": "Открытый отклик",
-                    "direct_contact": None,
-                    "discovered_at": datetime.now(timezone.utc).isoformat()
-                })
+                # Для FL.ru забираем все IT-заказы из потока
+                if feed_info["source"] == "FL.ru" or is_matching(full_text):
+                    tasks.append({
+                        "title": title[:95] + "..." if len(title) > 95 else title,
+                        "price": "Договорная",
+                        "url": link,
+                        "category": get_category(full_text, feed_info["source"]),
+                        "source": feed_info["source"],
+                        "published_at": "Сегодня",
+                        "responses": "Открытый отклик",
+                        "direct_contact": None,
+                        "discovered_at": datetime.now(timezone.utc).isoformat()
+                    })
         except Exception:
             pass
     return tasks
@@ -176,7 +179,7 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Сбор задач...")
+    print("[*] Сбор задач с бирж и FL.ru...")
     new_scraped.extend(parse_rss_feeds())
     for ch in TG_CHANNELS[:15]:
         new_scraped.extend(parse_tg(ch))
@@ -190,6 +193,6 @@ if __name__ == "__main__":
             combined_orders.append(order)
             
     with open("orders.json", "w", encoding="utf-8") as f:
-        json.dump(combined_orders[:100], f, ensure_ascii=False, indent=2)
+        json.dump(combined_orders[:120], f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! В базе {len(combined_orders[:100])} заказов.")
+    print(f"[+] Готово! В базе {len(combined_orders[:120])} заказов.")
