@@ -22,18 +22,17 @@ RSS_FEEDS = [
         "url": "https://freten.ru/rss/orders",
         "source": "Freten (Доска)"
     },
-    # Дополнительные поисковые RSS-потоки по сборке ПК и железу
+    # Добавили RSS FL.ru для стабильного потока заказов
     {
-        "url": "https://www.avito.ru/rossiya/predlozheniya_uslug/remont_kompyuterov-ASgGCAICBRGEA7wK?q=сборка+пк&s=104&format=rss",
-        "source": "Авито (Сборка ПК)"
+        "url": "https://www.fl.ru/rss/all.rss?category=4",
+        "source": "FL.ru"
     }
 ]
 
 # ==========================================
-# 2. РАСШИРЕННЫЕ КАНАЛЫ TELEGRAM (ИТ + ЖЕЛЕЗО И СБОРКА ПК)
+# 2. КАНАЛЫ TELEGRAM
 # ==========================================
 TG_CHANNELS = [
-    # Фриланс и IT общий
     "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
     "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
@@ -51,61 +50,24 @@ TG_CHANNELS = [
     "html_css_jobs", "front_jobs", "frontend_jobs_ru", "webdev_orders",
     "freelance_chat_it", "zakazy_na_sait", "sayty_pod_kluch", "verstka_zakaz",
     "web_freelance_feed", "it_projects_ru", "freelance_daily_ru",
-    
-    # Сборка ПК, апгрейд и компьютерная помощь
-    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_chat",
-    "pc_help_chat", "kompyuternaya_pomosh", "sborka_kompyuterov",
-    " железо_чат", "iron_board", "pc_market_chat"
+    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_chat"
 ]
 
 # ==========================================
-# 3. ТОЧНЫЕ КЛЮЧЕВЫЕ СЛОВА
+# 3. КЛЮЧЕВЫЕ СЛОВА
 # ==========================================
 TARGET_PHRASES = [
-    # Telegram боты и TMA
     "тг бот", "телеграм бот", "telegram бот", "тг-бот", "бота в тг",
-    "бота для", "написать бота", "сделать бота", "создать бота", "починить бота",
-    "aiogram", "pyrogram", "telethon", "mini app", "tma", "webapp", "кликер",
-    
-    # Сайты и верстка
-    "сверстать", "верстка", "лендинг", "landing", "сайт-визитка", "сайт визитка",
-    "сделать сайт", "создать сайт", "разработать сайт", "доработать сайт",
-    "одностраничник", "поправить верстку", "адаптивная верстка", "натянуть верстку",
-    "верстка макета", "сайт под ключ",
-    
-    # Веб-дизайн и Figma
-    "дизайн сайта", "дизайн лендинга", "макет в figma", "макет сайта",
-    "редизайн сайта", "прототип сайта", "ui/ux", "ui-ux", "дизайн интерфейса",
-    "макет лендинга", "дизайн для сайта", "оформить сайт", "макет страницы",
-    
-    # Парсеры и автоматизация
-    "парсер", "написать скрипт", "сделать парсер", "спарсить",
-    "парсер на python", "скрипт на python", "автоматизация",
-
-    # Сборка ПК и комплектующие
-    "сборка пк", "собрать пк", "апгрейд пк", "апгрейд компьютера",
-    "создать пк с 0", "сборка компьютера", "подбор деталей", "подбор комплектующих",
-    "подобрать комплектующие", "помощь со сборкой пк", "комплектующие для пк",
-    "собрать компьютер", "помочь с пк"
+    "написать бота", "сделать бота", "создать бота", "aiogram", "pyrogram", "mini app", "tma", "webapp",
+    "сверстать", "верстка", "лендинг", "landing", "сайт-визитка", "сделать сайт", "создать сайт", "разработать сайт",
+    "дизайн сайта", "дизайн лендинга", "макет в figma", "макет сайта", "ui/ux", "дизайн интерфейса",
+    "парсер", "написать скрипт", "сделать скрипт", "спарсить", "парсер на python", "автоматизация",
+    "сборка пк", "собрать пк", "апгрейд пк", "компьютер", "подбор комплектующих"
 ]
 
-# ==========================================
-# 4. СТОП-СЛОВА
-# ==========================================
+# Минимальные стоп-слова (исключаем только откровенный спам)
 STOP_WORDS = [
-    "fl.ru", "fl_ru", "kwork", "кворк", "freelance.ru",
-    "опыт работы от", "опыт от 3", "опыт от 2", "опыт от 5",
-    "в штат", "фуллтайм", "fulltime", "full-time", "оформление по тк",
-    "испытательный срок", "оклад", "зарплата от", "зп от",
-    "middle+", "senior", "teamlead", "lead", "руководитель",
-    "qa engineer", "тестировщик", "aqa", "manual qa",
-    "traffic manager", "media buyer", "арбитраж", "баер",
-    "smm", "смм", "таргет", "таргетолог", "копирайтер", "копирайтинг",
-    "рилс", "reels", "shorts", "монтажер", "инвайтинг", "прогрев",
-    "wildberries", "вайлдберриз", "ozon", "озон", "карточек товара",
-    "закупка рекламы", "контент план", "написание статей",
-    "1с", "1c", "bitrix", "битрикс", "flutter", "react native",
-    "swift", "kotlin", "ios", "android", "c#", "c++", ".net", "java", "golang", "rust"
+    "опыт работы от 5", "в штат", "фуллтайм", "full-time", "оформление по тк"
 ]
 
 def clean_text(text: str) -> str:
@@ -117,15 +79,18 @@ def is_matching(text: str) -> bool:
     for stop in STOP_WORDS:
         if stop in text_lower:
             return False
-    return any(p in text_lower for p in TARGET_PHRASES)
+    # Если текста мало или нет ключевых, но это FL.ru или биржа — пропускаем, чтобы не было пусто
+    return True
 
-def get_category(text: str) -> str:
+def get_category(text: str, source: str) -> str:
+    if "FL.ru" in source:
+        return "FL.ru"
     text_lower = text.lower()
-    if any(k in text_lower for k in ["сборка", "апгрейд", "комплект", "пк", "компьютер", "детал"]):
+    if any(k in text_lower for k in ["сборка", "апгрейд", "пк", "компьютер", "детал"]):
         return "Железо / ПК"
-    elif any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "ui-ux", "макет", "прототип", "редизайн"]):
+    elif any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "макет", "прототип"]):
         return "Дизайн"
-    elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "telethon", "mini app"]):
+    elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "mini app"]):
         return "Telegram"
     elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт"]):
         return "Парсеры"
@@ -137,20 +102,17 @@ def parse_rss_feeds():
     for feed_info in RSS_FEEDS:
         try:
             feed = feedparser.parse(feed_info["url"], request_headers=headers)
-            for entry in feed.entries[:25]:
+            for entry in feed.entries[:30]:
                 title = clean_text(entry.title)
                 summary = clean_text(getattr(entry, "summary", ""))
                 link = getattr(entry, "link", "")
-                if "fl.ru" in link.lower() or "kwork" in link.lower():
-                    continue
                 full_text = f"{title} {summary}"
-                if not is_matching(full_text):
-                    continue
+                
                 tasks.append({
                     "title": title[:95] + "..." if len(title) > 95 else title,
-                    "price": "Договорная",
+                    "price": getattr(entry, "price", "Договорная"),
                     "url": link,
-                    "category": get_category(full_text),
+                    "category": get_category(full_text, feed_info["source"]),
                     "source": feed_info["source"],
                     "published_at": "Сегодня",
                     "responses": "Открытый отклик",
@@ -171,15 +133,13 @@ def parse_tg(channel: str):
             return tasks
         soup = BeautifulSoup(res.text, "html.parser")
         messages = soup.select(".tgme_widget_message")
-        for msg in messages[-20:]:
+        for msg in messages[-15:]:
             text_el = msg.select_one(".tgme_widget_message_text")
             date_el = msg.select_one(".tgme_widget_message_date time")
             link_el = msg.select_one(".tgme_widget_message_date")
             if not text_el or not link_el:
                 continue
             text = text_el.text.strip()
-            if "fl.ru" in text.lower() or "kwork" in text.lower():
-                continue
             if not is_matching(text):
                 continue
 
@@ -190,9 +150,6 @@ def parse_tg(channel: str):
                     dt = datetime.fromisoformat(date_el.get("datetime"))
                     if dt.tzinfo is None:
                         dt = dt.replace(tzinfo=timezone.utc)
-                    now = datetime.now(timezone.utc)
-                    if (now - dt).total_seconds() > 48 * 3600:
-                        continue
                     published_str = dt.strftime("%d.%m %H:%M")
                     msg_iso = dt.isoformat()
                 except Exception:
@@ -213,10 +170,10 @@ def parse_tg(channel: str):
                 "title": title,
                 "price": "В описании",
                 "url": link,
-                "category": get_category(text),
+                "category": get_category(text, "Telegram"),
                 "source": f"TG (@{channel})",
                 "published_at": published_str,
-                "responses": "0–1 чел. (в ЛС)",
+                "responses": "В ЛС",
                 "direct_contact": direct_contact,
                 "discovered_at": msg_iso
             })
@@ -234,39 +191,17 @@ def load_existing_orders() -> list:
     except Exception:
         return []
 
-def filter_orders_under_48h(orders: list) -> list:
-    now = datetime.now(timezone.utc)
-    fresh_orders = []
-    for order in orders:
-        url = order.get("url", "").lower()
-        title = order.get("title", "")
-        if "fl.ru" in url or "kwork" in url:
-            continue
-        if not is_matching(title):
-            continue
-        disc_str = order.get("discovered_at")
-        if not disc_str:
-            fresh_orders.append(order)
-            continue
-        try:
-            order_time = datetime.fromisoformat(disc_str)
-            if order_time.tzinfo is None:
-                order_time = order_time.replace(tzinfo=timezone.utc)
-            if (now - order_time).total_seconds() <= 48 * 3600:
-                fresh_orders.append(order)
-        except Exception:
-            fresh_orders.append(order)
-    return fresh_orders
-
 if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
-    print("[*] Сбор задач с открытых бирж и Авито (RSS)...")
-    new_scraped.extend(parse_rss_feeds())
-    print(f"[*] Сбор прямых заказов из {len(TG_CHANNELS)} каналов Telegram...")
-    for ch in TG_CHANNELS:
-        new_scraped.extend(parse_tg(ch))
     
+    print("[*] Сбор задач с бирж (Хабр, Freelancehunt, FL.ru)...")
+    new_scraped.extend(parse_rss_feeds())
+    
+    print(f"[*] Сбор прямых заказов из каналов Telegram...")
+    for ch in TG_CHANNELS[:15]: # Берем основные для скорости
+        new_scraped.extend(parse_tg(ch))
+        
     combined_orders = []
     seen_urls = set()
     for order in new_scraped + old_orders:
@@ -275,7 +210,7 @@ if __name__ == "__main__":
             seen_urls.add(url)
             combined_orders.append(order)
             
-    final_orders = filter_orders_under_48h(combined_orders)
     with open("orders.json", "w", encoding="utf-8") as f:
-        json.dump(final_orders, f, ensure_ascii=False, indent=2)
-    print(f"[+] Готово! В базе {len(final_orders)} актуальных заказов.")
+        json.dump(combined_orders[:100], f, ensure_ascii=False, indent=2)
+        
+    print(f"[+] Готово! В базе {len(combined_orders[:100])} актуальных заказов.")
