@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Service Parser - Заказы на сборку ПК</title>
+    <title>PC Service - Заказы на сборку и апгрейд</title>
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-bg: rgba(17, 24, 39, 0.75);
             --text-color: #f3f4f6;
             --accent-rgb: 0, 255, 204;
             --accent-color: #00ffcc;
             --accent-hover: #00b386;
-            --border-color: rgba(0, 255, 204, 0.3);
-            --shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            --border-color: rgba(0, 255, 204, 0.35);
+            --shadow: 0 0 20px rgba(0, 255, 204, 0.25);
         }
 
         [data-theme="neon"] {
             --bg-color: #050505;
-            --card-bg: rgba(20, 20, 20, 0.8);
+            --card-bg: rgba(20, 20, 20, 0.85);
             --text-color: #ffffff;
             --accent-rgb: 255, 0, 127;
             --accent-color: #ff007f;
             --accent-hover: #b30059;
-            --border-color: rgba(255, 0, 127, 0.4);
-            --shadow: 0 0 25px rgba(255, 0, 127, 0.3);
+            --border-color: rgba(255, 0, 127, 0.45);
+            --shadow: 0 0 25px rgba(255, 0, 127, 0.35);
         }
 
         [data-theme="classic"] {
             --bg-color: #1a1a2e;
-            --card-bg: rgba(22, 27, 34, 0.8);
+            --card-bg: rgba(22, 27, 34, 0.85);
             --text-color: #e6edf3;
             --accent-rgb: 88, 166, 255;
             --accent-color: #58a6ff;
             --accent-hover: #388bfd;
-            --border-color: rgba(88, 166, 255, 0.4);
-            --shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+            --border-color: rgba(88, 166, 255, 0.45);
+            --shadow: 0 0 20px rgba(88, 166, 255, 0.25);
         }
 
         * {
@@ -43,7 +43,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
         }
 
         body {
@@ -77,13 +77,14 @@
         }
 
         .theme-switcher select {
-            background: var(--bg-color);
-            color: var(--text-color);
+            background: var(--card-bg);
+            color: var(--accent-color);
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             cursor: pointer;
             outline: none;
+            font-weight: bold;
         }
 
         .container {
@@ -111,6 +112,7 @@
             margin-bottom: 20px;
             font-size: 1.2rem;
             color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(var(--accent-rgb), 0.3);
         }
 
         .form-group {
@@ -121,21 +123,29 @@
             display: block;
             margin-bottom: 5px;
             font-size: 0.9rem;
+            color: var(--text-color);
         }
 
+        /* Убран серый цвет: теперь элементы управления используют темы и RGB границы */
         input, textarea, select {
             width: 100%;
             padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(var(--accent-rgb), 0.05);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-color);
             outline: none;
         }
 
-        input:focus, textarea:focus {
+        /* Выпадающий список категорий со стильным оформлением */
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        input:focus, textarea:focus, select:focus {
             border-color: var(--accent-color);
-            box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.4);
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4);
         }
 
         button {
@@ -154,6 +164,7 @@
         button:hover {
             background: var(--accent-hover);
             transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.7);
         }
 
         .orders-list {
@@ -166,15 +177,17 @@
         }
 
         .order-item {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(var(--accent-rgb), 0.05);
+            border: 1px solid var(--border-color);
             border-left: 4px solid var(--accent-color);
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.9rem;
         }
 
         .order-item small {
-            color: #888;
+            color: var(--accent-color);
+            opacity: 0.8;
             display: block;
             margin-top: 5px;
         }
@@ -186,28 +199,28 @@
         <h1>⚡ PC Leads Hunter</h1>
         <div class="theme-switcher">
             <select id="themeSelect" onchange="changeTheme(this.value)">
-                <option value="cyberpunk">Киберпанк (RGB)</option>
-                <option value="neon">Неон (Pink)</option>
-                <option value="classic">Классик (Blue)</option>
+                <option value="cyberpunk">🟢 Киберпанк (RGB)</option>
+                <option value="neon">🟣 Неон (Pink)</option>
+                <option value="classic">🔵 Классик (Blue)</option>
             </select>
         </div>
     </header>
 
     <div class="container">
-        <!-- Форма для клиента -->
+        <!-- Форма для получения данных заказчика -->
         <div class="card">
-            <h2>Оставить заявку на ПК</h2>
+            <h2>Оставить заявку</h2>
             <form id="leadForm" onsubmit="submitForm(event)">
                 <div class="form-group">
-                    <label>Ваше имя / Ник</label>
-                    <input type="text" id="name" required placeholder="Иван">
+                    <label>Ваше имя</label>
+                    <input type="text" id="name" required placeholder="Алексей">
                 </div>
                 <div class="form-group">
                     <label>Связь (Telegram / Телефон)</label>
                     <input type="text" id="contact" required placeholder="@username">
                 </div>
                 <div class="form-group">
-                    <label>Услуга</label>
+                    <label>Категория услуги</label>
                     <select id="service">
                         <option value="Сборка с 0">Сборка ПК с нуля</option>
                         <option value="Подбор запчастей">Подбор комплектующих</option>
@@ -216,25 +229,25 @@
                 </div>
                 <div class="form-group">
                     <label>Комментарий / Бюджет</label>
-                    <textarea id="comment" rows="3" placeholder="Бюджет 100к, нужен под игры..."></textarea>
+                    <textarea id="comment" rows="3" placeholder="Бюджет 120 000 руб..."></textarea>
                 </div>
                 <button type="submit">Отправить запрос</button>
             </form>
         </div>
 
-        <!-- Лента найденных заказов (Парсер / База) -->
+        <!-- Лента заказов -->
         <div class="card">
-            <h2>🔥 Горячие заказы (Лента)</h2>
+            <h2>🔥 Найденные заказы</h2>
             <div class="orders-list" id="ordersList">
                 <div class="order-item">
-                    <strong>Сборка ПК до 90 000 руб.</strong>
-                    <p>Нужен ПК для игр и работы в Blender, помогите подобрать железо.</p>
-                    <small>Источник: Telegram (Биржа фриланса) • 5 мин назад</small>
+                    <strong>Сборка ПК под игры (Бюджет 90к)</strong>
+                    <p>Помогите собрать сбалансированный системник под 2K гейминг.</p>
+                    <small>Канал: Заказы на ПК • 10 мин назад</small>
                 </div>
                 <div class="order-item">
-                    <strong>Апгрейд видеокарты</strong>
-                    <p>Хочу поменять GTX 1060 на что-то свежее, блок питания 500W.</p>
-                    <small>Источник: Форум / Чаты • 22 мин назад</small>
+                    <strong>Апгрейд процессора и ОЗУ</strong>
+                    <p>Нужен совет, что поставить на плату AM4 вместо Ryzen 5 1600.</p>
+                    <small>Биржа фриланса • 35 мин назад</small>
                 </div>
             </div>
         </div>
@@ -246,7 +259,6 @@
             localStorage.setItem('theme', theme);
         }
 
-        // Загрузка сохраненной темы
         window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'cyberpunk';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -256,12 +268,8 @@
         function submitForm(e) {
             e.preventDefault();
             const name = document.getElementById('name').value;
-            const contact = document.getElementById('contact').value;
             const service = document.getElementById('service').value;
-            const comment = document.getElementById('comment').value;
-
-            // Здесь данные можно отправить в Telegram-бот через fetch (интеграция с Bot API)
-            alert(`Спасибо, ${name}! Ваша заявка "${service}" принята. Мы свяжемся с вами в ближайшее время.`);
+            alert(`Спасибо, ${name}! Заявка по услуге "${service}" успешно отправлена.`);
             document.getElementById('leadForm').reset();
         }
     </script>
