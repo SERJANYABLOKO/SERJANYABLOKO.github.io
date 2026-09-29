@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сеть кофеен «Буханка» | Москва</title>
+    
+    <!-- Подключаем шрифты Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --primary-glow: rgba(245, 158, 11, 0.28);
+            --bg-base: #120b06;
+            --navbar-bg: rgba(24, 15, 9, 0.88);
+            --surface-1: rgba(38, 22, 13, 0.8);
+            --surface-2: rgba(54, 32, 18, 0.7);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(245, 158, 11, 0.45);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 10% 10%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* НАВИГАЦИЯ */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 16px 0; background: var(--navbar-bg);
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-subtle);
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: #fff; text-decoration: none; }
+        .logo span { color: var(--primary); text-shadow: 0 0 12px var(--primary-glow); }
+
+        .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        .icon-btn {
+            background: var(--surface-2); border: 1px solid var(--border-subtle);
+            color: var(--text-main); border-radius: 12px; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+        }
+        .icon-btn:hover { border-color: var(--border-focus); transform: translateY(-1px); }
+
+        /* КНОПКИ */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; background: var(--primary); color: #120b06; font-weight: 700;
+            font-size: 0.88rem; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s;
+            text-decoration: none; box-shadow: 0 4px 20px var(--primary-glow);
+        }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-sm { padding: 8px 16px; font-size: 0.8rem; border-radius: 8px; }
+        .btn-secondary { background: var(--surface-2); color: #fff; border: 1px solid var(--border-subtle); box-shadow: none; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--border-focus); }
+
+        /* СТРАНИЦЫ И СЕКЦИИ */
+        .page { display: none; padding-top: 100px; min-height: 100vh; padding-bottom: 60px; }
+        .page.active { display: block; }
+
+        .hero { min-height: 70vh; display: flex; align-items: center; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
+        .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px; }
+
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
+        .section-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+        .section-subtitle { color: var(--text-muted); font-size: 0.95rem; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        /* КАРТОЧКА ТОВАРА */
+        .coffee-card {
+            background: var(--surface-1); border: 1px solid var(--border-subtle);
+            border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;
+        }
+        .coffee-card:hover { transform: translateY(-4px); border-color: var(--border-focus); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .coffee-thumb {
+            height: 140px; background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(54,32,18,0.5));
+            display: flex; align-items: center; justify-content: center; font-size: 3.5rem; border-bottom: 1px solid var(--border-subtle);
+        }
+        .coffee-body { padding: 22px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+        .coffee-body h4 { font-size: 1.12rem; font-weight: 600; margin-bottom: 6px; }
+        .coffee-body p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; }
+        .coffee-footer { display: flex; justify-content: space-between; align-items: center; }
+        .coffee-price { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+
+        /* КАРТА / КОФЕЙНИ */
+        .cafe-branch {
+            background: var(--surface-1); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .cafe-branch h4 { font-size: 1.1rem; margin-bottom: 6px; }
+        .cafe-branch p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px; }
+
+        /* КОРЗИНА И МОДАЛКИ */
+        .cart-sidebar {
+            position: fixed; right: -400px; top: 0; width: 380px; height: 100vh;
+            background: var(--bg-base); border-left: 1px solid var(--border-subtle);
+            padding: 30px; transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2000; display: flex; flex-direction: column;
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1999; display: none; }
+        .cart-overlay.show { display: block; }
+
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; background: var(--surface-1);
+            border: 1px solid var(--border-focus); color: #fff; padding: 12px 20px;
+            border-radius: 12px; font-weight: 600; font-size: 0.85rem; transform: translateY(80px);
+            opacity: 0; transition: 0.3s; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 2.4rem; }
+            .nav-links { display: none; }
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="logo" data-page="home">БУХАНКА<span>.</span>КОФЕ</a>
+            <ul class="nav-links">
+                <li><a data-page="home" class="active">Главная</a></li>
+                <li><a data-page="menu">Меню и выпечка</a></li>
+                <li><a data-page="branches">Кофейни в Москве</a></li>
+                <li><a data-page="contacts">Контакты</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="icon-btn" id="cartToggle" title="Корзина">🛒</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. ГЛАВНАЯ СТРАНИЦА -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <span style="display:inline-block; padding: 6px 14px; background: rgba(245,158,11,0.1); border: 1px solid var(--border-focus); border-radius: 30px; font-size: 0.78rem; color: var(--primary); font-weight: 600; margin-bottom: 20px;">
+                            🥐 Свежая выпечка и зерновой кофе каждый день
+                        </span>
+                        <h1>Сеть уютных кофеен <span>«Буханка»</span> в Москве</h1>
+                        <p>Ароматный кофе свежей обжарки, хрустящие круассаны, фирменный хлеб на закваске и уютная атмосфера в каждом районе столицы.</p>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <a class="btn" data-page="menu">Смотреть меню ➔</a>
+                            <a class="btn btn-secondary" data-page="branches">Найти кофейню рядом</a>
+                        </div>
+                    </div>
+                    <div style="background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 40px; text-align: center;">
+                        <span style="font-size: 6rem; display: block; margin-bottom: 16px;">☕🥐</span>
+                        <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 8px;">Скидка 20% на первый заказ</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Оформите самовывоз через сайт или заберите кофе по дороге на работу без очереди.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. СТРАНИЦА МЕНЮ -->
+    <div class="page" id="page-menu">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Наше Меню</h2>
+                <p class="section-subtitle">Выберите напиток или свежую выпечку, добавьте в заказ и заберите в ближайшей кофейне</p>
+            </div>
+            <div class="cards-grid" id="menuGrid"></div>
+        </div>
+    </div>
+
+    <!-- 3. СТРАНИЦА КОФЕЕН (МОСКВА) -->
+    <div class="page" id="page-branches">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Кофейни в Москве</h2>
+                <p class="section-subtitle">Работаем с 08:00 до 22:00 ежедневно. Ждем вас на чашечку капучино!</p>
+            </div>
+            <div class="cards-grid" id="branchesGrid"></div>
+        </div>
+    </div>
+
+    <!-- 4. СТРАНИЦА КОНТАКТОВ -->
+    <div class="page" id="page-contacts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Контакты и Поддержка</h2>
+                <p class="section-subtitle">Есть вопросы по заказам или сотрудничеству? Напишите нам!</p>
+            </div>
+            <div style="max-width: 500px; margin: 0 auto; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px;">
+                <p style="margin-bottom: 14px;">📍 <b>Головной офис:</b> г. Москва, ул. Арбат, д. 12</p>
+                <p style="margin-bottom: 14px;">📞 <b>Телефон:</b> +7 (495) 123-45-67</p>
+                <p style="margin-bottom: 20px;">💬 <b>Telegram:</b> @buhanka_coffee_msk</p>
+                <a href="https://t.me/serjantyabloko" target="_blank" class="btn" style="width: 100%;">Написать в Telegram ➔</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- КОРЗИНА САЙДБАР -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem;">🛒 Ваш заказ</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;" id="cartClose">✕</button>
+        </div>
+        <div id="cartItems" style="flex: 1; overflow-y: auto;"></div>
+        <div id="cartTotalBlock" style="display: none; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 16px;">
+                <span style="color: var(--text-muted);">Итого:</span>
+                <span id="cartTotalPrice" style="font-family: var(--font-display); font-size: 1.4rem; font-weight:700; color: var(--primary);">0 ₽</span>
+            </div>
+            <button class="btn" style="width: 100%;" id="checkoutBtn">Оформить самовывоз</button>
+        </div>
+    </div>
+
+    <!-- УВЕДОМЛЕНИЕ -->
+    <div class="toast" id="toast">✅ Товар добавлен в заказ!</div>
+
+    <script>
+        const menuProducts = [
+            { id: 1, name: 'Капучино (300 мл)', desc: 'Классический эспрессо с нежной молочной пенкой.', price: 240, icon: '☕', category: 'coffee' },
+            { id: 2, name: 'Латте Карамель', desc: 'Мягкий кофейный напиток с карамельным сиропом.', price: 290, icon: '🥤', category: 'coffee' },
+            { id: 3, name: 'Раф Цитрусовый', desc: 'Авторский кофейный напиток на сливках с цедрой.', price: 330, icon: '🍊', category: 'coffee' },
+            { id: 4, name: 'Круассан классический', desc: 'Хрустящий французский круассан из слоеного теста.', price: 180, icon: '🥐', category: 'bakery' },
+            { id: 5, name: 'Буханка бородинского', desc: 'Фирменный ржаной хлеб на натуральной закваске.', price: 150, icon: '🍞', category: 'bakery' },
+            { id: 6, name: 'Улитка с корицей', desc: 'Сдобная булочка с ароматной корицей и глазурью.', price: 210, icon: '🥮', category: 'bakery' }
+        ];
+
+        const branches = [
+            { name: 'Буханка на Арбате', address: 'ул. Арбат, 12', metro: 'м. Арбатская' },
+            { name: 'Буханка на Тверской', address: 'Тверская ул., 24', metro: 'м. Пушкинская' },
+            { name: 'Буханка в Сити', address: 'Пресненская наб., 2', metro: 'м. Выставочная' },
+            { name: 'Буханка на Чистых прудах', address: 'Чистопрудный бульвар, 5', metro: 'м. Чистые пруды' }
+        ];
+
+        let cart = [];
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2400);
+        }
+
+        // НАВИГАЦИЯ
+        const pages = {
+            home: document.getElementById('page-home'),
+            menu: document.getElementById('page-menu'),
+            branches: document.getElementById('page-branches'),
+            contacts: document.getElementById('page-contacts')
+        };
+
+        document.querySelectorAll('[data-page]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = el.dataset.page;
+                Object.values(pages).forEach(p => p.classList.remove('active'));
+                if (pages[pageId]) pages[pageId].classList.add('active');
+                
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.classList.toggle('active', a.dataset.page === pageId);
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // РЕНДЕР МЕНЮ
+        function renderMenu() {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = menuProducts.map(p => `
+                <div class="coffee-card">
+                    <div class="coffee-thumb">${p.icon}</div>
+                    <div class="coffee-body">
+                        <div>
+                            <h4>${p.name}</h4>
+                            <p>${p.desc}</p>
+                        </div>
+                        <div class="coffee-footer">
+                            <span class="coffee-price">${p.price} ₽</span>
+                            <button class="btn btn-sm btn-add" data-id="${p.id}">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // РЕНДЕР ФИЛИАЛОВ
+        function renderBranches() {
+            const grid = document.getElementById('branchesGrid');
+            grid.innerHTML = branches.map(b => `
+                <div class="cafe-branch">
+                    <div>
+                        <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🏠</span>
+                        <h4>${b.name}</h4>
+                        <p>📍 ${b.address}<br>🚇 ${b.metro}</p>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">⏰ Открыто до 22:00</span>
+                </div>
+            `).join('');
+        }
+
+        // КОРЗИНА
+        document.getElementById('menuGrid').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-add');
+            if (btn) {
+                const id = parseInt(btn.dataset.id);
+                const item = menuProducts.find(p => p.id === id);
+                const exist = cart.find(p => p.id === id);
+                if (exist) exist.qty++;
+                else cart.push({ ...item, qty: 1 });
+                updateCart();
+                showToast(`Добавлено: ${item.name}`);
+            }
+        });
+
+        function updateCart() {
+            const container = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotalPrice');
+            const totalBlock = document.getElementById('cartTotalBlock');
+
+            if (!cart.length) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
+                totalBlock.style.display = 'none';
+                return;
+            }
+
+            totalBlock.style.display = 'block';
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-subtle);">
+                        <div>
+                            <div style="font-weight:600; font-size:0.9rem;">${i.name}</div>
+                            <div style="color:var(--text-muted); font-size:0.8rem;">${i.price} ₽ × ${i.qty}</div>
+                        </div>
+                        <button onclick="removeItem(${i.id})" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.textContent = total + ' ₽';
+        }
+
+        window.removeItem = (id) => {
+            cart = cart.filter(i => i.id !== id);
+            updateCart();
+        };
+
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+
+        document.getElementById('cartToggle').addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        });
+        document.getElementById('cartClose').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            showToast("Заказ оформлен! Готовим кофейню к вашему визиту ☕");
+            cart = [];
+            updateCart();
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        // Инициализация
+        renderMenu();
+        renderBranches();
+    </script>
+</body>
+</html>
