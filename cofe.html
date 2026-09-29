@@ -3,33 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SerjantDev | Python Developer & Portfolio Hub</title>
+    <title>Сеть кофеен «Буханка» | Москва</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #ff3366;
-            --primary-glow: rgba(255, 51, 102, 0.28);
-            --secondary: #ff9900;
-            --accent: #ff3366;
-            --bg-base: #0c0407;
-            --navbar-bg: rgba(15, 5, 8, 0.88);
-            --navbar-scrolled: rgba(12, 4, 7, 0.98);
-            --bg-gradient-1: rgba(255, 51, 102, 0.1);
-            --bg-gradient-2: rgba(255, 153, 0, 0.06);
-            --surface-1: rgba(28, 12, 18, 0.78);
-            --surface-2: rgba(41, 17, 26, 0.65);
-            --surface-input: rgba(18, 7, 12, 0.85);
+            --primary: #f59e0b;
+            --primary-glow: rgba(245, 158, 11, 0.28);
+            --bg-base: #120b06;
+            --navbar-bg: rgba(24, 15, 9, 0.88);
+            --surface-1: rgba(38, 22, 13, 0.8);
+            --surface-2: rgba(54, 32, 18, 0.7);
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(255, 51, 102, 0.45);
+            --border-focus: rgba(245, 158, 11, 0.45);
             --text-main: #f8fafc;
-            --text-muted: #8b9bb4;
+            --text-muted: #94a3b8;
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,382 +30,334 @@
         body {
             font-family: var(--font-body);
             background-color: var(--bg-base);
-            background-image: 
-                radial-gradient(circle at 15% 15%, var(--bg-gradient-1) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, var(--bg-gradient-2) 0%, transparent 45%);
+            background-image: radial-gradient(circle at 10% 10%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
-            overflow-x: hidden;
             min-height: 100vh;
         }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-base); }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
         /* НАВИГАЦИЯ */
         .navbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            padding: 18px 0; background: var(--navbar-bg);
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle);
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled {
-            padding: 12px 0; background: var(--navbar-scrolled);
-            border-bottom: 1px solid var(--border-focus); box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+            padding: 16px 0; background: var(--navbar-bg);
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-subtle);
         }
         .navbar .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; color: #fff; text-decoration: none; cursor: pointer; }
-        .logo span { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+        .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: #fff; text-decoration: none; cursor: pointer; }
+        .logo span { color: var(--primary); text-shadow: 0 0 12px var(--primary-glow); }
 
-        .nav-links { display: flex; gap: 18px; list-style: none; align-items: center; }
-        .nav-links a {
-            color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem;
-            transition: all 0.25s ease; position: relative; padding: 6px 0; cursor: pointer;
-        }
+        .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; cursor: pointer; }
         .nav-links a:hover, .nav-links a.active { color: #fff; }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--primary); box-shadow: 0 0 10px var(--primary); transition: width 0.25s ease;
-        }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-        .badge-counter {
-            padding: 2px 7px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; font-family: var(--font-mono); margin-left: 4px;
-        }
-        .radar-badge { background: rgba(255, 153, 0, 0.15); color: var(--secondary); border: 1px solid rgba(255, 153, 0, 0.35); }
-
-        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
         .icon-btn {
-            background: var(--surface-2); border: 1px solid var(--border-subtle); color: var(--text-main);
-            border-radius: 12px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease; font-size: 1.05rem;
+            background: var(--surface-2); border: 1px solid var(--border-subtle);
+            color: var(--text-main); border-radius: 12px; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
         }
-        .icon-btn:hover { border-color: var(--border-focus); background: rgba(255,255,255,0.08); transform: translateY(-1px); }
-
-        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-        .burger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+        .icon-btn:hover { border-color: var(--border-focus); transform: translateY(-1px); }
 
         /* КНОПКИ */
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px 24px; background: var(--primary); color: #fff !important; font-weight: 700;
-            font-size: 0.88rem; border: none; border-radius: 12px; cursor: pointer; transition: all 0.25s ease;
+            padding: 12px 24px; background: var(--primary); color: #120b06; font-weight: 700;
+            font-size: 0.88rem; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s;
             text-decoration: none; box-shadow: 0 4px 20px var(--primary-glow);
         }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 8px 25px var(--primary-glow); }
-        .btn-secondary { background: var(--surface-2); border: 1px solid var(--border-subtle); box-shadow: none; }
-        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--border-focus); }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
         .btn-sm { padding: 8px 16px; font-size: 0.8rem; border-radius: 8px; }
+        .btn-secondary { background: var(--surface-2); color: #fff; border: 1px solid var(--border-subtle); box-shadow: none; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--border-focus); }
 
         /* СТРАНИЦЫ */
-        .page { display: none; padding-top: 100px; min-height: 100vh; animation: fadeIn 0.3s ease forwards; padding-bottom: 60px; }
+        .page { display: none; padding-top: 100px; min-height: 100vh; padding-bottom: 60px; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .section-header { text-align: center; max-width: 680px; margin: 0 auto 40px; }
-        .section-title { font-family: var(--font-display); font-size: 2.3rem; font-weight: 700; margin-bottom: 10px; }
-        .section-subtitle { color: var(--text-muted); font-size: 0.98rem; }
+        .hero { min-height: 70vh; display: flex; align-items: center; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
+        .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px; }
 
-        /* HERO СЕКЦИЯ */
-        .hero { min-height: 75vh; display: flex; align-items: center; }
-        .hero .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center; width: 100%; }
-        .hero-pill {
-            display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-focus); border-radius: 30px;
-            font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 20px;
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
+        .section-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+        .section-subtitle { color: var(--text-muted); font-size: 0.95rem; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        /* КАРТОЧКИ */
+        .coffee-card, .cafe-branch, .review-card {
+            background: var(--surface-1); border: 1px solid var(--border-subtle);
+            border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;
         }
-        .pulse-dot { width: 7px; height: 7px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: pulse 1.8s infinite; }
-        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
-
-        .hero-content h1 { font-family: var(--font-display); font-size: 3.4rem; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
-        .hero-content h1 span { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-content p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 30px; }
-        .hero-actions { display: flex; gap: 14px; margin-bottom: 40px; flex-wrap: wrap; }
-        .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .stat-card { background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 18px; backdrop-filter: blur(12px); }
-        .stat-card .num { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: #fff; }
-        .stat-card .desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
-
-        /* ТЕРМИНАЛ НА ГЛАВНОЙ */
-        .hero-terminal { background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
-        .terminal-header { background: rgba(255,255,255,0.03); padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); }
-        .t-dots { display: flex; gap: 6px; }
-        .t-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .t-red { background: #ff5f56; } .t-yellow { background: #ffbd2e; } .t-green { background: #27c93f; }
-        .terminal-body { padding: 24px; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.8; color: #cbd5e1; }
-
-        /* ИНТЕРАКТИВНЫЕ ВИДЖЕТЫ / КАЛЬКУЛЯТОР */
-        .widget-card {
-            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px;
-            margin-top: 40px; backdrop-filter: blur(12px);
-        }
-        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-        .form-control {
-            width: 100%; padding: 12px 16px; background: var(--surface-input); border: 1px solid var(--border-subtle);
-            border-radius: 12px; color: #fff; font-size: 0.92rem; font-family: var(--font-body); outline: none; transition: 0.2s;
-        }
-        .form-control:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--primary-glow); }
-        select.form-control { cursor: pointer; }
-
-        /* КАРТОЧКИ И СЕТКИ */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-        .filter-tabs { display: flex; background: var(--surface-1); padding: 4px; border-radius: 12px; border: 1px solid var(--border-subtle); gap: 4px; flex-wrap: wrap; }
-        .filter-tab { padding: 8px 18px; background: transparent; border: none; border-radius: 8px; color: var(--text-muted); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .filter-tab:hover { color: #fff; }
-        .filter-tab.active { background: rgba(255,255,255,0.08); color: #fff; }
-
-        .radar-card, .shop-card, .portfolio-card {
-            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 24px;
-            display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s;
-        }
-        .radar-card:hover, .shop-card:hover, .portfolio-card:hover {
+        .coffee-card:hover, .cafe-branch:hover, .review-card:hover {
             transform: translateY(-4px); border-color: var(--border-focus); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
+        .coffee-thumb {
+            height: 140px; background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(54,32,18,0.5));
+            display: flex; align-items: center; justify-content: center; font-size: 3.5rem; border-bottom: 1px solid var(--border-subtle);
+        }
+        .coffee-body { padding: 22px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+        .coffee-body h4 { font-size: 1.12rem; font-weight: 600; margin-bottom: 6px; }
+        .coffee-body p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; }
+        .coffee-footer { display: flex; justify-content: space-between; align-items: center; }
+        .coffee-price { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--primary); }
 
-        /* МОДАЛКИ И ТОСТЫ */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            z-index: 3000; display: none; align-items: center; justify-content: center;
+        /* КАЛЬКУЛЯТОР КОФЕ */
+        .calc-box {
+            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 30px;
+            max-width: 600px; margin: 40px auto 0;
         }
-        .modal.show { display: flex; }
-        .modal-content {
-            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px;
-            padding: 32px; max-width: 480px; width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+        .form-control {
+            width: 100%; padding: 12px 16px; background: var(--surface-2); border: 1px solid var(--border-subtle);
+            border-radius: 12px; color: #fff; font-size: 0.92rem; outline: none; transition: 0.2s;
         }
+        .form-control:focus { border-color: var(--border-focus); }
+        select.form-control { cursor: pointer; }
+
+        /* КОРЗИНА И МОДАЛКИ */
+        .cart-sidebar {
+            position: fixed; right: -400px; top: 0; width: 380px; height: 100vh;
+            background: var(--bg-base); border-left: 1px solid var(--border-subtle);
+            padding: 30px; transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2000; display: flex; flex-direction: column;
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1999; display: none; }
+        .cart-overlay.show { display: block; }
 
         .toast {
             position: fixed; bottom: 24px; right: 24px; background: var(--surface-1);
-            border: 1px solid var(--border-focus); color: #fff; padding: 12px 22px;
+            border: 1px solid var(--border-focus); color: #fff; padding: 12px 20px;
             border-radius: 12px; font-weight: 600; font-size: 0.85rem; transform: translateY(80px);
-            opacity: 0; transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px;
+            opacity: 0; transition: 0.3s; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .toast.show { transform: translateY(0); opacity: 1; }
 
-        @media (max-width: 992px) {
-            .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero-content p { margin: 0 auto 30px auto; }
-            .hero-actions, .hero-stats { justify-content: center; }
-            .hero-terminal { display: none; }
-            .calc-grid { grid-template-columns: 1fr; }
-        }
         @media (max-width: 768px) {
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-base); padding: 24px; border-bottom: 1px solid var(--border-subtle); gap: 16px; }
-            .nav-links.active { display: flex; }
-            .burger { display: flex; }
-            .hero-content h1 { font-size: 2.4rem; }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 2.4rem; }
+            .nav-links { display: none; }
+            .cart-sidebar { width: 100%; right: -100%; }
         }
     </style>
 </head>
 <body>
 
     <!-- НАВИГАЦИЯ -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar">
         <div class="container">
-            <a class="logo" data-page="home">SERJANT<span>DEV</span></a>
-            <ul class="nav-links" id="navLinks">
+            <a class="logo" data-page="home">БУХАНКА<span>.</span>КОФЕ</a>
+            <ul class="nav-links">
                 <li><a data-page="home" class="active">Главная</a></li>
-                <li><a data-page="radar">⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span></a></li>
-                <li><a data-page="shop">Магазин</a></li>
-                <li><a data-page="portfolio">Портфолио</a></li>
-                <li><a data-page="calc">Калькулятор ТЗ</a></li>
-                <li><a data-page="contact">Контакты</a></li>
+                <li><a data-page="menu">Меню</a></li>
+                <li><a data-page="branches">Кофейни в Москве</a></li>
+                <li><a data-page="calc">Конструктор напитка</a></li>
+                <li><a data-page="reviews">Отзывы</a></li>
+                <li><a data-page="contacts">Контакты</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="icon-btn" id="settingsToggle" title="Сменить тему">⚙️</button>
                 <button class="icon-btn" id="cartToggle" title="Корзина">🛒</button>
-                <div class="burger" id="burger"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
-
-    <!-- МОДАЛКА НАСТРОЕК ТЕМЫ -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙️ Палитра темы</h3>
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button class="filter-tab theme-btn active" data-theme="red" style="flex:1; border:1px solid var(--border-subtle);">🔴 Неон-красный</button>
-                <button class="filter-tab theme-btn" data-theme="green" style="flex:1; border:1px solid var(--border-subtle);">🟢 Эмеральд</button>
-                <button class="filter-tab theme-btn" data-theme="blue" style="flex:1; border:1px solid var(--border-subtle);">🔵 Кибер-синий</button>
-            </div>
-            <button class="btn btn-secondary btn-sm" style="width: 100%;" id="settingsClose">Закрыть</button>
-        </div>
-    </div>
 
     <!-- 1. ГЛАВНАЯ СТРАНИЦА -->
     <div class="page active" id="page-home">
         <section class="hero">
             <div class="container">
-                <div class="hero-content">
-                    <div class="hero-pill">
-                        <span class="pulse-dot"></span>
-                        Python Developer & UI/UX Designer • 15 лет
-                    </div>
-                    <h1>Создаю крутые <span>Telegram Mini Apps</span>, ботов и сайты</h1>
-                    <p>Разрабатываю быстрые IT-проекты под ключ, пишу чистый код на Python, создаю 3D-игры и помогаю бизнесу автоматизировать задачи.</p>
-                    <div class="hero-actions">
-                        <a class="btn" data-page="radar">⚡ Смотреть радар</a>
-                        <a class="btn btn-secondary" data-page="portfolio">Портфолио ➔</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat-card">
-                            <div class="num" id="statOrdersCount">55+</div>
-                            <div class="desc">Потоков парсинга</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="num">3 года</div>
-                            <div class="desc">Опыт в коде</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="num">100%</div>
-                            <div class="desc">Качество под ключ</div>
+                <div class="hero-grid">
+                    <div>
+                        <span style="display:inline-block; padding: 6px 14px; background: rgba(245,158,11,0.1); border: 1px solid var(--border-focus); border-radius: 30px; font-size: 0.78rem; color: var(--primary); font-weight: 600; margin-bottom: 20px;">
+                            🥐 Свежая выпечка и зерновой кофе каждый день
+                        </span>
+                        <h1>Сеть уютных кофеен <span>«Буханка»</span> в Москве</h1>
+                        <p>Ароматный кофе свежей обжарки, хрустящие круассаны, фирменный хлеб на закваске и уютная атмосфера в каждом районе столицы.</p>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <a class="btn" data-page="menu">Смотреть меню ➔</a>
+                            <a class="btn btn-secondary" data-page="branches">Найти кофейню рядом</a>
                         </div>
                     </div>
-                </div>
-                <div class="hero-terminal">
-                    <div class="terminal-header">
-                        <div class="t-dots"><span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green"></span></div>
-                        <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">skills_manifest.py</span>
-                    </div>
-                    <div class="terminal-body">
-                        <div><span style="color:#ff3366;">class</span> <span style="color:#ff9900;">Developer</span>:</div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;name = <span style="color:#27c93f;">"Serjant"</span></div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;age = <span style="color:#ff9900;">15</span></div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;stack = [<span style="color:#27c93f;">"Python"</span>, <span style="color:#27c93f;">"aiogram 3"</span>, <span style="color:#27c93f;">"HTML/CSS"</span>, <span style="color:#27c93f;">"TMA"</span>]</div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;goals = <span style="color:#27c93f;">"Создание сложных проектов и игр"</span></div>
+                    <div style="background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 40px; text-align: center;">
+                        <span style="font-size: 6rem; display: block; margin-bottom: 16px;">☕🥐</span>
+                        <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 8px;">Скидка 20% на первый заказ</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Оформите самовывоз через сайт или заберите кофе по дороге на работу без очереди.</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- 2. РАДАР ЗАКАЗОВ -->
-    <div class="page" id="page-radar">
+    <!-- 2. СТРАНИЦА МЕНЮ -->
+    <div class="page" id="page-menu">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Радар IT-Заказов</h2>
-                <p class="section-subtitle">Парсер заказов с бирж и Telegram-каналов в реальном времени</p>
+                <h2 class="section-title">Наше Меню</h2>
+                <p class="section-subtitle">Выберите напиток или выпечку, добавьте в заказ и заберите в ближайшей кофейне</p>
             </div>
-            <div class="cards-grid" id="radarGridContainer">
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Загрузка задач...</div>
-            </div>
+            <div class="cards-grid" id="menuGrid"></div>
         </div>
     </div>
 
-    <!-- 3. МАГАЗИН -->
-    <div class="page" id="page-shop">
+    <!-- 3. СТРАНИЦА КОФЕЕН (МОСКВА) -->
+    <div class="page" id="page-branches">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Цифровой Магазин</h2>
-                <p class="section-subtitle">Готовые скрипты, боты и шаблоны для ваших проектов</p>
+                <h2 class="section-title">Кофейни в Москве</h2>
+                <p class="section-subtitle">Работаем с 08:00 до 22:00 ежедневно. Ждем вас на чашечку капучино!</p>
             </div>
-            <div class="cards-grid" id="shopGridContainer"></div>
+            <div class="cards-grid" id="branchesGrid"></div>
         </div>
     </div>
 
-    <!-- 4. ПОРТФОЛИО -->
-    <div class="page" id="page-portfolio">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Мое Портфолио</h2>
-                <p class="section-subtitle">Лучшие разработанные проекты и веб-приложения</p>
-            </div>
-            <div class="cards-grid">
-                <div class="portfolio-card">
-                    <span style="font-size: 3rem; margin-bottom: 12px;">🎰</span>
-                    <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Фортнайт Казик</h3>
-                    <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 16px;">Интерактивная мини-игра в стиле Fortnite с анимациями и рулеткой.</p>
-                    <a href="https://serjanyabloko.github.io/fortnite" target="_blank" class="btn btn-sm">Открыть игру ➔</a>
-                </div>
-                <div class="portfolio-card">
-                    <span style="font-size: 3rem; margin-bottom: 12px;">🤖</span>
-                    <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Telegram Bot & Mini App</h3>
-                    <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 16px;">Автоматизированные боты на aiogram 3 с удобным WebApp интерфейсом.</p>
-                    <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary">Заказать разработку</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. КАЛЬКУЛЯТОР ТЗ (НОВАЯ ФУНКЦИЯ) -->
+    <!-- 4. КОНСТРУКТОР НАПИТКА (НОВАЯ ФУНКЦИЯ) -->
     <div class="page" id="page-calc">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Калькулятор стоимости проекта</h2>
-                <p class="section-subtitle">Рассчитайте примерный бюджет и сроки для вашей задачи за пару кликов</p>
+                <h2 class="section-title">Конструктор кофе</h2>
+                <p class="section-subtitle">Соберите свой идеальный напиток под свой вкус</p>
             </div>
-            <div class="widget-card" style="max-width: 700px; margin: 0 auto;">
-                <div class="calc-grid">
-                    <div class="form-group">
-                        <label>Тип проекта</label>
-                        <select class="form-control" id="calcType">
-                            <option value="bot">Telegram Бот (от 3,000 ₽)</option>
-                            <option value="tma">Telegram Mini App (от 7,000 ₽)</option>
-                            <option value="site">Сайт / Лендинг (от 4,000 ₽)</option>
-                            <option value="parser">Парсер / Скрипт (от 2,500 ₽)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Срочность</label>
-                        <select class="form-control" id="calcUrgency">
-                            <option value="1">Обычные сроки</option>
-                            <option value="1.3">Срочно (+30%)</option>
-                        </select>
-                    </div>
+            <div class="calc-box">
+                <div class="form-group">
+                    <label>Основа напитка</label>
+                    <select class="form-control" id="coffeeBase">
+                        <option value="200">Эспрессо / Американо (200 ₽)</option>
+                        <option value="240" selected>Капучино (240 ₽)</option>
+                        <option value="290">Латте (290 ₽)</option>
+                        <option value="330">Раф авторский (330 ₽)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Молоко</label>
+                    <select class="form-control" id="milkType">
+                        <option value="0">Обычное молоко (0 ₽)</option>
+                        <option value="70">Кокосовое (+70 ₽)</option>
+                        <option value="70">Миндальное (+70 ₽)</option>
+                        <option value="70">Овсяное (+70 ₽)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Сироп</label>
+                    <select class="form-control" id="syrupType">
+                        <option value="0">Без сиропа (0 ₽)</option>
+                        <option value="50">Карамель (+50 ₽)</option>
+                        <option value="50">Ваниль (+50 ₽)</option>
+                        <option value="50">Лесной орех (+50 ₽)</option>
+                    </select>
                 </div>
                 <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted);">Примерная стоимость:</div>
-                        <div id="calcResult" style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--primary);">3 000 ₽</div>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Итоговая стоимость:</span>
+                        <div id="customCoffeePrice" style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--primary);">240 ₽</div>
                     </div>
-                    <button class="btn" id="calcOrderBtn">Заказать расчет в Telegram</button>
+                    <button class="btn" id="addCustomCoffeeBtn">Добавить в заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. ОТЗЫВЫ -->
+    <div class="page" id="page-reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Отзывы гостей</h2>
+                <p class="section-subtitle">Что говорят те, кто уже заглянул к нам за утренним кофе</p>
+            </div>
+            <div class="cards-grid">
+                <div class="review-card" style="padding: 24px;">
+                    <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Лучший капучино на Арбате! И круассаны всегда свежие, хрустящие. Забегаю каждое утро.»</p>
+                    <b style="font-size: 0.85rem;">Алексей С.</b>
+                </div>
+                <div class="review-card" style="padding: 24px;">
+                    <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Очень уютно, приветливые бариста и крутой хлеб на закваске. Рекомендую сицилийский раф!»</p>
+                    <b style="font-size: 0.85rem;">Мария К.</b>
+                </div>
+                <div class="review-card" style="padding: 24px;">
+                    <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Удобно делать предзаказ через сайт — подхожу, а кофе уже готов. Никаких очередей.»</p>
+                    <b style="font-size: 0.85rem;">Дмитрий В.</b>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 6. КОНТАКТЫ -->
-    <div class="page" id="page-contact">
+    <div class="page" id="page-contacts">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Связь со мной</h2>
-                <p class="section-subtitle">Напишите мне в Telegram для обсуждения деталей заказа</p>
+                <h2 class="section-title">Контакты</h2>
+                <p class="section-subtitle">Свяжитесь с нами по любым вопросам</p>
             </div>
-            <div style="max-width: 500px; margin: 0 auto; text-align: center;" class="widget-card">
-                <span style="font-size: 4rem; display: block; margin-bottom: 16px;">💬</span>
-                <h3 style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 10px;">Telegram: @serjantyabloko</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Отвечаю быстро, помогаю составить ТЗ и консультирую по коду.</p>
-                <a href="https://t.me/serjantyabloko" target="_blank" class="btn" style="width: 100%;">Написать в Telegram ➔</a>
+            <div style="max-width: 500px; margin: 0 auto; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px;">
+                <p style="margin-bottom: 14px;">📍 <b>Адрес:</b> г. Москва, ул. Арбат, д. 12</p>
+                <p style="margin-bottom: 14px;">📞 <b>Телефон:</b> +7 (495) 123-45-67</p>
+                <p style="margin-bottom: 20px;">💬 <b>Telegram:</b> @buhanka_coffee_msk</p>
+                <a href="https://t.me/serjantyabloko" target="_blank" class="btn" style="width: 100%;">Написать разработчику ➔</a>
             </div>
         </div>
     </div>
 
+    <!-- КОРЗИНА САЙДБАР -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem;">🛒 Ваш заказ</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;" id="cartClose">✕</button>
+        </div>
+        <div id="cartItems" style="flex: 1; overflow-y: auto;"></div>
+        <div id="cartTotalBlock" style="display: none; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 16px;">
+                <span style="color: var(--text-muted);">Итого:</span>
+                <span id="cartTotalPrice" style="font-family: var(--font-display); font-size: 1.4rem; font-weight:700; color: var(--primary);">0 ₽</span>
+            </div>
+            <button class="btn" style="width: 100%;" id="checkoutBtn">Оформить самовывоз</button>
+        </div>
+    </div>
+
     <!-- УВЕДОМЛЕНИЕ -->
-    <div class="toast" id="toast"><span>✅</span> <span id="toastText">Готово!</span></div>
+    <div class="toast" id="toast">✅ Товар добавлен в заказ!</div>
 
     <script>
+        const menuProducts = [
+            { id: 1, name: 'Капучино (300 мл)', desc: 'Классический эспрессо с нежной молочной пенкой.', price: 240, icon: '☕' },
+            { id: 2, name: 'Латте Карамель', desc: 'Мягкий кофейный напиток с карамельным сиропом.', price: 290, icon: '🥤' },
+            { id: 3, name: 'Раф Цитрусовый', desc: 'Авторский кофейный напиток на сливках с цедрой.', price: 330, icon: '🍊' },
+            { id: 4, name: 'Круассан классический', desc: 'Хрустящий французский круассан из слоеного теста.', price: 180, icon: '🥐' },
+            { id: 5, name: 'Буханка бородинского', desc: 'Фирменный ржаной хлеб на натуральной закваске.', price: 150, icon: '🍞' },
+            { id: 6, name: 'Улитка с корицей', desc: 'Сдобная булочка с ароматной корицей и глазурью.', price: 210, icon: '🥮' }
+        ];
+
+        const branches = [
+            { name: 'Буханка на Арбате', address: 'ул. Арбат, 12', metro: 'м. Арбатская' },
+            { name: 'Буханка на Тверской', address: 'Тверская ул., 24', metro: 'м. Пушкинская' },
+            { name: 'Буханка в Сити', address: 'Пресненская наб., 2', metro: 'м. Выставочная' },
+            { name: 'Буханка на Чистых прудах', address: 'Чистопрудный бульвар, 5', metro: 'м. Чистые пруды' }
+        ];
+
+        let cart = [];
+
         function showToast(msg) {
             const toast = document.getElementById('toast');
-            document.getElementById('toastText').textContent = msg;
+            toast.textContent = msg;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2600);
+            setTimeout(() => toast.classList.remove('show'), 2400);
         }
 
         // НАВИГАЦИЯ
         const pages = {
             home: document.getElementById('page-home'),
-            radar: document.getElementById('page-radar'),
-            shop: document.getElementById('page-shop'),
-            portfolio: document.getElementById('page-portfolio'),
+            menu: document.getElementById('page-menu'),
+            branches: document.getElementById('page-branches'),
             calc: document.getElementById('page-calc'),
-            contact: document.getElementById('page-contact')
+            reviews: document.getElementById('page-reviews'),
+            contacts: document.getElementById('page-contacts')
         };
 
         document.querySelectorAll('[data-page]').forEach(el => {
@@ -425,77 +370,144 @@
                 document.querySelectorAll('.nav-links a').forEach(a => {
                     a.classList.toggle('active', a.dataset.page === pageId);
                 });
-                document.getElementById('navLinks').classList.remove('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
 
-        document.getElementById('burger').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
-
-        // КАЛЬКУЛЯТОР ТЗ
-        const calcType = document.getElementById('calcType');
-        const calcUrgency = document.getElementById('calcUrgency');
-        const calcResult = document.getElementById('calcResult');
-
-        function updateCalc() {
-            const prices = { bot: 3000, tma: 7000, site: 4000, parser: 2500 };
-            const base = prices[calcType.value] || 3000;
-            const urgencyMult = parseFloat(calcUrgency.value);
-            const total = Math.round(base * urgencyMult);
-            calcResult.textContent = total.toLocaleString('ru-RU') + ' ₽';
-        }
-
-        calcType.addEventListener('change', updateCalc);
-        calcUrgency.addEventListener('change', updateCalc);
-        updateCalc();
-
-        document.getElementById('calcOrderBtn').addEventListener('click', () => {
-            const text = `Привет! Хочу заказать проект (${calcType.options[calcType.selectedIndex].text}) с бюджетом около ${calcResult.textContent}.`;
-            window.open(`https://t.me/serjantyabloko?text=${encodeURIComponent(text)}`, '_blank');
-        });
-
-        // ТЕМЫ
-        const settingsModal = document.getElementById('settingsModal');
-        document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
-        document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
-
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                showToast("Тема оформления применена!");
-                settingsModal.classList.remove('show');
-            });
-        });
-
-        // ЗАГРУЗКА ЗАКАЗОВ РАДАРА
-        async function loadRadar() {
-            try {
-                const res = await fetch('orders.json');
-                const data = await res.json();
-                document.getElementById('radarCount').textContent = data.length;
-                document.getElementById('statOrdersCount').textContent = data.length + '+';
-                
-                const grid = document.getElementById('radarGridContainer');
-                grid.innerHTML = data.slice(0, 12).map(o => `
-                    <div class="radar-card">
+        // РЕНДЕР МЕНЮ
+        function renderMenu() {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = menuProducts.map(p => `
+                <div class="coffee-card">
+                    <div class="coffee-thumb">${p.icon}</div>
+                    <div class="coffee-body">
                         <div>
-                            <span style="font-size:0.75rem; color:var(--secondary); font-weight:600;">${o.source}</span>
-                            <h3 style="font-size:1.05rem; margin:10px 0; color:#fff;">${o.title}</h3>
+                            <h4>${p.name}</h4>
+                            <p>${p.desc}</p>
                         </div>
-                        <div>
-                            <div style="font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:12px;">${o.price}</div>
-                            <a href="${o.url}" target="_blank" class="btn btn-sm btn-secondary" style="width:100%;">Открыть задачу ➔</a>
+                        <div class="coffee-footer">
+                            <span class="coffee-price">${p.price} ₽</span>
+                            <button class="btn btn-sm btn-add" data-id="${p.id}">В корзину</button>
                         </div>
                     </div>
-                `).join('');
-            } catch (e) {
-                document.getElementById('radarGridContainer').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">Поток задач загружается из бэкенда...</div>`;
-            }
+                </div>
+            `).join('');
         }
-        loadRadar();
+
+        // РЕНДЕР ФИЛИАЛОВ
+        function renderBranches() {
+            const grid = document.getElementById('branchesGrid');
+            grid.innerHTML = branches.map(b => `
+                <div class="cafe-branch" style="padding: 24px;">
+                    <div>
+                        <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🏠</span>
+                        <h4>${b.name}</h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">📍 ${b.address}<br>🚇 ${b.metro}</p>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">⏰ Открыто до 22:00</span>
+                </div>
+            `).join('');
+        }
+
+        // КОНСТРУКТОР НАПИТКА
+        const coffeeBase = document.getElementById('coffeeBase');
+        const milkType = document.getElementById('milkType');
+        const syrupType = document.getElementById('syrupType');
+        const customPriceEl = document.getElementById('customCoffeePrice');
+
+        function updateCustomPrice() {
+            const total = parseInt(coffeeBase.value) + parseInt(milkType.value) + parseInt(syrupType.value);
+            customPriceEl.textContent = total + ' ₽';
+            return total;
+        }
+
+        coffeeBase.addEventListener('change', updateCustomPrice);
+        milkType.addEventListener('change', updateCustomPrice);
+        syrupType.addEventListener('change', updateCustomPrice);
+        updateCustomPrice();
+
+        document.getElementById('addCustomCoffeeBtn').addEventListener('click', () => {
+            const price = updateCustomPrice();
+            const name = `Кастомный: ${coffeeBase.options[coffeeBase.selectedIndex].text.split('(')[0]}`;
+            cart.push({ id: Date.now(), name, price, qty: 1 });
+            updateCart();
+            showToast("Свой напиток добавлен в заказ!");
+        });
+
+        // КОРЗИНА
+        document.getElementById('menuGrid').addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-add');
+            if (btn) {
+                const id = parseInt(btn.dataset.id);
+                const item = menuProducts.find(p => p.id === id);
+                const exist = cart.find(p => p.id === id);
+                if (exist) exist.qty++;
+                else cart.push({ ...item, qty: 1 });
+                updateCart();
+                showToast(`Добавлено: ${item.name}`);
+            }
+        });
+
+        function updateCart() {
+            const container = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotalPrice');
+            const totalBlock = document.getElementById('cartTotalBlock');
+
+            if (!cart.length) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:40px 0;">Корзина пока пуста</p>`;
+                totalBlock.style.display = 'none';
+                return;
+            }
+
+            totalBlock.style.display = 'block';
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-subtle);">
+                        <div>
+                            <div style="font-weight:600; font-size:0.9rem;">${i.name}</div>
+                            <div style="color:var(--text-muted); font-size:0.8rem;">${i.price} ₽ × ${i.qty}</div>
+                        </div>
+                        <button onclick="removeItem(${i.id})" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.textContent = total + ' ₽';
+        }
+
+        window.removeItem = (id) => {
+            cart = cart.filter(i => i.id !== id);
+            updateCart();
+        };
+
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+
+        document.getElementById('cartToggle').addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('show');
+        });
+        document.getElementById('cartClose').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            showToast("Заказ оформлен! Готовим кофейню к вашему визиту ☕");
+            cart = [];
+            updateCart();
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        });
+
+        // Инициализация
+        renderMenu();
+        renderBranches();
     </script>
 </body>
 </html>
