@@ -13,12 +13,12 @@
         :root {
             --primary: #f59e0b;
             --primary-glow: rgba(245, 158, 11, 0.28);
-            --bg-base: #120b06;
-            --navbar-bg: rgba(24, 15, 9, 0.88);
-            --surface-1: rgba(38, 22, 13, 0.8);
-            --surface-2: rgba(54, 32, 18, 0.7);
+            --bg-base: #0f0a07;
+            --navbar-bg: rgba(20, 13, 8, 0.9);
+            --surface-1: rgba(35, 20, 11, 0.82);
+            --surface-2: rgba(50, 30, 17, 0.75);
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(245, 158, 11, 0.45);
+            --border-focus: rgba(245, 158, 11, 0.5);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --font-display: 'Space Grotesk', sans-serif;
@@ -30,7 +30,7 @@
         body {
             font-family: var(--font-body);
             background-color: var(--bg-base);
-            background-image: radial-gradient(circle at 10% 10%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.09) 0%, transparent 45%);
             background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
@@ -46,8 +46,8 @@
             backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-subtle);
         }
         .navbar .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: #fff; text-decoration: none; cursor: pointer; }
-        .logo span { color: var(--primary); text-shadow: 0 0 12px var(--primary-glow); }
+        .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; cursor: pointer; }
+        .logo span { color: var(--primary); text-shadow: 0 0 14px var(--primary-glow); }
 
         .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; cursor: pointer; }
@@ -56,7 +56,7 @@
         .nav-actions { display: flex; gap: 12px; align-items: center; }
         .icon-btn {
             background: var(--surface-2); border: 1px solid var(--border-subtle);
-            color: var(--text-main); border-radius: 12px; width: 40px; height: 40px;
+            color: var(--text-main); border-radius: 12px; width: 42px; height: 42px;
             display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
         }
         .icon-btn:hover { border-color: var(--border-focus); transform: translateY(-1px); }
@@ -77,29 +77,37 @@
         .page { display: none; padding-top: 100px; min-height: 100vh; padding-bottom: 60px; }
         .page.active { display: block; }
 
-        .hero { min-height: 70vh; display: flex; align-items: center; }
-        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
-        .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+        .hero { min-height: 75vh; display: flex; align-items: center; }
+        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+        .hero h1 { font-family: var(--font-display); font-size: 3.4rem; font-weight: 700; line-height: 1.12; margin-bottom: 20px; }
         .hero h1 span { color: var(--primary); }
         .hero p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px; }
 
-        .section-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
-        .section-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 30px; }
+        .section-title { font-family: var(--font-display); font-size: 2.3rem; font-weight: 700; margin-bottom: 10px; }
         .section-subtitle { color: var(--text-muted); font-size: 0.95rem; }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        /* ФИЛЬТРЫ МЕНЮ */
+        .filter-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 18px; background: var(--surface-1); border: 1px solid var(--border-subtle);
+            color: var(--text-muted); border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: #120b06; border-color: var(--primary); }
 
-        /* КАРТОЧКИ */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+
+        /* КАРТОЧКИ ТОВАРОВ И ФИЛИАЛОВ */
         .coffee-card, .cafe-branch, .review-card {
             background: var(--surface-1); border: 1px solid var(--border-subtle);
             border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;
         }
         .coffee-card:hover, .cafe-branch:hover, .review-card:hover {
-            transform: translateY(-4px); border-color: var(--border-focus); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transform: translateY(-4px); border-color: var(--border-focus); box-shadow: 0 15px 35px rgba(0,0,0,0.45);
         }
         .coffee-thumb {
-            height: 140px; background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(54,32,18,0.5));
-            display: flex; align-items: center; justify-content: center; font-size: 3.5rem; border-bottom: 1px solid var(--border-subtle);
+            height: 150px; background: linear-gradient(135deg, rgba(245,158,11,0.18), rgba(50,30,17,0.6));
+            display: flex; align-items: center; justify-content: center; font-size: 3.8rem; border-bottom: 1px solid var(--border-subtle);
         }
         .coffee-body { padding: 22px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
         .coffee-body h4 { font-size: 1.12rem; font-weight: 600; margin-bottom: 6px; }
@@ -107,12 +115,12 @@
         .coffee-footer { display: flex; justify-content: space-between; align-items: center; }
         .coffee-price { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--primary); }
 
-        /* КАЛЬКУЛЯТОР КОФЕ */
+        /* КОНСТРУКТОР */
         .calc-box {
-            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 30px;
-            max-width: 600px; margin: 40px auto 0;
+            background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px;
+            max-width: 600px; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .form-group { margin-bottom: 16px; }
+        .form-group { margin-bottom: 18px; }
         .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
         .form-control {
             width: 100%; padding: 12px 16px; background: var(--surface-2); border: 1px solid var(--border-subtle);
@@ -123,18 +131,18 @@
 
         /* КОРЗИНА И МОДАЛКИ */
         .cart-sidebar {
-            position: fixed; right: -400px; top: 0; width: 380px; height: 100vh;
+            position: fixed; right: -420px; top: 0; width: 400px; height: 100vh;
             background: var(--bg-base); border-left: 1px solid var(--border-subtle);
             padding: 30px; transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2000; display: flex; flex-direction: column;
         }
         .cart-sidebar.open { right: 0; }
-        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1999; display: none; }
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 1999; display: none; }
         .cart-overlay.show { display: block; }
 
         .toast {
             position: fixed; bottom: 24px; right: 24px; background: var(--surface-1);
-            border: 1px solid var(--border-focus); color: #fff; padding: 12px 20px;
-            border-radius: 12px; font-weight: 600; font-size: 0.85rem; transform: translateY(80px);
+            border: 1px solid var(--border-focus); color: #fff; padding: 14px 22px;
+            border-radius: 14px; font-weight: 600; font-size: 0.88rem; transform: translateY(80px);
             opacity: 0; transition: 0.3s; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .toast.show { transform: translateY(0); opacity: 1; }
@@ -155,9 +163,9 @@
             <a class="logo" data-page="home">БУХАНКА<span>.</span>КОФЕ</a>
             <ul class="nav-links">
                 <li><a data-page="home" class="active">Главная</a></li>
-                <li><a data-page="menu">Меню</a></li>
+                <li><a data-page="menu">Меню и десерты</a></li>
                 <li><a data-page="branches">Кофейни в Москве</a></li>
-                <li><a data-page="calc">Конструктор напитка</a></li>
+                <li><a data-page="calc">Конструктор</a></li>
                 <li><a data-page="reviews">Отзывы</a></li>
                 <li><a data-page="contacts">Контакты</a></li>
             </ul>
@@ -167,64 +175,73 @@
         </div>
     </nav>
 
-    <!-- 1. ГЛАВНАЯ СТРАНИЦА -->
+    <!-- 1. ГЛАВНАЯ -->
     <div class="page active" id="page-home">
         <section class="hero">
             <div class="container">
                 <div class="hero-grid">
                     <div>
                         <span style="display:inline-block; padding: 6px 14px; background: rgba(245,158,11,0.1); border: 1px solid var(--border-focus); border-radius: 30px; font-size: 0.78rem; color: var(--primary); font-weight: 600; margin-bottom: 20px;">
-                            🥐 Свежая выпечка и зерновой кофе каждый день
+                            🥐 Свежая выпечка, десерты и зерновой кофе в Москве
                         </span>
-                        <h1>Сеть уютных кофеен <span>«Буханка»</span> в Москве</h1>
-                        <p>Ароматный кофе свежей обжарки, хрустящие круассаны, фирменный хлеб на закваске и уютная атмосфера в каждом районе столицы.</p>
+                        <h1>Сеть уютных кофеен <span>«Буханка»</span></h1>
+                        <p>Авторский кофе, хрустящие круассаны, нежнейшие десерты и крафтовый хлеб на закваске в шаговой доступности от метро.</p>
                         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                             <a class="btn" data-page="menu">Смотреть меню ➔</a>
-                            <a class="btn btn-secondary" data-page="branches">Найти кофейню рядом</a>
+                            <a class="btn btn-secondary" data-page="branches">Адреса кофеен</a>
                         </div>
                     </div>
                     <div style="background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 40px; text-align: center;">
-                        <span style="font-size: 6rem; display: block; margin-bottom: 16px;">☕🥐</span>
-                        <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 8px;">Скидка 20% на первый заказ</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Оформите самовывоз через сайт или заберите кофе по дороге на работу без очереди.</p>
+                        <span style="font-size: 5.5rem; display: block; margin-bottom: 16px;">🍰☕</span>
+                        <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 8px;">Комбо: Кофе + Десерт</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Скидка 15% на любой десерт при покупке любого фирменного напитка до 12:00.</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- 2. СТРАНИЦА МЕНЮ -->
+    <!-- 2. МЕНЮ И ДЕСЕРТЫ -->
     <div class="page" id="page-menu">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Наше Меню</h2>
-                <p class="section-subtitle">Выберите напиток или выпечку, добавьте в заказ и заберите в ближайшей кофейне</p>
+                <p class="section-subtitle">Выберите напитки, свежую выпечку или десерты</p>
             </div>
+            
+            <!-- Кнопки фильтрации меню -->
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">Все позиции</button>
+                <button class="filter-btn" data-filter="coffee">☕ Напитки</button>
+                <button class="filter-btn" data-filter="dessert">🍰 Десерты</button>
+                <button class="filter-btn" data-filter="bakery">🥐 Выпечка и хлеб</button>
+            </div>
+
             <div class="cards-grid" id="menuGrid"></div>
         </div>
     </div>
 
-    <!-- 3. СТРАНИЦА КОФЕЕН (МОСКВА) -->
+    <!-- 3. ФИЛИАЛЫ В МОСКВЕ -->
     <div class="page" id="page-branches">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Кофейни в Москве</h2>
-                <p class="section-subtitle">Работаем с 08:00 до 22:00 ежедневно. Ждем вас на чашечку капучино!</p>
+                <p class="section-subtitle">Работаем ежедневно с 08:00 до 22:00. Заходите за утренним зарядом энергии!</p>
             </div>
             <div class="cards-grid" id="branchesGrid"></div>
         </div>
     </div>
 
-    <!-- 4. КОНСТРУКТОР НАПИТКА (НОВАЯ ФУНКЦИЯ) -->
+    <!-- 4. КОНСТРУКТОР НАПИТКА -->
     <div class="page" id="page-calc">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Конструктор кофе</h2>
-                <p class="section-subtitle">Соберите свой идеальный напиток под свой вкус</p>
+                <p class="section-subtitle">Соберите свой уникальный напиток</p>
             </div>
             <div class="calc-box">
                 <div class="form-group">
-                    <label>Основа напитка</label>
+                    <label>Основа</label>
                     <select class="form-control" id="coffeeBase">
                         <option value="200">Эспрессо / Американо (200 ₽)</option>
                         <option value="240" selected>Капучино (240 ₽)</option>
@@ -252,7 +269,7 @@
                 </div>
                 <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;">Итоговая стоимость:</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Итого:</span>
                         <div id="customCoffeePrice" style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--primary);">240 ₽</div>
                     </div>
                     <button class="btn" id="addCustomCoffeeBtn">Добавить в заказ</button>
@@ -266,23 +283,23 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Отзывы гостей</h2>
-                <p class="section-subtitle">Что говорят те, кто уже заглянул к нам за утренним кофе</p>
+                <p class="section-subtitle">Что говорят те, кто заглядывает к нам каждый день</p>
             </div>
             <div class="cards-grid">
                 <div class="review-card" style="padding: 24px;">
                     <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Лучший капучино на Арбате! И круассаны всегда свежие, хрустящие. Забегаю каждое утро.»</p>
-                    <b style="font-size: 0.85rem;">Алексей С.</b>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Медовик здесь просто невероятный! И капучино всегда идеальной температуры.»</p>
+                    <b style="font-size: 0.85rem;">Елена М.</b>
                 </div>
                 <div class="review-card" style="padding: 24px;">
                     <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Очень уютно, приветливые бариста и крутой хлеб на закваске. Рекомендую сицилийский раф!»</p>
-                    <b style="font-size: 0.85rem;">Мария К.</b>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Очень удобный сайт, оформляю заказ по дороге, прихожу — всё уже готово на стойке.»</p>
+                    <b style="font-size: 0.85rem;">Артем П.</b>
                 </div>
                 <div class="review-card" style="padding: 24px;">
                     <div style="color: var(--primary); margin-bottom: 8px;">★★★★★</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Удобно делать предзаказ через сайт — подхожу, а кофе уже готов. Никаких очередей.»</p>
-                    <b style="font-size: 0.85rem;">Дмитрий В.</b>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">«Уютная атмосфера на Арбате, приветливые бариста и вкуснейший хлеб на закваске.»</p>
+                    <b style="font-size: 0.85rem;">Ольга С.</b>
                 </div>
             </div>
         </div>
@@ -293,7 +310,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Контакты</h2>
-                <p class="section-subtitle">Свяжитесь с нами по любым вопросам</p>
+                <p class="section-subtitle">Свяжитесь с нами</p>
             </div>
             <div style="max-width: 500px; margin: 0 auto; background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px;">
                 <p style="margin-bottom: 14px;">📍 <b>Адрес:</b> г. Москва, ул. Арбат, д. 12</p>
@@ -304,7 +321,7 @@
         </div>
     </div>
 
-    <!-- КОРЗИНА САЙДБАР -->
+    <!-- КОРЗИНА -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
@@ -321,17 +338,19 @@
         </div>
     </div>
 
-    <!-- УВЕДОМЛЕНИЕ -->
     <div class="toast" id="toast">✅ Товар добавлен в заказ!</div>
 
     <script>
         const menuProducts = [
-            { id: 1, name: 'Капучино (300 мл)', desc: 'Классический эспрессо с нежной молочной пенкой.', price: 240, icon: '☕' },
-            { id: 2, name: 'Латте Карамель', desc: 'Мягкий кофейный напиток с карамельным сиропом.', price: 290, icon: '🥤' },
-            { id: 3, name: 'Раф Цитрусовый', desc: 'Авторский кофейный напиток на сливках с цедрой.', price: 330, icon: '🍊' },
-            { id: 4, name: 'Круассан классический', desc: 'Хрустящий французский круассан из слоеного теста.', price: 180, icon: '🥐' },
-            { id: 5, name: 'Буханка бородинского', desc: 'Фирменный ржаной хлеб на натуральной закваске.', price: 150, icon: '🍞' },
-            { id: 6, name: 'Улитка с корицей', desc: 'Сдобная булочка с ароматной корицей и глазурью.', price: 210, icon: '🥮' }
+            { id: 1, name: 'Капучино (300 мл)', desc: 'Классический эспрессо с нежной молочной пенкой.', price: 240, icon: '☕', category: 'coffee' },
+            { id: 2, name: 'Латте Карамель', desc: 'Мягкий кофейный напиток с карамельным сиропом.', price: 290, icon: '🥤', category: 'coffee' },
+            { id: 3, name: 'Раф Цитрусовый', desc: 'Авторский кофейный напиток на сливках с цедрой.', price: 330, icon: '🍊', category: 'coffee' },
+            { id: 4, name: 'Торт «Медовик»', desc: 'Нежные медовые коржи с крем-чизом и сотами.', price: 350, icon: '🍰', category: 'dessert' },
+            { id: 5, name: 'Чизкейк Нью-Йорк', desc: 'Классический сливочный чизкейк на песочной основе.', price: 320, icon: '🧁', category: 'dessert' },
+            { id: 6, name: 'Десерт «Манго-Маракуйя»', desc: 'Муссовый легкий десерт с тропической кислинкой.', price: 340, icon: '🍮', category: 'dessert' },
+            { id: 7, name: 'Круассан классический', desc: 'Хрустящий французский круассан из слоеного теста.', price: 180, icon: '🥐', category: 'bakery' },
+            { id: 8, name: 'Буханка бородинского', desc: 'Фирменный ржаной хлеб на натуральной закваске.', price: 150, icon: '🍞', category: 'bakery' },
+            { id: 9, name: 'Улитка с корицей', desc: 'Сдобная булочка с ароматной корицей и глазурью.', price: 210, icon: '🥮', category: 'bakery' }
         ];
 
         const branches = [
@@ -374,10 +393,12 @@
             });
         });
 
-        // РЕНДЕР МЕНЮ
-        function renderMenu() {
+        // РЕНДЕР МЕНЮ С ФИЛЬТРАМИ
+        function renderMenu(filter = 'all') {
             const grid = document.getElementById('menuGrid');
-            grid.innerHTML = menuProducts.map(p => `
+            const filtered = filter === 'all' ? menuProducts : menuProducts.filter(p => p.category === filter);
+
+            grid.innerHTML = filtered.map(p => `
                 <div class="coffee-card">
                     <div class="coffee-thumb">${p.icon}</div>
                     <div class="coffee-body">
@@ -394,6 +415,14 @@
             `).join('');
         }
 
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMenu(btn.dataset.filter);
+            });
+        });
+
         // РЕНДЕР ФИЛИАЛОВ
         function renderBranches() {
             const grid = document.getElementById('branchesGrid');
@@ -409,7 +438,7 @@
             `).join('');
         }
 
-        // КОНСТРУКТОР НАПИТКА
+        // КОНСТРУКТОР
         const coffeeBase = document.getElementById('coffeeBase');
         const milkType = document.getElementById('milkType');
         const syrupType = document.getElementById('syrupType');
