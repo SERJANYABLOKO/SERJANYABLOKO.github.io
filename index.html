@@ -621,6 +621,17 @@
             font-size: 0.85rem;
         }
 
+        /* СТИЛЬ ПАПКИ FL */
+        .fl-folder-card {
+            background: rgba(255, 153, 0, 0.05);
+            border: 1px dashed rgba(255, 153, 0, 0.4);
+            border-left: 5px solid var(--secondary);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(12px);
+        }
+
         /* КАРТОЧКА РАДАРА */
         .radar-card {
             background: var(--surface-1);
@@ -1133,7 +1144,7 @@
     <!-- МОДАЛКА НАСТРОЕК ТЕМЫ -->
     <div class="modal" id="settingsModal">
         <div class="modal-content">
-            <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙️️ Палитра темы</h3>
+            <h3 style="font-family: var(--font-display); margin-bottom: 16px;">⚙ Палитра темы</h3>
             <div style="display: flex; gap: 8px; margin-bottom: 20px;">
                 <button class="filter-tab theme-btn" data-theme="green" style="flex: 1; border: 1px solid var(--border-subtle);">🟢 Эмеральд</button>
                 <button class="filter-tab theme-btn" data-theme="blue" style="flex: 1; border: 1px solid var(--border-subtle);">🔵 Кибер-синий</button>
@@ -1253,13 +1264,13 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Радар IT-Заказов</h2>
-                <p class="section-subtitle">Парсинг 50+ открытых каналов, Хабра и FL.ru в реальном времени</p>
+                <p class="section-subtitle">Парсинг 50+ открытых каналов и бирж в реальном времени</p>
             </div>
 
             <div class="radar-bar">
                 <div class="filter-tabs" id="radarFilterGroup">
                     <button class="filter-tab active" data-filter="all">Все потоки</button>
-                    <button class="filter-tab" data-filter="FL.ru">📂 FL ru</button>
+                    <button class="filter-tab" data-filter="FL.ru">📂 FL</button>
                     <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
                     <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
                     <button class="filter-tab" data-filter="Железо / ПК">💻 Сборка ПК</button>
@@ -1273,6 +1284,20 @@
                     </div>
                     <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
                 </div>
+            </div>
+
+            <!-- СПЕЦИАЛЬНАЯ ПАПКА FL.RU -->
+            <div id="flFolderSection" class="fl-folder-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div>
+                        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--secondary); display: flex; align-items: center; gap: 8px;">
+                            <span>📁</span> Папка: FL
+                        </h3>
+                        <p style="color: var(--text-muted); font-size: 0.82rem;">Автоматический сбор и сортировка заказов исключительно с биржи FL.ru</p>
+                    </div>
+                    <span class="tag-pill" id="flCountBadge">0 задач</span>
+                </div>
+                <div class="cards-grid" id="flGridContainer" style="margin-top: 16px;"></div>
             </div>
 
             <div class="cards-grid" id="radarGridContainer"></div>
@@ -1345,34 +1370,53 @@
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
                 <h2 class="section-title">Портфолио Кейсов</h2>
-                <p class="section-subtitle">Примеры разработанных Telegram Mini Apps, ботов, сайтов и UI/UX концептов</p>
+                <p class="section-subtitle">Примеры разработанных проектов, кофейни, Telegram Mini Apps, ботов и сайтов</p>
             </div>
 
             <div class="radar-bar" style="justify-content: center; margin-bottom: 30px;">
                 <div class="filter-tabs" id="portfolioFilterGroup">
                     <button class="filter-tab active" data-pfilter="all">Все проекты</button>
                     <button class="filter-tab" data-pfilter="telegram">🤖 Telegram / TMA</button>
-                    <button class="filter-tab" data-pfilter="web">🌐 Веб-сайты</button>
+                    <button class="filter-tab" data-pfilter="web">🌐 Веб-сайты & Кофейни</button>
                     <button class="filter-tab" data-pfilter="design">🎨 UI/UX & Скрипты</button>
                 </div>
             </div>
 
             <div class="cards-grid" id="portfolioGrid">
+                <!-- Сеть кофеен «Буханка» (/cofe) -->
+                <div class="portfolio-card" data-pcat="web">
+                    <div class="portfolio-banner">☕</div>
+                    <div class="portfolio-body">
+                        <div>
+                            <h4>Сеть кофеен «Буханка»</h4>
+                            <p>Полноценный интерактивный веб-сайт сети кофеен с меню, конструктором авторских напитков и корзиной самовывоза.</p>
+                            <div class="stack-list">
+                                <span class="stack-tag">HTML5/CSS3</span>
+                                <span class="stack-tag">JavaScript</span>
+                                <span class="stack-tag">E-Commerce</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <a href="/cofe" target="_blank" class="btn btn-sm" style="flex:1;">Открыть кофейню ➔</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Фортнайт Казик -->
                 <div class="portfolio-card" data-pcat="web">
                     <div class="portfolio-banner">🎰</div>
                     <div class="portfolio-body">
                         <div>
                             <h4>Фортнайт Казик</h4>
-                            <p>Интерактивный развлекательный веб-проект в стиле Fortnite с игровыми механиками и стильным интерфейсом.</p>
+                            <p>Интерактивный развлекательный веб-проект в стиле Fortnite с кейсами, апгрейдером скинов и стильным интерфейсом.</p>
                             <div class="stack-list">
                                 <span class="stack-tag">HTML5/CSS3</span>
-                                <span class="stack-tag">JavaScript</span>
+                                <span class="stack-tag">Tailwind</span>
                                 <span class="stack-tag">Game UI</span>
                             </div>
                         </div>
                         <div style="display:flex; gap:8px;">
-                            <a href="https://serjanyabloko.github.io/fortnite" target="_blank" class="btn btn-sm" style="flex:1;">Открыть проект ➔</a>
+                            <a href="/fortnite" target="_blank" class="btn btn-sm" style="flex:1;">Открыть проект ➔</a>
                         </div>
                     </div>
                 </div>
@@ -1448,24 +1492,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="portfolio-card" data-pcat="design">
-                    <div class="portfolio-banner">⚡</div>
-                    <div class="portfolio-body">
-                        <div>
-                            <h4>Radar Scraper Engine</h4>
-                            <p>Автономный парсер каналов, FL.ru и RSS-лент с дедупликацией и фильтрацией задач без API-лимитов.</p>
-                            <div class="stack-list">
-                                <span class="stack-tag">Python</span>
-                                <span class="stack-tag">BeautifulSoup4</span>
-                                <span class="stack-tag">GitHub Actions</span>
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -1513,7 +1539,7 @@
                     <a href="https://t.me/serjantyabloko" target="_blank" class="direct-item">
                         <div class="direct-icon">💬</div>
                         <div class="direct-info">
-                            <h5>Telegram канал & ЛС</h5>
+                            <h5>Telegram ЛС</h5>
                             <span>@serjantyabloko (Быстрый ответ)</span>
                         </div>
                     </a>
@@ -1624,11 +1650,15 @@
             showToast("⚡ Симуляция пинга завершена!");
         });
 
-        // ЗАГРУЗКА РАДАРА
+        // ЗАГРУЗКА РАДАРА С ПРАВИЛЬНОЙ СОРТИРОВКОЙ И ПАПКОЙ FL
         async function fetchRadarOrders() {
             try {
                 const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
                 radarOrders = await res.json();
+                
+                // Правильная сортировка заказов по новизне (сначала новые)
+                radarOrders.sort((a, b) => new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0));
+
                 renderRadar();
                 document.getElementById('radarCount').textContent = radarOrders.length;
                 document.getElementById('statOrdersCount').textContent = radarOrders.length;
@@ -1646,10 +1676,33 @@
 
         function renderRadar() {
             const container = document.getElementById('radarGridContainer');
+            const flContainer = document.getElementById('flGridContainer');
+            const flSection = document.getElementById('flFolderSection');
+            
             const activeFilter = document.querySelector('#radarFilterGroup .filter-tab.active').dataset.filter;
             const query = document.getElementById('radarSearchInput').value.toLowerCase().trim();
 
-            let list = radarOrders;
+            // Отделяем заказы из папки FL
+            const flOrders = radarOrders.filter(o => o.source && o.source.includes('FL.ru'));
+            document.getElementById('flCountBadge').textContent = `${flOrders.length} задач`;
+
+            // Рендер папки FL (если активен фильтр "all" или "FL.ru")
+            if (activeFilter === 'all' || activeFilter === 'FL.ru') {
+                flSection.style.display = 'block';
+                const filteredFl = query ? flOrders.filter(o => o.title.toLowerCase().includes(query)) : flOrders;
+                
+                if (filteredFl.length === 0) {
+                    flContainer.innerHTML = `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач по вашему запросу.</div>`;
+                } else {
+                    flContainer.innerHTML = filteredFl.map(o => createOrderCard(o)).join('');
+                }
+            } else {
+                flSection.style.display = 'none';
+            }
+
+            // Остальные заказы (исключая FL.ru для чистоты папки)
+            let list = radarOrders.filter(o => !(o.source && o.source.includes('FL.ru')));
+            
             if (activeFilter !== 'all') {
                 list = list.filter(o => o.category === activeFilter);
             }
@@ -1662,7 +1715,11 @@
                 return;
             }
 
-            container.innerHTML = list.map(o => `
+            container.innerHTML = list.map(o => createOrderCard(o)).join('');
+        }
+
+        function createOrderCard(o) {
+            return `
                 <div class="radar-card">
                     <div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1680,9 +1737,7 @@
 
                         <div class="radar-meta">
                             <span>🕒 ${o.published_at || 'Недавно'}</span>
-                            <span style="color: ${o.responses && o.responses.includes('0') ? 'var(--primary)' : 'inherit'};">
-                                👥 ${o.responses || 'В личке'}
-                            </span>
+                            <span>👥 ${o.responses || 'В личке'}</span>
                         </div>
                     </div>
                     <div>
@@ -1697,7 +1752,7 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
 
         document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(btn => {
@@ -1716,7 +1771,7 @@
         const pitchModal = document.getElementById('pitchModal');
         const pitchTextarea = document.getElementById('pitchTextarea');
 
-        document.getElementById('radarGridContainer').addEventListener('click', (e) => {
+        document.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-gen-pitch');
             if (btn) {
                 const title = decodeURIComponent(btn.dataset.title);
