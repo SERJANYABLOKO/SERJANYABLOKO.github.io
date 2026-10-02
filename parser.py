@@ -43,6 +43,17 @@ TG_CHANNELS = [
     "FlutterGigs", "ReactNativeGigs", "QA_Jobs", "DevOps_Jobs", "SysAdmin_Jobs",
     "DataScience_Jobs", "ML_Jobs", "AI_Jobs", "CryptoDev_Jobs", "Web3_Jobs",
 
+    # Топовые каналы с заказами по дизайну и графике
+    "Design_Jobs", "ui_ux_jobs", "figma_jobs", "web_design_jobs",
+    "ui_ux_chat_work", "figma_design_chat", "design_gigs_ru", "ui_gigs", "ux_gigs",
+    "motion_design_orders", "video_montage_orders", "3d_max_orders",
+    "zakazy_design", "design_orders_ru", "graphic_design_jobs",
+    "behance_jobs", "dribbble_jobs_ru", "creatives_jobs", "banner_orders",
+    "preview_youtube_jobs", "smm_design_orders", "tilda_design_jobs",
+    "logo_orders_chat", "brand_identity_jobs", "infographics_mp_orders",
+    # Плюс ключевые биржевые каналы, где часто проскакивают быстрые задачи по визуалу
+    "freelancebay", "Frilanser_100", "tg_work", "zakazy_it",
+
     # --- Python, боты, парсеры и бэкенд ---
     "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs",
     "python_freelance", "python_job_board", "bot_creators_ru",
