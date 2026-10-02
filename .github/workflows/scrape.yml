@@ -1,43 +1,37 @@
 name: Update Orders
 
 on:
-  schedule:
-    # Запуск на 7-й и 37-й минутах каждого часа без очередей
-    - cron: '7,37 * * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
+  schedule:
+    - cron: '0 */2 * * *'
 
 jobs:
   scrape-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout repository
+      - name: Клонирование репозитория
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Настройка Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
-      - name: Install dependencies
+      - name: Установка зависимостей
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 feedparser
 
-      - name: Run parser
+      - name: Запуск парсера
         run: python parser.py
 
-      - name: Commit and push changes
+      - name: Автоматический коммит и отправка заказов
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "action@github.com"
           git add orders.json
-          if ! git diff --staged --quiet; then
-            git commit -m "Автообновление заказов"
-            git pull --rebase origin main || true
-            git push origin main
-          else
-            echo "Новых заказов нет, пропускаем коммит."
-          fi
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update orders.json [skip ci]" && git push)
