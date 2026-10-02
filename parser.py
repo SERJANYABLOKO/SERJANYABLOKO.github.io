@@ -25,132 +25,20 @@ RSS_FEEDS = [
     }
 ]
 
-# Полная база более 1000 каналов и чатов (дизайн, сайты, боты, сборка ПК, хостинги и IT)
+# Реальные и активные открытые каналы
 TG_CHANNELS = [
-    # --- Основные IT, фриланс и биржевые чаты ---
-    "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
-    "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
-    "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
-    "It_Vakansii", "remote_it", "freelance_work", "profi_freelance", 
-    "zakaz_freelance", "veb_rabota", "remote_work_ru", "freelance_choice", 
-    "zakazy_fl", "birzha_freelance", "it_freelance_1", "it_freelance_2", 
-    "it_freelance_3", "it_freelance_4", "dev_jobs_ru", "junior_it_jobs", 
-    "middle_it_jobs", "senior_it_jobs", "startup_jobs_ru", "projects_market", 
-    "digital_freelance", "freelance_hub", "work_online_it", "JobHuntIt", 
-    "IT_GIGS", "RemoteITGigs", "DevGigs", "CodeJobs", "WebGigs", "BotGigs", 
-    "ScriptGigs", "DesignGigs", "UIUXGigs", "NoCodeGigs", "TildaGigs", 
-    "WordpressGigs", "ReactGigs", "VueGigs", "NodeGigs", "PhpGigs", "GoGigs", 
-    "CSharpGigs", "JavaGigs", "CppGigs", "SwiftGigs", "KotlinGigs", 
-    "FlutterGigs", "ReactNativeGigs", "QA_Jobs", "DevOps_Jobs", "SysAdmin_Jobs",
-    "DataScience_Jobs", "ML_Jobs", "AI_Jobs", "CryptoDev_Jobs", "Web3_Jobs",
-
-    # Топовые каналы с заказами по дизайну и графике
-    "Design_Jobs", "ui_ux_jobs", "figma_jobs", "web_design_jobs",
-    "ui_ux_chat_work", "figma_design_chat", "design_gigs_ru", "ui_gigs", "ux_gigs",
-    "motion_design_orders", "video_montage_orders", "3d_max_orders",
-    "zakazy_design", "design_orders_ru", "graphic_design_jobs",
-    "behance_jobs", "dribbble_jobs_ru", "creatives_jobs", "banner_orders",
-    "preview_youtube_jobs", "smm_design_orders", "tilda_design_jobs",
-    "logo_orders_chat", "brand_identity_jobs", "infographics_mp_orders",
-    # Плюс ключевые биржевые каналы, где часто проскакивают быстрые задачи по визуалу
-    "freelancebay", "Frilanser_100", "tg_work", "zakazy_it",
-
-    # --- Python, боты, парсеры и бэкенд ---
-    "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs",
-    "python_freelance", "python_job_board", "bot_creators_ru",
-    "pydevjob", "it_bot_zakaz", "telegram_bots_order", "py_orders",
-    "script_freelance", "bot_developers_ru", "python_vacancies",
-    "py_development", "django_jobs", "fastapi_jobs", "python_remote",
-    "1c_rabota", "javascript_jobs", "react_jobs", "vue_jobs", "frontend_job",
-    "backend_jobs", "fullstack_jobs", "php_jobs", "go_jobs", "csharp_jobs",
-    "python_devs_chat", "py_chat_jobs", "django_chat_jobs", "fastapi_chat",
-    "bot_makers_chat", "telethon_chat_jobs", "parser_orders_chat", "aiogram_chat_work",
-
-    # --- Дизайн, верстка, NoCode и контент ---
-    "Design_Jobs", "tilda_jobs", "NoCode_Jobs", "web_design_jobs",
-    "ui_ux_jobs", "figma_jobs", "html_css_jobs", "wordpress_jobs",
-    "webmaster_jobs", "seo_orders", "emarketing_jobs", "smm_orders_tg",
-    "copywriting_jobs", "content_jobs", "translators_jobs", "editors_jobs",
-    "video_editing_jobs", "motion_design_jobs", "3d_jobs_ru", "gamedev_jobs",
-    "figma_design_chat", "web_verstka_orders", "tilda_site_orders", "ui_ux_chat_work",
-    "motion_design_orders", "video_montage_orders", "3d_max_orders", "unity_dev_jobs",
-
-    # --- Железо, сборка ПК и поддержка ---
-    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_ru",
-    "pc_masters", "build_pc_chat", "pc_upgrade_ru", "it_hardware_chat",
-    "pc_repair_chat", "hardware_market_ru", " железо_чате",
-
-    # --- Масштабированный пул открытых тематических бирж (300+ дополнительных каналов-источников) ---
-    "zakazy_web", "zakazy_mob", "zakazy_design", "zakazy_seo", "zakazy_copy",
-    "freelance_russia", "freelance_ua", "freelance_by", "it_rabota_rf", "remote_job_it",
-    "dev_freelance", "coders_jobs", "programmers_market", "webdev_orders", "app_dev_orders",
-    "bot_orders_net", "tma_jobs_channel", "miniapp_orders", "telegram_mini_app_jobs", "aiogram_devs_board",
-    "python_gigs", "js_gigs", "php_gigs", "design_gigs_ru", "ui_gigs",
-    "ux_gigs", "tilda_gigs_ru", "nocode_gigs_ru", "wordpress_gigs_ru", "seo_gigs_ru",
-    "smm_gigs_ru", "copy_gigs_ru", "video_gigs_ru", "motion_gigs_ru", "3d_gigs_ru",
-    "gamedev_gigs_ru", "unity_gigs_ru", "unreal_gigs_ru", "qa_gigs_ru", "devops_gigs_ru",
-    "sysadmin_gigs_ru", "datascience_gigs_ru", "ml_gigs_ru", "ai_gigs_ru", "web3_gigs_ru",
-    
-    # Пул общих каналов удаленной работы и подработок
-    "udalenka_job", "remote_work_channel", "freelance_ton", "crypto_jobs_ru", "nft_jobs_ru",
-    "startup_russia", "it_startups_jobs", "junior_dev_board", "middle_dev_board", "senior_dev_board",
-    "lead_it_jobs", "cto_jobs_ru", "product_manager_jobs", "project_manager_jobs", "analyst_jobs_ru",
-    "qa_automation_jobs", "qa_manual_jobs", "security_jobs_ru", "pentest_jobs", "sysadmin_jobs_ru",
-    
-    # Дополнительные региональные и нишевые IT-чаты
-    "it_msk_jobs", "it_spb_jobs", "it_nsk_jobs", "it_ekb_jobs", "it_kzn_jobs",
-    "freelance_msk", "freelance_spb", "web_studio_orders", "digital_agency_jobs", "outsource_it_jobs",
-    "outstaff_it_jobs", "1c_dev_jobs", "php_dev_jobs", "java_dev_jobs", "cpp_dev_jobs",
-    "csharp_dev_jobs", "go_dev_jobs", "rust_dev_jobs", "swift_dev_jobs", "kotlin_dev_jobs",
-    "flutter_dev_jobs", "reactnative_dev_jobs", "vue_dev_jobs", "react_dev_jobs", "angular_dev_jobs",
-    "node_dev_jobs", "ruby_dev_jobs", "scala_dev_jobs", "elixir_dev_jobs", "unity_dev_jobs_ru",
-    
-    # Расширенный список чатов автоматизации и скриптов
-    "parser_orders", "parser_jobs", "scraping_jobs", "selenium_jobs", "beautifulsoup_jobs",
-    "automation_jobs_ru", "excel_automation_jobs", "google_sheets_orders", "api_integration_jobs", "webhook_orders",
-    "database_jobs_ru", "sql_jobs_ru", "postgresql_jobs", "mongodb_jobs", "redis_jobs_ru",
-    
-    # --- Дизайн, UI/UX, Графика ---
-    "Design_Jobs", "ui_ux_jobs", "figma_jobs", "web_design_jobs", "ui_ux_chat_work",
-    "figma_design_chat", "design_gigs_ru", "ui_gigs", "ux_gigs", "motion_design_orders",
-    "video_montage_orders", "3d_max_orders", "zakazy_design", "design_orders_ru",
-    "graphic_design_jobs", "behance_jobs", "dribbble_jobs_ru", "creatives_jobs",
-    "banner_orders", "preview_youtube_jobs", "smm_design_orders", "tilda_design_jobs",
-    "logo_orders_chat", "brand_identity_jobs", "infographics_mp_orders", "figma_design_chat",
-    "web_verstka_orders", "tilda_site_orders", "motion_design_orders", "video_montage_orders",
-    
-    # --- Telegram-боты, Mini Apps, Python и бэкенд ---
-    "bots_orders", "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
-    "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs", "python_freelance",
-    "python_job_board", "bot_creators_ru", "pydevjob", "it_bot_zakaz", "telegram_bots_order",
-    "py_orders", "script_freelance", "bot_developers_ru", "python_vacancies", "py_development",
-    "django_jobs", "fastapi_jobs", "python_remote", "javascript_jobs", "react_jobs", "vue_jobs",
-    "frontend_job", "backend_jobs", "fullstack_jobs", "php_jobs", "go_jobs", "csharp_jobs",
-    "bot_makers_chat", "aiogram_chat_work", "parser_orders_chat", "miniapp_orders",
-    
-    # --- Сайты, Веб-разработка, NoCode ---
     "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
-    "zakazy_it", "web_zakazy", "it_podrabotka", "It_Vakansii", "remote_it", "freelance_work",
-    "profi_freelance", "zakaz_freelance", "veb_rabota", "tilda_jobs", "NoCode_Jobs",
-    "wordpress_jobs", "webmaster_jobs", "seo_orders", "emarketing_jobs", "smm_orders_tg",
-    
-    # --- Железо, сборка ПК, Хостинг, Поддержка ---
-    "pc_builds", "iron_chat", "sbor_pc", "komp_help", "hardware_ru", "pc_masters",
-    "build_pc_chat", "pc_upgrade_ru", "it_hardware_chat", "vps_hosting_chat", "sysadmin_jobs",
-    "devops_jobs", "cloud_servers_chat", "linux_admin_chat",
-    
-    # --- Масштабированный пул открытых тематических бирж и агрегаторов (до 1000+ источников) ---
-    *[f"it_orders_feed_{i}" for i in range(1, 250)],
-    *[f"freelance_board_ru_{i}" for i in range(1, 250)],
-    *[f"remote_it_work_{i}" for i in range(1, 250)],
-    *[f"bot_dev_chat_{i}" for i in range(1, 150)],
-    *[f"web_zakaz_{i}" for i in range(1, 150)]
+    "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", 
+    "bot_zakazy", "zakaz_na_bota", "tg_apps_jobs", "tma_developers",
+    "It_Vakansii", "remote_it", "freelance_work", "profi_freelance", 
+    "zakaz_freelance", "veb_rabota", "python_rabota", "aiogram_jobs", 
+    "telethon_jobs", "py_jobs", "python_freelance", "python_job_board", 
+    "bot_creators_ru", "pydevjob", "it_bot_zakaz", "telegram_bots_order", 
+    "py_orders", "script_freelance", "bot_developers_ru", "Design_Jobs", 
+    "ui_ux_jobs", "figma_jobs", "web_design_jobs", "pc_builds", "iron_chat"
 ]
 
-STOP_WORDS = [
-    "опыт работы от 5", "в штат", "фуллтайм", "full-time", 
-    "оформление по тк", "в офис", "надолго", "долгосрочный проект"
-]
+STOP_WORDS = ["опыт работы от 5", "в штат", "фуллтайм", "full-time", "оформление по тк"]
 
 def clean_text(text: str) -> str:
     text = re.sub(r"<[^>]+>", "", text)
@@ -168,36 +56,30 @@ def get_category(text: str, source: str) -> str:
         return "FL.ru"
         
     text_lower = text.lower()
-    if any(k in text_lower for k in ["сборка", "апгрейд", "пк", "компьютер", "детал", "видеокарта", "процессор"]):
+    if any(k in text_lower for k in ["сборка", "апгрейд", "пк", "компьютер", "детал"]):
         return "Железо / ПК"
-    elif any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "макет", "прототип", "баннер", "аватар", "превью", "логотип", "презентация", "карточка"]):
+    elif any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "макет", "прототип", "баннер"]):
         return "Дизайн"
-    elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "mini app", "telegram"]):
+    elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "mini app"]):
         return "Telegram"
-    elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт", "автоматизац"]):
+    elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт"]):
         return "Парсеры"
     return "Веб-сайт"
 
 def parse_rss_feeds():
     tasks = []
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "application/rss+xml,application/xml;q=0.9,*/*;q=0.8"
-    }
-    
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
     for feed_info in RSS_FEEDS:
         try:
             response = requests.get(feed_info["url"], headers=headers, timeout=10)
             if response.status_code != 200:
                 continue
-                
             feed = feedparser.parse(response.content)
-            for entry in feed.entries[:30]:
+            for entry in feed.entries[:20]:
                 title = clean_text(entry.title)
                 summary = clean_text(getattr(entry, "summary", ""))
                 link = getattr(entry, "link", "")
                 full_text = f"{title} {summary}"
-                
                 if feed_info["source"] == "FL.ru" or is_matching(full_text):
                     tasks.append({
                         "title": title[:95] + "..." if len(title) > 95 else title,
@@ -219,7 +101,7 @@ def parse_tg(channel: str):
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
     tasks = []
     try:
-        res = requests.get(url, headers=headers, timeout=5)
+        res = requests.get(url, headers=headers, timeout=6)
         if res.status_code != 200:
             return tasks
         soup = BeautifulSoup(res.text, "html.parser")
@@ -286,10 +168,8 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Запуск масштабного сканирования 1000+ каналов и бирж...")
+    print("[*] Сбор заказов...")
     new_scraped.extend(parse_rss_feeds())
-    
-    # Опрос активных каналов
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
         
@@ -302,6 +182,6 @@ if __name__ == "__main__":
             combined_orders.append(order)
             
     with open("orders.json", "w", encoding="utf-8") as f:
-        json.dump(combined_orders[:150], f, ensure_ascii=False, indent=2)
+        json.dump(combined_orders[:120], f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Готово! База обновлена. Актуальных заказов: {len(combined_orders[:150])}.")
+    print(f"[+] Успешно! Заказов в базе: {len(combined_orders[:120])}")
