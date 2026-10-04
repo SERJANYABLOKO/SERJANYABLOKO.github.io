@@ -6,20 +6,20 @@
     
     <!-- Заголовок и SEO-описание -->
     <title>SerjantDev | IT Radar & Digital Studio</title>
-    <meta name="description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников." />
+    <meta name="description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников."[cite: 2]/>
     
     <!-- Превью для Telegram, VK и соцсетей -->
     <meta property="og:title" content="SerjantDev | IT Radar & Digital Studio" />
-    <meta property="og:description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников." />
+    <meta property="og:description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников."[cite: 2]/>
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://serjanyabloko.github.io" />
-    <meta property="og:image" content="https://serjanyabloko.github.io/favicon.png" />
+    <meta property="og:url" content="https://serjanyabloko.github.io"[cite: 2]/>
+    <meta property="og:image" content="https://serjanyabloko.github.io/favicon.png"[cite: 2]/>
 
     <!-- Иконки сайта -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"[cite: 2]/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png"[cite: 2]/>
+    <link rel="apple-touch-icon" href="/favicon.png"[cite: 2]/>
+    <link rel="shortcut icon" href="/favicon.png" type="image/png"[cite: 2]/>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -643,6 +643,7 @@
             justify-content: space-between;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(12px);
+            position: relative;
         }
 
         .radar-card:hover {
@@ -650,6 +651,14 @@
             border-color: var(--border-focus);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
+
+        .fav-btn {
+            position: absolute; top: 20px; right: 20px; background: var(--surface-2); border: 1px solid var(--border-subtle);
+            width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; transition: 0.2s; color: var(--text-muted);
+        }
+        .fav-btn:hover { border-color: var(--border-focus); color: #fff; }
+        .fav-btn.active { background: rgba(255, 51, 102, 0.15); border-color: var(--primary); color: var(--primary); }
 
         .tag-pill {
             font-size: 0.72rem;
@@ -673,6 +682,7 @@
             line-height: 1.45;
             margin: 14px 0;
             color: #fff;
+            padding-right: 35px;
         }
 
         .direct-link {
@@ -1085,6 +1095,7 @@
                         ⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span>
                     </a>
                 </li>
+                <li><a data-page="favorites">⭐ Избранное <span class="badge-counter fav-badge" id="favCount">0</span></a></li>
                 <li><a data-page="shop">Магазин</a></li>
                 <li><a data-page="portfolio">Портфолио</a></li>
                 <li><a data-page="contact">Контакты</a></li>
@@ -1304,7 +1315,18 @@
         </div>
     </div>
 
-    <!-- 3. СТРАНИЦА: МАГАЗИН -->
+    <!-- 3. СТРАНИЦА: ИЗБРАННОЕ -->
+    <div class="page" id="page-favorites">
+        <div class="container" style="padding-bottom: 80px;">
+            <div class="section-header">
+                <h2 class="section-title">⭐ Избранные задачи</h2>
+                <p class="section-subtitle">Сохраненные заказы, отмеченные звездочкой</p>
+            </div>
+            <div class="cards-grid" id="favoritesGridContainer"></div>
+        </div>
+    </div>
+
+    <!-- 4. СТРАНИЦА: МАГАЗИН -->
     <div class="page" id="page-shop">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
@@ -1365,7 +1387,7 @@
         </div>
     </div>
 
-    <!-- 4. СТРАНИЦА: ПОРТФОЛИО -->
+    <!-- 5. СТРАНИЦА: ПОРТФОЛИО -->
     <div class="page" id="page-portfolio">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
@@ -1496,7 +1518,7 @@
         </div>
     </div>
 
-    <!-- 5. СТРАНИЦА: КОНТАКТЫ -->
+    <!-- 6. СТРАНИЦА: КОНТАКТЫ -->
     <div class="page" id="page-contact">
         <div class="container" style="padding-bottom: 80px;">
             <div class="section-header">
@@ -1580,6 +1602,7 @@
         let products = JSON.parse(localStorage.getItem('serjant_products_v4')) || defaultProducts;
         let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
         let radarOrders = [];
+        let favorites = JSON.parse(localStorage.getItem('serjant_favs')) || [];
         let isAdmin = false;
 
         function showToast(msg) {
@@ -1605,6 +1628,7 @@
         const pages = {
             home: document.getElementById('page-home'),
             radar: document.getElementById('page-radar'),
+            favorites: document.getElementById('page-favorites'),
             shop: document.getElementById('page-shop'),
             portfolio: document.getElementById('page-portfolio'),
             contact: document.getElementById('page-contact')
@@ -1625,6 +1649,7 @@
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 navigateTo(el.dataset.page);
+                if (el.dataset.page === 'favorites') renderFavorites();
             });
         });
 
@@ -1719,10 +1744,12 @@
         }
 
         function createOrderCard(o) {
+            const isFav = favorites.some(f => f.url === o.url);
             return `
                 <div class="radar-card">
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${encodeURIComponent(o.url)}')">⭐</button>
                     <div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding-right: 35px;">
                             <span class="tag-pill">${o.category || 'IT'}</span>
                             <span class="source-tag">${o.source || 'Прямой контакт'}</span>
                         </div>
@@ -1753,6 +1780,36 @@
                     </div>
                 </div>
             `;
+        }
+
+        // ИЗБРАННОЕ (ЗВЕЗДОЧКА)
+        window.toggleFavorite = (encodedUrl) => {
+            const url = decodeURIComponent(encodedUrl);
+            const item = radarOrders.find(o => o.url === url);
+            if (!item) return;
+
+            const idx = favorites.findIndex(f => f.url === url);
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+                showToast("Удалено из избранного");
+            } else {
+                favorites.push(item);
+                showToast("⭐ Добавлено в избранное!");
+            }
+            localStorage.setItem('serjant_favs', JSON.stringify(favorites));
+            document.getElementById('favCount').textContent = favorites.length;
+            renderRadar();
+            if (document.getElementById('page-favorites').classList.contains('active')) renderFavorites();
+        };
+
+        function renderFavorites() {
+            const container = document.getElementById('favoritesGridContainer');
+            document.getElementById('favCount').textContent = favorites.length;
+            if (!favorites.length) {
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-muted);">В избранном пока ничего нет. Нажмите звездочку ⭐ на карточке заказа!</div>`;
+                return;
+            }
+            container.innerHTML = favorites.map(o => createOrderCard(o)).join('');
         }
 
         document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(btn => {
@@ -2123,6 +2180,7 @@
         renderShop();
         updateCartUI();
         fetchRadarOrders();
+        document.getElementById('favCount').textContent = favorites.length;
     </script>
 </body>
 </html>
