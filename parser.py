@@ -48,7 +48,7 @@ TG_CHANNELS = [
     "build_pc_chat", "pc_upgrade_ru", "it_hardware_chat", "vps_hosting_chat", "sysadmin_jobs"
 ]
 
-# Стоп-слова и корни для полного исключения штата, офиса и постоянной занятости
+# Стоп-слова и корни для полного исключения нежелательной занятости со всеми склонениями
 STOP_STEMS = [
     "штат", "офис", "фуллтайм", "full-time", "тк рф", "оформлен", 
     "постоян", "долгосроч", "месяц", "оклад", "зарплат", "гибрид"
@@ -100,6 +100,7 @@ def parse_rss_feeds():
                     try: pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
                     except Exception: pass
 
+                # Отбор только свежих заказов за последнюю неделю
                 if pub_date >= week_ago and (feed_info["source"] == "FL.ru" or is_matching(full_text)):
                     tasks.append({
                         "title": title[:95] + "..." if len(title) > 95 else title,
@@ -140,7 +141,9 @@ def parse_tg(channel: str):
                     msg_dt = dt
                 except Exception: pass
 
+            # Пропуск сообщений старше недели
             if msg_dt < week_ago: continue
+            
             text = text_el.text.strip()
             if not is_matching(text): continue
 
@@ -181,7 +184,7 @@ if __name__ == "__main__":
     old_orders = load_existing_orders()
     new_scraped = []
     
-    print("[*] Сканирование заказов за неделю с фильтрацией стоп-слов...")
+    print("[*] Сбор заказов за последнюю неделю (до 7 дней)...")
     new_scraped.extend(parse_rss_feeds())
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
@@ -208,4 +211,4 @@ if __name__ == "__main__":
     with open("orders.json", "w", encoding="utf-8") as f:
         json.dump(combined_orders[:150], f, ensure_ascii=False, indent=2)
         
-    print(f"[+] Успешно! Чистых актуальных заказов: {len(combined_orders[:150])}")
+    print(f"[+] Успешно! Актуальных заказов за неделю в базе: {len(combined_orders[:150])}")
