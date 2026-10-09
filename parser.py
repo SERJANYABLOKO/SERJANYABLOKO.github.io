@@ -25,7 +25,9 @@ RSS_FEEDS = [
     }
 ]
 
+# Добавлены новые чаты: freelance_in_telegram, freelancenolimit, frilans_slavynskiimir
 TG_CHANNELS = [
+    "freelance_in_telegram", "freelancenolimit", "frilans_slavynskiimir",
     "freelancebay", "Frilanser_100", "freelance_birzha", "tg_work", "golub_freelance",
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", "bot_zakazy",
     "zakaz_na_bota", "tg_apps_jobs", "tma_developers", "It_Vakansii", "remote_it",
@@ -100,7 +102,6 @@ def parse_rss_feeds():
                     try: pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
                     except Exception: pass
 
-                # Отбор только свежих заказов за последнюю неделю
                 if pub_date >= week_ago and (feed_info["source"] == "FL.ru" or is_matching(full_text)):
                     tasks.append({
                         "title": title[:95] + "..." if len(title) > 95 else title,
@@ -141,7 +142,6 @@ def parse_tg(channel: str):
                     msg_dt = dt
                 except Exception: pass
 
-            # Пропуск сообщений старше недели
             if msg_dt < week_ago: continue
             
             text = text_el.text.strip()
