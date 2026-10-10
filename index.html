@@ -1,1085 +1,3 @@
-```
-<!-- Заголовок и SEO-описание -->
-<title>SerjantDev | IT Radar & Digital Studio</title>
-<meta name="description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников."/>
-
-<!-- Превью для Telegram, VK и соцсетей -->
-<meta property="og:title" content="SerjantDev | IT Radar & Digital Studio" />
-<meta property="og:description" content="🚀 Автономный IT-радар заказов 24/7, разработка Telegram-ботов (aiogram), Mini Apps и сайтов под ключ без посредников."/>
-<meta property="og:type" content="website" />
-<meta property="og:url" content="[https://serjanyabloko.github.io](https://serjanyabloko.github.io)"/>
-<meta property="og:image" content="[https://serjanyabloko.github.io/favicon.png](https://serjanyabloko.github.io/favicon.png)"/>
-
-<!-- Иконки сайта -->
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"/>
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png"/>
-<link rel="apple-touch-icon" href="/favicon.png"/>
-<link rel="shortcut icon" href="/favicon.png" type="image/png"/>
-
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-<link href="[https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap](https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap)" rel="stylesheet">
-
-<style>
-    :root {
-        /* Базовая тема (Красный неон) */
-        --primary: #ff3366;
-        --primary-glow: rgba(255, 51, 102, 0.28);
-        --secondary: #ff9900;
-        --accent: #ff3366;
-        --bg-base: #0c0407;
-        --navbar-bg: rgba(15, 5, 8, 0.88);
-        --navbar-scrolled: rgba(12, 4, 7, 0.98);
-        --bg-gradient-1: rgba(255, 51, 102, 0.1);
-        --bg-gradient-2: rgba(255, 153, 0, 0.06);
-        --surface-1: rgba(28, 12, 18, 0.78);
-        --surface-2: rgba(41, 17, 26, 0.65);
-        --surface-input: rgba(18, 7, 12, 0.85);
-        --border-subtle: rgba(255, 255, 255, 0.08);
-        --border-focus: rgba(255, 51, 102, 0.45);
-        --text-main: #f8fafc;
-        --text-muted: #8b9bb4;
-        --font-display: 'Space Grotesk', sans-serif;
-        --font-body: 'Plus Jakarta Sans', sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
-        font-family: var(--font-body);
-        background-color: var(--bg-base);
-        background-image: 
-            radial-gradient(circle at 15% 15%, var(--bg-gradient-1) 0%, transparent 45%),
-            radial-gradient(circle at 85% 85%, var(--bg-gradient-2) 0%, transparent 45%);
-        background-attachment: fixed;
-        color: var(--text-main);
-        line-height: 1.6;
-        overflow-x: hidden;
-        min-height: 100vh;
-        transition: background-color 0.35s ease, background-image 0.35s ease;
-    }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-    }
-
-    /* НАВИГАЦИЯ */
-    .navbar {
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        z-index: 1000;
-        padding: 18px 0;
-        background: var(--navbar-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border-subtle);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .navbar.scrolled {
-        padding: 12px 0;
-        background: var(--navbar-scrolled);
-        border-bottom: 1px solid var(--border-focus);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-    }
-
-    .navbar .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        font-family: var(--font-display);
-        font-size: 1.45rem;
-        font-weight: 700;
-        color: #fff;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        letter-spacing: -0.5px;
-        cursor: pointer;
-    }
-
-    .logo span {
-        color: var(--primary);
-        text-shadow: 0 0 15px var(--primary-glow);
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 20px;
-        list-style: none;
-        align-items: center;
-    }
-
-    .nav-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.92rem;
-        transition: all 0.25s ease;
-        position: relative;
-        padding: 6px 0;
-        cursor: pointer;
-    }
-
-    .nav-links a:hover, .nav-links a.active {
-        color: #fff;
-    }
-
-    .nav-links a::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0;
-        width: 0; height: 2px;
-        background: var(--primary);
-        box-shadow: 0 0 10px var(--primary);
-        transition: width 0.25s ease;
-        border-radius: 2px;
-    }
-
-    .nav-links a:hover::after, .nav-links a.active::after {
-        width: 100%;
-    }
-
-    .badge-counter {
-        padding: 2px 7px;
-        border-radius: 20px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        font-family: var(--font-mono);
-        margin-left: 5px;
-        vertical-align: middle;
-    }
-
-    .radar-badge { 
-        background: rgba(255, 153, 0, 0.15); 
-        color: var(--secondary); 
-        border: 1px solid rgba(255, 153, 0, 0.35); 
-    }
-
-    .nav-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .icon-btn {
-        background: var(--surface-2);
-        border: 1px solid var(--border-subtle);
-        color: var(--text-main);
-        border-radius: 12px;
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 1.1rem;
-    }
-
-    .icon-btn:hover {
-        border-color: var(--border-focus);
-        background: rgba(255, 255, 255, 0.08);
-        transform: translateY(-1px);
-    }
-
-    .burger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-    }
-
-    .burger span {
-        width: 24px;
-        height: 2px;
-        background: #fff;
-        border-radius: 2px;
-        transition: 0.3s;
-    }
-
-    /* КНОПКИ */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 12px 24px;
-        background: var(--primary);
-        color: #fff !important;
-        font-weight: 700;
-        font-size: 0.88rem;
-        font-family: var(--font-body);
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        text-decoration: none;
-        box-shadow: 0 4px 20px var(--primary-glow);
-        letter-spacing: -0.2px;
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px var(--primary-glow);
-        filter: brightness(1.08);
-    }
-
-    .btn:active { transform: translateY(0); }
-
-    .btn-secondary {
-        background: var(--surface-2);
-        color: #fff !important;
-        border: 1px solid var(--border-subtle);
-        box-shadow: none;
-    }
-
-    .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: var(--border-focus);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-sm {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-        border-radius: 8px;
-    }
-
-    .btn-outline-glow {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border-focus);
-        color: var(--primary) !important;
-    }
-
-    .btn-outline-glow:hover {
-        background: var(--primary);
-        color: #fff !important;
-        box-shadow: 0 0 15px var(--primary-glow);
-    }
-
-    .btn-danger {
-        background: rgba(255, 51, 102, 0.15);
-        color: var(--accent) !important;
-        border: 1px solid rgba(255, 51, 102, 0.3);
-    }
-
-    .btn-danger:hover {
-        background: var(--accent);
-        color: #fff !important;
-    }
-
-    /* СТРАНИЦЫ */
-    .page {
-        display: none;
-        padding-top: 100px;
-        min-height: 100vh;
-        animation: modernFade 0.35s ease forwards;
-    }
-
-    .page.active { display: block; }
-
-    @keyframes modernFade {
-        from { opacity: 0; transform: translateY(12px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-header {
-        text-align: center;
-        max-width: 680px;
-        margin: 0 auto 40px;
-    }
-
-    .section-title {
-        font-family: var(--font-display);
-        font-size: 2.3rem;
-        font-weight: 700;
-        letter-spacing: -1px;
-        margin-bottom: 12px;
-        background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .section-subtitle {
-        color: var(--text-muted);
-        font-size: 0.98rem;
-    }
-
-    /* HERO */
-    .hero {
-        min-height: 75vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding-bottom: 40px;
-    }
-
-    .hero .container {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: 50px;
-        align-items: center;
-        width: 100%;
-    }
-
-    .hero-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 14px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border-focus);
-        border-radius: 30px;
-        font-size: 0.8rem;
-        color: var(--primary);
-        font-weight: 600;
-        margin-bottom: 20px;
-    }
-
-    .pulse-dot {
-        width: 7px;
-        height: 7px;
-        background: var(--primary);
-        border-radius: 50%;
-        box-shadow: 0 0 10px var(--primary);
-        animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(0.95); opacity: 0.8; }
-        50% { transform: scale(1.3); opacity: 1; }
-        100% { transform: scale(0.95); opacity: 0.8; }
-    }
-
-    .hero-content h1 {
-        font-family: var(--font-display);
-        font-size: 3.4rem;
-        font-weight: 700;
-        line-height: 1.15;
-        letter-spacing: -1.5px;
-        margin-bottom: 20px;
-    }
-
-    .hero-content h1 span {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-content p {
-        font-size: 1.05rem;
-        color: var(--text-muted);
-        margin-bottom: 30px;
-        max-width: 520px;
-    }
-
-    .hero-actions {
-        display: flex;
-        gap: 14px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-
-    .hero-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-
-    .stat-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 16px;
-        padding: 18px;
-        backdrop-filter: blur(12px);
-    }
-
-    .stat-card .num {
-        font-family: var(--font-display);
-        font-size: 1.7rem;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: -0.5px;
-    }
-
-    .stat-card .desc {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-top: 2px;
-    }
-
-    .hero-terminal {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 20px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-        overflow: hidden;
-        backdrop-filter: blur(16px);
-    }
-
-    .terminal-header {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 12px 18px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .t-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .t-red { background: #ff5f56; }
-    .t-yellow { background: #ffbd2e; }
-    .t-green { background: #27c93f; }
-
-    .terminal-body {
-        padding: 24px;
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        line-height: 1.8;
-        color: #cbd5e1;
-        min-height: 220px;
-    }
-
-    .c-muted { color: #5b687c; }
-    .c-green { color: var(--primary); }
-    .c-blue { color: var(--secondary); }
-    .c-pink { color: var(--primary); }
-
-    /* БЛОК БИО НА ГЛАВНОЙ */
-    .bio-section {
-        padding: 40px 0 80px;
-        border-top: 1px solid var(--border-subtle);
-    }
-
-    .bio-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 24px;
-        padding: 36px;
-        display: grid;
-        grid-template-columns: 260px 1fr;
-        gap: 36px;
-        align-items: center;
-        backdrop-filter: blur(12px);
-    }
-
-    .bio-avatar-box {
-        background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
-        border: 1px solid var(--border-focus);
-        border-radius: 20px;
-        padding: 30px 20px;
-        text-align: center;
-    }
-
-    .bio-avatar-emoji {
-        font-size: 4.5rem;
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .bio-info h3 {
-        font-size: 1.6rem;
-        font-family: var(--font-display);
-        margin-bottom: 8px;
-        color: #fff;
-    }
-
-    .bio-tagline {
-        color: var(--secondary);
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 14px;
-    }
-
-    .bio-info p {
-        color: var(--text-muted);
-        font-size: 0.95rem;
-        margin-bottom: 18px;
-        line-height: 1.6;
-    }
-
-    .bio-skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 12px;
-        margin-top: 15px;
-    }
-
-    .bio-skill-item {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border-subtle);
-        padding: 10px 14px;
-        border-radius: 10px;
-        font-size: 0.82rem;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* КАРТОЧКИ И СЕТКИ */
-    .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        gap: 20px;
-    }
-
-    .filter-tabs {
-        display: flex;
-        background: var(--surface-1);
-        padding: 4px;
-        border-radius: 12px;
-        border: 1px solid var(--border-subtle);
-        gap: 4px;
-        flex-wrap: wrap;
-    }
-
-    .filter-tab {
-        padding: 8px 18px;
-        background: transparent;
-        border: none;
-        border-radius: 8px;
-        color: var(--text-muted);
-        font-size: 0.84rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .filter-tab:hover { color: #fff; }
-    .filter-tab.active {
-        background: rgba(255, 255, 255, 0.08);
-        color: #fff;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    .radar-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 30px;
-    }
-
-    .search-bar {
-        position: relative;
-        min-width: 260px;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 10px 16px 10px 38px;
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 12px;
-        color: #fff;
-        font-size: 0.85rem;
-        outline: none;
-        transition: 0.2s;
-    }
-
-    .search-input:focus {
-        border-color: var(--border-focus);
-        box-shadow: 0 0 0 3px var(--primary-glow);
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 14px; top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: 0.85rem;
-    }
-
-    /* СТИЛЬ ПАПКИ FL */
-    .fl-folder-card {
-        background: rgba(255, 153, 0, 0.05);
-        border: 1px dashed rgba(255, 153, 0, 0.4);
-        border-left: 5px solid var(--secondary);
-        border-radius: 18px;
-        padding: 24px;
-        margin-bottom: 25px;
-        backdrop-filter: blur(12px);
-    }
-
-    /* КАРТОЧКА РАДАРА */
-    .radar-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 18px;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        backdrop-filter: blur(12px);
-        position: relative;
-    }
-
-    .radar-card:hover {
-        transform: translateY(-4px);
-        border-color: var(--border-focus);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .fav-btn {
-        position: absolute; top: 20px; right: 20px; background: var(--surface-2); border: 1px solid var(--border-subtle);
-        width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-        cursor: pointer; font-size: 1.1rem; transition: 0.2s; color: var(--text-muted);
-    }
-    .fav-btn:hover { border-color: var(--border-focus); color: #fff; }
-    .fav-btn.active { background: rgba(255, 51, 102, 0.15); border-color: var(--primary); color: var(--primary); }
-
-    .tag-pill {
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-subtle);
-        color: var(--text-muted);
-    }
-
-    .source-tag {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--secondary);
-    }
-
-    .radar-card h3 {
-        font-size: 1.08rem;
-        font-weight: 600;
-        line-height: 1.45;
-        margin: 14px 0;
-        color: #fff;
-        padding-right: 35px;
-    }
-
-    .direct-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border-focus);
-        border-radius: 8px;
-        color: var(--secondary);
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-decoration: none;
-        margin-bottom: 16px;
-        transition: 0.2s;
-    }
-
-    .direct-link:hover {
-        background: var(--secondary);
-        color: #06070a;
-    }
-
-    .radar-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 14px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-bottom: 18px;
-    }
-
-    .radar-price {
-        font-family: var(--font-display);
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 16px;
-    }
-
-    .radar-card-actions {
-        display: flex;
-        gap: 8px;
-    }
-
-    /* КАРТОЧКА МАГАЗИНА */
-    .shop-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 20px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .shop-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--border-focus);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
-
-    .shop-thumb {
-        height: 120px;
-        background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.2rem;
-        position: relative;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .shop-tag {
-        position: absolute;
-        top: 12px; right: 12px;
-        font-size: 0.68rem;
-        padding: 3px 10px;
-        border-radius: 30px;
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--primary);
-        border: 1px solid var(--border-focus);
-        font-weight: 700;
-    }
-
-    .shop-content {
-        padding: 22px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        justify-content: space-between;
-    }
-
-    .shop-content h4 {
-        font-size: 1.12rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #fff;
-    }
-
-    .shop-content p {
-        color: var(--text-muted);
-        font-size: 0.86rem;
-        margin-bottom: 18px;
-    }
-
-    .shop-price {
-        font-family: var(--font-display);
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 16px;
-    }
-
-    /* КАРТОЧКА ПОРТФОЛИО */
-    .portfolio-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 20px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .portfolio-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--border-focus);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
-
-    .portfolio-banner {
-        height: 140px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.8rem;
-        background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .portfolio-body {
-        padding: 22px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        justify-content: space-between;
-    }
-
-    .portfolio-body h4 {
-        font-size: 1.15rem;
-        color: #fff;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-
-    .portfolio-body p {
-        font-size: 0.86rem;
-        color: var(--text-muted);
-        margin-bottom: 16px;
-    }
-
-    .stack-list {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-bottom: 16px;
-    }
-
-    .stack-tag {
-        font-size: 0.72rem;
-        padding: 3px 8px;
-        border-radius: 6px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border-subtle);
-        color: #cbd5e1;
-        font-family: var(--font-mono);
-    }
-
-    /* КОНТАКТЫ */
-    .contact-layout {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 30px;
-        align-items: start;
-    }
-
-    .contact-card {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 24px;
-        padding: 36px;
-        backdrop-filter: blur(12px);
-    }
-
-    .form-group {
-        margin-bottom: 18px;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 0.84rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        margin-bottom: 8px;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        background: var(--surface-input);
-        border: 1px solid var(--border-subtle);
-        border-radius: 12px;
-        color: #fff;
-        font-size: 0.92rem;
-        font-family: var(--font-body);
-        outline: none;
-        transition: 0.2s;
-    }
-
-    .form-control:focus {
-        border-color: var(--border-focus);
-        box-shadow: 0 0 0 3px var(--primary-glow);
-    }
-
-    select.form-control {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        cursor: pointer;
-        padding-right: 40px;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 24 24' fill='none' stroke='%238b9bb4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-        background-size: 16px;
-    }
-
-    select.form-control option {
-        background: var(--bg-base);
-        color: #fff;
-        padding: 10px;
-    }
-
-    .direct-contacts {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .direct-item {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 18px;
-        padding: 24px;
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.25s;
-    }
-
-    .direct-item:hover {
-        border-color: var(--border-focus);
-        transform: translateX(4px);
-        background: rgba(255, 255, 255, 0.03);
-    }
-
-    .direct-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
-        border: 1px solid var(--border-subtle);
-    }
-
-    .direct-info h5 {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        margin-bottom: 2px;
-    }
-
-    .direct-info span {
-        font-size: 0.84rem;
-        color: var(--text-muted);
-    }
-
-    /* КОРЗИНА */
-    .cart-sidebar {
-        position: fixed;
-        right: -420px;
-        top: 0;
-        width: 400px;
-        height: 100vh;
-        background: var(--bg-base);
-        border-left: 1px solid var(--border-subtle);
-        padding: 30px;
-        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 2000;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cart-sidebar.open { right: 0; }
-    .cart-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(8px);
-        z-index: 1999;
-        display: none;
-    }
-    .cart-overlay.show { display: block; }
-
-    .modal {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.82);
-        backdrop-filter: blur(10px);
-        z-index: 3000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal.show { display: flex; }
-    .modal-content {
-        background: var(--surface-1);
-        border: 1px solid var(--border-subtle);
-        border-radius: 20px;
-        padding: 32px;
-        max-width: 480px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(16px);
-    }
-
-    .toast {
-        position: fixed;
-        bottom: 24px; right: 24px;
-        background: var(--surface-1);
-        border: 1px solid var(--border-focus);
-        color: #fff;
-        padding: 12px 22px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        transform: translateY(80px);
-        opacity: 0;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 9999;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .toast.show { transform: translateY(0); opacity: 1; }
-
-    @media (max-width: 992px) {
-        .hero .container { grid-template-columns: 1fr; text-align: center; }
-        .hero-content p { margin: 0 auto 30px auto; }
-        .hero-actions, .hero-stats { justify-content: center; }
-        .hero-terminal { display: none; }
-        .bio-card { grid-template-columns: 1fr; text-align: center; }
-        .contact-layout { grid-template-columns: 1fr; }
-        .cart-sidebar { width: 100%; right: -100%; }
-    }
-
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%; left: 0; right: 0;
-            background: var(--bg-base);
-            padding: 24px;
-            border-bottom: 1px solid var(--border-subtle);
-            gap: 16px;
-        }
-        .nav-links.active { display: flex; }
-        .burger { display: flex; }
-        .hero-content h1 { font-size: 2.3rem; }
-        .radar-bar { flex-direction: column; align-items: stretch; }
-        .search-bar { width: 100%; }
-    }
-</style>
-
-```
-
-```
 <!-- ШАПКА -->
 <nav class="navbar" id="navbar">
     <div class="container">
@@ -1087,11 +5,10 @@
         <ul class="nav-links" id="navLinks">
             <li><a data-page="home" class="active">Главная</a></li>
             <li>
-                <a data-page="radar">
-                    ⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span>
+                <a data-page="radar" id="navRadarLink">
+                    ⚡ Радар <span class="badge-counter radar-badge" id="radarCount">0</span> 🔒
                 </a>
             </li>
-            <li><a data-page="favorites">⭐ Избранное <span class="badge-counter fav-badge" id="favCount">0</span></a></li>
             <li><a data-page="shop">Магазин</a></li>
             <li><a data-page="portfolio">Портфолио</a></li>
             <li><a data-page="contact">Контакты</a></li>
@@ -1106,12 +23,12 @@
     </div>
 </nav>
 
-<!-- МОДАЛКА ПАРОЛЯ АДМИНКИ -->
+<!-- МОДАЛКА ПАРОЛЯ АДМИНКИ / РАДАРА -->
 <div class="modal" id="passwordModal">
     <div class="modal-content">
-        <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔐 Вход в админку</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите пароль управления каталогом</p>
-        <input type="password" class="form-control" id="passwordInput" placeholder="Пароль" style="margin-bottom: 14px;" />
+        <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔐 Доступ ограничен</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите пароль администратора для доступа к парсеру</p>
+        <input type="password" class="form-control" id="passwordInput" placeholder="Пароль (admin123)" style="margin-bottom: 14px;" />
         <button class="btn" style="width: 100%;" id="passwordSubmit">Войти</button>
         <div id="passwordError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный пароль</div>
     </div>
@@ -1178,9 +95,8 @@
     </div>
 </div>
 
-<!-- 1. СТРАНИЦА: ГЛАВНАЯ (HERO + БЛОК БИО) -->
+<!-- 1. СТРАНИЦА: ГЛАВНАЯ -->
 <div class="page active" id="page-home">
-    <!-- БЛОК HERO -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -1237,7 +153,6 @@
         </div>
     </section>
 
-    <!-- БЛОК БИО / ОБО МНЕ НА ГЛАВНОЙ -->
     <section class="bio-section">
         <div class="container">
             <div class="bio-card">
@@ -1266,11 +181,11 @@
     </section>
 </div>
 
-<!-- 2. СТРАНИЦА: РАДАР ЗАКАЗОВ -->
+<!-- 2. СТРАНИЦА: РАДАР ЗАКАЗОВ (ТОЛЬКО ДЛЯ АДМИНА) -->
 <div class="page" id="page-radar">
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
-            <h2 class="section-title">Радар IT-Заказов</h2>
+            <h2 class="section-title">Радар IT-Заказов (Admin)</h2>
             <p class="section-subtitle">Парсинг 50+ открытых каналов и бирж в реальном времени</p>
         </div>
 
@@ -1293,7 +208,6 @@
             </div>
         </div>
 
-        <!-- СПЕЦИАЛЬНАЯ ПАПКА FL.RU -->
         <div id="flFolderSection" class="fl-folder-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <div>
@@ -1311,18 +225,7 @@
     </div>
 </div>
 
-<!-- 3. СТРАНИЦА: ИЗБРАННОЕ -->
-<div class="page" id="page-favorites">
-    <div class="container" style="padding-bottom: 80px;">
-        <div class="section-header">
-            <h2 class="section-title">⭐ Избранные задачи</h2>
-            <p class="section-subtitle">Сохраненные заказы, отмеченные звездочкой</p>
-        </div>
-        <div class="cards-grid" id="favoritesGridContainer"></div>
-    </div>
-</div>
-
-<!-- 4. СТРАНИЦА: МАГАЗИН -->
+<!-- 3. СТРАНИЦА: МАГАЗИН -->
 <div class="page" id="page-shop">
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
@@ -1383,7 +286,7 @@
     </div>
 </div>
 
-<!-- 5. СТРАНИЦА: ПОРТФОЛИО -->
+<!-- 4. СТРАНИЦА: ПОРТФОЛИО -->
 <div class="page" id="page-portfolio">
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
@@ -1401,7 +304,6 @@
         </div>
 
         <div class="cards-grid" id="portfolioGrid">
-            <!-- Сеть кофеен «Буханка» (/cofe) -->
             <div class="portfolio-card" data-pcat="web">
                 <div class="portfolio-banner">☕</div>
                 <div class="portfolio-body">
@@ -1420,7 +322,6 @@
                 </div>
             </div>
 
-            <!-- Фортнайт Казик -->
             <div class="portfolio-card" data-pcat="web">
                 <div class="portfolio-banner">🎰</div>
                 <div class="portfolio-body">
@@ -1452,7 +353,7 @@
                         </div>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <a href="[https://t.me/serjantyabloko](https://t.me/serjantyabloko)" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                     </div>
                 </div>
             </div>
@@ -1470,7 +371,7 @@
                         </div>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <a href="[https://t.me/serjantyabloko](https://t.me/serjantyabloko)" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                     </div>
                 </div>
             </div>
@@ -1488,7 +389,7 @@
                         </div>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <a href="[https://t.me/serjantyabloko](https://t.me/serjantyabloko)" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                     </div>
                 </div>
             </div>
@@ -1506,7 +407,7 @@
                         </div>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <a href="[https://t.me/serjantyabloko](https://t.me/serjantyabloko)" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
+                        <a href="https://t.me/serjantyabloko" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Заказать аналог</a>
                     </div>
                 </div>
             </div>
@@ -1514,7 +415,7 @@
     </div>
 </div>
 
-<!-- 6. СТРАНИЦА: КОНТАКТЫ -->
+<!-- 5. СТРАНИЦА: КОНТАКТЫ -->
 <div class="page" id="page-contact">
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
@@ -1554,7 +455,7 @@
             </div>
 
             <div class="direct-contacts">
-                <a href="[https://t.me/serjantyabloko](https://t.me/serjantyabloko)" target="_blank" class="direct-item">
+                <a href="https://t.me/serjantyabloko" target="_blank" class="direct-item">
                     <div class="direct-icon">💬</div>
                     <div class="direct-info">
                         <h5>Telegram ЛС</h5>
@@ -1587,38 +488,23 @@
     const CHAT_ID = '8673619246';
     const ADMIN_PASSWORD = 'admin123';
 
-    // Загрузка товаров из shop.json с поддержкой локального сохранения (для GitHub Pages)
     let products = [];
     let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
     let radarOrders = [];
-    let favorites = JSON.parse(localStorage.getItem('serjant_favs')) || [];
-    let isAdmin = false;
+    let isAdmin = localStorage.getItem('serjant_is_admin') === 'true';
 
     async function loadShopProducts() {
-        const savedProducts = localStorage.getItem('serjant_shop_products_v5');
-        if (savedProducts) {
-            products = JSON.parse(savedProducts);
-            renderShop();
-            return;
-        }
-
         try {
             const response = await fetch(`shop.json?t=${Date.now()}`);
             const data = await response.json();
             products = data.products || [];
-            localStorage.setItem('serjant_shop_products_v5', JSON.stringify(products));
         } catch (err) {
-            console.error("Не удалось загрузить shop.json, используются стандартные товары:", err);
-            products = [
-                { id: 101, name: 'Mini App "Магазин"', category: 'miniapp', icon: '🛍️', desc: 'Автономный e-commerce внутри Telegram с каталогом, корзиной и чекаутом.', price: 7900, tag: 'Хит' },
-                { id: 102, name: 'ТГ-Бот "Авторассылка"', category: 'bot', icon: '📢', desc: 'Бот с веб-админкой для массовой и безопасной рассылки клиентам.', price: 3500, tag: 'Топ' }
-            ];
+            console.error("Не удалось загрузить shop.json:", err);
         }
         renderShop();
     }
 
     function saveProductsToStorage() {
-        localStorage.setItem('serjant_shop_products_v5', JSON.stringify(products));
         renderShop();
     }
 
@@ -1631,7 +517,7 @@
 
     async function sendToTelegram(text) {
         try {
-            await fetch(`[https://api.telegram.org/bot$](https://api.telegram.org/bot$){BOT_TOKEN}/sendMessage`, {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
@@ -1641,17 +527,24 @@
         }
     }
 
-    // НАВИГАЦИЯ
+    // НАВИГАЦИЯ С ЗАЩИТОЙ РАДАРА
     const pages = {
         home: document.getElementById('page-home'),
         radar: document.getElementById('page-radar'),
-        favorites: document.getElementById('page-favorites'),
         shop: document.getElementById('page-shop'),
         portfolio: document.getElementById('page-portfolio'),
         contact: document.getElementById('page-contact')
     };
 
     function navigateTo(pageId) {
+        // Проверка доступа к Радару
+        if (pageId === 'radar' && !isAdmin) {
+            document.getElementById('passwordModal').classList.add('show');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+            return;
+        }
+
         Object.values(pages).forEach(p => { if (p) p.classList.remove('active'); });
         if (pages[pageId]) pages[pageId].classList.add('active');
         
@@ -1666,7 +559,6 @@
         el.addEventListener('click', (e) => {
             e.preventDefault();
             navigateTo(el.dataset.page);
-            if (el.dataset.page === 'favorites') renderFavorites();
         });
     });
 
@@ -1678,7 +570,27 @@
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
     });
 
-    // ИНТЕРАКТИВНЫЙ ТЕСТОВЫЙ ПИНГ ТЕРМИНАЛА
+    // ПРОВЕРКА ПАРОЛЯ ДЛЯ АДМИНА / РАДАРА
+    const passwordModal = document.getElementById('passwordModal');
+    document.getElementById('passwordSubmit').addEventListener('click', () => {
+        const pass = document.getElementById('passwordInput').value.trim();
+        if (pass === ADMIN_PASSWORD) {
+            isAdmin = true;
+            localStorage.setItem('serjant_is_admin', 'true');
+            passwordModal.classList.remove('show');
+            showToast("✅ Доступ к парсеру разрешен!");
+            navigateTo('radar');
+            fetchRadarOrders();
+        } else {
+            document.getElementById('passwordError').style.display = 'block';
+        }
+    });
+
+    passwordModal.addEventListener('click', (e) => {
+        if (e.target === passwordModal) passwordModal.classList.remove('show');
+    });
+
+    // ТЕСТОВЫЙ ПИНГ ТЕРМИНАЛА
     document.getElementById('testPingBtn').addEventListener('click', () => {
         const log = document.getElementById('terminalLog');
         const now = new Date().toLocaleTimeString();
@@ -1692,12 +604,12 @@
         showToast("⚡ Симуляция пинга завершена!");
     });
 
-    // ЗАГРУЗКА РАДАРА С ПРАВИЛЬНОЙ СОРТИРОВКОЙ И ПАПКОЙ FL
+    // ЗАГРУЗКА РАДАРА
     async function fetchRadarOrders() {
+        if (!isAdmin) return;
         try {
             const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
             radarOrders = await res.json();
-            
             radarOrders.sort((a, b) => new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0));
 
             renderRadar();
@@ -1729,24 +641,14 @@
         if (activeFilter === 'all' || activeFilter === 'FL.ru') {
             flSection.style.display = 'block';
             const filteredFl = query ? flOrders.filter(o => o.title.toLowerCase().includes(query)) : flOrders;
-            
-            if (filteredFl.length === 0) {
-                flContainer.innerHTML = `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач по вашему запросу.</div>`;
-            } else {
-                flContainer.innerHTML = filteredFl.map(o => createOrderCard(o)).join('');
-            }
+            flContainer.innerHTML = filteredFl.length === 0 ? `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач.</div>` : filteredFl.map(o => createOrderCard(o)).join('');
         } else {
             flSection.style.display = 'none';
         }
 
         let list = radarOrders.filter(o => !(o.source && o.source.includes('FL.ru')));
-        
-        if (activeFilter !== 'all') {
-            list = list.filter(o => o.category === activeFilter);
-        }
-        if (query) {
-            list = list.filter(o => o.title.toLowerCase().includes(query));
-        }
+        if (activeFilter !== 'all') list = list.filter(o => o.category === activeFilter);
+        if (query) list = list.filter(o => o.title.toLowerCase().includes(query));
 
         if (!list.length) {
             container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">Заказы в выбранной категории пока не найдены.</div>`;
@@ -1757,12 +659,10 @@
     }
 
     function createOrderCard(o) {
-        const isFav = favorites.some(f => f.url === o.url);
         return `
             <div class="radar-card">
-                <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${encodeURIComponent(o.url)}')">⭐</button>
                 <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding-right: 35px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span class="tag-pill">${o.category || 'IT'}</span>
                         <span class="source-tag">${o.source || 'Прямой контакт'}</span>
                     </div>
@@ -1770,7 +670,7 @@
                     <h3>${o.title}</h3>
 
                     ${o.direct_contact ? `
-                        <a href="[https://t.me/$](https://t.me/$){o.direct_contact.replace('@','')}" target="_blank" class="direct-link">
+                        <a href="https://t.me/${o.direct_contact.replace('@','')}" target="_blank" class="direct-link">
                             💬 ЛС заказчика: ${o.direct_contact}
                         </a>
                     ` : ''}
@@ -1795,35 +695,6 @@
         `;
     }
 
-    window.toggleFavorite = (encodedUrl) => {
-        const url = decodeURIComponent(encodedUrl);
-        const item = radarOrders.find(o => o.url === url);
-        if (!item) return;
-
-        const idx = favorites.findIndex(f => f.url === url);
-        if (idx > -1) {
-            favorites.splice(idx, 1);
-            showToast("Удалено из избранного");
-        } else {
-            favorites.push(item);
-            showToast("⭐ Добавлено в избранное!");
-        }
-        localStorage.setItem('serjant_favs', JSON.stringify(favorites));
-        document.getElementById('favCount').textContent = favorites.length;
-        renderRadar();
-        if (document.getElementById('page-favorites').classList.contains('active')) renderFavorites();
-    };
-
-    function renderFavorites() {
-        const container = document.getElementById('favoritesGridContainer');
-        document.getElementById('favCount').textContent = favorites.length;
-        if (!favorites.length) {
-            container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:var(--text-muted);">В избранном пока ничего нет. Нажмите звездочку ⭐ на карточке заказа!</div>`;
-            return;
-        }
-        container.innerHTML = favorites.map(o => createOrderCard(o)).join('');
-    }
-
     document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#radarFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
@@ -1834,9 +705,8 @@
 
     document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
     document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
-    setInterval(fetchRadarOrders, 30 * 60 * 1000);
 
-    // ГЕНЕРАТОР ОТКЛИКА ДЛЯ ЗАКАЗА
+    // ГЕНЕРАТОР ОТКЛИКА
     const pitchModal = document.getElementById('pitchModal');
     const pitchTextarea = document.getElementById('pitchTextarea');
 
@@ -1848,13 +718,11 @@
             
             let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\n\n`;
             if (cat === 'Telegram') {
-                pitch += `Специализируюсь на Telegram-ботах (aiogram 3, SQLite) и Telegram Mini Apps (TMA WebApp). Реализую чистый код, подключу меню, базу и уведомления. Помогу с развертыванием на сервере 24/7.`;
+                pitch += `Специализируюсь на Telegram-ботах (aiogram 3, SQLite) и Telegram Mini Apps (TMA WebApp). Реализую чистый код, подключу меню, базу и уведомления.`;
             } else if (cat === 'Дизайн') {
-                pitch += `Занимаюсь веб-дизайном и UI/UX в Figma. Сделаю современный, продуманный и адаптивный макет с UI-китом и компонентами, готовый к верстке.`;
-            } else if (cat === 'Парсеры') {
-                pitch += `Пишу парсеры и скрипты автоматизации на Python (BeautifulSoup, Asyncio). Соберу данные в Excel/JSON без дубликатов.`;
+                pitch += `Занимаюсь веб-дизайном и UI/UX в Figma. Сделаю современный, продуманный и адаптивный макет с UI-китом.`;
             } else {
-                pitch += `Занимаюсь качественной адаптивной версткой и созданием сайтов под ключ (HTML5/CSS3/JS). Сайт будет быстро открываться на всех смартфонах и ПК.`;
+                pitch += `Занимаюсь качественной адаптивной версткой и созданием сайтов под ключ (HTML5/CSS3/JS). Сайт будет быстро открываться на всех устройствах.`;
             }
             pitch += `\n\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
             
@@ -1873,7 +741,7 @@
         pitchModal.classList.remove('show');
     });
 
-    // ФИЛЬТРАЦИЯ ВО ВКЛАДКЕ ПОРТФОЛИО
+    // ПОРТФОЛИО ФИЛЬТРЫ
     document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#portfolioFilterGroup .filter-tab').forEach(b => b.classList.remove('active'));
@@ -1881,11 +749,7 @@
             const pcat = btn.dataset.pfilter;
 
             document.querySelectorAll('#portfolioGrid .portfolio-card').forEach(card => {
-                if (pcat === 'all' || card.dataset.pcat === pcat) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (pcat === 'all' || card.dataset.pcat === pcat) ? 'flex' : 'none';
             });
         });
     });
@@ -1895,11 +759,6 @@
         const container = document.getElementById('shopGridContainer');
         const activeFilter = document.querySelector('#shopFilterGroup .filter-tab.active').dataset.filter;
         const list = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
-
-        if (!list.length) {
-            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Товары отсутствуют.</div>`;
-            return;
-        }
 
         container.innerHTML = list.map(p => `
             <div class="shop-card">
@@ -2039,40 +898,16 @@
         showToast("Заказ передан разработчику!");
     });
 
-    // АДМИНКА
+    // АДМИНКА ТОВАРОВ
     const adminPanel = document.getElementById('adminPanel');
-    const passwordModal = document.getElementById('passwordModal');
-
     document.getElementById('toggleAdminBtn').addEventListener('click', () => {
-        if (isAdmin) {
-            isAdmin = false;
-            adminPanel.style.display = 'none';
-            document.getElementById('toggleAdminBtn').textContent = '⚙️ Панель управления';
-            renderShop();
-            showToast("Админка закрыта");
+        if (!isAdmin) {
+            passwordModal.classList.add('show');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
             return;
         }
-        passwordModal.classList.add('show');
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('passwordError').style.display = 'none';
-    });
-
-    document.getElementById('passwordSubmit').addEventListener('click', () => {
-        const pass = document.getElementById('passwordInput').value.trim();
-        if (pass === ADMIN_PASSWORD) {
-            isAdmin = true;
-            passwordModal.classList.remove('show');
-            adminPanel.style.display = 'block';
-            document.getElementById('toggleAdminBtn').textContent = '✕ Закрыть админку';
-            renderShop();
-            showToast("Доступ подтвержден");
-        } else {
-            document.getElementById('passwordError').style.display = 'block';
-        }
-    });
-
-    passwordModal.addEventListener('click', (e) => {
-        if (e.target === passwordModal) passwordModal.classList.remove('show');
+        adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
     });
 
     document.getElementById('adminCloseBtn').addEventListener('click', () => {
@@ -2091,7 +926,7 @@
             tag: 'Новинка'
         };
         products.push(newItem);
-        saveProductsToStorage();
+        renderShop();
         document.getElementById('adminForm').reset();
         showToast("Товар успешно добавлен!");
     });
@@ -2110,87 +945,10 @@
         document.getElementById('contactForm').reset();
     });
 
-    // ПОЛНАЯ СИСТЕМА СМЕНЫ ТЕМ (ВСЕ ЭЛЕМЕНТЫ + АВТОСОХРАНЕНИЕ)
+    // ТЕМЫ
     const themes = {
         green: {
-            '--primary': '#00ff88',
-            '--primary-glow': 'rgba(0, 255, 136, 0.28)',
-            '--secondary': '#00e5ff',
-            '--accent': '#00ff88',
-            '--bg-base': '#040d08',
-            '--navbar-bg': 'rgba(5, 16, 10, 0.88)',
-            '--navbar-scrolled': 'rgba(4, 13, 8, 0.98)',
-            '--bg-gradient-1': 'rgba(0, 255, 136, 0.08)',
-            '--bg-gradient-2': 'rgba(0, 229, 255, 0.05)',
-            '--surface-1': 'rgba(8, 25, 16, 0.78)',
-            '--surface-2': 'rgba(12, 38, 24, 0.65)',
-            '--surface-input': 'rgba(6, 18, 12, 0.85)',
-            '--border-subtle': 'rgba(255, 255, 255, 0.08)',
-            '--border-focus': 'rgba(0, 255, 136, 0.45)'
-        },
-        blue: {
-            '--primary': '#00e5ff',
-            '--primary-glow': 'rgba(0, 229, 255, 0.28)',
-            '--secondary': '#3b82f6',
-            '--accent': '#00e5ff',
-            '--bg-base': '#040913',
-            '--navbar-bg': 'rgba(5, 12, 24, 0.88)',
-            '--navbar-scrolled': 'rgba(4, 9, 19, 0.98)',
-            '--bg-gradient-1': 'rgba(0, 229, 255, 0.08)',
-            '--bg-gradient-2': 'rgba(59, 130, 246, 0.07)',
-            '--surface-1': 'rgba(8, 20, 40, 0.78)',
-            '--surface-2': 'rgba(12, 30, 60, 0.65)',
-            '--surface-input': 'rgba(5, 14, 28, 0.85)',
-            '--border-subtle': 'rgba(255, 255, 255, 0.08)',
-            '--border-focus': 'rgba(0, 229, 255, 0.45)'
-        },
-        red: {
-            '--primary': '#ff3366',
-            '--primary-glow': 'rgba(255, 51, 102, 0.28)',
-            '--secondary': '#ff9900',
-            '--accent': '#ff3366',
-            '--bg-base': '#0c0407',
-            '--navbar-bg': 'rgba(15, 5, 8, 0.88)',
-            '--navbar-scrolled': 'rgba(12, 4, 7, 0.98)',
-            '--bg-gradient-1': 'rgba(255, 51, 102, 0.1)',
-            '--bg-gradient-2': 'rgba(255, 153, 0, 0.06)',
-            '--surface-1': 'rgba(28, 12, 18, 0.78)',
-            '--surface-2': 'rgba(41, 17, 26, 0.65)',
-            '--surface-input': 'rgba(18, 7, 12, 0.85)',
-            '--border-subtle': 'rgba(255, 255, 255, 0.08)',
-            '--border-focus': 'rgba(255, 51, 102, 0.45)'
-        }
-    };
-
-    function applyTheme(themeName) {
-        const config = themes[themeName] || themes.red;
-        for (const [prop, val] of Object.entries(config)) {
-            document.documentElement.style.setProperty(prop, val);
-        }
-        localStorage.setItem('serjant_selected_theme', themeName);
-        document.querySelectorAll('.theme-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.theme === themeName);
-        });
-    }
-
-    const settingsModal = document.getElementById('settingsModal');
-    document.getElementById('settingsToggle').addEventListener('click', () => settingsModal.classList.add('show'));
-    document.getElementById('settingsClose').addEventListener('click', () => settingsModal.classList.remove('show'));
-
-    document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            applyTheme(btn.dataset.theme);
-            showToast("Тема и оформление применены ко всем элементам");
-        });
-    });
-
-    // СТАРТ
-    const savedTheme = localStorage.getItem('serjant_selected_theme') || 'red';
-    applyTheme(savedTheme);
-    loadShopProducts();
-    updateCartUI();
-    fetchRadarOrders();
-    document.getElementById('favCount').textContent = favorites.length;
-</script>
-
-```
+            '--primary': '#00ff88', '--primary-glow': 'rgba(0, 255, 136, 0.28)', '--secondary': '#00e5ff', '--accent': '#00ff88',
+            '--bg-base': '#040d08', '--navbar-bg': 'rgba(5, 16, 10, 0.88)', '--navbar-scrolled': 'rgba(4, 13, 8, 0.98)',
+            '--bg-gradient-1': 'rgba(0, 255, 136, 0.08)', '--bg-gradient-2': 'rgba(0, 229, 255, 0.05)',
+            '--surface-1': 'rgba(
