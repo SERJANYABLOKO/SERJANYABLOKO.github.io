@@ -353,6 +353,17 @@
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;" id="authModalDesc">Войдите под существующим аккаунтом или зарегистрируйтесь</p>
         
         <input type="text" class="form-control" id="authUsername" placeholder="Имя аккаунта (логин)" style="margin-bottom: 12px;" />
+        
+        <!-- Дополнительные поля для регистрации (ТГ, почта, телефон) -->
+        <div id="registerFields" style="display: none;">
+            <select class="form-control" id="regContactType" style="margin-bottom: 12px;">
+                <option value="tg">Telegram (@username)</option>
+                <option value="email">Электронная почта (Email)</option>
+                <option value="phone">Телефон (+7...)</option>
+            </select>
+            <input type="text" class="form-control" id="authContactValue" placeholder="Ваш контакт (например @serjant)" style="margin-bottom: 12px;" />
+        </div>
+
         <input type="password" class="form-control" id="authPassword" placeholder="Пароль" style="margin-bottom: 16px;" />
         
         <div style="display: flex; gap: 10px; margin-bottom: 12px;">
@@ -369,30 +380,37 @@
     </div>
 </div>
 
-<!-- МОДАЛКА КАБИНЕТА И ПОПОЛНЕНИЯ БАЛАНСА -->
+<!-- МОДАЛКА КАБИНЕТА, БАЛАНСА И ПОКУПОК -->
 <div class="modal" id="profileModal">
-    <div class="modal-content" style="text-align: left;">
+    <div class="modal-content" style="text-align: left; max-width: 520px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: #fff;">👤 Личный кабинет</h3>
             <button style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;" id="profileClose">✕</button>
         </div>
+        
         <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px; margin-bottom: 16px;">
             <div style="font-size: 0.85rem; color: var(--text-muted);">Аккаунт: <b id="profileUsername" style="color: #fff;">-</b></div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Контакт: <b id="profileContact" style="color: var(--secondary);">-</b></div>
             <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Роль: <b id="profileRole" style="color: var(--secondary);">-</b></div>
             <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 10px;">Баланс: <span id="profileBalance">0</span> ₽</div>
         </div>
 
         <h4 style="font-size: 0.95rem; margin-bottom: 8px;">💳 Пополнить баланс</h4>
-        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+        <div style="display: flex; gap: 8px; margin-bottom: 20px;">
             <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" />
             <button class="btn btn-sm" id="topupBtn">Пополнить</button>
         </div>
 
-        <button class="btn btn-danger btn-sm" style="width: 100%; margin-top: 16px;" id="logoutBtn">Выйти из аккаунта</button>
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px;">📦 Купленные товары и цифровые ключи</h4>
+        <div id="profilePurchasesList" style="max-height: 160px; overflow-y: auto; background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 10px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted);">
+            У вас пока нет купленных товаров.
+        </div>
+
+        <button class="btn btn-danger btn-sm" style="width: 100%;" id="logoutBtn">Выйти из аккаунта</button>
     </div>
 </div>
 
-<!-- МОДАЛКА ПОКУПКИ ПОДПИСКИ (ВЫХОДИТ ПРИ КЛИКЕ НА РАДАР БЕЗ ПОДПИСКИ) -->
+<!-- МОДАЛКА ПОКУПКИ ПОДПИСКИ -->
 <div class="modal" id="subModal">
     <div class="modal-content">
         <span style="font-size: 3.5rem; display: block; margin-bottom: 10px;">⭐</span>
@@ -493,7 +511,7 @@
                     <a class="btn btn-secondary" data-page="portfolio">Портфолио ➔</a>
                 </div>
 
-                <!-- КРАСИВОЕ ОВАЛЬНОЕ ОКНО PREMIUM НА ГЛАВНОЙ -->
+                <!-- ОВАЛЬНОЕ ОКНО PREMIUM НА ГЛАВНОЙ -->
                 <div class="premium-capsule">
                     <div class="premium-info">
                         <h4>⭐ Premium Подписка на Радар</h4>
@@ -886,9 +904,9 @@
     // Загрузка аккаунтов из accaunt.json и локального хранилища
     async function loadAccounts() {
         let defaultAccounts = [
-            { username: "serjant-L20812081", role: "admin", password: "admin_secure_password", balance: 10000 },
-            { username: "parser-parser", role: "parser_subscriber", password: "parser_password123", balance: 500 },
-            { username: "serjant dev", role: "customer", password: "customer_password123", balance: 2500 }
+            { username: "serjant-L20812081", role: "admin", password: "admin_secure_password", balance: 10000, contact: "@serjant", purchases: [] },
+            { username: "parser-parser", role: "parser_subscriber", password: "parser_password123", balance: 500, contact: "@parser", purchases: [] },
+            { username: "serjant dev", role: "customer", password: "customer_password123", balance: 2500, contact: "@dev", purchases: [] }
         ];
 
         try {
@@ -907,6 +925,8 @@
             if (found) {
                 currentUser.balance = found.balance !== undefined ? found.balance : (currentUser.balance || 0);
                 currentUser.role = found.role;
+                currentUser.contact = found.contact || "-";
+                currentUser.purchases = found.purchases || [];
                 localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
             }
         }
@@ -937,10 +957,25 @@
     const subModal = document.getElementById('subModal');
 
     document.getElementById('authToggle').addEventListener('click', () => {
-        if (currentUser) {
+        if (currentUser && currentUser.username !== "Гость") {
             document.getElementById('profileUsername').textContent = currentUser.username;
+            document.getElementById('profileContact').textContent = currentUser.contact || "Не указан";
             document.getElementById('profileRole').textContent = currentUser.role;
             document.getElementById('profileBalance').textContent = currentUser.balance || 0;
+            
+            // Отрисовка списка покупок в кабинете
+            const purchasesContainer = document.getElementById('profilePurchasesList');
+            if (currentUser.purchases && currentUser.purchases.length > 0) {
+                purchasesContainer.innerHTML = currentUser.purchases.map(p => `
+                    <div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between;">
+                        <span>📦 ${p.name} (${p.price} ₽)</span>
+                        <span style="color: var(--secondary);">✅ Куплено</span>
+                    </div>
+                `).join('');
+            } else {
+                purchasesContainer.innerHTML = "У вас пока нет купленных товаров.";
+            }
+
             profileModal.classList.add('show');
         } else {
             isRegisterMode = false;
@@ -967,7 +1002,7 @@
         navigateTo('home');
     });
 
-    // Обработка покупки подписки (с главного экрана или модалки радара)
+    // Покупка подписки
     function handleBuySubscription() {
         if (!currentUser || currentUser.username === "Гость") {
             authModal.classList.add('show');
@@ -1024,22 +1059,25 @@
         const title = document.getElementById('authModalTitle');
         const desc = document.getElementById('authModalDesc');
         const submitBtn = document.getElementById('authSubmitBtn');
+        const registerFields = document.getElementById('registerFields');
 
         if (isRegisterMode) {
             title.textContent = "📝 Регистрация аккаунта";
-            desc.textContent = "Создайте новый аккаунт для доступа к радару и покупкам";
+            desc.textContent = "Укажите данные и контакт (Telegram, Email или телефон)";
             submitBtn.textContent = "Зарегистрироваться";
             toggleRegisterModeBtn.textContent = "🔑 Войти";
+            registerFields.style.display = 'block';
         } else {
             title.textContent = "🔑 Вход в систему";
             desc.textContent = "Войдите под существующим аккаунтом или зарегистрируйтесь";
             submitBtn.textContent = "Войти";
             toggleRegisterModeBtn.textContent = "📝 Регистрация";
+            registerFields.style.display = 'none';
         }
     }
 
     document.getElementById('guestLoginBtn').addEventListener('click', () => {
-        currentUser = { username: "Гость", role: "guest", balance: 0 };
+        currentUser = { username: "Гость", role: "guest", balance: 0, contact: "Гость", purchases: [] };
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
         authModal.classList.remove('show');
         updateUserSessionUI();
@@ -1053,19 +1091,35 @@
         const errorEl = document.getElementById('authError');
 
         if (!uInput || !pInput) {
-            errorEl.textContent = "❌ Заполните все поля";
+            errorEl.textContent = "❌ Заполните обязательные поля";
             errorEl.style.display = 'block';
             return;
         }
 
         if (isRegisterMode) {
+            const contactVal = document.getElementById('authContactValue').value.trim();
+            if (!contactVal) {
+                errorEl.textContent = "❌ Укажите ваш контакт (ТГ, почту или телефон)";
+                errorEl.style.display = 'block';
+                return;
+            }
+
             const exists = accountsData.find(a => a.username.toLowerCase() === uInput.toLowerCase());
             if (exists) {
                 errorEl.textContent = "❌ Этот логин уже занят";
                 errorEl.style.display = 'block';
                 return;
             }
-            const newAcc = { username: uInput, role: "customer", password: pInput, balance: 0 };
+
+            const newAcc = { 
+                username: uInput, 
+                role: "customer", 
+                password: pInput, 
+                balance: 0, 
+                contact: contactVal,
+                purchases: []
+            };
+
             accountsData.push(newAcc);
             saveAccountsToStorage();
 
@@ -1073,13 +1127,14 @@
             localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
             authModal.classList.remove('show');
             updateUserSessionUI();
-            showToast(`✅ Аккаунт ${uInput} создан!`);
+            showToast(`✅ Аккаунт ${uInput} успешно создан!`);
             navigateTo('home');
         } else {
             const found = accountsData.find(acc => acc.username === uInput && acc.password === pInput);
             if (found) {
                 currentUser = found;
                 if (currentUser.balance === undefined) currentUser.balance = 0;
+                if (!currentUser.purchases) currentUser.purchases = [];
                 localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
                 if (currentUser.role === 'admin') {
                     localStorage.setItem('serjant_is_admin', 'true');
@@ -1102,7 +1157,7 @@
             showToast("Введите корректную сумму");
             return;
         }
-        if (!currentUser || currentUser.role === 'guest') {
+        if (!currentUser || currentUser.username === "Гость") {
             showToast("Войдите в личный аккаунт для пополнения");
             return;
         }
@@ -1115,7 +1170,7 @@
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
         document.getElementById('profileBalance').textContent = currentUser.balance;
         showToast(`✅ Баланс пополнен на ${amount} ₽!`);
-        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username}\n💰 Сумма: +${amount} ₽\n💎 Баланс: ${currentUser.balance} ₽`);
+        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\n💰 Сумма: +${amount} ₽\n💎 Баланс: ${currentUser.balance} ₽`);
     });
 
     // Загрузка товаров магазина
@@ -1170,7 +1225,6 @@
                 return;
             }
             if (currentUser.role !== 'admin' && currentUser.role !== 'parser_subscriber') {
-                // Показываем красивое окно покупки подписки вместо простого alert
                 document.getElementById('subModalBalance').textContent = (currentUser.balance || 0) + " ₽";
                 subModal.classList.add('show');
                 return;
@@ -1498,6 +1552,7 @@
         checkoutModal.classList.remove('show');
     });
 
+    // ПОКУПКА ТОВАРОВ ИЗ КОРЗИНЫ С СЕЗАНИЕМ С БАЛАНСА И ДОБАВЛЕНИЕМ В ПРОФИЛЬ
     document.getElementById('checkoutConfirmBtn').addEventListener('click', async () => {
         const tg = document.getElementById('checkoutTg').value.trim();
         if (!tg) {
@@ -1512,19 +1567,29 @@
         }
 
         currentUser.balance -= total;
+        if (!currentUser.purchases) currentUser.purchases = [];
+
+        // Добавляем товары в историю покупок пользователя
+        cart.forEach(item => {
+            currentUser.purchases.push({ name: item.name, price: item.price * item.qty });
+        });
+
         const acc = accountsData.find(a => a.username === currentUser.username);
-        if (acc) acc.balance = currentUser.balance;
+        if (acc) {
+            acc.balance = currentUser.balance;
+            acc.purchases = currentUser.purchases;
+        }
         saveAccountsToStorage();
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
 
         const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
-        const msg = `🛒 <b>Покупка в магазине (с баланса):</b>\n👤 Аккаунт: ${currentUser.username}\n💬 Telegram: ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого списано:</b> ${total.toLocaleString('ru-RU')} ₽\n💎 Остаток баланса: ${currentUser.balance} ₽`;
+        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\n💬 Telegram для связи: ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого списано с баланса:</b> ${total.toLocaleString('ru-RU')} ₽\n💎 Остаток баланса: ${currentUser.balance} ₽`;
         
         await sendToTelegram(msg);
         cart = [];
         saveCart();
         checkoutModal.classList.remove('show');
-        showToast("✅ Заказ успешно оплачен и передан разработчику!");
+        showToast("✅ Заказ успешно оплачен! Товары добавлены в ваш профиль.");
     });
 
     // АДМИНКА ТОВАРОВ
