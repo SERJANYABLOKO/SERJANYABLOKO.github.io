@@ -290,6 +290,16 @@
             padding: 32px; max-width: 480px; width: 90%; text-align: center; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); backdrop-filter: blur(16px);
         }
 
+        /* УВЕЛИЧЕННОЕ БОЛЬШОЕ ОКНО ПРОФИЛЯ */
+        .modal-content-large {
+            max-width: 680px !important;
+            width: 95% !important;
+            padding: 40px !important;
+            text-align: left !important;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
         .toast {
             position: fixed; bottom: 24px; right: 24px; background: var(--surface-1); border: 1px solid var(--border-focus);
             color: #fff; padding: 12px 22px; border-radius: 12px; font-weight: 600; font-size: 0.85rem;
@@ -380,33 +390,52 @@
     </div>
 </div>
 
-<!-- МОДАЛКА КАБИНЕТА, БАЛАНСА И ПОКУПОК -->
+<!-- БОЛЬШОЕ ОКНО ЛИЧНОГО КАБИНЕТА (ПРОФИЛЯ) -->
 <div class="modal" id="profileModal">
-    <div class="modal-content" style="text-align: left; max-width: 520px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: #fff;">👤 Личный кабинет</h3>
-            <button style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;" id="profileClose">✕</button>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px; margin-bottom: 16px;">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Аккаунт: <b id="profileUsername" style="color: #fff;">-</b></div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Контакт: <b id="profileContact" style="color: var(--secondary);">-</b></div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Роль: <b id="profileRole" style="color: var(--secondary);">-</b></div>
-            <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 10px;">Баланс: <span id="profileBalance">0</span> ₽</div>
+    <div class="modal-content modal-content-large">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: #fff;">👤 Личный кабинет</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" id="profileClose">✕</button>
         </div>
 
-        <h4 style="font-size: 0.95rem; margin-bottom: 8px;">💳 Пополнить баланс</h4>
-        <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-            <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" />
-            <button class="btn btn-sm" id="topupBtn">Пополнить</button>
+        <!-- Сетка информации профиля -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">Имя аккаунта</div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: #fff;" id="profileUsername">-</div>
+                
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 14px; margin-bottom: 4px;">Контакт для связи</div>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--secondary);" id="profileContact">-</div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">Статус / Роль</div>
+                    <div style="font-size: 1.05rem; font-weight: 600; color: var(--primary);" id="profileRole">-</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 2px;">Баланс счета</div>
+                    <div style="font-size: 1.6rem; font-weight: 700; color: var(--primary);"><span id="profileBalance">0</span> ₽</div>
+                </div>
+            </div>
         </div>
 
-        <h4 style="font-size: 0.95rem; margin-bottom: 8px;">📦 Купленные товары и цифровые ключи</h4>
-        <div id="profilePurchasesList" style="max-height: 160px; overflow-y: auto; background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 10px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted);">
+        <!-- Пополнение баланса -->
+        <div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
+            <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс счета</h4>
+            <div style="display: flex; gap: 12px;">
+                <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
+                <button class="btn" id="topupBtn" style="white-space: nowrap;">Пополнить счет</button>
+            </div>
+        </div>
+
+        <!-- Купленные товары -->
+        <h4 style="font-size: 1rem; color: #fff; margin-bottom: 12px;">📦 Купленные товары и цифровые файлы</h4>
+        <div id="profilePurchasesList" style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 16px; margin-bottom: 24px; font-size: 0.9rem; color: var(--text-muted);">
             У вас пока нет купленных товаров.
         </div>
 
-        <button class="btn btn-danger btn-sm" style="width: 100%;" id="logoutBtn">Выйти из аккаунта</button>
+        <button class="btn btn-danger" style="width: 100%;" id="logoutBtn">Выйти из аккаунта</button>
     </div>
 </div>
 
@@ -963,17 +992,17 @@
             document.getElementById('profileRole').textContent = currentUser.role;
             document.getElementById('profileBalance').textContent = currentUser.balance || 0;
             
-            // Отрисовка списка покупок в кабинете
+            // Отрисовка списка купленных товаров в большом окне профиля
             const purchasesContainer = document.getElementById('profilePurchasesList');
             if (currentUser.purchases && currentUser.purchases.length > 0) {
                 purchasesContainer.innerHTML = currentUser.purchases.map(p => `
-                    <div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between;">
-                        <span>📦 ${p.name} (${p.price} ₽)</span>
-                        <span style="color: var(--secondary);">✅ Куплено</span>
+                    <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center;">
+                        <span>📦 <b>${p.name}</b> — <span style="color: var(--primary);">${p.price} ₽</span></span>
+                        <span style="color: var(--secondary); font-size: 0.8rem; background: rgba(255,153,0,0.1); padding: 4px 10px; border-radius: 20px;">✅ Доступно</span>
                     </div>
                 `).join('');
             } else {
-                purchasesContainer.innerHTML = "У вас пока нет купленных товаров.";
+                purchasesContainer.innerHTML = "У вас пока нет купленных товаров в магазине.";
             }
 
             profileModal.classList.add('show');
@@ -1569,7 +1598,6 @@
         currentUser.balance -= total;
         if (!currentUser.purchases) currentUser.purchases = [];
 
-        // Добавляем товары в историю покупок пользователя
         cart.forEach(item => {
             currentUser.purchases.push({ name: item.name, price: item.price * item.qty });
         });
