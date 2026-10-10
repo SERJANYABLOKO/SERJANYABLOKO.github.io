@@ -317,19 +317,55 @@
     </div>
 </nav>
 
-<!-- МОДАЛКА АВТОРИЗАЦИИ / ГОСТЯ -->
+<!-- МОДАЛКА АВТОРИЗАЦИИ / РЕГИСТРАЦИИ -->
 <div class="modal" id="authModal">
     <div class="modal-content">
-        <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔑 Вход в систему</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите данные аккаунта или продолжите как гость</p>
-        <input type="text" class="form-control" id="authUsername" placeholder="Имя аккаунта" style="margin-bottom: 12px;" />
+        <h3 style="font-family: var(--font-display); margin-bottom: 8px;" id="authModalTitle">🔑 Вход в систему</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;" id="authModalDesc">Войдите под существующим аккаунтом или зарегистрируйтесь</p>
+        
+        <input type="text" class="form-control" id="authUsername" placeholder="Имя аккаунта (логин)" style="margin-bottom: 12px;" />
         <input type="password" class="form-control" id="authPassword" placeholder="Пароль" style="margin-bottom: 16px;" />
+        
         <div style="display: flex; gap: 10px; margin-bottom: 12px;">
             <button class="btn" style="flex: 1;" id="authSubmitBtn">Войти</button>
             <button class="btn btn-secondary btn-sm" id="authCloseBtn">Отмена</button>
         </div>
-        <button class="btn btn-outline-glow btn-sm" style="width: 100%;" id="guestLoginBtn">👤 Войти как Гость</button>
-        <div id="authError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный логин или пароль</div>
+
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-outline-glow btn-sm" style="flex: 1;" id="toggleRegisterModeBtn">📝 Регистрация</button>
+            <button class="btn btn-secondary btn-sm" style="flex: 1;" id="guestLoginBtn">👤 Как гость</button>
+        </div>
+
+        <div id="authError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Ошибка авторизации</div>
+    </div>
+</div>
+
+<!-- МОДАЛКА КАБИНЕТА И ПОПОЛНЕНИЯ БАЛАНСА -->
+<div class="modal" id="profileModal">
+    <div class="modal-content" style="text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: #fff;">👤 Личный кабинет</h3>
+            <button style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;" id="profileClose">✕</button>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px; margin-bottom: 16px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Аккаунт: <b id="profileUsername" style="color: #fff;">-</b></div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Роль: <b id="profileRole" style="color: var(--secondary);">-</b></div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 10px;">Баланс: <span id="profileBalance">0</span> ₽</div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px;">💳 Пополнить баланс</h4>
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+            <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" />
+            <button class="btn btn-sm" id="topupBtn">Пополнить</button>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 8px;">⭐ Подписка на Парсер</h4>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">Дает полный доступ к радару заказов (parser-parser) на 30 дней.</p>
+            <button class="btn btn-secondary btn-sm" style="width: 100%;" id="buyParserSubBtn">Купить подписку (1000 ₽)</button>
+        </div>
+
+        <button class="btn btn-danger btn-sm" style="width: 100%; margin-top: 16px;" id="logoutBtn">Выйти из аккаунта</button>
     </div>
 </div>
 
@@ -340,7 +376,7 @@
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Укажите ваш Telegram, чтобы получить товар</p>
         <input type="text" class="form-control" id="checkoutTg" placeholder="@username" style="margin-bottom: 16px;" required />
         <div style="display: flex; gap: 10px;">
-            <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Отправить</button>
+            <button class="btn" style="flex: 1;" id="checkoutConfirmBtn">Оплатить с баланса</button>
             <button class="btn btn-secondary btn-sm" id="checkoutCancelBtn">Отмена</button>
         </div>
     </div>
@@ -471,7 +507,7 @@
                         <div class="bio-skill-item">📱 Telegram Mini Apps (TMA)</div>
                         <div class="bio-skill-item">🌐 HTML5 / CSS3 / Flexbox</div>
                         <div class="bio-skill-item">🎨 Web-дизайн & UI/UX Figma</div>
-                        <div class="bio-skill-item">🎮 Разработка 3D Игр</div>
+                        <div class="bio-skill-item">🎮 Разработка 3D Игры</div>
                         <div class="bio-skill-item">⚡ Парсеры & Автоматизация</div>
                     </div>
                 </div>
@@ -793,20 +829,44 @@
     let accountsData = [];
     let currentUser = JSON.parse(localStorage.getItem('serjant_current_user')) || null;
     let isAdmin = currentUser ? (currentUser.role === 'admin') : false;
+    let isRegisterMode = false;
 
-    // Загрузка аккаунтов из accaunt.json
+    // Загрузка аккаунтов из accaunt.json и локального хранилища
     async function loadAccounts() {
+        let defaultAccounts = [
+            { username: "serjant-L20812081", role: "admin", password: "admin_secure_password", balance: 10000 },
+            { username: "parser-parser", role: "parser_subscriber", password: "parser_password123", balance: 500 },
+            { username: "serjant dev", role: "customer", password: "customer_password123", balance: 2500 }
+        ];
+
         try {
             const response = await fetch(`accaunt.json?t=${Date.now()}`);
             const data = await response.json();
-            accountsData = data.accounts || [];
+            if (data.accounts) defaultAccounts = data.accounts;
         } catch (err) {
-            console.error("Не удалось загрузить accaunt.json:", err);
+            console.log("Используем локальные аккаунты");
+        }
+
+        const localAccs = JSON.parse(localStorage.getItem('serjant_registered_accounts')) || [];
+        accountsData = [...defaultAccounts, ...localAccs];
+
+        if (currentUser) {
+            // Синхронизируем баланс текущего юзера
+            const found = accountsData.find(a => a.username === currentUser.username);
+            if (found) {
+                currentUser.balance = found.balance !== undefined ? found.balance : (currentUser.balance || 0);
+                currentUser.role = found.role;
+                localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+            }
         }
         updateUserSessionUI();
     }
 
-    // Управление интерфейсом в зависимости от роли
+    function saveAccountsToStorage() {
+        const customAccs = accountsData.filter(a => !["serjant-L20812081", "parser-parser", "serjant dev"].includes(a.username));
+        localStorage.setItem('serjant_registered_accounts', JSON.stringify(customAccs));
+    }
+
     function updateUserSessionUI() {
         const toggleAdminBtn = document.getElementById('toggleAdminBtn');
         if (currentUser) {
@@ -820,20 +880,20 @@
         }
     }
 
-    // Модальное окно авторизации
+    // Модалка авторизации / профиля
     const authModal = document.getElementById('authModal');
+    const profileModal = document.getElementById('profileModal');
+
     document.getElementById('authToggle').addEventListener('click', () => {
         if (currentUser) {
-            if (confirm(`Вы вошли как ${currentUser.username} (${currentUser.role}). Выйти из аккаунта?`)) {
-                localStorage.removeItem('serjant_current_user');
-                localStorage.removeItem('serjant_is_admin');
-                currentUser = null;
-                isAdmin = false;
-                updateUserSessionUI();
-                showToast("Вы вышли из аккаунта");
-                navigateTo('home');
-            }
+            // Открываем личный кабинет вместо окна входа
+            document.getElementById('profileUsername').textContent = currentUser.username;
+            document.getElementById('profileRole').textContent = currentUser.role;
+            document.getElementById('profileBalance').textContent = currentUser.balance || 0;
+            profileModal.classList.add('show');
         } else {
+            isRegisterMode = false;
+            updateAuthModalView();
             authModal.classList.add('show');
             document.getElementById('authUsername').value = '';
             document.getElementById('authPassword').value = '';
@@ -841,43 +901,164 @@
         }
     });
 
-    document.getElementById('authCloseBtn').addEventListener('click', () => {
-        authModal.classList.remove('show');
+    document.getElementById('authCloseBtn').addEventListener('click', () => authModal.classList.remove('show'));
+    document.getElementById('profileClose').addEventListener('click', () => profileModal.classList.remove('show'));
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('serjant_current_user');
+        localStorage.removeItem('serjant_is_admin');
+        currentUser = null;
+        isAdmin = false;
+        profileModal.classList.remove('show');
+        updateUserSessionUI();
+        showToast("Вы вышли из аккаунта");
+        navigateTo('home');
     });
 
-    // Кнопка входа как гость
+    // Переключение между Входом и Регистрацией
+    const toggleRegisterModeBtn = document.getElementById('toggleRegisterModeBtn');
+    toggleRegisterModeBtn.addEventListener('click', () => {
+        isRegisterMode = !isRegisterMode;
+        updateAuthModalView();
+    });
+
+    function updateAuthModalView() {
+        const title = document.getElementById('authModalTitle');
+        const desc = document.getElementById('authModalDesc');
+        const submitBtn = document.getElementById('authSubmitBtn');
+
+        if (isRegisterMode) {
+            title.textContent = "📝 Регистрация аккаунта";
+            desc.textContent = "Создайте новый аккаунт для покупок и управления";
+            submitBtn.textContent = "Зарегистрироваться";
+            toggleRegisterModeBtn.textContent = "🔑 Войти";
+        } else {
+            title.textContent = "🔑 Вход в систему";
+            desc.textContent = "Войдите под существующим аккаунтом или зарегистрируйтесь";
+            submitBtn.textContent = "Войти";
+            toggleRegisterModeBtn.textContent = "📝 Регистрация";
+        }
+    }
+
+    // Вход как гость
     document.getElementById('guestLoginBtn').addEventListener('click', () => {
-        currentUser = {
-            username: "Гость",
-            role: "guest"
-        };
+        currentUser = { username: "Гость", role: "guest", balance: 0 };
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
-        localStorage.removeItem('serjant_is_admin');
         authModal.classList.remove('show');
         updateUserSessionUI();
         showToast("👤 Вы вошли как Гость");
         navigateTo('home');
     });
 
+    // Обработка отправки формы Входа / Регистрации
     document.getElementById('authSubmitBtn').addEventListener('click', () => {
         const uInput = document.getElementById('authUsername').value.trim();
         const pInput = document.getElementById('authPassword').value.trim();
+        const errorEl = document.getElementById('authError');
 
-        const found = accountsData.find(acc => acc.username === uInput && acc.password === pInput);
+        if (!uInput || !pInput) {
+            errorEl.textContent = "❌ Заполните все поля";
+            errorEl.style.display = 'block';
+            return;
+        }
 
-        if (found) {
-            currentUser = found;
-            localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
-            if (currentUser.role === 'admin') {
-                localStorage.setItem('serjant_is_admin', 'true');
+        if (isRegisterMode) {
+            // Проверка, занят ли логин
+            const exists = accountsData.find(a => a.username.toLowerCase() === uInput.toLowerCase());
+            if (exists) {
+                errorEl.textContent = "❌ Этот логин уже занят";
+                errorEl.style.display = 'block';
+                return;
             }
+            // Создаем нового пользователя
+            const newAcc = { username: uInput, role: "customer", password: pInput, balance: 0 };
+            accountsData.push(newAcc);
+            saveAccountsToStorage();
+
+            currentUser = newAcc;
+            localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
             authModal.classList.remove('show');
             updateUserSessionUI();
-            showToast(`Успешный вход: ${currentUser.username}`);
+            showToast(`✅ Аккаунт ${uInput} создан и выполнен вход!`);
             navigateTo('home');
         } else {
-            document.getElementById('authError').style.display = 'block';
+            // Вход
+            const found = accountsData.find(acc => acc.username === uInput && acc.password === pInput);
+            if (found) {
+                currentUser = found;
+                if (currentUser.balance === undefined) currentUser.balance = 0;
+                localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+                if (currentUser.role === 'admin') {
+                    localStorage.setItem('serjant_is_admin', 'true');
+                }
+                authModal.classList.remove('show');
+                updateUserSessionUI();
+                showToast(`Успешный вход: ${currentUser.username}`);
+                navigateTo('home');
+            } else {
+                errorEl.textContent = "❌ Неверный логин или пароль";
+                errorEl.style.display = 'block';
+            }
         }
+    });
+
+    // ПОПОЛНЕНИЕ БАЛАНСА
+    document.getElementById('topupBtn').addEventListener('click', () => {
+        const amount = parseInt(document.getElementById('topupAmountInput').value) || 0;
+        if (amount <= 0) {
+            showToast("Введите корректную сумму");
+            return;
+        }
+        if (!currentUser || currentUser.role === 'guest') {
+            showToast("Войдите в личный аккаунт для пополнения");
+            return;
+        }
+
+        currentUser.balance = (currentUser.balance || 0) + amount;
+        
+        // Обновляем в общем списке аккаунтов
+        const acc = accountsData.find(a => a.username === currentUser.username);
+        if (acc) acc.balance = currentUser.balance;
+        saveAccountsToStorage();
+
+        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+        document.getElementById('profileBalance').textContent = currentUser.balance;
+        showToast(`✅ Баланс успешно пополнен на ${amount} ₽!`);
+        
+        // Отправка уведомления разработчику
+        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username}\n💰 Сумма: +${amount} ₽\n💎 Новый баланс: ${currentUser.balance} ₽`);
+    });
+
+    // ПОКУПКА ПОДПИСКИ НА ПАРСЕР
+    document.getElementById('buyParserSubBtn').addEventListener('click', () => {
+        const subCost = 1000;
+        if (!currentUser || currentUser.role === 'guest') {
+            showToast("Войдите в аккаунт для покупки подписки");
+            return;
+        }
+        if ((currentUser.balance || 0) < subCost) {
+            showToast("❌ Недостаточно средств на балансе. Пополните счет!");
+            return;
+        }
+
+        currentUser.balance -= subCost;
+        currentUser.role = 'parser_subscriber'; // Даем роль подписчика парсера
+
+        const acc = accountsData.find(a => a.username === currentUser.username);
+        if (acc) {
+            acc.balance = currentUser.balance;
+            acc.role = 'parser_subscriber';
+        }
+        saveAccountsToStorage();
+
+        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+        document.getElementById('profileBalance').textContent = currentUser.balance;
+        document.getElementById('profileRole').textContent = currentUser.role;
+        updateUserSessionUI();
+        profileModal.classList.remove('show');
+
+        showToast("🎉 Подписка на парсер успешно оформлена!");
+        sendToTelegram(`⭐ <b>Покупка подписки:</b>\n👤 Аккаунт: ${currentUser.username}\n📦 Товар: Подписка на Парсер (30 дней)\n💰 Списано: ${subCost} ₽`);
     });
 
     // Загрузка товаров магазина
@@ -928,11 +1109,11 @@
         if (pageId === 'radar') {
             if (!currentUser) {
                 authModal.classList.add('show');
-                showToast("Сначала войдите в аккаунт или зайдите как гость!");
+                showToast("Сначала войдите в аккаунт!");
                 return;
             }
             if (currentUser.role !== 'admin' && currentUser.role !== 'parser_subscriber') {
-                showToast("❌ У гостя нет доступа к парсеру (нужна роль админа или подписка)");
+                showToast("❌ У вашего аккаунта нет доступа к парсеру (нужна подписка)");
                 return;
             }
         }
@@ -1245,6 +1426,11 @@
 
     const checkoutModal = document.getElementById('checkoutModal');
     document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
+        if (!currentUser || currentUser.role === 'guest') {
+            showToast("Сначала войдите в аккаунт!");
+            authModal.classList.add('show');
+            return;
+        }
         cartSidebar.classList.remove('open');
         cartOverlay.classList.remove('show');
         checkoutModal.classList.add('show');
@@ -1252,22 +1438,35 @@
     document.getElementById('checkoutCancelBtn').addEventListener('click', () => {
         checkoutModal.classList.remove('show');
     });
+
     document.getElementById('checkoutConfirmBtn').addEventListener('click', async () => {
         const tg = document.getElementById('checkoutTg').value.trim();
         if (!tg) {
             showToast("Укажите ваш контакт в Telegram");
             return;
         }
-        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
         const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const buyerInfo = currentUser ? `\n👤 <b>Аккаунт:</b> ${currentUser.username} (${currentUser.role})` : '';
-        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>${buyerInfo}\n💬 <b>Telegram:</b> ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого:</b> ${total.toLocaleString('ru-RU')} ₽`;
+
+        if ((currentUser.balance || 0) < total) {
+            showToast("❌ Недостаточно средств на балансе! Пополните счет в личном кабинете.");
+            return;
+        }
+
+        // Списываем средства
+        currentUser.balance -= total;
+        const acc = accountsData.find(a => a.username === currentUser.username);
+        if (acc) acc.balance = currentUser.balance;
+        saveAccountsToStorage();
+        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+
+        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
+        const msg = `🛒 <b>Покупка в магазине (с баланса):</b>\n👤 Аккаунт: ${currentUser.username}\n💬 Telegram: ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого списано:</b> ${total.toLocaleString('ru-RU')} ₽\n💎 Остаток баланса: ${currentUser.balance} ₽`;
         
         await sendToTelegram(msg);
         cart = [];
         saveCart();
         checkoutModal.classList.remove('show');
-        showToast("Заказ передан разработчику!");
+        showToast("✅ Заказ успешно оплачен и передан разработчику!");
     });
 
     // АДМИНКА ТОВАРОВ
