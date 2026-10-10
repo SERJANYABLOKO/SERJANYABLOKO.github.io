@@ -120,6 +120,34 @@
         .btn-danger { background: rgba(255, 51, 102, 0.15); color: var(--accent) !important; border: 1px solid rgba(255, 51, 102, 0.3); }
         .btn-danger:hover { background: var(--accent); color: #fff !important; }
 
+        /* ОВАЛЬНОЕ ОКНО PREMIUM НА ГЛАВНОЙ */
+        .premium-capsule {
+            background: linear-gradient(135deg, rgba(255, 153, 0, 0.12), rgba(255, 51, 102, 0.12));
+            border: 1px solid rgba(255, 153, 0, 0.4);
+            border-radius: 50px;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(255, 153, 0, 0.1);
+        }
+        .premium-info h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .premium-info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
         /* СТРАНИЦЫ */
         .page { display: none; padding-top: 100px; min-height: 100vh; animation: modernFade 0.35s ease forwards; }
         .page.active { display: block; }
@@ -146,8 +174,8 @@
         .hero-content h1 { font-family: var(--font-display); font-size: 3.4rem; font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 20px; }
         .hero-content h1 span { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-content p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 30px; max-width: 520px; }
-        .hero-actions { display: flex; gap: 14px; margin-bottom: 40px; flex-wrap: wrap; }
-        .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .hero-actions { display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+        .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px;}
         .stat-card { background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 18px; backdrop-filter: blur(12px); }
         .stat-card .num { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
         .stat-card .desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
@@ -286,6 +314,7 @@
             .hero-content h1 { font-size: 2.3rem; }
             .radar-bar { flex-direction: column; align-items: stretch; }
             .search-bar { width: 100%; }
+            .premium-capsule { flex-direction: column; align-items: stretch; text-align: center; }
         }
     </style>
 </head>
@@ -359,13 +388,26 @@
             <button class="btn btn-sm" id="topupBtn">Пополнить</button>
         </div>
 
-        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;">
-            <h4 style="font-size: 0.95rem; margin-bottom: 8px;">⭐ Подписка на Парсер</h4>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">Дает полный доступ к радару заказов (parser-parser) на 30 дней.</p>
-            <button class="btn btn-secondary btn-sm" style="width: 100%;" id="buyParserSubBtn">Купить подписку (1000 ₽)</button>
-        </div>
-
         <button class="btn btn-danger btn-sm" style="width: 100%; margin-top: 16px;" id="logoutBtn">Выйти из аккаунта</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ПОКУПКИ ПОДПИСКИ (ВЫХОДИТ ПРИ КЛИКЕ НА РАДАР БЕЗ ПОДПИСКИ) -->
+<div class="modal" id="subModal">
+    <div class="modal-content">
+        <span style="font-size: 3.5rem; display: block; margin-bottom: 10px;">⭐</span>
+        <h3 style="font-family: var(--font-display); margin-bottom: 8px; color: #fff;">Доступ к Радару закрыт</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px;">
+            Для просмотра потока заказов в реальном времени необходима премиум-подписка <b>parser-parser</b> на 30 дней.
+        </p>
+        <div style="background: rgba(255,153,0,0.08); border: 1px solid rgba(255,153,0,0.3); border-radius: 12px; padding: 14px; margin-bottom: 20px; text-align: left;">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Стоимость подписки: <b style="color: var(--secondary);">1000 ₽</b></div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Ваш баланс: <b id="subModalBalance" style="color: var(--primary);">0 ₽</b></div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn" style="flex: 1;" id="modalBuySubBtn">⚡ Купить за 1000 ₽</button>
+            <button class="btn btn-secondary btn-sm" id="subModalClose">Позже</button>
+        </div>
     </div>
 </div>
 
@@ -450,6 +492,16 @@
                     <a class="btn" data-page="radar">⚡ Открыть радар</a>
                     <a class="btn btn-secondary" data-page="portfolio">Портфолио ➔</a>
                 </div>
+
+                <!-- КРАСИВОЕ ОВАЛЬНОЕ ОКНО PREMIUM НА ГЛАВНОЙ -->
+                <div class="premium-capsule">
+                    <div class="premium-info">
+                        <h4>⭐ Premium Подписка на Радар</h4>
+                        <p>Полный доступ к парсеру 50+ каналов и бирж на 30 дней • 1000 ₽</p>
+                    </div>
+                    <button class="btn btn-sm" id="heroBuySubBtn">Купить доступ</button>
+                </div>
+
                 <div class="hero-stats">
                     <div class="stat-card">
                         <div class="num" id="statOrdersCount">0</div>
@@ -851,7 +903,6 @@
         accountsData = [...defaultAccounts, ...localAccs];
 
         if (currentUser) {
-            // Синхронизируем баланс текущего юзера
             const found = accountsData.find(a => a.username === currentUser.username);
             if (found) {
                 currentUser.balance = found.balance !== undefined ? found.balance : (currentUser.balance || 0);
@@ -880,13 +931,13 @@
         }
     }
 
-    // Модалка авторизации / профиля
+    // Модалки
     const authModal = document.getElementById('authModal');
     const profileModal = document.getElementById('profileModal');
+    const subModal = document.getElementById('subModal');
 
     document.getElementById('authToggle').addEventListener('click', () => {
         if (currentUser) {
-            // Открываем личный кабинет вместо окна входа
             document.getElementById('profileUsername').textContent = currentUser.username;
             document.getElementById('profileRole').textContent = currentUser.role;
             document.getElementById('profileBalance').textContent = currentUser.balance || 0;
@@ -903,6 +954,7 @@
 
     document.getElementById('authCloseBtn').addEventListener('click', () => authModal.classList.remove('show'));
     document.getElementById('profileClose').addEventListener('click', () => profileModal.classList.remove('show'));
+    document.getElementById('subModalClose').addEventListener('click', () => subModal.classList.remove('show'));
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.removeItem('serjant_current_user');
@@ -915,7 +967,53 @@
         navigateTo('home');
     });
 
-    // Переключение между Входом и Регистрацией
+    // Обработка покупки подписки (с главного экрана или модалки радара)
+    function handleBuySubscription() {
+        if (!currentUser || currentUser.username === "Гость") {
+            authModal.classList.add('show');
+            showToast("Сначала войдите в аккаунт!");
+            return;
+        }
+        if (currentUser.role === 'admin' || currentUser.role === 'parser_subscriber') {
+            showToast("✅ У вас уже есть активная подписка или права администратора!");
+            navigateTo('radar');
+            return;
+        }
+
+        document.getElementById('subModalBalance').textContent = (currentUser.balance || 0) + " ₽";
+        subModal.classList.add('show');
+    }
+
+    document.getElementById('heroBuySubBtn').addEventListener('click', handleBuySubscription);
+
+    document.getElementById('modalBuySubBtn').addEventListener('click', () => {
+        const subCost = 1000;
+        if ((currentUser.balance || 0) < subCost) {
+            showToast("❌ Недостаточно средств! Пополните баланс в личном кабинете (👤).");
+            subModal.classList.remove('show');
+            return;
+        }
+
+        currentUser.balance -= subCost;
+        currentUser.role = 'parser_subscriber';
+
+        const acc = accountsData.find(a => a.username === currentUser.username);
+        if (acc) {
+            acc.balance = currentUser.balance;
+            acc.role = 'parser_subscriber';
+        }
+        saveAccountsToStorage();
+
+        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+        updateUserSessionUI();
+        subModal.classList.remove('show');
+
+        showToast("🎉 Подписка успешно оформлена! Радар разблокирован.");
+        sendToTelegram(`⭐ <b>Покупка подписки на Радар:</b>\n👤 Аккаунт: ${currentUser.username}\n💰 Списано: ${subCost} ₽\n💎 Остаток: ${currentUser.balance} ₽`);
+        navigateTo('radar');
+    });
+
+    // Переключение Вход / Регистрация
     const toggleRegisterModeBtn = document.getElementById('toggleRegisterModeBtn');
     toggleRegisterModeBtn.addEventListener('click', () => {
         isRegisterMode = !isRegisterMode;
@@ -929,7 +1027,7 @@
 
         if (isRegisterMode) {
             title.textContent = "📝 Регистрация аккаунта";
-            desc.textContent = "Создайте новый аккаунт для покупок и управления";
+            desc.textContent = "Создайте новый аккаунт для доступа к радару и покупкам";
             submitBtn.textContent = "Зарегистрироваться";
             toggleRegisterModeBtn.textContent = "🔑 Войти";
         } else {
@@ -940,7 +1038,6 @@
         }
     }
 
-    // Вход как гость
     document.getElementById('guestLoginBtn').addEventListener('click', () => {
         currentUser = { username: "Гость", role: "guest", balance: 0 };
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
@@ -950,7 +1047,6 @@
         navigateTo('home');
     });
 
-    // Обработка отправки формы Входа / Регистрации
     document.getElementById('authSubmitBtn').addEventListener('click', () => {
         const uInput = document.getElementById('authUsername').value.trim();
         const pInput = document.getElementById('authPassword').value.trim();
@@ -963,14 +1059,12 @@
         }
 
         if (isRegisterMode) {
-            // Проверка, занят ли логин
             const exists = accountsData.find(a => a.username.toLowerCase() === uInput.toLowerCase());
             if (exists) {
                 errorEl.textContent = "❌ Этот логин уже занят";
                 errorEl.style.display = 'block';
                 return;
             }
-            // Создаем нового пользователя
             const newAcc = { username: uInput, role: "customer", password: pInput, balance: 0 };
             accountsData.push(newAcc);
             saveAccountsToStorage();
@@ -979,10 +1073,9 @@
             localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
             authModal.classList.remove('show');
             updateUserSessionUI();
-            showToast(`✅ Аккаунт ${uInput} создан и выполнен вход!`);
+            showToast(`✅ Аккаунт ${uInput} создан!`);
             navigateTo('home');
         } else {
-            // Вход
             const found = accountsData.find(acc => acc.username === uInput && acc.password === pInput);
             if (found) {
                 currentUser = found;
@@ -1015,50 +1108,14 @@
         }
 
         currentUser.balance = (currentUser.balance || 0) + amount;
-        
-        // Обновляем в общем списке аккаунтов
         const acc = accountsData.find(a => a.username === currentUser.username);
         if (acc) acc.balance = currentUser.balance;
         saveAccountsToStorage();
 
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
         document.getElementById('profileBalance').textContent = currentUser.balance;
-        showToast(`✅ Баланс успешно пополнен на ${amount} ₽!`);
-        
-        // Отправка уведомления разработчику
-        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username}\n💰 Сумма: +${amount} ₽\n💎 Новый баланс: ${currentUser.balance} ₽`);
-    });
-
-    // ПОКУПКА ПОДПИСКИ НА ПАРСЕР
-    document.getElementById('buyParserSubBtn').addEventListener('click', () => {
-        const subCost = 1000;
-        if (!currentUser || currentUser.role === 'guest') {
-            showToast("Войдите в аккаунт для покупки подписки");
-            return;
-        }
-        if ((currentUser.balance || 0) < subCost) {
-            showToast("❌ Недостаточно средств на балансе. Пополните счет!");
-            return;
-        }
-
-        currentUser.balance -= subCost;
-        currentUser.role = 'parser_subscriber'; // Даем роль подписчика парсера
-
-        const acc = accountsData.find(a => a.username === currentUser.username);
-        if (acc) {
-            acc.balance = currentUser.balance;
-            acc.role = 'parser_subscriber';
-        }
-        saveAccountsToStorage();
-
-        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
-        document.getElementById('profileBalance').textContent = currentUser.balance;
-        document.getElementById('profileRole').textContent = currentUser.role;
-        updateUserSessionUI();
-        profileModal.classList.remove('show');
-
-        showToast("🎉 Подписка на парсер успешно оформлена!");
-        sendToTelegram(`⭐ <b>Покупка подписки:</b>\n👤 Аккаунт: ${currentUser.username}\n📦 Товар: Подписка на Парсер (30 дней)\n💰 Списано: ${subCost} ₽`);
+        showToast(`✅ Баланс пополнен на ${amount} ₽!`);
+        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username}\n💰 Сумма: +${amount} ₽\n💎 Баланс: ${currentUser.balance} ₽`);
     });
 
     // Загрузка товаров магазина
@@ -1096,7 +1153,7 @@
         }
     }
 
-    // НАВИГАЦИЯ С ПРОВЕРКОЙ ПРАВ ДОСТУПА К РАДАРУ
+    // НАВИГАЦИЯ С ПРОВЕРКОЙ ПРАВ К РАДАРУ
     const pages = {
         home: document.getElementById('page-home'),
         radar: document.getElementById('page-radar'),
@@ -1107,13 +1164,15 @@
 
     function navigateTo(pageId) {
         if (pageId === 'radar') {
-            if (!currentUser) {
+            if (!currentUser || currentUser.username === "Гость") {
                 authModal.classList.add('show');
                 showToast("Сначала войдите в аккаунт!");
                 return;
             }
             if (currentUser.role !== 'admin' && currentUser.role !== 'parser_subscriber') {
-                showToast("❌ У вашего аккаунта нет доступа к парсеру (нужна подписка)");
+                // Показываем красивое окно покупки подписки вместо простого alert
+                document.getElementById('subModalBalance').textContent = (currentUser.balance || 0) + " ₽";
+                subModal.classList.add('show');
                 return;
             }
         }
@@ -1426,7 +1485,7 @@
 
     const checkoutModal = document.getElementById('checkoutModal');
     document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
-        if (!currentUser || currentUser.role === 'guest') {
+        if (!currentUser || currentUser.username === "Гость") {
             showToast("Сначала войдите в аккаунт!");
             authModal.classList.add('show');
             return;
@@ -1452,7 +1511,6 @@
             return;
         }
 
-        // Списываем средства
         currentUser.balance -= total;
         const acc = accountsData.find(a => a.username === currentUser.username);
         if (acc) acc.balance = currentUser.balance;
