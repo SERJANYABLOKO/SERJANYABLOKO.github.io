@@ -321,7 +321,7 @@
 <div class="modal" id="authModal">
     <div class="modal-content">
         <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔑 Вход в систему</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите данные вашего аккаунта (например: serjant-L20812081, parser-parser, serjant dev)</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите данные аккаунта (например: serjant-L20812081, parser-parser, serjant dev)</p>
         <input type="text" class="form-control" id="authUsername" placeholder="Имя аккаунта" style="margin-bottom: 12px;" />
         <input type="password" class="form-control" id="authPassword" placeholder="Пароль" style="margin-bottom: 16px;" />
         <div style="display: flex; gap: 10px;">
@@ -479,7 +479,7 @@
     </section>
 </div>
 
-<!-- 2. СТРАНИЦА: РАДАР (ДОСТУП ДЛЯ АДМИНА И ПОДПИСЧИКОВ) -->
+<!-- 2. СТРАНИЦА: РАДАР -->
 <div class="page" id="page-radar">
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
@@ -865,10 +865,10 @@
         }
     });
 
-    // Загрузка товаров магазина
+    // Загрузка товаров магазина (исправлено имя файла на shop.json)
     async function loadShopProducts() {
         try {
-            const response = await fetch(`shop (1).json?t=${Date.now()}`);
+            const response = await fetch(`shop.json?t=${Date.now()}`);
             const data = await response.json();
             products = data.products || [];
         } catch (err) {
