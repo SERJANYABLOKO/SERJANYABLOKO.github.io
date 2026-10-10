@@ -1,0 +1,93 @@
+{
+"store_name": "SerjantDev Digital & Services",
+"currency": "RUB",
+"updated_at": "2026-10-10",
+"categories": [
+{
+"id": "miniapp",
+"name": "Telegram Mini Apps"
+},
+{
+"id": "bot",
+"name": "Telegram Боты"
+},
+{
+"id": "site",
+"name": "Сайты и Верстка"
+},
+{
+"id": "design",
+"name": "Дизайн и UI/UX"
+},
+{
+"id": "hosting",
+"name": "Облачный хостинг и настройка"
+},
+{
+"id": "parser",
+"name": "Скрипты и Парсеры"
+}
+],
+"items": [
+{
+"id": 101,
+"name": "Mini App "Магазин"",
+"category": "miniapp",
+"icon": "🛍️",
+"description": "Автономный e-commerce внутри Telegram с каталогом, корзиной, базой SQLite и моментальным чекаутом.",
+"price": 7900,
+"tag": "Хит",
+"available": true
+},
+{
+"id": 102,
+"name": "ТГ-Бот "Авторассылка"",
+"category": "bot",
+"icon": "📢",
+"description": "Бот на aiogram 3 с защитой от спама, интеграцией с базой данных и веб-админкой для массовой рассылки.",
+"price": 3500,
+"tag": "Топ",
+"available": true
+},
+{
+"id": 103,
+"name": "UI/UX Макет Лендинга (Figma)",
+"category": "design",
+"icon": "🎨",
+"description": "Современный прототип, адаптивный дизайн в темных киберпанк/неоновых тонах и готовый UI-kit.",
+"price": 3900,
+"tag": "Новинка",
+"available": true
+},
+{
+"id": 104,
+"name": "Сайт-портфолио IT",
+"category": "site",
+"icon": "🌐",
+"description": "Адаптивный современный одностраничник на HTML5/CSS3/JS с темной темой, анимацией и быстрой загрузкой.",
+"price": 4500,
+"tag": "Популярно",
+"available": true
+},
+{
+"id": 105,
+"name": "Облачный хостинг под ключ",
+"category": "hosting",
+"icon": "☁️",
+"description": "Настройка VPS Linux, SSL-сертификатов, автозапуска Telegram-ботов и парсеров 24/7.",
+"price": 2900,
+"tag": "Услуга",
+"available": true
+},
+{
+"id": 106,
+"name": "Python Парсер данных",
+"category": "parser",
+"icon": "⚡",
+"description": "Скрипт на Python (BeautifulSoup/Requests/Asyncio) для сбора информации с сайтов или бирж в Excel/JSON.",
+"price": 3200,
+"tag": "Автоматизация",
+"available": true
+}
+]
+}
