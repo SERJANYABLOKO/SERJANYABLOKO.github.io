@@ -1,0 +1,19 @@
+{
+  "accounts": [
+    {
+      "username": "serjant",
+      "role": "admin",
+      "password": "L20812081"
+    },
+    {
+      "username": "parser",
+      "role": "parser_subscriber",
+      "password": "parser"
+    },
+    {
+      "username": "zek",
+      "role": "customer",
+      "password": "123"
+    }
+  ]
+}
