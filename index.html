@@ -317,17 +317,18 @@
     </div>
 </nav>
 
-<!-- МОДАЛКА АВТОРИЗАЦИИ (accaunt.json) -->
+<!-- МОДАЛКА АВТОРИЗАЦИИ / ГОСТЯ -->
 <div class="modal" id="authModal">
     <div class="modal-content">
         <h3 style="font-family: var(--font-display); margin-bottom: 8px;">🔑 Вход в систему</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите данные аккаунта (например: serjant-L20812081, parser-parser, serjant dev)</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Введите данные аккаунта или продолжите как гость</p>
         <input type="text" class="form-control" id="authUsername" placeholder="Имя аккаунта" style="margin-bottom: 12px;" />
         <input type="password" class="form-control" id="authPassword" placeholder="Пароль" style="margin-bottom: 16px;" />
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
             <button class="btn" style="flex: 1;" id="authSubmitBtn">Войти</button>
             <button class="btn btn-secondary btn-sm" id="authCloseBtn">Отмена</button>
         </div>
+        <button class="btn btn-outline-glow btn-sm" style="width: 100%;" id="guestLoginBtn">👤 Войти как Гость</button>
         <div id="authError" style="color: var(--accent); font-size: 0.85rem; margin-top: 10px; display: none;">❌ Неверный логин или пароль</div>
     </div>
 </div>
@@ -844,6 +845,20 @@
         authModal.classList.remove('show');
     });
 
+    // Кнопка входа как гость
+    document.getElementById('guestLoginBtn').addEventListener('click', () => {
+        currentUser = {
+            username: "Гость",
+            role: "guest"
+        };
+        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
+        localStorage.removeItem('serjant_is_admin');
+        authModal.classList.remove('show');
+        updateUserSessionUI();
+        showToast("👤 Вы вошли как Гость");
+        navigateTo('home');
+    });
+
     document.getElementById('authSubmitBtn').addEventListener('click', () => {
         const uInput = document.getElementById('authUsername').value.trim();
         const pInput = document.getElementById('authPassword').value.trim();
@@ -865,7 +880,7 @@
         }
     });
 
-    // Загрузка товаров магазина (исправлено имя файла на shop.json)
+    // Загрузка товаров магазина
     async function loadShopProducts() {
         try {
             const response = await fetch(`shop.json?t=${Date.now()}`);
@@ -913,11 +928,11 @@
         if (pageId === 'radar') {
             if (!currentUser) {
                 authModal.classList.add('show');
-                showToast("Сначала войдите в аккаунт!");
+                showToast("Сначала войдите в аккаунт или зайдите как гость!");
                 return;
             }
             if (currentUser.role !== 'admin' && currentUser.role !== 'parser_subscriber') {
-                showToast("❌ У вашего аккаунта нет доступа к парсеру (нужна подписка parser-parser)");
+                showToast("❌ У гостя нет доступа к парсеру (нужна роль админа или подписка)");
                 return;
             }
         }
