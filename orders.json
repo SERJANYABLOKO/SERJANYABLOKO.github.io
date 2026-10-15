@@ -1,16 +1,5 @@
 [
   {
-    "title": "💬 UGC-агентство Creator Family ищет ассистента на короткую задачуЧТО НУЖНО ДЕЛАТЬ:1. Отправить ...",
-    "price": "В описании",
-    "url": "https://t.me/FreelanceBay/16560",
-    "category": "Telegram",
-    "source": "TG (@freelancebay)",
-    "published_at": "13.10 07:04",
-    "responses": "В ЛС",
-    "direct_contact": "@evgri",
-    "discovered_at": "2026-10-13T07:04:29+00:00"
-  },
-  {
     "title": "💬 Сценарист/смысловикИщу сценариста, смысловика, копирайтера, творческого человека ( все в одно...",
     "price": "В описании",
     "url": "https://t.me/FreelanceBay/16562",
@@ -86,17 +75,6 @@
     "responses": "В ЛС",
     "direct_contact": null,
     "discovered_at": "2026-10-15T06:58:07+00:00"
-  },
-  {
-    "title": "🔔 Ищу графического дизайнера для вёрстки настенного календаря на 2027 год📍 Москва · Дизайн · 🕒 ...",
-    "price": "В описании",
-    "url": "https://t.me/zakazy_it/136",
-    "category": "Дизайн",
-    "source": "TG (@zakazy_it)",
-    "published_at": "13.10 10:52",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-10-13T10:52:50+00:00"
   },
   {
     "title": "🔔 Ищу дизайнера для создания промоматериалов и скриншотов в Google Play📍 Алтай · Дизайн · 🕒 1 ч...",
@@ -242,6 +220,17 @@
     "discovered_at": "2026-10-15T07:54:19+00:00"
   },
   {
+    "title": "🔔 Ищу аниматора для создания анимаций📍 Видео и аудио · 🕒 19 мин назадКонтакт заказчика — в Lead...",
+    "price": "В описании",
+    "url": "https://t.me/zakazy_it/151",
+    "category": "Веб-сайт",
+    "source": "TG (@zakazy_it)",
+    "published_at": "15.10 09:24",
+    "responses": "В ЛС",
+    "direct_contact": null,
+    "discovered_at": "2026-10-15T09:24:53+00:00"
+  },
+  {
     "title": "👁👁 Тестовый собес на Python с разработчиком из Яндекса[+ ответы на 50 сложных вопросов в подаро...",
     "price": "В описании",
     "url": "https://t.me/pydevjob/2531",
@@ -295,6 +284,28 @@
     "responses": "В ЛС",
     "direct_contact": "@humanhr1",
     "discovered_at": "2026-10-14T13:14:23+00:00"
+  },
+  {
+    "title": "💬 UGC-агентство Creator Family ищет ассистента на короткую задачуЧТО НУЖНО ДЕЛАТЬ:1. Отправить ...",
+    "price": "В описании",
+    "url": "https://t.me/FreelanceBay/16560",
+    "category": "Telegram",
+    "source": "TG (@freelancebay)",
+    "published_at": "13.10 07:04",
+    "responses": "В ЛС",
+    "direct_contact": "@evgri",
+    "discovered_at": "2026-10-13T07:04:29+00:00"
+  },
+  {
+    "title": "🔔 Ищу графического дизайнера для вёрстки настенного календаря на 2027 год📍 Москва · Дизайн · 🕒 ...",
+    "price": "В описании",
+    "url": "https://t.me/zakazy_it/136",
+    "category": "Дизайн",
+    "source": "TG (@zakazy_it)",
+    "published_at": "13.10 10:52",
+    "responses": "В ЛС",
+    "direct_contact": null,
+    "discovered_at": "2026-10-13T10:52:50+00:00"
   },
   {
     "title": "🔔 Ищу дизайнеров для создания сайтов на Тильде📍 Москва · Дизайн · 🕒 36 мин назадКонтакт заказчи...",
@@ -880,17 +891,6 @@
     "discovered_at": "2026-10-08T13:48:55+00:00"
   },
   {
-    "title": "💬 SMM-менеджерSMM-менеджер в международный финтех-проектИщем специалиста с опытом от 2 лет.Форм...",
-    "price": "В описании",
-    "url": "https://t.me/FreelanceBay/16523",
-    "category": "Telegram",
-    "source": "TG (@freelancebay)",
-    "published_at": "08.10 09:03",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-10-08T09:03:51+00:00"
-  },
-  {
     "title": "🔔 Ищу дизайнера для создания премиум эмоджи в определенном стиле📍 Дизайн · 🕒 35 мин назадКонтак...",
     "price": "В описании",
     "url": "https://t.me/zakazy_it/96",
@@ -900,16 +900,5 @@
     "responses": "В ЛС",
     "direct_contact": null,
     "discovered_at": "2026-10-08T10:46:30+00:00"
-  },
-  {
-    "title": "🔔 Ищу дизайнера для оперативного создания макета в Illustrator📍 Москва · Дизайн · 🕒 9 мин назад...",
-    "price": "В описании",
-    "url": "https://t.me/zakazy_it/95",
-    "category": "Дизайн",
-    "source": "TG (@zakazy_it)",
-    "published_at": "08.10 09:15",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-10-08T09:15:17+00:00"
   }
 ]
