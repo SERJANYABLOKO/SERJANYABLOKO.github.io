@@ -420,7 +420,7 @@
             </div>
         </div>
 
-        <!-- Блок быстрой оплаты по QR-коду и прямой ссылке -->
+        <!-- Блок быстрой оплаты по QR-коду и прямой ссылке Т-Банка -->
         <div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center;">
             <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс в 1 клик</h4>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
@@ -432,12 +432,12 @@
                 <img src="qrcode.png" alt="QR-код для оплаты" style="width: 160px; height: 160px; border-radius: 12px; background: #fff; padding: 8px;" />
             </div>
 
-            <!-- Прямая ссылка на оплату -->
+            <!-- Прямая ссылка на оплату Т-Банк -->
             <a href="https://www.tbank-online.com/rm/r_elZvROuMnA.HcautRaXSV/RggMt39898" target="_blank" class="btn" style="width: 100%; text-decoration: none; display: inline-block; margin-bottom: 12px;">
                 ⚡ Оплатить через приложение банка
             </a>
 
-            <!-- Инпут для отправки запроса на пополнение -->
+            <!-- Инпут и кнопка отправки запроса в бота @serjantyabloko_client_bot -->
             <div style="display: flex; gap: 12px; margin-top: 15px;">
                 <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
                 <button class="btn btn-secondary" id="topupBtn" style="white-space: nowrap;">Я оплатил</button>
@@ -934,7 +934,7 @@
 
 <script>
     const BOT_TOKEN = '8930803259:AAEJzVyTD8ONbYkDIKH23HhrIkTrDCdSp5g';
-    const CHAT_ID = '8673619246';
+    const CHAT_ID = '8673619246'; // Ваш цифровой Telegram ID для отправки уведомлений в бота @serjantyabloko_client_bot
 
     let products = [];
     let cart = JSON.parse(localStorage.getItem('serjant_cart')) || [];
@@ -1194,7 +1194,7 @@
         }
     });
 
-    // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (Отправка уведомления в Telegram)
+    // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (С отправкой кнопки в бота @serjantyabloko_client_bot)
     document.getElementById('topupBtn').addEventListener('click', async () => {
         const amount = parseInt(document.getElementById('topupAmountInput').value) || 0;
         if (amount <= 0) {
@@ -1202,19 +1202,41 @@
             return;
         }
         if (!currentUser || currentUser.username === "Гость") {
-            showToast("Войдите в личный аккаунт для пополнения");
+            showToast("Сначала войдите в личный аккаунт!");
             return;
         }
 
-        const message = `💳 <b>Запрос на пополнение баланса!</b>\n` +
-                        `👤 Аккаунт: <code>${currentUser.username}</code>\n` +
-                        `📞 Контакт: ${currentUser.contact || 'не указан'}\n` +
-                        `💰 Сумма перевода: <b>${amount} ₽</b>\n\n` +
-                        `<i>Пользователь нажал «Я оплатил». Проверьте поступление на счет Т-Банк.</i>`;
+        const text = `💳 <b>Запрос на пополнение баланса!</b>\n` +
+                     `👤 Аккаунт: <code>${currentUser.username}</code>\n` +
+                     `📞 Контакт: ${currentUser.contact || 'не указан'}\n` +
+                     `💰 Сумма перевода: <b>${amount} ₽</b>\n\n` +
+                     `<i>Пользователь нажал «Я оплатил». Нажмите кнопку ниже для зачисления:</i>`;
 
-        await sendToTelegram(message);
-        showToast("✅ Запрос отправлен! Ожидайте зачисления.");
-        profileModal.classList.remove('show');
+        try {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: text,
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { 
+                                    text: `✅ Подтвердить +${amount}₽ (${currentUser.username})`, 
+                                    callback_data: `approve_${currentUser.username}_${amount}` 
+                                }
+                            ]
+                        ]
+                    }
+                })
+            });
+            showToast("✅ Запрос отправлен в бота! Ожидайте зачисления.");
+            profileModal.classList.remove('show');
+        } catch (err) {
+            showToast("❌ Ошибка отправки запроса");
+        }
     });
 
     // Загрузка товаров магазина
