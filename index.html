@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write('''<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -420,12 +421,15 @@
             </div>
         </div>
 
-        <!-- Пополнение баланса -->
+        <!-- Пополнение баланса счета через СБП (+79161383846) -->
         <div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
-            <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс счета</h4>
+            <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс через СБП</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+                Переведите сумму по СБП на номер: <b style="color: var(--secondary);">+79161383846</b> (Т-Банк / Сбер). После перевода нажмите кнопку ниже для отправки запроса.
+            </p>
             <div style="display: flex; gap: 12px;">
                 <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
-                <button class="btn" id="topupBtn" style="white-space: nowrap;">Пополнить счет</button>
+                <button class="btn" id="topupBtn" style="white-space: nowrap;">Запросить пополнение</button>
             </div>
         </div>
 
@@ -1179,8 +1183,8 @@
         }
     });
 
-    // ПОПОЛНЕНИЕ БАЛАНСА
-    document.getElementById('topupBtn').addEventListener('click', () => {
+    // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (+79161383846)
+    document.getElementById('topupBtn').addEventListener('click', async () => {
         const amount = parseInt(document.getElementById('topupAmountInput').value) || 0;
         if (amount <= 0) {
             showToast("Введите корректную сумму");
@@ -1191,15 +1195,15 @@
             return;
         }
 
-        currentUser.balance = (currentUser.balance || 0) + amount;
-        const acc = accountsData.find(a => a.username === currentUser.username);
-        if (acc) acc.balance = currentUser.balance;
-        saveAccountsToStorage();
+        const message = `💳 <b>Запрос на пополнение баланса СБП!</b>\\n` +
+                        `👤 Аккаунт: <code>${currentUser.username}</code>\\n` +
+                        `📞 Контакт: ${currentUser.contact || 'не указан'}\\n` +
+                        `💰 Сумма к зачислению: <b>${amount} ₽</b>\\n\\n` +
+                        `<i>Проверьте перевод по СБП на номер +79161383846 и начислите баланс пользователю.</i>`;
 
-        localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
-        document.getElementById('profileBalance').textContent = currentUser.balance;
-        showToast(`✅ Баланс пополнен на ${amount} ₽!`);
-        sendToTelegram(`💳 <b>Пополнение баланса:</b>\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\n💰 Сумма: +${amount} ₽\n💎 Баланс: ${currentUser.balance} ₽`);
+        await sendToTelegram(message);
+        showToast("✅ Запрос отправлен! Ожидайте подтверждения после перевода по СБП.");
+        profileModal.classList.remove('show');
     });
 
     // Загрузка товаров магазина
@@ -1410,7 +1414,7 @@
             const title = decodeURIComponent(btn.dataset.title);
             const cat = decodeURIComponent(btn.dataset.cat);
             
-            let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\n\n`;
+            let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\\n\\n`;
             if (cat === 'Telegram') {
                 pitch += `Специализируюсь на Telegram-ботах (aiogram 3, SQLite) и Telegram Mini Apps (TMA WebApp). Реализую чистый код, подключу меню, базу и уведомления.`;
             } else if (cat === 'Дизайн') {
@@ -1418,7 +1422,7 @@
             } else {
                 pitch += `Занимаюсь качественной адаптивной версткой и созданием сайтов под ключ (HTML5/CSS3/JS). Сайт будет быстро открываться на всех устройствах.`;
             }
-            pitch += `\n\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
+            pitch += `\\n\\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
             
             pitchTextarea.value = pitch;
             pitchModal.classList.add('show');
@@ -1610,8 +1614,8 @@
         saveAccountsToStorage();
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
 
-        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
-        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\n💬 Telegram для связи: ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого списано с баланса:</b> ${total.toLocaleString('ru-RU')} ₽\n💎 Остаток баланса: ${currentUser.balance} ₽`;
+        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\\n');
+        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>\\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\\n💬 Telegram для связи: ${tg}\\n\\n<b>Товары:</b>\\n${items}\\n\\n💰 <b>Итого списано с баланса:</b> ${total.toLocaleString('ru-RU')} ₽\\n💎 Остаток баланса: ${currentUser.balance} ₽`;
         
         await sendToTelegram(msg);
         cart = [];
@@ -1655,8 +1659,8 @@
         const service = document.getElementById('contactService').value;
         const msg = document.getElementById('contactMsg').value.trim();
 
-        const userAccountStr = currentUser ? `\n🔑 <b>Аккаунт:</b> ${currentUser.username} (${currentUser.role})` : '';
-        const text = `📬 <b>Заявка с сайта!</b>${userAccountStr}\n\n👤 <b>Клиент:</b> ${name}\n💬 <b>Telegram:</b> ${tg}\n🔧 <b>Услуга:</b> ${service}\n📝 <b>ТЗ:</b> ${msg}`;
+        const userAccountStr = currentUser ? `\\n🔑 <b>Аккаунт:</b> ${currentUser.username} (${currentUser.role})` : '';
+        const text = `📬 <b>Заявка с сайта!</b>${userAccountStr}\\n\\n👤 <b>Клиент:</b> ${name}\\n💬 <b>Telegram:</b> ${tg}\\n🔧 <b>Услуга:</b> ${service}\\n📝 <b>ТЗ:</b> ${msg}`;
         await sendToTelegram(text);
         showToast("Заявка успешно отправлена!");
         document.getElementById('contactForm').reset();
@@ -1719,3 +1723,4 @@
 </script>
 </body>
 </html>
+''')
