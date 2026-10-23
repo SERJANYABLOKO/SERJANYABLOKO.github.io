@@ -1,5 +1,4 @@
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write('''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -421,15 +420,27 @@ with open("index.html", "w", encoding="utf-8") as f:
             </div>
         </div>
 
-        <!-- Пополнение баланса счета через СБП (+79161383846) -->
-        <div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
-            <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс через СБП</h4>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
-                Переведите сумму по СБП на номер: <b style="color: var(--secondary);">+79161383846</b> (Т-Банк / Сбер). После перевода нажмите кнопку ниже для отправки запроса.
+        <!-- Блок быстрой оплаты по QR-коду и прямой ссылке -->
+        <div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center;">
+            <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Пополнить баланс в 1 клик</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+                Сканируйте QR-код камерой телефона или нажмите кнопку для быстрой оплаты:
             </p>
-            <div style="display: flex; gap: 12px;">
+
+            <!-- Картинка QR-кода -->
+            <div style="margin-bottom: 15px;">
+                <img src="qrcode.png" alt="QR-код для оплаты" style="width: 160px; height: 160px; border-radius: 12px; background: #fff; padding: 8px;" />
+            </div>
+
+            <!-- Прямая ссылка на оплату -->
+            <a href="https://www.tbank-online.com/rm/r_elZvROuMnA.HcautRaXSV/RggMt39898" target="_blank" class="btn" style="width: 100%; text-decoration: none; display: inline-block; margin-bottom: 12px;">
+                ⚡ Оплатить через приложение банка
+            </a>
+
+            <!-- Инпут для отправки запроса на пополнение -->
+            <div style="display: flex; gap: 12px; margin-top: 15px;">
                 <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
-                <button class="btn" id="topupBtn" style="white-space: nowrap;">Запросить пополнение</button>
+                <button class="btn btn-secondary" id="topupBtn" style="white-space: nowrap;">Я оплатил</button>
             </div>
         </div>
 
@@ -1183,30 +1194,28 @@ with open("index.html", "w", encoding="utf-8") as f:
         }
     });
 
-    // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (+79161383846)
-<!-- Пополнение баланса через СБП по QR-коду и ссылке -->
-<div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center;">
-    <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Быстрая оплата по СБП</h4>
-    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
-        Сканируйте QR-код камерой телефона или нажмите кнопку для мгновенной оплаты:
-    </p>
+    // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (Отправка уведомления в Telegram)
+    document.getElementById('topupBtn').addEventListener('click', async () => {
+        const amount = parseInt(document.getElementById('topupAmountInput').value) || 0;
+        if (amount <= 0) {
+            showToast("Введите корректную сумму");
+            return;
+        }
+        if (!currentUser || currentUser.username === "Гость") {
+            showToast("Войдите в личный аккаунт для пополнения");
+            return;
+        }
 
-    <!-- Картинка QR-кода -->
-    <div style="margin-bottom: 15px;">
-        <img src="qrcode.png" alt="QR-код для оплаты" style="width: 160px; height: 160px; border-radius: 12px; background: #fff; padding: 8px;" />
-    </div>
+        const message = `💳 <b>Запрос на пополнение баланса!</b>\n` +
+                        `👤 Аккаунт: <code>${currentUser.username}</code>\n` +
+                        `📞 Контакт: ${currentUser.contact || 'не указан'}\n` +
+                        `💰 Сумма перевода: <b>${amount} ₽</b>\n\n` +
+                        `<i>Пользователь нажал «Я оплатил». Проверьте поступление на счет Т-Банк.</i>`;
 
-    <!-- Кнопка с вашей прямой ссылкой -->
-    <a href="https://www.tbank-online.com/rm/r_elZvROuMnA.HcautRaXSV/RggMt39898" target="_blank" class="btn" style="width: 100%; text-decoration: none; display: inline-block; margin-bottom: 12px;">
-        ⚡ Оплатить через приложение банка
-    </a>
-
-    <!-- Инпут для отправки уведомления вам в бота после перевода -->
-    <div style="display: flex; gap: 12px; margin-top: 15px;">
-        <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
-        <button class="btn btn-secondary" id="topupBtn" style="white-space: nowrap;">Я оплатил</button>
-    </div>
-</div>
+        await sendToTelegram(message);
+        showToast("✅ Запрос отправлен! Ожидайте зачисления.");
+        profileModal.classList.remove('show');
+    });
 
     // Загрузка товаров магазина
     async function loadShopProducts() {
@@ -1416,7 +1425,7 @@ with open("index.html", "w", encoding="utf-8") as f:
             const title = decodeURIComponent(btn.dataset.title);
             const cat = decodeURIComponent(btn.dataset.cat);
             
-            let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\\n\\n`;
+            let pitch = `Здравствуйте! Увидел вашу задачу "${title}".\n\n`;
             if (cat === 'Telegram') {
                 pitch += `Специализируюсь на Telegram-ботах (aiogram 3, SQLite) и Telegram Mini Apps (TMA WebApp). Реализую чистый код, подключу меню, базу и уведомления.`;
             } else if (cat === 'Дизайн') {
@@ -1424,7 +1433,7 @@ with open("index.html", "w", encoding="utf-8") as f:
             } else {
                 pitch += `Занимаюсь качественной адаптивной версткой и созданием сайтов под ключ (HTML5/CSS3/JS). Сайт будет быстро открываться на всех устройствах.`;
             }
-            pitch += `\\n\\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
+            pitch += `\n\nГотов обсудить ТЗ и сразу приступить к работе. Когда вам удобно выйти на связь?`;
             
             pitchTextarea.value = pitch;
             pitchModal.classList.add('show');
@@ -1616,8 +1625,8 @@ with open("index.html", "w", encoding="utf-8") as f:
         saveAccountsToStorage();
         localStorage.setItem('serjant_current_user', JSON.stringify(currentUser));
 
-        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\\n');
-        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>\\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\\n💬 Telegram для связи: ${tg}\\n\\n<b>Товары:</b>\\n${items}\\n\\n💰 <b>Итого списано с баланса:</b> ${total.toLocaleString('ru-RU')} ₽\\n💎 Остаток баланса: ${currentUser.balance} ₽`;
+        const items = cart.map(i => `• ${i.name} x${i.qty} (${(i.price * i.qty).toLocaleString('ru-RU')} ₽)`).join('\n');
+        const msg = `🛒 <b>Покупка в магазине (serjant dev):</b>\n👤 Аккаунт: ${currentUser.username} (${currentUser.contact || 'нет контакта'})\n💬 Telegram для связи: ${tg}\n\n<b>Товары:</b>\n${items}\n\n💰 <b>Итого списано с баланса:</b> ${total.toLocaleString('ru-RU')} ₽\n💎 Остаток баланса: ${currentUser.balance} ₽`;
         
         await sendToTelegram(msg);
         cart = [];
@@ -1661,8 +1670,8 @@ with open("index.html", "w", encoding="utf-8") as f:
         const service = document.getElementById('contactService').value;
         const msg = document.getElementById('contactMsg').value.trim();
 
-        const userAccountStr = currentUser ? `\\n🔑 <b>Аккаунт:</b> ${currentUser.username} (${currentUser.role})` : '';
-        const text = `📬 <b>Заявка с сайта!</b>${userAccountStr}\\n\\n👤 <b>Клиент:</b> ${name}\\n💬 <b>Telegram:</b> ${tg}\\n🔧 <b>Услуга:</b> ${service}\\n📝 <b>ТЗ:</b> ${msg}`;
+        const userAccountStr = currentUser ? `\n🔑 <b>Аккаунт:</b> ${currentUser.username} (${currentUser.role})` : '';
+        const text = `📬 <b>Заявка с сайта!</b>${userAccountStr}\n\n👤 <b>Клиент:</b> ${name}\n💬 <b>Telegram:</b> ${tg}\n🔧 <b>Услуга:</b> ${service}\n📝 <b>ТЗ:</b> ${msg}`;
         await sendToTelegram(text);
         showToast("Заявка успешно отправлена!");
         document.getElementById('contactForm').reset();
@@ -1725,4 +1734,3 @@ with open("index.html", "w", encoding="utf-8") as f:
 </script>
 </body>
 </html>
-''')
