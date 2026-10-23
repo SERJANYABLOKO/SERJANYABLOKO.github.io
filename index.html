@@ -1184,27 +1184,29 @@ with open("index.html", "w", encoding="utf-8") as f:
     });
 
     // ПОПОЛНЕНИЕ БАЛАНСА ЧЕРЕЗ СБП (+79161383846)
-    document.getElementById('topupBtn').addEventListener('click', async () => {
-        const amount = parseInt(document.getElementById('topupAmountInput').value) || 0;
-        if (amount <= 0) {
-            showToast("Введите корректную сумму");
-            return;
-        }
-        if (!currentUser || currentUser.username === "Гость") {
-            showToast("Войдите в личный аккаунт для пополнения");
-            return;
-        }
+<!-- Пополнение баланса через СБП по QR-коду и ссылке -->
+<div style="background: rgba(255, 153, 0, 0.04); border: 1px dashed rgba(255, 153, 0, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center;">
+    <h4 style="font-size: 1rem; color: #fff; margin-bottom: 10px;">💳 Быстрая оплата по СБП</h4>
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+        Сканируйте QR-код камерой телефона или нажмите кнопку для мгновенной оплаты:
+    </p>
 
-        const message = `💳 <b>Запрос на пополнение баланса СБП!</b>\\n` +
-                        `👤 Аккаунт: <code>${currentUser.username}</code>\\n` +
-                        `📞 Контакт: ${currentUser.contact || 'не указан'}\\n` +
-                        `💰 Сумма к зачислению: <b>${amount} ₽</b>\\n\\n` +
-                        `<i>Проверьте перевод по СБП на номер +79161383846 и начислите баланс пользователю.</i>`;
+    <!-- Картинка QR-кода -->
+    <div style="margin-bottom: 15px;">
+        <img src="qrcode.png" alt="QR-код для оплаты" style="width: 160px; height: 160px; border-radius: 12px; background: #fff; padding: 8px;" />
+    </div>
 
-        await sendToTelegram(message);
-        showToast("✅ Запрос отправлен! Ожидайте подтверждения после перевода по СБП.");
-        profileModal.classList.remove('show');
-    });
+    <!-- Кнопка с вашей прямой ссылкой -->
+    <a href="https://www.tbank-online.com/rm/r_elZvROuMnA.HcautRaXSV/RggMt39898" target="_blank" class="btn" style="width: 100%; text-decoration: none; display: inline-block; margin-bottom: 12px;">
+        ⚡ Оплатить через приложение банка
+    </a>
+
+    <!-- Инпут для отправки уведомления вам в бота после перевода -->
+    <div style="display: flex; gap: 12px; margin-top: 15px;">
+        <input type="number" class="form-control" id="topupAmountInput" placeholder="Сумма в ₽" min="100" value="500" style="background: var(--surface-1);" />
+        <button class="btn btn-secondary" id="topupBtn" style="white-space: nowrap;">Я оплатил</button>
+    </div>
+</div>
 
     // Загрузка товаров магазина
     async function loadShopProducts() {
