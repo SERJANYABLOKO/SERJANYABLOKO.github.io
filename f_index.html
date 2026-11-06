@@ -3,18 +3,714 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORTNITE VIP // CASE & UPGRADE</title>
+    <title>FORTNITE VIP // CASE & UPGRADE PLATFORM</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="f_style.css">
+    <style>
+        /* ==========================================================================
+           СТРУКТУРНЫЕ И ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ (МИДАС / РЫЦАРЬ / ХЗ КТО)
+           ========================================================================== */
+        :root {
+            --bg-base: #0f0b07;
+            --bg-card: rgba(30, 22, 14, 0.85);
+            --bg-card-hover: rgba(45, 33, 21, 0.95);
+            --border-glow: rgba(212, 175, 55, 0.35);
+            --accent-color: #d4af37;
+            --accent-gradient: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+            --accent-shadow: rgba(212, 175, 55, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #b8a388;
+        }
+
+        body.theme-knight {
+            --bg-base: #0a0404;
+            --bg-card: rgba(26, 10, 10, 0.85);
+            --bg-card-hover: rgba(40, 15, 15, 0.95);
+            --border-glow: rgba(255, 51, 102, 0.35);
+            --accent-color: #ff3366;
+            --accent-gradient: linear-gradient(135deg, #ff3366 0%, #cc0033 100%);
+            --accent-shadow: rgba(255, 51, 102, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #b88a94;
+        }
+
+        body.theme-cyber {
+            --bg-base: #050d0f;
+            --bg-card: rgba(10, 26, 31, 0.85);
+            --bg-card-hover: rgba(15, 40, 48, 0.95);
+            --border-glow: rgba(0, 255, 204, 0.35);
+            --accent-color: #00ffcc;
+            --accent-gradient: linear-gradient(135deg, #00ffcc 0%, #0099ff 100%);
+            --accent-shadow: rgba(0, 255, 204, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #88b3b8;
+        }
+
+        /* ==========================================================================
+           БАЗОВЫЕ СБРОСЫ И ТИПОГРАФИКА
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, var(--border-glow) 0%, transparent 70%),
+                linear-gradient(180deg, var(--bg-base) 0%, #030406 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+            transition: background 0.3s ease;
+        }
+
+        /* ==========================================================================
+           ШАПКА САЙТА (HEADER)
+           ========================================================================== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 50px;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .logo-text span {
+            color: var(--accent-color);
+            text-shadow: 0 0 20px var(--accent-shadow);
+        }
+
+        /* ПЕРЕКЛЮЧАТЕЛЬ ТЕМ */
+        .theme-switcher {
+            display: flex;
+            gap: 6px;
+            background: rgba(0,0,0,0.4);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .theme-btn.active, .theme-btn:hover {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-shadow);
+        }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .user-meta {
+            text-align: right;
+        }
+
+        .username {
+            font-size: 14px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+            border: 1px solid var(--border-glow);
+        }
+
+        .balance-container {
+            font-size: 18px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .balance-value {
+            color: var(--accent-color);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .currency {
+            color: var(--text-muted);
+        }
+
+        .btn-topup-vip {
+            background: var(--accent-gradient);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px var(--accent-shadow);
+        }
+
+        .btn-topup-vip:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+
+        /* ==========================================================================
+           ОБЩИЕ КОНТЕЙНЕРЫ И ВКЛАДКИ
+           ========================================================================== */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-glow);
+            padding: 14px 32px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 6px 25px var(--accent-shadow);
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* ==========================================================================
+           СЕТКИ КЕЙСОВ И ИНВЕНТАРЯ
+           ========================================================================== */
+        .cases-grid, .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .case-card, .item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .case-card:hover, .item-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--border-glow);
+            border-color: var(--accent-color);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-color);
+            border: 1px solid var(--border-glow);
+        }
+
+        .case-graphic {
+            font-size: 60px;
+            margin: 20px 0;
+        }
+
+        .case-info {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .case-info h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .case-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.4;
+            min-height: 36px;
+        }
+
+        .case-footer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .price-tag {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .btn-action {
+            background: var(--accent-gradient);
+            color: #fff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px var(--accent-shadow);
+        }
+
+        .btn-action:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           РУЛЕТКА ОТКРЫТИЯ КЕЙСОВ
+           ========================================================================== */
+        .roulette-wrapper {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 2px solid var(--border-glow);
+            margin: 40px auto;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .roulette-pointer {
+            position: absolute;
+            top: 0; bottom: 0; left: 50%;
+            width: 4px;
+            background: #ff3366;
+            z-index: 10;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px #ff3366;
+        }
+
+        .roulette-track-container {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .roulette-track {
+            display: flex;
+            position: absolute;
+            left: 0;
+            transition: left 4.5s cubic-bezier(0.08, 0.82, 0.12, 1);
+        }
+
+        .roulette-item {
+            min-width: 150px;
+            height: 160px;
+            background: rgba(0, 0, 0, 0.4);
+            border-right: 1px solid var(--border-glow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .roulette-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .roulette-item span {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .drop-result-banner {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-top: 25px;
+            min-height: 40px;
+        }
+
+        /* ==========================================================================
+           АПГРЕЙДЕР ПРЕДМЕТОВ
+           ========================================================================== */
+        .upgrade-arena {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-glow);
+            margin-bottom: 30px;
+            gap: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .upgrade-slot-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .slot-header {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .vip-select {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .preview-card {
+            background: var(--bg-base);
+            border: 2px dashed var(--border-glow);
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-card img, .target-card-content img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .preview-placeholder {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .upgrade-vs-badge {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px var(--accent-shadow);
+            padding: 0 15px;
+        }
+
+        .target-box .preview-card {
+            border-style: solid;
+        }
+
+        .target-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .target-details h4 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .target-price-tag {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .upgrade-controls-panel {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-glow);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .chance-indicator {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .chance-indicator span {
+            color: var(--accent-color);
+            font-size: 24px;
+        }
+
+        .btn-massive {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 16px;
+            font-size: 18px;
+            border-radius: 14px;
+        }
+
+        /* ==========================================================================
+           ИНВЕНТАРЬ
+           ========================================================================== */
+        .item-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            margin: 15px auto;
+        }
+
+        .item-card h4 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        /* ==========================================================================
+           МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (СБП / РЕКВИЗИТЫ)
+           ========================================================================== */
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-window {
+            background: var(--bg-card);
+            border: 2px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 35px;
+            width: 440px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .close-x {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 26px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-x:hover {
+            color: #fff;
+        }
+
+        .qr-container {
+            text-align: center;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 170px;
+            height: 170px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .qr-img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+        }
+
+        .sbp-instruction {
+            background: var(--bg-base);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .recipient-name {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .contract-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .phone-highlight {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+
+        .input-group-vip {
+            margin-bottom: 20px;
+        }
+
+        .input-group-vip label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .vip-input {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            outline: none;
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="theme-midas">
-    <div class="header">
+
+    <!-- ШАПКА САЙТА -->
+    <header class="header">
         <div class="logo-area">
             <div class="logo-icon">👑</div>
             <div class="logo-text">FORTNITE <span>VIP</span></div>
         </div>
 
-        <!-- Переключатель тем (Мидас / Рыцарь / Хз кто) -->
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
         <div class="theme-switcher">
             <button class="theme-btn active" onclick="setTheme('midas')">МИДАС</button>
             <button class="theme-btn" onclick="setTheme('knight')">РЫЦАРЬ</button>
@@ -23,25 +719,27 @@
 
         <div class="user-panel">
             <div class="user-meta">
-                <span id="username-display" class="username">Player_42</span>
+                <span id="username-display" class="username">Player_VIP</span>
                 <span class="status-badge">PREMIUM</span>
             </div>
             <div class="balance-container">
-                Баланс: <span id="balance-display" class="balance-value">1000</span> <span class="currency">₽</span>
+                Баланс: <span id="balance-display" class="balance-value">1500</span> <span class="currency">₽</span>
             </div>
             <button class="btn-topup-vip" onclick="openTopUpModal()">+ Пополнить</button>
         </div>
-    </div>
+    </header>
 
-    <div class="main-container">
-        <!-- Навигация по вкладкам -->
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <main class="main-container">
+        
+        <!-- НАВИГАЦИЯ -->
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="switchTab('cases', event)">🎁 Эксклюзивные кейсы</button>
             <button class="tab-btn" onclick="switchTab('upgrade', event)">⚡ Апгрейдер скинов</button>
             <button class="tab-btn" onclick="switchTab('inventory', event)">🎒 Инвентарь (<span id="inv-count">0</span>)</button>
         </div>
 
-        <!-- Вкладка: Кейсы -->
+        <!-- ВКЛАДКА 1: КЕЙСЫ -->
         <div id="tab-cases" class="tab-content active">
             <div class="section-header">
                 <h2>Коллекция кейсов</h2>
@@ -76,7 +774,7 @@
                 </div>
             </div>
 
-            <!-- Рулетка выпадения -->
+            <!-- РУЛЕТКА -->
             <div class="roulette-wrapper" id="roulette-container" style="display: none;">
                 <div class="roulette-pointer"></div>
                 <div class="roulette-track-container">
@@ -86,17 +784,17 @@
             <div id="drop-result" class="drop-result-banner"></div>
         </div>
 
-        <!-- Вкладка: Апгрейдер -->
+        <!-- ВКЛАДКА 2: АПГРЕЙДЕР -->
         <div id="tab-upgrade" class="tab-content">
             <div class="section-header">
                 <h2>Апгрейдер предметов</h2>
-                <p>Улучшите свой скин, чтобы получить более ценную награду</p>
+                <p>Улучшите свой скин, выбрав желаемую награду</p>
             </div>
 
             <div class="upgrade-arena">
-                <!-- Слот 1: Ваш предмет из инвентаря -->
+                <!-- Слот 1: Ваш предмет -->
                 <div class="upgrade-slot-box">
-                    <div class="slot-header">Ваш предмет</div>
+                    <div class="slot-header">Ваш предмет из инвентаря</div>
                     <select id="upgrade-item-select" class="vip-select" onchange="updateUpgradeData()"></select>
                     <div class="preview-card" id="my-item-preview">
                         <span class="preview-placeholder">Выберите предмет</span>
@@ -105,7 +803,7 @@
 
                 <div class="upgrade-vs-badge">VS</div>
 
-                <!-- Слот 2: Выбор желаемой награды -->
+                <!-- Слот 2: Желаемая награда -->
                 <div class="upgrade-slot-box target-box">
                     <div class="slot-header">Желаемая награда</div>
                     <select id="target-item-select" class="vip-select" onchange="updateUpgradeData()"></select>
@@ -123,7 +821,7 @@
             </div>
         </div>
 
-        <!-- Вкладка: Инвентарь -->
+        <!-- ВКЛАДКА 3: ИНВЕНТАРЬ -->
         <div id="tab-inventory" class="tab-content">
             <div class="section-header">
                 <h2>Ваш склад скинов</h2>
@@ -131,9 +829,9 @@
             </div>
             <div class="inventory-grid" id="inventory-grid"></div>
         </div>
-    </div>
+    </main>
 
-    <!-- Модальное окно пополнения (СБП / QR) -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div id="topup-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-window">
             <div class="modal-header">
@@ -158,14 +856,77 @@
         </div>
     </div>
 
-    <script src="f_script.js"></script>
+    <!-- СКРИПТЫ ЛОГИКИ И ИНТЕРАКТИВА -->
     <script>
-        // Переключение тем
+        // ДАННЫЕ ПОЛЬЗОВАТЕЛЯ И БАЗА СКИНОВ
+        let user = JSON.parse(localStorage.getItem('fn_user')) || {
+            username: 'Player_VIP',
+            balance: 1500,
+            inventory: [
+                { name: 'Аура', price: 150, img: 'https://fortnite-api.com/images/cosmetics/br/cid_436_athena_commune_f_aurora/icon.png' },
+                { name: 'Супергерой', price: 400, img: 'https://fortnite-api.com/images/cosmetics/br/cid_703_athena_commune_m_superhero/icon.png' }
+            ]
+        };
+
+        const skinsDatabase = [
+            { name: 'Аура', price: 150, img: 'https://fortnite-api.com/images/cosmetics/br/cid_436_athena_commune_f_aurora/icon.png' },
+            { name: 'Супергерой', price: 400, img: 'https://fortnite-api.com/images/cosmetics/br/cid_703_athena_commune_m_superhero/icon.png' },
+            { name: 'Киберпанк', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commune_m_cyberpunk/icon.png' },
+            { name: 'Дикий Налетчик', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commune_m_halloween/icon.png' },
+            { name: 'Рыцарь Омега', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_138_athena_commune_m_carbide/icon.png' },
+            { name: 'Элитный агент', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commune_m_military/icon.png' },
+            { name: 'Легендарный Асс', price: 5000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commune_m_default/icon.png' }
+        ];
+
+        function saveUser() {
+            localStorage.setItem('fn_user', JSON.stringify(user));
+            updateUI();
+        }
+
+        // ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+        function updateUI() {
+            document.getElementById('balance-display').innerText = user.balance;
+            document.getElementById('username-display').innerText = user.username;
+            document.getElementById('inv-count').innerText = user.inventory.length;
+
+            const invGrid = document.getElementById('inventory-grid');
+            invGrid.innerHTML = '';
+
+            if (user.inventory.length === 0) {
+                invGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">Ваш инвентарь пуст. Откройте кейс!</p>';
+            } else {
+                user.inventory.forEach((item, index) => {
+                    invGrid.innerHTML += `
+                        <div class="item-card">
+                            <img src="${item.img}" alt="${item.name}">
+                            <h4>${item.name}</h4>
+                            <p class="price-tag">${item.price} ₽</p>
+                            <button class="btn-action" style="margin-top:15px;" onclick="sellItem(${index})">Продать</button>
+                        </div>
+                    `;
+                });
+            }
+
+            updateUpgradeSelectors();
+        }
+
+        // ВКЛАДКИ
+        function switchTab(tabName, event) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        // ТЕМЫ
         function setTheme(themeName) {
             document.body.classList.remove('theme-midas', 'theme-knight', 'theme-cyber');
             document.body.classList.add('theme-' + themeName);
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if(event && event.currentTarget) event.currentTarget.classList.add('active');
             localStorage.setItem('fn_theme', themeName);
         }
 
@@ -173,12 +934,167 @@
             let savedTheme = localStorage.getItem('fn_theme') || 'midas';
             document.body.classList.add('theme-' + savedTheme);
             document.querySelectorAll('.theme-btn').forEach(b => {
-                if(b.innerText.toLowerCase().includes(savedTheme === 'knight' ? 'рыцарь' : savedTheme === 'cyber' ? 'хз' : 'мидас')) {
+                let text = b.innerText.toLowerCase();
+                if(text.includes(savedTheme === 'knight' ? 'рыцарь' : savedTheme === 'cyber' ? 'хз' : 'мидас')) {
                     document.querySelectorAll('.theme-btn').forEach(x => x.classList.remove('active'));
                     b.classList.add('active');
                 }
             });
+            updateUI();
         });
+
+        // МОДАЛКА ПОПОЛНЕНИЯ
+        function openTopUpModal() { document.getElementById('topup-modal').style.display = 'flex'; }
+        function closeTopUpModal() { document.getElementById('topup-modal').style.display = 'none'; }
+        function sendTopUpRequest() {
+            let amount = parseInt(document.getElementById('topup-amount').value) || 0;
+            if (amount <= 0) { alert('Введите корректную сумму!'); return; }
+            alert(`Запрос на пополнение на сумму ${amount} ₽ успешно создан! Ожидайте зачисления.`);
+            closeTopUpModal();
+        }
+
+        // ОТКРЫТИЕ КЕЙСОВ С РУЛЕТКОЙ
+        function openCase(price) {
+            if (user.balance < price) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+            user.balance -= price;
+            saveUser();
+
+            const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
+            document.getElementById('roulette-container').style.display = 'block';
+            document.getElementById('drop-result.innerText') = 'Крутим рулетку...';
+
+            let itemsPool = [];
+            for (let i = 0; i < 50; i++) {
+                let randomSkin = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
+                itemsPool.push(randomSkin);
+            }
+            
+            let winningSkin = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
+            itemsPool[35] = winningSkin;
+
+            itemsPool.forEach(skin => {
+                track.innerHTML += `
+                    <div class="roulette-item">
+                        <img src="${skin.img}" alt="${skin.name}">
+                        <span>${skin.price} ₽</span>
+                    </div>
+                `;
+            });
+
+            track.style.transition = 'none';
+            track.style.left = '0px';
+
+            setTimeout(() => {
+                track.style.transition = 'left 4.5s cubic-bezier(0.08, 0.82, 0.12, 1)';
+                let offset = -(35 * 150 - 380);
+                track.style.left = offset + 'px';
+            }, 50);
+
+            setTimeout(() => {
+                user.inventory.push(winningSkin);
+                saveUser();
+                document.getElementById('drop-result').innerHTML = `🎉 Вы выиграли: <span style="color:var(--accent-color);">${winningSkin.name}</span> (${winningSkin.price} ₽)!`;
+            }, 4600);
+        }
+
+        function sellItem(index) {
+            user.balance += user.inventory[index].price;
+            user.inventory.splice(index, 1);
+            saveUser();
+        }
+
+        // АПГРЕЙДЕР
+        function updateUpgradeSelectors() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+            
+            mySelect.innerHTML = '';
+            targetSelect.innerHTML = '';
+
+            if (user.inventory.length === 0) {
+                mySelect.innerHTML = '<option>Нет предметов в инвентаре</option>';
+            } else {
+                user.inventory.forEach((item, index) => {
+                    mySelect.innerHTML += `<option value="${index}">${item.name} (${item.price} ₽)</option>`;
+                });
+            }
+
+            skinsDatabase.forEach((skin, index) => {
+                targetSelect.innerHTML += `<option value="${index}">${skin.name} (${skin.price} ₽)</option>`;
+            });
+
+            updateUpgradeData();
+        }
+
+        function updateUpgradeData() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+            
+            const myPreview = document.getElementById('my-item-preview');
+            const targetPreview = document.getElementById('target-item-preview');
+
+            if (user.inventory.length === 0 || mySelect.selectedIndex === -1) {
+                myPreview.innerHTML = '<span class="preview-placeholder">Нет предметов</span>';
+                document.getElementById('chance-display').innerText = '0';
+                return;
+            }
+
+            let myItem = user.inventory[mySelect.value];
+            let targetItem = skinsDatabase[targetSelect.selectedIndex || 0];
+
+            myPreview.innerHTML = `
+                <img src="${myItem.img}" alt="${myItem.name}">
+                <div class="target-details">
+                    <h4>${myItem.name}</h4>
+                    <span class="target-price-tag">${myItem.price} ₽</span>
+                </div>
+            `;
+
+            targetPreview.innerHTML = `
+                <img src="${targetItem.img}" alt="${targetItem.name}">
+                <div class="target-details">
+                    <h4>${targetItem.name}</h4>
+                    <span class="target-price-tag">${targetItem.price} ₽</span>
+                </div>
+            `;
+
+            // Расчет шанса (с учетом комиссии)
+            let chance = Math.min(Math.floor((myItem.price / targetItem.price) * 90), 95);
+            if (chance < 1) chance = 1;
+            document.getElementById('chance-display').innerText = chance;
+        }
+
+        function runUpgrade() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+
+            if (user.inventory.length === 0 || mySelect.selectedIndex === -1) {
+                alert('Выберите ваш предмет для апгрейда!');
+                return;
+            }
+
+            let itemIndex = mySelect.value;
+            let myItem = user.inventory[itemIndex];
+            let targetItem = skinsDatabase[targetSelect.selectedIndex];
+
+            let chance = Math.min(Math.floor((myItem.price / targetItem.price) * 90), 95);
+            if (chance < 1) chance = 1;
+
+            user.inventory.splice(itemIndex, 1);
+
+            let roll = Math.random() * 100;
+            if (roll <= chance) {
+                user.inventory.push(targetItem);
+                alert(`⚡ Успех! Вы выиграли ${targetItem.name}!`);
+            } else {
+                alert('❌ Неудача! Предмет сгорел.');
+            }
+            saveUser();
+        }
     </script>
 </body>
 </html>
