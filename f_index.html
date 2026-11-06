@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           СТРУКТУРНЫЕ И ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ (МИДАС / РЫЦАРЬ / ХЗ КТО)
+           СТРУКТУРНЫЕ И ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ (МИДАС / РЫЦАРЬ / КОРВУС)
            ========================================================================== */
         :root {
             --bg-base: #0f0b07;
@@ -582,7 +582,7 @@
         }
 
         /* ==========================================================================
-           МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (СБП / РЕКВИЗИТЫ)
+           МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (СБП + ТГ + РЕКВИЗИТЫ)
            ========================================================================== */
         .modal-backdrop {
             position: fixed;
@@ -675,6 +675,12 @@
             letter-spacing: 0.5px;
         }
 
+        .tg-highlight {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--accent-color);
+        }
+
         .input-group-vip {
             margin-bottom: 20px;
         }
@@ -710,11 +716,11 @@
             <div class="logo-text">FORTNITE <span>VIP</span></div>
         </div>
 
-        <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМ (МИДАС / РЫЦАРЬ / КОРВУС) -->
         <div class="theme-switcher">
             <button class="theme-btn active" onclick="setTheme('midas')">МИДАС</button>
             <button class="theme-btn" onclick="setTheme('knight')">РЫЦАРЬ</button>
-            <button class="theme-btn" onclick="setTheme('cyber')">ХЗ КТО</button>
+            <button class="theme-btn" onclick="setTheme('cyber')">КОРВУС</button>
         </div>
 
         <div class="user-panel">
@@ -831,7 +837,7 @@
         </div>
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (СБП + ТГ) -->
     <div id="topup-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-window">
             <div class="modal-header">
@@ -846,6 +852,7 @@
                     <p class="recipient-name"><strong>Гераскин Лев Романович</strong></p>
                     <p class="contract-info">Номер договора: <span>5195864433</span></p>
                     <p class="phone-highlight">+7 (916) 138-38-46</p>
+                    <p class="tg-highlight">Telegram: <strong>@serjantyabloko</strong></p>
                 </div>
                 <div class="input-group-vip">
                     <label>Сумма перевода (₽):</label>
@@ -858,7 +865,6 @@
 
     <!-- СКРИПТЫ ЛОГИКИ И ИНТЕРАКТИВА -->
     <script>
-        // ДАННЫЕ ПОЛЬЗОВАТЕЛЯ И БАЗА СКИНОВ
         let user = JSON.parse(localStorage.getItem('fn_user')) || {
             username: 'Player_VIP',
             balance: 1500,
@@ -883,7 +889,6 @@
             updateUI();
         }
 
-        // ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
         function updateUI() {
             document.getElementById('balance-display').innerText = user.balance;
             document.getElementById('username-display').innerText = user.username;
@@ -910,7 +915,6 @@
             updateUpgradeSelectors();
         }
 
-        // ВКЛАДКИ
         function switchTab(tabName, event) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -921,7 +925,6 @@
             }
         }
 
-        // ТЕМЫ
         function setTheme(themeName) {
             document.body.classList.remove('theme-midas', 'theme-knight', 'theme-cyber');
             document.body.classList.add('theme-' + themeName);
@@ -935,7 +938,7 @@
             document.body.classList.add('theme-' + savedTheme);
             document.querySelectorAll('.theme-btn').forEach(b => {
                 let text = b.innerText.toLowerCase();
-                if(text.includes(savedTheme === 'knight' ? 'рыцарь' : savedTheme === 'cyber' ? 'хз' : 'мидас')) {
+                if(text.includes(savedTheme === 'knight' ? 'рыцарь' : savedTheme === 'cyber' ? 'корвус' : 'мидас')) {
                     document.querySelectorAll('.theme-btn').forEach(x => x.classList.remove('active'));
                     b.classList.add('active');
                 }
@@ -943,17 +946,15 @@
             updateUI();
         });
 
-        // МОДАЛКА ПОПОЛНЕНИЯ
         function openTopUpModal() { document.getElementById('topup-modal').style.display = 'flex'; }
         function closeTopUpModal() { document.getElementById('topup-modal').style.display = 'none'; }
         function sendTopUpRequest() {
             let amount = parseInt(document.getElementById('topup-amount').value) || 0;
             if (amount <= 0) { alert('Введите корректную сумму!'); return; }
-            alert(`Запрос на пополнение на сумму ${amount} ₽ успешно создан! Ожидайте зачисления.`);
+            alert(`Запрос на пополнение на сумму ${amount} ₽ отправлен! Свяжитесь в ТГ @serjantyabloko для подтверждения.`);
             closeTopUpModal();
         }
 
-        // ОТКРЫТИЕ КЕЙСОВ С РУЛЕТКОЙ
         function openCase(price) {
             if (user.balance < price) {
                 alert('Недостаточно средств на балансе!');
@@ -965,7 +966,6 @@
             const track = document.getElementById('roulette-track');
             track.innerHTML = '';
             document.getElementById('roulette-container').style.display = 'block';
-            document.getElementById('drop-result.innerText') = 'Крутим рулетку...';
 
             let itemsPool = [];
             for (let i = 0; i < 50; i++) {
@@ -1007,7 +1007,6 @@
             saveUser();
         }
 
-        // АПГРЕЙДЕР
         function updateUpgradeSelectors() {
             const mySelect = document.getElementById('upgrade-item-select');
             const targetSelect = document.getElementById('target-item-select');
@@ -1033,7 +1032,6 @@
         function updateUpgradeData() {
             const mySelect = document.getElementById('upgrade-item-select');
             const targetSelect = document.getElementById('target-item-select');
-            
             const myPreview = document.getElementById('my-item-preview');
             const targetPreview = document.getElementById('target-item-preview');
 
@@ -1062,7 +1060,6 @@
                 </div>
             `;
 
-            // Расчет шанса (с учетом комиссии)
             let chance = Math.min(Math.floor((myItem.price / targetItem.price) * 90), 95);
             if (chance < 1) chance = 1;
             document.getElementById('chance-display').innerText = chance;
