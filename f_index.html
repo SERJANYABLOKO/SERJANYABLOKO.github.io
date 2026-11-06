@@ -97,7 +97,6 @@
             </div>
 
             <div class="upgrade-arena">
-                <!-- Слот 1: Выбор вашего предмета -->
                 <div class="upgrade-slot-box">
                     <div class="slot-header">Ваш предмет из инвентаря</div>
                     <select id="upgrade-item-select" class="vip-select" onchange="updateUpgradeChance()"></select>
@@ -110,7 +109,6 @@
                     <span>VS</span>
                 </div>
 
-                <!-- Слот 2: Желаемая цель -->
                 <div class="upgrade-slot-box target-box">
                     <div class="slot-header">Желаемый VIP скин</div>
                     <div class="target-card-content">
@@ -141,7 +139,7 @@
         </div>
     </main>
 
-    <!-- Модальное окно пополнения (VIP) -->
+    <!-- Модальное окно пополнения (QR + Запрос) -->
     <div id="topup-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-window">
             <div class="modal-header">
@@ -149,20 +147,35 @@
                 <button class="close-x" onclick="closeTopUpModal()">×</button>
             </div>
             <div class="modal-body">
+                <div class="qr-container">
+                    <!-- Замените qr_code.png на имя файла вашего QR-кода или прямую ссылку -->
+                    <img src="qr_code.png" alt="QR СБП" class="qr-img" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SBK_PAY_5195864433'">
+                </div>
                 <div class="sbp-instruction">
-                    <p>Переведите сумму по системе <strong>СБП (Система Быстрых Платежей)</strong> на номер:</p>
-                    <div class="phone-highlight">+7 (916) 138-38-46</div>
-                    <span class="bank-name">Тинькофф / Сбер / ВТБ</span>
+                    <p class="recipient-name"><strong>Гераскин Лев Романович</strong></p>
+                    <p class="contract-info">Номер договора: <span>5195864433</span></p>
+                    <p class="phone-highlight">+7 (916) 138-38-46</p>
                 </div>
                 <div class="input-group-vip">
                     <label>Сумма перевода (₽):</label>
                     <input type="number" id="topup-amount" class="vip-input" value="500" min="50">
                 </div>
-                <button class="btn-action btn-massive" onclick="simulateTopUp()">Подтвердить перевод</button>
+                <button class="btn-action btn-massive" onclick="sendTopUpRequest()">Отправить запрос на пополнение</button>
             </div>
         </div>
     </div>
 
+    <script>
+        function sendTopUpRequest() {
+            let amount = parseInt(document.getElementById('topup-amount').value) || 0;
+            if (amount <= 0) {
+                alert('Введите корректную сумму!');
+                return;
+            }
+            alert(`Запрос на пополнение на сумму ${amount} ₽ успешно создан! Ожидайте зачисления после подтверждения платежа.`);
+            closeTopUpModal();
+        }
+    </script>
     <script src="f_script.js"></script>
 </body>
 </html>
