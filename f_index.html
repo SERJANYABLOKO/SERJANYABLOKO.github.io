@@ -3,79 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortnite Case & Upgrader</title>
+    <title>FN-DROPS | Кейсы Fortnite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="f_style.css">
 </head>
 <body>
     <header class="header">
-        <div class="logo">FORTNITE **CASE**</div>
+        <div class="logo">⚡ FN-<span>DROPS</span></div>
         <div class="user-panel">
-            <span id="username-display">Игрок</span> | 
-            Баланс: <span id="balance-display">0</span> ₽
-            <button class="btn-topup" onclick="openTopUpModal()">Пополнить</button>
+            <div class="user-info">
+                <span id="username-display">Player</span>
+                <div class="balance-box">Баланс: <span id="balance-display">0</span> ₽</div>
+            </div>
+            <button class="btn-topup" onclick="openTopUpModal()">+ Пополнить</button>
         </div>
     </header>
 
     <div class="container">
-        <!-- Навигация по вкладкам -->
+        <!-- Навигация -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('cases')">Кейсы</button>
-            <button class="tab-btn" onclick="switchTab('upgrade')">Апгрейдер</button>
-            <button class="tab-btn" onclick="switchTab('inventory')">Инвентарь (<span id="inv-count">0</span>)</button>
+            <button class="tab-btn active" onclick="switchTab('cases')">🎁 Кейсы</button>
+            <button class="tab-btn" onclick="switchTab('upgrade')">⚡ Апгрейдер</button>
+            <button class="tab-btn" onclick="switchTab('inventory')">🎒 Инвентарь (<span id="inv-count">0</span>)</button>
         </div>
 
         <!-- Вкладка: Кейсы -->
         <div id="tab-cases" class="tab-content active">
-            <h2>Открытие кейсов</h2>
+            <div class="section-title">Доступные кейсы</div>
             <div class="cases-grid">
-                <div class="case-card">
-                    <h3>Легендарный кейс</h3>
-                    <p>Цена: 500 ₽</p>
-                    <button class="btn-primary" onclick="openCase(500, 'legendary')">Открыть</button>
+                <div class="case-card legendary">
+                    <div class="case-badge">ЛЕГЕНДАРНЫЙ</div>
+                    <div class="case-img">💎</div>
+                    <h3>Хэллоуинский кейс</h3>
+                    <p class="case-price">500 ₽</p>
+                    <button class="btn-primary" onclick="openCase(500, 'legendary')">Открыть кейс</button>
                 </div>
-                <div class="case-card">
-                    <h3>Эпический кейс</h3>
-                    <p>Цена: 200 ₽</p>
-                    <button class="btn-primary" onclick="openCase(200, 'epic')">Открыть</button>
+                <div class="case-card epic">
+                    <div class="case-badge">ЭПИЧЕСКИЙ</div>
+                    <div class="case-img">🌀</div>
+                    <h3>Киберпанк кейс</h3>
+                    <p class="case-price">200 ₽</p>
+                    <button class="btn-primary" onclick="openCase(200, 'epic')">Открыть кейс</button>
                 </div>
             </div>
 
-            <!-- Рулетка выпадения -->
-            <div class="roulette-container" id="roulette-container" style="display: none;">
+            <!-- Рулетка -->
+            <div class="roulette-wrapper" id="roulette-container" style="display: none;">
                 <div class="pointer"></div>
-                <div class="roulette-track" id="roulette-track"></div>
+                <div class="roulette-container-inner">
+                    <div class="roulette-track" id="roulette-track"></div>
+                </div>
             </div>
             <div id="drop-result" class="drop-result"></div>
         </div>
 
         <!-- Вкладка: Апгрейдер -->
         <div id="tab-upgrade" class="tab-content">
-            <h2>Апгрейдер скинов</h2>
+            <div class="section-title">Апгрейд предметов</div>
             <div class="upgrade-box">
                 <div class="upgrade-slot">
                     <h3>Ваш предмет</h3>
                     <select id="upgrade-item-select" onchange="updateUpgradeChance()"></select>
                 </div>
-                <div class="upgrade-vs">⚡ VS ⚡</div>
+                <div class="upgrade-vs">VS</div>
                 <div class="upgrade-slot">
                     <h3>Желаемый скин</h3>
                     <div class="target-item-card">
                         <img id="target-img" src="" alt="">
                         <p id="target-name">Элитный агент</p>
-                        <p id="target-price">Цена: 1500 ₽</p>
+                        <p id="target-price" class="price">2000 ₽</p>
                     </div>
                 </div>
             </div>
-            <p>Шанс успеха: <span id="chance-display">50</span>%</p>
-            <button class="btn-primary" onclick="runUpgrade()">Улучшить</button>
+            <div class="upgrade-info">Шанс успеха: <span id="chance-display">50</span>%</div>
+            <button class="btn-primary btn-full" onclick="runUpgrade()">Совершить апгрейд</button>
         </div>
 
         <!-- Вкладка: Инвентарь -->
         <div id="tab-inventory" class="tab-content">
-            <h2>Ваш инвентарь</h2>
-            <div class="inventory-grid" id="inventory-grid">
-                <!-- Сюда падают скины -->
-            </div>
+            <div class="section-title">Ваш склад скинов</div>
+            <div class="inventory-grid" id="inventory-grid"></div>
         </div>
     </div>
 
@@ -84,11 +91,11 @@
         <div class="modal-content">
             <h3>Пополнение баланса</h3>
             <p>Переведите нужную сумму по СБП на номер:</p>
-            <p class="phone-number">+7 (916) 138-38-46</p>
-            <p class="small-text">После перевода введите сумму и нажмите кнопку проверки:</p>
-            <input type="number" id="topup-amount" placeholder="Сумма в рублях" value="500">
-            <button class="btn-primary" onclick="simulateTopUp()">Подтвердить перевод</button>
-            <button class="btn-close" onclick="closeTopUpModal()">Закрыть</button>
+            <div class="phone-number">+7 (916) 138-38-46</div>
+            <p class="small-text">После перевода укажите сумму и нажмите подтвердить:</p>
+            <input type="number" id="topup-amount" class="input-field" value="500">
+            <button class="btn-primary btn-full" onclick="simulateTopUp()">Подтвердить перевод</button>
+            <button class="btn-close-modal" onclick="closeTopUpModal()">Отмена</button>
         </div>
     </div>
 
