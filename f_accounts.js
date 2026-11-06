@@ -1,10 +1,9 @@
-// --- СИСТЕМА АККАУНТОВ И СТРОГАЯ АДМИНКА (f_accounts.js) ---
+// --- СИСТЕМА АККАУНТОВ, АДМИНКИ И ВЫВОДА (f_accounts.js) ---
 
 let allUsers = JSON.parse(localStorage.getItem('fn_all_users')) || {};
 let adminRequests = JSON.parse(localStorage.getItem('fn_admin_requests')) || [];
 let currentUser = localStorage.getItem('fn_current_user') || null;
 
-// Сохраняем защищенный пароль администратора в localStorage (по умолчанию "12345678", если еще не задан)
 if (!localStorage.getItem('fn_admin_pass')) {
     localStorage.setItem('fn_admin_pass', '12345678');
 }
@@ -25,7 +24,7 @@ function saveActiveUser(userObj) {
     }
 }
 
-// Строгая авторизация с проверкой пароля админа
+// Авторизация
 function handleLogin() {
     let loginInput = document.getElementById('auth-login');
     let passInput = document.getElementById('auth-pass');
@@ -40,16 +39,14 @@ function handleLogin() {
         return;
     }
 
-    // Проверка для администратора (serjant)
     if (login === 'serjant') {
         let correctAdminPass = localStorage.getItem('fn_admin_pass');
         if (pass !== correctAdminPass) {
             alert('❌ Неверный пароль администратора!');
-            return; // Прерываем вход, если пароль не тот
+            return;
         }
         currentUser = 'serjant';
     } else {
-        // Обычные пользователи могут входить под любым ником
         currentUser = login;
     }
 
@@ -80,7 +77,7 @@ function closeAuthModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Отправка заявки на пополнение админу
+// Запрос на пополнение
 function sendTopUpRequestToAdmin() {
     let amountInput = document.getElementById('topup-amount');
     if (!amountInput) return;
@@ -99,6 +96,7 @@ function sendTopUpRequestToAdmin() {
     }
 
     adminRequests.push({
+        type: 'topup',
         id: Date.now(),
         username: user.username,
         amount: amount,
@@ -110,7 +108,37 @@ function sendTopUpRequestToAdmin() {
     alert(`✅ Заявка на пополнение на ${amount} ₽ отправлена администратору (@serjantyabloko)! Ожидайте подтверждения.`);
 }
 
-// Панель администратора
+// Запрос на вывод скина
+function requestWithdrawal(itemIndex) {
+    let user = getActiveUser();
+    let item = user.inventory[itemIndex];
+    if (!item) return;
+
+    // Запрос ссылки на трейд или подтверждение
+    let recipientTag = prompt(`Вывод скина: ${item.name} (${item.price} ₽)\nВведите ваш тег/ник в Telegram для выдачи:`, '@');
+    if (!recipientTag) return;
+
+    // Убираем скин из инвентаря игрока
+    user.inventory.splice(itemIndex, 1);
+    saveActiveUser(user);
+
+    // Добавляем заявку админу
+    adminRequests.push({
+        type: 'withdraw',
+        id: Date.now(),
+        username: user.username,
+        itemName: item.name,
+        itemPrice: item.price,
+        itemImg: item.img,
+        targetTg: recipientTag,
+        time: new Date().toLocaleTimeString()
+    });
+
+    localStorage.setItem('fn_admin_requests', JSON.stringify(adminRequests));
+    alert(`📤 Заявка на вывод скина "${item.name}" успешно создана! Администратор свяжется с вами в Telegram (${recipientTag}).`);
+}
+
+// Управление админкой
 function openAdminModal() {
     renderAdminRequests();
     let modal = document.getElementById('admin-modal');
@@ -129,36 +157,54 @@ function renderAdminRequests() {
     container.innerHTML = '';
 
     if (adminRequests.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">Нет новых заявок на пополнение.</p>';
+        container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">Нет новых заявок.</p>';
         return;
     }
 
     adminRequests.forEach((req, idx) => {
-        container.innerHTML += `
-            <div class="admin-notif-card">
-                <div>
-                    <strong>Игрок:</strong> ${req.username}<br>
-                    <strong>Сумма:</strong> <span style="color:var(--accent-color);">${req.amount} ₽</span><br>
-                    <small style="color:var(--text-muted);">${req.time}</small>
+        if (req.type === 'topup') {
+            container.innerHTML += `
+                <div class="admin-notif-card">
+                    <div>
+                        <strong style="color: #00ff80;">[ПОПОЛНЕНИЕ]</strong><br>
+                        <strong>Игрок:</strong> ${req.username}<br>
+                        <strong>Сумма:</strong> <span style="color:var(--accent-color);">${req.amount} ₽</span><br>
+                        <small style="color:var(--text-muted);">${req.time}</small>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-action" style="background: #27ae60; padding: 8px 12px;" onclick="resolveAdminRequest(${idx}, true)">Принять</button>
+                        <button class="btn-action" style="background: #c0392b; padding: 8px 12px;" onclick="resolveAdminRequest(${idx}, false)">Удалить</button>
+                    </div>
                 </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-action" style="background: #27ae60; padding: 8px 12px;" onclick="resolveAdminRequest(${idx}, true)">Принять</button>
-                    <button class="btn-action" style="background: #c0392b; padding: 8px 12px;" onclick="resolveAdminRequest(${idx}, false)">Удалить</button>
+            `;
+        } else if (req.type === 'withdraw') {
+            container.innerHTML += `
+                <div class="admin-notif-card">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="${req.itemImg}" style="width:50px; height:50px; object-fit:contain;">
+                        <div>
+                            <strong style="color: #ff3366;">[ВЫВОД СКИНА]</strong><br>
+                            <strong>Игрок:</strong> ${req.username} (ТГ: ${req.targetTg})<br>
+                            <strong>Скин:</strong> ${req.itemName} (${req.itemPrice} ₽)<br>
+                            <small style="color:var(--text-muted);">${req.time}</small>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-action" style="background: #27ae60; padding: 8px 12px;" onclick="resolveAdminRequest(${idx}, false)">Выдал (Закрыть)</button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
     });
 }
 
 function resolveAdminRequest(index, isApproved) {
     let req = adminRequests[index];
-    if (isApproved) {
+    if (req.type === 'topup' && isApproved) {
         if (allUsers[req.username]) {
             allUsers[req.username].balance += req.amount;
             localStorage.setItem('fn_all_users', JSON.stringify(allUsers));
             alert(`Заявка игрока ${req.username} на ${req.amount} ₽ одобрена! Баланс зачислен.`);
-        } else {
-            alert('Игрок не найден в базе данных!');
         }
     }
     adminRequests.splice(index, 1);
@@ -169,7 +215,6 @@ function resolveAdminRequest(index, isApproved) {
     }
 }
 
-// Проверка при загрузке
 window.addEventListener('DOMContentLoaded', () => {
     if (!currentUser || !allUsers[currentUser]) {
         openAuthModal();
