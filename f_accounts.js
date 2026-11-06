@@ -4,6 +4,7 @@ let allUsers = JSON.parse(localStorage.getItem('fn_all_users')) || {};
 let adminRequests = JSON.parse(localStorage.getItem('fn_admin_requests')) || [];
 let currentUser = localStorage.getItem('fn_current_user') || null;
 
+// Установка пароля администратора по умолчанию, если он еще не задан
 if (!localStorage.getItem('fn_admin_pass')) {
     localStorage.setItem('fn_admin_pass', '12345678');
 }
@@ -24,7 +25,7 @@ function saveActiveUser(userObj) {
     }
 }
 
-// Авторизация
+// Строгая авторизация с проверкой логина и пароля
 function handleLogin() {
     let loginInput = document.getElementById('auth-login');
     let passInput = document.getElementById('auth-pass');
@@ -39,11 +40,12 @@ function handleLogin() {
         return;
     }
 
+    // Проверка администратора
     if (login === 'serjant') {
         let correctAdminPass = localStorage.getItem('fn_admin_pass');
         if (pass !== correctAdminPass) {
             alert('❌ Неверный пароль администратора!');
-            return;
+            return; // Прерываем вход при неверном пароле
         }
         currentUser = 'serjant';
     } else {
@@ -77,7 +79,7 @@ function closeAuthModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Запрос на пополнение
+// Запрос на пополнение счета
 function sendTopUpRequestToAdmin() {
     let amountInput = document.getElementById('topup-amount');
     if (!amountInput) return;
@@ -108,21 +110,20 @@ function sendTopUpRequestToAdmin() {
     alert(`✅ Заявка на пополнение на ${amount} ₽ отправлена администратору (@serjantyabloko)! Ожидайте подтверждения.`);
 }
 
-// Запрос на вывод скина
+// Запрос на вывод скина из инвентаря
 function requestWithdrawal(itemIndex) {
     let user = getActiveUser();
     let item = user.inventory[itemIndex];
     if (!item) return;
 
-    // Запрос ссылки на трейд или подтверждение
-    let recipientTag = prompt(`Вывод скина: ${item.name} (${item.price} ₽)\nВведите ваш тег/ник в Telegram для выдачи:`, '@');
-    if (!recipientTag) return;
+    let targetTg = prompt(`Вывод скина: ${item.name} (${item.price} ₽)\nВведите ваш Telegram для выдачи:`, '@');
+    if (!targetTg) return;
 
-    // Убираем скин из инвентаря игрока
+    // Списываем скин из инвентаря игрока
     user.inventory.splice(itemIndex, 1);
     saveActiveUser(user);
 
-    // Добавляем заявку админу
+    // Добавляем заявку в панель админа
     adminRequests.push({
         type: 'withdraw',
         id: Date.now(),
@@ -130,15 +131,15 @@ function requestWithdrawal(itemIndex) {
         itemName: item.name,
         itemPrice: item.price,
         itemImg: item.img,
-        targetTg: recipientTag,
+        targetTg: targetTg,
         time: new Date().toLocaleTimeString()
     });
 
     localStorage.setItem('fn_admin_requests', JSON.stringify(adminRequests));
-    alert(`📤 Заявка на вывод скина "${item.name}" успешно создана! Администратор свяжется с вами в Telegram (${recipientTag}).`);
+    alert(`📤 Заявка на вывод скина "${item.name}" успешно создана! Администратор (@serjantyabloko) свяжется с вами.`);
 }
 
-// Управление админкой
+// Управление панелью администратора
 function openAdminModal() {
     renderAdminRequests();
     let modal = document.getElementById('admin-modal');
@@ -215,6 +216,7 @@ function resolveAdminRequest(index, isApproved) {
     }
 }
 
+// Проверка сессии при загрузке
 window.addEventListener('DOMContentLoaded', () => {
     if (!currentUser || !allUsers[currentUser]) {
         openAuthModal();
