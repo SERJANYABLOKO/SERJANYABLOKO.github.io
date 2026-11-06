@@ -1,8 +1,13 @@
-// --- СИСТЕМА АККАУНТОВ И АДМИНКИ (f_accounts.js) ---
+// --- СИСТЕМА АККАУНТОВ И СТРОГАЯ АДМИНКА (f_accounts.js) ---
 
 let allUsers = JSON.parse(localStorage.getItem('fn_all_users')) || {};
 let adminRequests = JSON.parse(localStorage.getItem('fn_admin_requests')) || [];
 let currentUser = localStorage.getItem('fn_current_user') || null;
+
+// Сохраняем защищенный пароль администратора в localStorage (по умолчанию "12345678", если еще не задан)
+if (!localStorage.getItem('fn_admin_pass')) {
+    localStorage.setItem('fn_admin_pass', '12345678');
+}
 
 function getActiveUser() {
     if (!currentUser || !allUsers[currentUser]) {
@@ -20,7 +25,7 @@ function saveActiveUser(userObj) {
     }
 }
 
-// Авторизация / Вход (исправлено считывание полей)
+// Строгая авторизация с проверкой пароля админа
 function handleLogin() {
     let loginInput = document.getElementById('auth-login');
     let passInput = document.getElementById('auth-pass');
@@ -35,10 +40,16 @@ function handleLogin() {
         return;
     }
 
-    // Проверка администратора
-    if (login === 'serjant' && pass === '12345678') {
+    // Проверка для администратора (serjant)
+    if (login === 'serjant') {
+        let correctAdminPass = localStorage.getItem('fn_admin_pass');
+        if (pass !== correctAdminPass) {
+            alert('❌ Неверный пароль администратора!');
+            return; // Прерываем вход, если пароль не тот
+        }
         currentUser = 'serjant';
     } else {
+        // Обычные пользователи могут входить под любым ником
         currentUser = login;
     }
 
@@ -69,7 +80,7 @@ function closeAuthModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Отправка заявки администратору (serjant)
+// Отправка заявки на пополнение админу
 function sendTopUpRequestToAdmin() {
     let amountInput = document.getElementById('topup-amount');
     if (!amountInput) return;
@@ -99,7 +110,7 @@ function sendTopUpRequestToAdmin() {
     alert(`✅ Заявка на пополнение на ${amount} ₽ отправлена администратору (@serjantyabloko)! Ожидайте подтверждения.`);
 }
 
-// Управление заявками в админке
+// Панель администратора
 function openAdminModal() {
     renderAdminRequests();
     let modal = document.getElementById('admin-modal');
@@ -158,7 +169,7 @@ function resolveAdminRequest(index, isApproved) {
     }
 }
 
-// Автопроверка при старте
+// Проверка при загрузке
 window.addEventListener('DOMContentLoaded', () => {
     if (!currentUser || !allUsers[currentUser]) {
         openAuthModal();
