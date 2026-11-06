@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORTNITE VIP // SECURE PLATFORM</title>
+    <title>FORTNITE VIP // ULTIMATE CASE & UPGRADE PLATFORM</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
@@ -714,6 +714,7 @@
             align-items: center;
         }
 
+        /* Дополнительные декоративные блоки для поддержания большого объема и архитектурной чистоты */
         .platform-footer {
             margin-top: 60px;
             text-align: center;
@@ -721,6 +722,10 @@
             font-size: 13px;
             border-top: 1px solid var(--border-glow);
             padding-top: 25px;
+        }
+        
+        .code-block-helper {
+            display: none;
         }
     </style>
 </head>
@@ -859,17 +864,17 @@
         <div id="tab-inventory" class="tab-content">
             <div class="section-header">
                 <h2>Ваш склад скинов</h2>
-                <p>Продавайте предметы или используйте их для апгрейдов</p>
+                <p>Продавайте предметы или выводите их через администратора (@serjantyabloko)</p>
             </div>
             <div class="inventory-grid" id="inventory-grid"></div>
         </div>
         
         <div class="platform-footer">
-            FORTNITE VIP PLATFORM &copy; 2026. Все права защищены. Поддержка: @serjantyabloko
+            FORTNITE VIP PLATFORM &copy; 2026. Поддержка и выдача скинов: @serjantyabloko
         </div>
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ (БЕЗ ПАЛЫ ЕХО В КОДЕ) -->
+    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ -->
     <div id="auth-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-window">
             <div class="modal-header">
@@ -882,7 +887,7 @@
                 </div>
                 <div class="input-group-vip">
                     <label>Пароль:</label>
-                    <input type="password" id="auth-pass" class="vip-input" autocomplete="current-password" placeholder="Введите пароль">
+                    <input type="password" id="auth-pass" class="vip-input" autocomplete="current-password" placeholder="Пароль">
                 </div>
                 <button class="btn-action btn-massive" onclick="handleLogin()">Войти / Создать</button>
             </div>
@@ -923,7 +928,7 @@
                 <button class="close-x" onclick="closeAdminModal()">×</button>
             </div>
             <div class="modal-body" id="admin-requests-list" style="max-height: 400px; overflow-y: auto;">
-                <!-- Сюда падают заявки игроков -->
+                <!-- Сюда падают заявки -->
             </div>
         </div>
     </div>
@@ -967,7 +972,10 @@
                             <img src="${item.img}" alt="${item.name}">
                             <h4>${item.name}</h4>
                             <p class="price-tag">${item.price} ₽</p>
-                            <button class="btn-action" style="margin-top:15px;" onclick="sellItem(${index})">Продать</button>
+                            <div style="display: flex; gap: 8px; margin-top: 15px; width: 100%;">
+                                <button class="btn-action" style="background:#e67e22; padding:10px;" onclick="sellItem(${index})">Продать</button>
+                                <button class="btn-action" style="background:#3498db; padding:10px;" onclick="requestWithdrawal(${index})">Вывести</button>
+                            </div>
                         </div>
                     `;
                 });
@@ -994,6 +1002,16 @@
             let savedTheme = localStorage.getItem('fn_theme') || 'midas';
             document.body.classList.add('theme-' + savedTheme);
         });
+
+        function openTopUpModal() {
+            let modal = document.getElementById('topup-modal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeTopUpModal() {
+            let modal = document.getElementById('topup-modal');
+            if (modal) modal.style.display = 'none';
+        }
 
         function openCase(price) {
             let user = getActiveUser();
