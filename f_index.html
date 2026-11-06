@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORTNITE VIP // ULTIMATE CASE & UPGRADE PLATFORM</title>
+    <title>FORTNITE VIP // SECURE PLATFORM</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
@@ -714,7 +714,6 @@
             align-items: center;
         }
 
-        /* Дополнительные вспомогательные блоки для объема кода и структуры */
         .platform-footer {
             margin-top: 60px;
             text-align: center;
@@ -870,7 +869,7 @@
         </div>
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ -->
+    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ (БЕЗ ПАЛЫ ЕХО В КОДЕ) -->
     <div id="auth-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-window">
             <div class="modal-header">
@@ -879,11 +878,11 @@
             <div class="modal-body">
                 <div class="input-group-vip">
                     <label>Логин (ник):</label>
-                    <input type="text" id="auth-login" class="vip-input" placeholder="serjant для админки">
+                    <input type="text" id="auth-login" class="vip-input" autocomplete="username" placeholder="Ваш ник">
                 </div>
                 <div class="input-group-vip">
                     <label>Пароль:</label>
-                    <input type="password" id="auth-pass" class="vip-input" placeholder="12345678 для админки">
+                    <input type="password" id="auth-pass" class="vip-input" autocomplete="current-password" placeholder="Введите пароль">
                 </div>
                 <button class="btn-action btn-massive" onclick="handleLogin()">Войти / Создать</button>
             </div>
@@ -932,7 +931,7 @@
     <!-- ПОДКЛЮЧЕНИЕ СИСТЕМЫ АККАУНТОВ -->
     <script src="f_accounts.js"></script>
 
-    <!-- ОСНОВНАЯ ЛОГИКА САЙТА (КЕЙСЫ, РУЛЕТКА, АПГРЕЙДЕР) -->
+    <!-- ОСНОВНАЯ ЛОГИКА САЙТА -->
     <script>
         const skinsDatabase = [
             { name: 'Аура', price: 150, img: 'https://fortnite-api.com/images/cosmetics/br/cid_436_athena_commune_f_aurora/icon.png' },
