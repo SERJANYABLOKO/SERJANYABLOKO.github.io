@@ -6,9 +6,6 @@
     <title>FORTNITE VIP // CASE & UPGRADE PLATFORM</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           СТРУКТУРНЫЕ И ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ (МИДАС / РЫЦАРЬ / КОРВУС)
-           ========================================================================== */
         :root {
             --bg-base: #0f0b07;
             --bg-card: rgba(30, 22, 14, 0.85);
@@ -45,9 +42,6 @@
             --text-muted: #88b3b8;
         }
 
-        /* ==========================================================================
-           БАЗОВЫЕ СБРОСЫ И ТИПОГРАФИКА
-           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -66,9 +60,6 @@
             transition: background 0.3s ease;
         }
 
-        /* ==========================================================================
-           ШАПКА САЙТА (HEADER)
-           ========================================================================== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -88,21 +79,10 @@
             gap: 15px;
         }
 
-        .logo-icon {
-            font-size: 32px;
-        }
+        .logo-icon { font-size: 32px; }
+        .logo-text { font-size: 26px; font-weight: 800; }
+        .logo-text span { color: var(--accent-color); text-shadow: 0 0 20px var(--accent-shadow); }
 
-        .logo-text {
-            font-size: 26px;
-            font-weight: 800;
-        }
-
-        .logo-text span {
-            color: var(--accent-color);
-            text-shadow: 0 0 20px var(--accent-shadow);
-        }
-
-        /* ПЕРЕКЛЮЧАТЕЛЬ ТЕМ */
         .theme-switcher {
             display: flex;
             gap: 6px;
@@ -130,22 +110,9 @@
             box-shadow: 0 0 15px var(--accent-shadow);
         }
 
-        .user-panel {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .user-meta {
-            text-align: right;
-        }
-
-        .username {
-            font-size: 14px;
-            color: var(--text-muted);
-            display: block;
-        }
-
+        .user-panel { display: flex; align-items: center; gap: 25px; }
+        .user-meta { text-align: right; }
+        .username { font-size: 14px; color: var(--text-muted); display: block; }
         .status-badge {
             font-size: 10px;
             background: rgba(255, 255, 255, 0.05);
@@ -165,15 +132,8 @@
             border: 1px solid var(--border-glow);
         }
 
-        .balance-value {
-            color: var(--accent-color);
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .currency {
-            color: var(--text-muted);
-        }
+        .balance-value { color: var(--accent-color); font-size: 22px; font-weight: 800; }
+        .currency { color: var(--text-muted); }
 
         .btn-topup-vip {
             background: var(--accent-gradient);
@@ -187,28 +147,11 @@
             transition: 0.3s;
             box-shadow: 0 4px 20px var(--accent-shadow);
         }
+        .btn-topup-vip:hover { transform: translateY(-2px); filter: brightness(1.15); }
 
-        .btn-topup-vip:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.15);
-        }
+        .main-container { max-width: 1200px; margin: 40px auto; padding: 0 30px; }
 
-        /* ==========================================================================
-           ОБЩИЕ КОНТЕЙНЕРЫ И ВКЛАДКИ
-           ========================================================================== */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 30px;
-        }
-
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
+        .tabs-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
         .tab-btn {
             background: var(--bg-card);
             color: var(--text-muted);
@@ -224,7 +167,6 @@
             gap: 10px;
             backdrop-filter: blur(10px);
         }
-
         .tab-btn.active, .tab-btn:hover {
             background: var(--accent-gradient);
             color: #fff;
@@ -233,39 +175,18 @@
             transform: translateY(-3px);
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+        .section-header { text-align: center; margin-bottom: 35px; }
+        .section-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+        .section-header p { color: var(--text-muted); font-size: 16px; }
 
-        .section-header h2 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 16px;
-        }
-
-        /* ==========================================================================
-           СЕТКИ КЕЙСОВ И ИНВЕНТАРЯ
-           ========================================================================== */
         .cases-grid, .inventory-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -287,7 +208,6 @@
             flex-direction: column;
             align-items: center;
         }
-
         .case-card:hover, .item-card:hover {
             background: var(--bg-card-hover);
             transform: translateY(-8px);
@@ -297,54 +217,20 @@
 
         .tier-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 5px 10px;
-            border-radius: 6px;
+            top: 15px; right: 15px;
+            font-size: 10px; font-weight: 800;
+            padding: 5px 10px; border-radius: 6px;
             background: rgba(255, 255, 255, 0.05);
             color: var(--accent-color);
             border: 1px solid var(--border-glow);
         }
 
-        .case-graphic {
-            font-size: 60px;
-            margin: 20px 0;
-        }
-
-        .case-info {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .case-info h3 {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .case-desc {
-            color: var(--text-muted);
-            font-size: 13px;
-            line-height: 1.4;
-            min-height: 36px;
-        }
-
-        .case-footer {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-top: auto;
-        }
-
-        .price-tag {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--accent-color);
-        }
+        .case-graphic { font-size: 60px; margin: 20px 0; }
+        .case-info { width: 100%; margin-bottom: 20px; }
+        .case-info h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .case-desc { color: var(--text-muted); font-size: 13px; line-height: 1.4; min-height: 36px; }
+        .case-footer { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: auto; }
+        .price-tag { font-size: 22px; font-weight: 800; color: var(--accent-color); }
 
         .btn-action {
             background: var(--accent-gradient);
@@ -362,15 +248,8 @@
             align-items: center;
             box-shadow: 0 4px 15px var(--accent-shadow);
         }
+        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); }
 
-        .btn-action:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-        }
-
-        /* ==========================================================================
-           РУЛЕТКА ОТКРЫТИЯ КЕЙСОВ
-           ========================================================================== */
         .roulette-wrapper {
             position: relative;
             background: var(--bg-card);
@@ -385,343 +264,103 @@
         .roulette-pointer {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 4px;
-            background: #ff3366;
-            z-index: 10;
-            transform: translateX(-50%);
+            width: 4px; background: #ff3366;
+            z-index: 10; transform: translateX(-50%);
             box-shadow: 0 0 15px #ff3366;
         }
 
-        .roulette-track-container {
-            width: 100%;
-            height: 160px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .roulette-track {
-            display: flex;
-            position: absolute;
-            left: 0;
-            transition: left 4.5s cubic-bezier(0.08, 0.82, 0.12, 1);
-        }
-
+        .roulette-track-container { width: 100%; height: 160px; overflow: hidden; position: relative; }
+        .roulette-track { display: flex; position: absolute; left: 0; transition: left 4.5s cubic-bezier(0.08, 0.82, 0.12, 1); }
         .roulette-item {
-            min-width: 150px;
-            height: 160px;
+            min-width: 150px; height: 160px;
             background: rgba(0, 0, 0, 0.4);
             border-right: 1px solid var(--border-glow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            padding: 15px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-sizing: border-box; padding: 15px;
         }
+        .roulette-item img { width: 90px; height: 90px; object-fit: contain; }
+        .roulette-item span { font-size: 14px; color: var(--accent-color); font-weight: 800; margin-top: 8px; }
+        .drop-result-banner { text-align: center; font-size: 22px; font-weight: 800; color: var(--accent-color); margin-top: 25px; min-height: 40px; }
 
-        .roulette-item img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-        }
-
-        .roulette-item span {
-            font-size: 14px;
-            color: var(--accent-color);
-            font-weight: 800;
-            margin-top: 8px;
-        }
-
-        .drop-result-banner {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--accent-color);
-            margin-top: 25px;
-            min-height: 40px;
-        }
-
-        /* ==========================================================================
-           АПГРЕЙДЕР ПРЕДМЕТОВ
-           ========================================================================== */
         .upgrade-arena {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid var(--border-glow);
-            margin-bottom: 30px;
-            gap: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-card); border-radius: 20px; padding: 40px;
+            border: 1px solid var(--border-glow); margin-bottom: 30px; gap: 30px;
             backdrop-filter: blur(10px);
         }
-
-        .upgrade-slot-box {
-            flex: 1;
-            text-align: center;
-        }
-
-        .slot-header {
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--text-muted);
-        }
-
+        .upgrade-slot-box { flex: 1; text-align: center; }
+        .slot-header { font-size: 16px; font-weight: 800; margin-bottom: 15px; color: var(--text-muted); }
         .vip-select {
-            width: 100%;
-            background: var(--bg-base);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            outline: none;
-            cursor: pointer;
+            width: 100%; background: var(--bg-base); border: 1px solid var(--border-glow);
+            color: #fff; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700;
+            margin-bottom: 20px; outline: none; cursor: pointer;
         }
-
         .preview-card {
-            background: var(--bg-base);
-            border: 2px dashed var(--border-glow);
-            border-radius: 16px;
-            padding: 20px;
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: var(--bg-base); border: 2px dashed var(--border-glow);
+            border-radius: 16px; padding: 20px; min-height: 160px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-
-        .preview-card img, .target-card-content img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-
-        .preview-placeholder {
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-
-        .upgrade-vs-badge {
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--accent-color);
-            text-shadow: 0 0 20px var(--accent-shadow);
-            padding: 0 15px;
-        }
-
-        .target-box .preview-card {
-            border-style: solid;
-        }
-
-        .target-card-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .target-details h4 {
-            font-size: 17px;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .target-price-tag {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--accent-color);
-        }
+        .preview-card img, .target-card-content img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px; }
+        .preview-placeholder { color: var(--text-muted); font-size: 15px; }
+        .upgrade-vs-badge { font-size: 28px; font-weight: 900; color: var(--accent-color); text-shadow: 0 0 20px var(--accent-shadow); padding: 0 15px; }
+        .target-box .preview-card { border-style: solid; }
+        .target-card-content { display: flex; flex-direction: column; align-items: center; }
+        .target-details h4 { font-size: 17px; font-weight: 800; margin-bottom: 5px; }
+        .target-price-tag { font-size: 18px; font-weight: 800; color: var(--accent-color); }
 
         .upgrade-controls-panel {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid var(--border-glow);
-            text-align: center;
-            backdrop-filter: blur(10px);
+            background: var(--bg-card); border-radius: 20px; padding: 30px;
+            border: 1px solid var(--border-glow); text-align: center; backdrop-filter: blur(10px);
         }
+        .chance-indicator { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+        .chance-indicator span { color: var(--accent-color); font-size: 24px; }
+        .btn-massive { max-width: 400px; margin: 0 auto; padding: 16px; font-size: 18px; border-radius: 14px; }
 
-        .chance-indicator {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
+        .item-card img { width: 110px; height: 110px; object-fit: contain; margin: 15px auto; }
+        .item-card h4 { font-size: 17px; font-weight: 800; margin-bottom: 5px; }
 
-        .chance-indicator span {
-            color: var(--accent-color);
-            font-size: 24px;
-        }
-
-        .btn-massive {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 16px;
-            font-size: 18px;
-            border-radius: 14px;
-        }
-
-        /* ==========================================================================
-           ИНВЕНТАРЬ
-           ========================================================================== */
-        .item-card img {
-            width: 110px;
-            height: 110px;
-            object-fit: contain;
-            margin: 15px auto;
-        }
-
-        .item-card h4 {
-            font-size: 17px;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        /* ==========================================================================
-           МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (СБП + ТГ + ТЕСТОВЫЙ ПУЛЬТ)
-           ========================================================================== */
         .modal-backdrop {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center; z-index: 100;
         }
-
         .modal-window {
-            background: var(--bg-card);
-            border: 2px solid var(--border-glow);
-            border-radius: 24px;
-            padding: 35px;
-            width: 440px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-            position: relative;
+            background: var(--bg-card); border: 2px solid var(--border-glow);
+            border-radius: 24px; padding: 35px; width: 440px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8); position: relative;
         }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-header h3 {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .close-x {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 26px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .close-x:hover {
-            color: #fff;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .modal-header h3 { font-size: 22px; font-weight: 800; }
+        .close-x { background: transparent; border: none; color: var(--text-muted); font-size: 26px; cursor: pointer; transition: 0.2s; }
+        .close-x:hover { color: #fff; }
 
         .qr-container {
-            text-align: center;
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 16px;
-            display: block;
-            margin: 0 auto 20px auto;
-            width: 170px;
-            height: 170px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            text-align: center; background: #ffffff; padding: 15px; border-radius: 16px;
+            display: block; margin: 0 auto 20px auto; width: 170px; height: 170px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-
-        .qr-img {
-            width: 140px;
-            height: 140px;
-            object-fit: contain;
-        }
+        .qr-img { width: 140px; height: 140px; object-fit: contain; }
 
         .sbp-instruction {
-            background: var(--bg-base);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            margin-bottom: 20px;
-            text-align: center;
+            background: var(--bg-base); padding: 15px; border-radius: 12px;
+            border: 1px solid var(--border-glow); margin-bottom: 20px; text-align: center;
         }
+        .recipient-name { font-size: 15px; margin-bottom: 4px; }
+        .contract-info { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+        .phone-highlight { font-size: 20px; font-weight: 900; color: var(--accent-color); letter-spacing: 0.5px; }
+        .tg-highlight { margin-top: 8px; font-size: 14px; color: var(--accent-color); }
 
-        .recipient-name {
-            font-size: 15px;
-            margin-bottom: 4px;
-        }
-
-        .contract-info {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .phone-highlight {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--accent-color);
-            letter-spacing: 0.5px;
-        }
-
-        .tg-highlight {
-            margin-top: 8px;
-            font-size: 14px;
-            color: var(--accent-color);
-        }
-
-        .input-group-vip {
-            margin-bottom: 20px;
-        }
-
-        .input-group-vip label {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
+        .input-group-vip { margin-bottom: 20px; }
+        .input-group-vip label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text-muted); }
         .vip-input {
-            width: 100%;
-            background: var(--bg-base);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 800;
-            outline: none;
-            text-align: center;
+            width: 100%; background: var(--bg-base); border: 1px solid var(--border-glow);
+            color: #fff; padding: 14px; border-radius: 12px; font-size: 18px; font-weight: 800; outline: none; text-align: center;
         }
 
-        /* Уведомление из ТГ для теста */
         .tg-simulation-banner {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1e293b;
-            border: 2px solid var(--accent-color);
-            border-radius: 16px;
-            padding: 20px;
-            width: 320px;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            display: none;
-            animation: slideUp 0.3s ease;
+            position: fixed; bottom: 20px; right: 20px; background: #1e293b;
+            border: 2px solid var(--accent-color); border-radius: 16px; padding: 20px;
+            width: 320px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: none; animation: slideUp 0.3s ease;
         }
-
         @keyframes slideUp {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -730,12 +369,413 @@
 </head>
 <body class="theme-midas">
 
-    <!-- ШАПКА САЙТА -->
     <header class="header">
         <div class="logo-area">
             <div class="logo-icon">👑</div>
             <div class="logo-text">FORTNITE <span>VIP</span></div>
         </div>
 
-        <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
         <div class="theme-switcher">
+            <button class="theme-btn active" onclick="setTheme('midas')">МИДАС</button>
+            <button class="theme-btn" onclick="setTheme('knight')">РЫЦАРЬ</button>
+            <button class="theme-btn" onclick="setTheme('cyber')">КОРВУС</button>
+        </div>
+
+        <div class="user-panel">
+            <div class="user-meta">
+                <span id="username-display" class="username">Player_VIP</span>
+                <span class="status-badge">PREMIUM</span>
+            </div>
+            <div class="balance-container">
+                Баланс: <span id="balance-display" class="balance-value">0</span> <span class="currency">₽</span>
+            </div>
+            <button class="btn-topup-vip" onclick="openTopUpModal()">+ Пополнить</button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('cases', event)">🎁 Эксклюзивные кейсы</button>
+            <button class="tab-btn" onclick="switchTab('upgrade', event)">⚡ Апгрейдер скинов</button>
+            <button class="tab-btn" onclick="switchTab('inventory', event)">🎒 Инвентарь (<span id="inv-count">0</span>)</button>
+        </div>
+
+        <div id="tab-cases" class="tab-content active">
+            <div class="section-header">
+                <h2>Коллекция кейсов</h2>
+                <p>Испытай удачу и выиграй редкие скины Fortnite</p>
+            </div>
+            
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="tier-badge">EPIC</div>
+                    <div class="case-graphic">🌀</div>
+                    <div class="case-info">
+                        <h3>Киберпанк кейс</h3>
+                        <p class="case-desc">Базовый кейс со стильной экипировкой</p>
+                    </div>
+                    <div class="case-footer">
+                        <span class="price-tag">200 ₽</span>
+                        <button class="btn-action" onclick="openCase(200)">Открыть кейс</button>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="tier-badge">LEGENDARY</div>
+                    <div class="case-graphic">💎</div>
+                    <div class="case-info">
+                        <h3>Хэллоуинский премиум</h3>
+                        <p class="case-desc">Элитный кейс с топовыми редкими скинами</p>
+                    </div>
+                    <div class="case-footer">
+                        <span class="price-tag">500 ₽</span>
+                        <button class="btn-action" onclick="openCase(500)">Открыть кейс</button>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="tier-badge">MYTHIC</div>
+                    <div class="case-graphic">🔥</div>
+                    <div class="case-info">
+                        <h3>Мифический буст</h3>
+                        <p class="case-desc">Максимальный шанс окупа и уникальные скины</p>
+                    </div>
+                    <div class="case-footer">
+                        <span class="price-tag">1200 ₽</span>
+                        <button class="btn-action" onclick="openCase(1200)">Открыть кейс</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="roulette-wrapper" id="roulette-container" style="display: none;">
+                <div class="roulette-pointer"></div>
+                <div class="roulette-track-container">
+                    <div class="roulette-track" id="roulette-track"></div>
+                </div>
+            </div>
+            <div id="drop-result" class="drop-result-banner"></div>
+        </div>
+
+        <div id="tab-upgrade" class="tab-content">
+            <div class="section-header">
+                <h2>Апгрейдер предметов</h2>
+                <p>Улучшите свой скин, выбрав желаемую награду</p>
+            </div>
+
+            <div class="upgrade-arena">
+                <div class="upgrade-slot-box">
+                    <div class="slot-header">Ваш предмет из инвентаря</div>
+                    <select id="upgrade-item-select" class="vip-select" onchange="updateUpgradeData()"></select>
+                    <div class="preview-card" id="my-item-preview">
+                        <span class="preview-placeholder">Выберите предмет</span>
+                    </div>
+                </div>
+
+                <div class="upgrade-vs-badge">VS</div>
+
+                <div class="upgrade-slot-box target-box">
+                    <div class="slot-header">Желаемая награда</div>
+                    <select id="target-item-select" class="vip-select" onchange="updateUpgradeData()"></select>
+                    <div class="preview-card" id="target-item-preview">
+                        <span class="preview-placeholder">Выберите цель</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upgrade-controls-panel">
+                <div class="chance-indicator">
+                    Шанс успеха: <span id="chance-display">50</span>%
+                </div>
+                <button class="btn-action btn-massive" onclick="runUpgrade()">Совершить апгрейд</button>
+            </div>
+        </div>
+
+        <div id="tab-inventory" class="tab-content">
+            <div class="section-header">
+                <h2>Ваш склад скинов</h2>
+                <p>Продавайте предметы или используйте их для апгрейдов</p>
+            </div>
+            <div class="inventory-grid" id="inventory-grid"></div>
+        </div>
+    </main>
+
+    <div id="topup-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3>Пополнение счета</h3>
+                <button class="close-x" onclick="closeTopUpModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-container">
+                    <img src="qr_code.png" alt="QR СБП" class="qr-img" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SBK_PAY_5195864433'">
+                </div>
+                <div class="sbp-instruction">
+                    <p class="recipient-name"><strong>Гераскин Лев Романович</strong></p>
+                    <p class="contract-info">Номер договора: <span>5195864433</span></p>
+                    <p class="phone-highlight">+7 (916) 138-38-46</p>
+                    <p class="tg-highlight">Telegram: <strong>@serjantyabloko</strong></p>
+                </div>
+                <div class="input-group-vip">
+                    <label>Сумма перевода (₽):</label>
+                    <input type="number" id="topup-amount" class="vip-input" value="500" min="50">
+                </div>
+                <button class="btn-action btn-massive" onclick="requestTopUpTelegram()">Запросить подтверждение в ТГ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tg-simulation-banner" class="tg-simulation-banner">
+        <h4 style="color: var(--accent-color); margin-bottom: 8px;">🤖 Уведомление в ТГ</h4>
+        <p id="tg-banner-text" style="font-size: 14px; margin-bottom: 15px; color:#fff;">Запрос на пополнение: 500 ₽</p>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-action" style="background: #27ae60; padding: 10px;" onclick="approveTopUp(true)">Принять</button>
+            <button class="btn-action" style="background: #c0392b; padding: 10px;" onclick="approveTopUp(false)">Отклонить</button>
+        </div>
+    </div>
+
+    <script>
+        let user = JSON.parse(localStorage.getItem('fn_user')) || {
+            username: 'Player_VIP',
+            balance: 0,
+            inventory: []
+        };
+
+        const skinsDatabase = [
+            { name: 'Аура', price: 150, img: 'https://fortnite-api.com/images/cosmetics/br/cid_436_athena_commune_f_aurora/icon.png' },
+            { name: 'Супергерой', price: 400, img: 'https://fortnite-api.com/images/cosmetics/br/cid_703_athena_commune_m_superhero/icon.png' },
+            { name: 'Киберпанк', price: 800, img: 'https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commune_m_cyberpunk/icon.png' },
+            { name: 'Дикий Налетчик', price: 1500, img: 'https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commune_m_halloween/icon.png' },
+            { name: 'Рыцарь Омега', price: 3000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_138_athena_commune_m_carbide/icon.png' },
+            { name: 'Элитный агент', price: 2000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_035_athena_commune_m_military/icon.png' },
+            { name: 'Легендарный Асс', price: 5000, img: 'https://fortnite-api.com/images/cosmetics/br/cid_001_athena_commune_m_default/icon.png' }
+        ];
+
+        let pendingAmount = 0;
+
+        function saveUser() {
+            localStorage.setItem('fn_user', JSON.stringify(user));
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('balance-display').innerText = user.balance;
+            document.getElementById('username-display').innerText = user.username;
+            document.getElementById('inv-count').innerText = user.inventory.length;
+
+            const invGrid = document.getElementById('inventory-grid');
+            invGrid.innerHTML = '';
+
+            if (user.inventory.length === 0) {
+                invGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">Ваш инвентарь пуст. Пополните счет и откройте кейс!</p>';
+            } else {
+                user.inventory.forEach((item, index) => {
+                    invGrid.innerHTML += `
+                        <div class="item-card">
+                            <img src="${item.img}" alt="${item.name}">
+                            <h4>${item.name}</h4>
+                            <p class="price-tag">${item.price} ₽</p>
+                            <button class="btn-action" style="margin-top:15px;" onclick="sellItem(${index})">Продать</button>
+                        </div>
+                    `;
+                });
+            }
+
+            updateUpgradeSelectors();
+        }
+
+        function switchTab(tabName, event) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        function setTheme(themeName) {
+            document.body.classList.remove('theme-midas', 'theme-knight', 'theme-cyber');
+            document.body.classList.add('theme-' + themeName);
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            if(event && event.currentTarget) event.currentTarget.classList.add('active');
+            localStorage.setItem('fn_theme', themeName);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = localStorage.getItem('fn_theme') || 'midas';
+            document.body.classList.add('theme-' + savedTheme);
+            document.querySelectorAll('.theme-btn').forEach(b => {
+                let text = b.innerText.toLowerCase();
+                if(text.includes(savedTheme === 'knight' ? 'рыцарь' : savedTheme === 'cyber' ? 'корвус' : 'мидас')) {
+                    document.querySelectorAll('.theme-btn').forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                }
+            });
+            updateUI();
+        });
+
+        function openTopUpModal() { document.getElementById('topup-modal').style.display = 'flex'; }
+        function closeTopUpModal() { document.getElementById('topup-modal').style.display = 'none'; }
+        
+        function requestTopUpTelegram() {
+            pendingAmount = parseInt(document.getElementById('topup-amount').value) || 0;
+            if (pendingAmount <= 0) { alert('Введите корректную сумму!'); return; }
+            
+            closeTopUpModal();
+            document.getElementById('tg-banner-text').innerText = `Запрос на пополнение: ${pendingAmount} ₽ отправлен в ТГ @serjantyabloko`;
+            document.getElementById('tg-simulation-banner').style.display = 'block';
+        }
+
+        function approveTopUp(isAccepted) {
+            document.getElementById('tg-simulation-banner').style.display = 'none';
+            if (isAccepted) {
+                user.balance += pendingAmount;
+                saveUser();
+                alert(`✅ Платеж подтвержден! Баланс пополнен на ${pendingAmount} ₽.`);
+            } else {
+                alert('❌ Платеж отклонен администратором (@serjantyabloko).');
+            }
+            pendingAmount = 0;
+        }
+
+        function openCase(price) {
+            if (user.balance < price) {
+                alert('Недостаточно средств на балансе! Пополните счет.');
+                return;
+            }
+            user.balance -= price;
+            saveUser();
+
+            const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
+            document.getElementById('roulette-container').style.display = 'block';
+            document.getElementById('drop-result').innerText = 'Крутим рулетку...';
+
+            let itemsPool = [];
+            for (let i = 0; i < 50; i++) {
+                let randomSkin = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
+                itemsPool.push(randomSkin);
+            }
+            
+            let winningSkin = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
+            itemsPool[35] = winningSkin;
+
+            itemsPool.forEach(skin => {
+                track.innerHTML += `
+                    <div class="roulette-item">
+                        <img src="${skin.img}" alt="${skin.name}">
+                        <span>${skin.price} ₽</span>
+                    </div>
+                `;
+            });
+
+            track.style.transition = 'none';
+            track.style.left = '0px';
+
+            setTimeout(() => {
+                track.style.transition = 'left 4.5s cubic-bezier(0.08, 0.82, 0.12, 1)';
+                let offset = -(35 * 150 - 380);
+                track.style.left = offset + 'px';
+            }, 50);
+
+            setTimeout(() => {
+                user.inventory.push(winningSkin);
+                saveUser();
+                document.getElementById('drop-result').innerHTML = `🎉 Вы выиграли: <span style="color:var(--accent-color);">${winningSkin.name}</span> (${winningSkin.price} ₽)!`;
+            }, 4600);
+        }
+
+        function sellItem(index) {
+            user.balance += user.inventory[index].price;
+            user.inventory.splice(index, 1);
+            saveUser();
+        }
+
+        function updateUpgradeSelectors() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+            
+            mySelect.innerHTML = '';
+            targetSelect.innerHTML = '';
+
+            if (user.inventory.length === 0) {
+                mySelect.innerHTML = '<option>Нет предметов в инвентаре</option>';
+            } else {
+                user.inventory.forEach((item, index) => {
+                    mySelect.innerHTML += `<option value="${index}">${item.name} (${item.price} ₽)</option>`;
+                });
+            }
+
+            skinsDatabase.forEach((skin, index) => {
+                targetSelect.innerHTML += `<option value="${index}">${skin.name} (${skin.price} ₽)</option>`;
+            });
+
+            updateUpgradeData();
+        }
+
+        function updateUpgradeData() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+            const myPreview = document.getElementById('my-item-preview');
+            const targetPreview = document.getElementById('target-item-preview');
+
+            if (user.inventory.length === 0 || mySelect.selectedIndex === -1) {
+                myPreview.innerHTML = '<span class="preview-placeholder">Нет предметов</span>';
+                document.getElementById('chance-display').innerText = '0';
+                return;
+            }
+
+            let myItem = user.inventory[mySelect.value];
+            let targetItem = skinsDatabase[targetSelect.selectedIndex || 0];
+
+            myPreview.innerHTML = `
+                <img src="${myItem.img}" alt="${myItem.name}">
+                <div class="target-details">
+                    <h4>${myItem.name}</h4>
+                    <span class="target-price-tag">${myItem.price} ₽</span>
+                </div>
+            `;
+
+            targetPreview.innerHTML = `
+                <img src="${targetItem.img}" alt="${targetItem.name}">
+                <div class="target-details">
+                    <h4>${targetItem.name}</h4>
+                    <span class="target-price-tag">${targetItem.price} ₽</span>
+                </div>
+            `;
+
+            let chance = Math.min(Math.floor((myItem.price / targetItem.price) * 90), 95);
+            if (chance < 1) chance = 1;
+            document.getElementById('chance-display').innerText = chance;
+        }
+
+        function runUpgrade() {
+            const mySelect = document.getElementById('upgrade-item-select');
+            const targetSelect = document.getElementById('target-item-select');
+
+            if (user.inventory.length === 0 || mySelect.selectedIndex === -1) {
+                alert('Выберите ваш предмет для апгрейда!');
+                return;
+            }
+
+            let itemIndex = mySelect.value;
+            let myItem = user.inventory[itemIndex];
+            let targetItem = skinsDatabase[targetSelect.selectedIndex];
+
+            let chance = Math.min(Math.floor((myItem.price / targetItem.price) * 90), 95);
+            if (chance < 1) chance = 1;
+
+            user.inventory.splice(itemIndex, 1);
+
+            let roll = Math.random() * 100;
+            if (roll <= chance) {
+                user.inventory.push(targetItem);
+                alert(`⚡ Успех! Вы выиграли ${targetItem.name}!`);
+            } else {
+                alert('❌ Неудача! Предмет сгорел.');
+            }
+            saveUser();
+        }
+    </script>
+</body>
+</html>
