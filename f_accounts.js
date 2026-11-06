@@ -1,10 +1,9 @@
-// --- СИСТЕМА АККАУНТОВ И БАЗЫ ДАННЫХ (f_accounts.js) ---
+// --- СИСТЕМА АККАУНТОВ И АДМИНКИ (f_accounts.js) ---
 
 let allUsers = JSON.parse(localStorage.getItem('fn_all_users')) || {};
 let adminRequests = JSON.parse(localStorage.getItem('fn_admin_requests')) || [];
 let currentUser = localStorage.getItem('fn_current_user') || null;
 
-// Получить текущего активного игрока
 function getActiveUser() {
     if (!currentUser || !allUsers[currentUser]) {
         return { username: 'Гость', balance: 0, inventory: [] };
@@ -12,7 +11,6 @@ function getActiveUser() {
     return allUsers[currentUser];
 }
 
-// Сохранить текущего игрока в localStorage
 function saveActiveUser(userObj) {
     if (!currentUser) return;
     allUsers[currentUser] = userObj;
@@ -22,7 +20,7 @@ function saveActiveUser(userObj) {
     }
 }
 
-// Обработка входа / регистрации
+// Авторизация / Вход (исправлено считывание полей)
 function handleLogin() {
     let loginInput = document.getElementById('auth-login');
     let passInput = document.getElementById('auth-pass');
@@ -33,18 +31,17 @@ function handleLogin() {
     let pass = passInput.value.trim();
 
     if (!login) {
-        alert('Введите логин!');
+        alert('Введите ник (логин)!');
         return;
     }
 
-    // Проверка учетной записи администратора
+    // Проверка администратора
     if (login === 'serjant' && pass === '12345678') {
         currentUser = 'serjant';
     } else {
         currentUser = login;
     }
 
-    // Если такого аккаунта еще нет, создаем с нулевым балансом
     if (!allUsers[currentUser]) {
         allUsers[currentUser] = {
             username: currentUser,
@@ -62,7 +59,6 @@ function handleLogin() {
     }
 }
 
-// Открытие / закрытие модалки входа
 function openAuthModal() {
     let modal = document.getElementById('auth-modal');
     if (modal) modal.style.display = 'flex';
@@ -73,7 +69,7 @@ function closeAuthModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Отправка заявки на пополнение админу (serjant)
+// Отправка заявки администратору (serjant)
 function sendTopUpRequestToAdmin() {
     let amountInput = document.getElementById('topup-amount');
     if (!amountInput) return;
@@ -85,6 +81,12 @@ function sendTopUpRequestToAdmin() {
     }
 
     let user = getActiveUser();
+    if (user.username === 'Гость') {
+        alert('Сначала войдите в аккаунт!');
+        openAuthModal();
+        return;
+    }
+
     adminRequests.push({
         id: Date.now(),
         username: user.username,
@@ -94,10 +96,10 @@ function sendTopUpRequestToAdmin() {
     
     localStorage.setItem('fn_admin_requests', JSON.stringify(adminRequests));
     closeTopUpModal();
-    alert(`✅ Запрос на пополнение на ${amount} ₽ отправлен администратору (@serjantyabloko)! Ожидайте подтверждения.`);
+    alert(`✅ Заявка на пополнение на ${amount} ₽ отправлена администратору (@serjantyabloko)! Ожидайте подтверждения.`);
 }
 
-// Функции панели администратора
+// Управление заявками в админке
 function openAdminModal() {
     renderAdminRequests();
     let modal = document.getElementById('admin-modal');
@@ -156,7 +158,7 @@ function resolveAdminRequest(index, isApproved) {
     }
 }
 
-// Проверка при загрузке страницы
+// Автопроверка при старте
 window.addEventListener('DOMContentLoaded', () => {
     if (!currentUser || !allUsers[currentUser]) {
         openAuthModal();
