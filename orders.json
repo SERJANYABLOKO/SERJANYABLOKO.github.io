@@ -1,16 +1,5 @@
 [
   {
-    "title": "💬 СценаристИщу сценариста для сюжетного сезона как у Лололошки. Писать в ЛС: @MrMain_Rinkey➖➖➖➖...",
-    "price": "В описании",
-    "url": "https://t.me/FreelanceBay/16731",
-    "category": "Telegram",
-    "source": "TG (@freelancebay)",
-    "published_at": "07.11 09:13",
-    "responses": "В ЛС",
-    "direct_contact": "@MrMain_Rinkey",
-    "discovered_at": "2026-11-07T09:13:00+00:00"
-  },
-  {
     "title": "💬 Моушн-дизайнерИщу МОУШН-ДИЗАЙНЕРА для создания визуального сопровождения концерта на LED-экра...",
     "price": "В описании",
     "url": "https://t.me/FreelanceBay/16733",
@@ -119,28 +108,6 @@
     "responses": "В ЛС",
     "direct_contact": null,
     "discovered_at": "2026-11-09T13:08:15+00:00"
-  },
-  {
-    "title": "🔔 Ищу мобилографа с дроном для съемки квартиры на завтра📍 Видео и аудио · 🕒 3 ч назадКонтакт за...",
-    "price": "В описании",
-    "url": "https://t.me/zakazy_it/338",
-    "category": "Веб-сайт",
-    "source": "TG (@zakazy_it)",
-    "published_at": "07.11 18:10",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-11-07T18:10:39+00:00"
-  },
-  {
-    "title": "🔔 Ищу видеографа для съемок сниппетов на треки в стиле r&b rap📍 Московская область · Видео и ау...",
-    "price": "В описании",
-    "url": "https://t.me/zakazy_it/339",
-    "category": "Веб-сайт",
-    "source": "TG (@zakazy_it)",
-    "published_at": "08.11 05:58",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-11-08T05:58:45+00:00"
   },
   {
     "title": "🔔 Ищу дизайнера с опытом работы в нейросетях📍 Краснодар · Дизайн · 🕒 1 ч назадКонтакт заказчика...",
@@ -275,15 +242,26 @@
     "discovered_at": "2026-11-09T14:52:34+00:00"
   },
   {
-    "title": "The username is currently being sold in Fragment.Please visit the URL below to view or contact ...",
+    "title": "🔔 Ищу фотографа на завтра для контентной съемки в Ташкенте📍 Ташкент · Видео и аудио · 🕒 1 ч наз...",
     "price": "В описании",
-    "url": "https://t.me/remote_it/11",
+    "url": "https://t.me/zakazy_it/353",
     "category": "Веб-сайт",
-    "source": "TG (@remote_it)",
-    "published_at": "02.11 15:24",
+    "source": "TG (@zakazy_it)",
+    "published_at": "09.11 16:38",
     "responses": "В ЛС",
-    "direct_contact": "@Nextid",
-    "discovered_at": "2026-11-02T15:24:30+00:00"
+    "direct_contact": null,
+    "discovered_at": "2026-11-09T16:38:27+00:00"
+  },
+  {
+    "title": "🔔 Ищу дизайнера для создания NFC-визиток и сопутствующих макетов📍 Дизайн · 🕒 2 ч назадКонтакт з...",
+    "price": "В описании",
+    "url": "https://t.me/zakazy_it/354",
+    "category": "Дизайн",
+    "source": "TG (@zakazy_it)",
+    "published_at": "09.11 18:24",
+    "responses": "В ЛС",
+    "direct_contact": null,
+    "discovered_at": "2026-11-09T18:24:19+00:00"
   },
   {
     "title": "💻 Лоция ищет Python-разработчика для платформы управления языковыми моделямиПредстоит разрабаты...",
@@ -361,6 +339,39 @@
     "responses": "В ЛС",
     "direct_contact": null,
     "discovered_at": "2026-11-07T16:37:51+00:00"
+  },
+  {
+    "title": "💬 СценаристИщу сценариста для сюжетного сезона как у Лололошки. Писать в ЛС: @MrMain_Rinkey➖➖➖➖...",
+    "price": "В описании",
+    "url": "https://t.me/FreelanceBay/16731",
+    "category": "Telegram",
+    "source": "TG (@freelancebay)",
+    "published_at": "07.11 09:13",
+    "responses": "В ЛС",
+    "direct_contact": "@MrMain_Rinkey",
+    "discovered_at": "2026-11-07T09:13:00+00:00"
+  },
+  {
+    "title": "🔔 Ищу мобилографа с дроном для съемки квартиры на завтра📍 Видео и аудио · 🕒 3 ч назадКонтакт за...",
+    "price": "В описании",
+    "url": "https://t.me/zakazy_it/338",
+    "category": "Веб-сайт",
+    "source": "TG (@zakazy_it)",
+    "published_at": "07.11 18:10",
+    "responses": "В ЛС",
+    "direct_contact": null,
+    "discovered_at": "2026-11-07T18:10:39+00:00"
+  },
+  {
+    "title": "🔔 Ищу видеографа для съемок сниппетов на треки в стиле r&b rap📍 Московская область · Видео и ау...",
+    "price": "В описании",
+    "url": "https://t.me/zakazy_it/339",
+    "category": "Веб-сайт",
+    "source": "TG (@zakazy_it)",
+    "published_at": "08.11 05:58",
+    "responses": "В ЛС",
+    "direct_contact": null,
+    "discovered_at": "2026-11-08T05:58:45+00:00"
   },
   {
     "title": "💬 Сценарист рилсИщут СЦЕНАРИСТОВ REELS с умением мыслить креативно и подходить в выполнению отв...",
@@ -889,17 +900,6 @@
     "responses": "В ЛС",
     "direct_contact": null,
     "discovered_at": "2026-11-03T13:49:46+00:00"
-  },
-  {
-    "title": "🔔 Ищу видеографа с профессиональной камерой для съёмки интервью📍 Батуми · Видео и аудио · 🕒 2 ч...",
-    "price": "В описании",
-    "url": "https://t.me/zakazy_it/298",
-    "category": "Веб-сайт",
-    "source": "TG (@zakazy_it)",
-    "published_at": "02.11 17:09",
-    "responses": "В ЛС",
-    "direct_contact": null,
-    "discovered_at": "2026-11-02T17:09:26+00:00"
   },
   {
     "title": "🔔 Ищу дизайнера для создания контента в кулинарный блог📍 Дизайн · 🕒 28 мин назадКонтакт заказчи...",
