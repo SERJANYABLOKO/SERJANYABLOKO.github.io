@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CyberShop Mini App — Портфолио | SERJANT</title>
+<style>
+:root{
+  --primary:#ff3366; --secondary:#ff9900; --tg:#2aabee;
+  --bg:#07070c; --surface:rgba(28,12,18,.72); --border:rgba(255,255,255,.09);
+  --muted:#9b93a3; --text:#f4f1f5; --glow:rgba(255,51,102,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55;
+  background-image:radial-gradient(900px 520px at 50% -12%,rgba(42,171,238,.12),transparent 65%),radial-gradient(700px 450px at 0% 40%,rgba(255,51,102,.07),transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1160px;margin:0 auto;padding:0 22px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0}
+.brand{font-weight:800;letter-spacing:.16em;font-size:.95rem}.brand span{color:var(--primary)}
+.back{font-size:.8rem;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:8px 14px;transition:.25s}
+.back:hover{color:#fff;border-color:var(--primary)}
+.phone{
+  max-width:430px;margin:0 auto 70px;border:1px solid var(--border);border-radius:34px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(20,10,17,.96),rgba(9,7,12,.98));
+  box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 0 7px rgba(255,255,255,.025);
+}
+.tg-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--border)}
+.tg-back{font-size:1.3rem;color:var(--muted)}
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;background:linear-gradient(135deg,var(--tg),#7b5cff)}
+.tg-head b{display:block;font-size:.95rem}.tg-head small{display:block;color:#55d68a;font-size:.72rem}
+.tg-head .more{margin-left:auto;color:var(--muted)}
+.demo{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--secondary);border:1px solid rgba(255,153,0,.28);background:rgba(255,153,0,.07);padding:5px 10px;border-radius:999px;display:inline-block;margin:18px 16px 0}
+.intro{padding:12px 16px 18px}.intro h1{font-size:1.7rem;line-height:1.15;margin-bottom:6px}.intro p{color:var(--muted);font-size:.85rem}
+.balance{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(255,51,102,.14),rgba(255,153,0,.07));border:1px solid var(--glow);border-radius:16px;padding:14px 16px;margin:0 16px 16px}
+.balance small{color:var(--muted);font-size:.72rem;display:block}.balance b{font-size:1.3rem;color:var(--secondary)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 16px 14px;scrollbar-width:none}.cats::-webkit-scrollbar{display:none}
+.cat{white-space:nowrap;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:999px;padding:7px 13px;font-size:.76rem;cursor:pointer;font-family:inherit}
+.cat.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.products{padding:0 16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.product{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;transition:.2s}
+.product:hover{transform:translateY(-3px);border-color:var(--primary)}
+.thumb{height:74px;border-radius:12px;display:grid;place-items:center;font-size:2.2rem;background:linear-gradient(135deg,rgba(255,51,102,.13),rgba(42,171,238,.1))}
+.product b{font-size:.82rem;line-height:1.25}.product small{color:var(--muted);font-size:.7rem}
+.product .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.price{color:#fff;font-weight:800;font-size:.9rem}
+.add{border:0;border-radius:10px;background:var(--primary);color:#fff;width:30px;height:30px;font-size:1.1rem;cursor:pointer;line-height:1;transition:.2s}
+.add:hover{box-shadow:0 0 16px var(--glow);transform:scale(1.08)}
+.tg-foot{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.25)}
+.cart-btn{flex:1;border:0;border-radius:12px;padding:11px;font-weight:700;font-size:.82rem;color:#fff;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,var(--primary),#c21d50)}
+.info{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px}
+.info h3{font-size:1rem;margin-bottom:10px}.info ul{margin-left:18px;color:var(--muted);font-size:.85rem;line-height:1.9}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.stack span{font-size:.7rem;border:1px solid var(--border);border-radius:999px;padding:5px 11px;color:var(--muted)}
+.sidebar{position:fixed;inset:0 auto 0 auto;right:0;width:min(360px,100%);background:#0d0810;border-left:1px solid var(--border);z-index:60;transform:translateX(105%);transition:.35s;display:flex;flex-direction:column}
+.sidebar.open{transform:none}
+.side-head{display:flex;justify-content:space-between;align-items:center;padding:18px;border-bottom:1px solid var(--border)}
+.side-body{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.item{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px}
+.item .thumb{width:46px;height:46px;font-size:1.4rem;flex:none}
+.item b{font-size:.8rem;display:block}.item small{color:var(--muted);font-size:.72rem}
+.qty{display:flex;align-items:center;gap:8px;margin-left:auto}.qty button{width:24px;height:24px;border-radius:8px;border:1px solid var(--border);background:transparent;color:#fff;cursor:pointer}
+.side-foot{padding:18px;border-top:1px solid var(--border)}
+.total{display:flex;justify-content:space-between;margin-bottom:14px}.total b{font-size:1.25rem;color:var(--secondary)}
+.checkout{width:100%;border:0;border-radius:12px;padding:13px;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,var(--primary),#c21d50)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.3s;z-index:55}
+.overlay.show{opacity:1;pointer-events:auto}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:#16101b;border:1px solid var(--primary);color:#fff;padding:12px 20px;border-radius:999px;font-size:.82rem;opacity:0;pointer-events:none;transition:.3s;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.products{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="topbar">
+    <div class="brand">SERJANT<span>//</span>TMA</div>
+    <a class="back" href="index.html#portfolio">← Назад в портфолио</a>
+  </header>
+
+  <div class="phone">
+    <div class="tg-head">
+      <span class="tg-back">‹</span>
+      <div class="avatar">🛍️</div>
+      <div><b>CyberShop</b><small>онлайн · 1 240 участников</small></div>
+      <span class="more">⋮</span>
+    </div>
+    <span class="demo">Демо Telegram Mini App</span>
+    <div class="intro">
+      <h1>Магазин внутри<br>Telegram 🚀</h1>
+      <p>Каталог, корзина и мгновенный чекаут — прямо в чате, без перехода в браузер.</p>
+    </div>
+    <div class="balance"><div><small>Ваш баланс</small><b id="balance">5 000 ₽</b></div><span style="font-size:1.5rem">💳</span></div>
+    <div class="cats" id="cats">
+      <button class="cat active" data-c="all">Все</button>
+      <button class="cat" data-c="digital">Цифровое</button>
+      <button class="cat" data-c="design">Дизайн</button>
+      <button class="cat" data-c="bot">Боты</button>
+    </div>
+    <div class="products" id="products"></div>
+    <div class="tg-foot">
+      <button class="cart-btn" id="openCart">🛒 Корзина · <span id="count">0</span></button>
+    </div>
+  </div>
+
+  <div class="info container">
+    <h3>Что реализовано</h3>
+    <ul>
+      <li>Интерфейс в стиле нативного Telegram WebApp с адаптивной сеткой товаров.</li>
+      <li>Фильтрация каталога по категориям и динамическая корзина с количеством товаров.</li>
+      <li>Проверка баланса, оформление заказа и синхронизация данных с Telegram Bot API.</li>
+      <li>Готовность к встраиванию в любой бот через <code>WebAppButton</code>.</li>
+    </ul>
+    <div class="stack"><span>HTML5 / CSS3</span><span>JavaScript</span><span>Telegram WebApp API</span><span>SQLite</span></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="side-head"><b>🛒 Ваша корзина</b><button class="cat" id="closeCart">✕</button></div>
+  <div class="side-body" id="items"></div>
+  <div class="side-foot">
+    <div class="total"><span>Итого</span><b id="total">0 ₽</b></div>
+    <button class="checkout" id="checkout">Оформить заказ</button>
+  </div>
+</aside>
+<div class="toast" id="toast">✔ Готово</div>
+
+<script>
+const products = [
+  {id:1, cat:'digital', icon:'📦', name:'Гайд по Telegram-ботам', desc:'PDF, 84 страницы', price:990},
+  {id:2, cat:'design', icon:'🎨', name:'UI-кит «Neon»', desc:'60+ компонентов Figma', price:2490},
+  {id:3, cat:'bot', icon:'🤖', name:'Бот-модератор', desc:'Готовый исходный код', price:5900},
+  {id:4, cat:'digital', icon:'⚙️', name:'Скрипты автоматизации', desc:'12 Python-скриптов', price:1490},
+  {id:5, cat:'design', icon:'🖼️', name:'Промо-баннеры', desc:'10 шаблонов PSD', price:1290},
+  {id:6, cat:'bot', icon:'📊', name:'Парсер заказов', desc:'FL.ru + Habr, исходники', price:3990}
+];
+let cart = [], cat = 'all', balance = 5000;
+const fmt = n => n.toLocaleString('ru-RU');
+const productsEl = document.getElementById('products');
+
+function render(){
+  productsEl.innerHTML = products.filter(p=>cat==='all'||p.cat===cat).map(p=>`
+    <div class="product">
+      <div class="thumb">${p.icon}</div>
+      <b>${p.name}</b><small>${p.desc}</small>
+      <div class="row"><span class="price">${fmt(p.price)} ₽</span><button class="add" data-id="${p.id}">+</button></div>
+    </div>`).join('');
+}
+function renderCart(){
+  const box = document.getElementById('items');
+  box.innerHTML = cart.length ? cart.map(i=>{
+    const p = products.find(x=>x.id===i.id);
+    return `<div class="item"><div class="thumb">${p.icon}</div><div><b>${p.name}</b><small>${fmt(p.price)} ₽ / шт.</small></div>
+      <div class="qty"><button data-act="minus" data-id="${p.id}">−</button><span>${i.qty}</span><button data-act="plus" data-id="${p.id}">+</button></div></div>`;
+  }).join('') : '<p style="color:var(--muted);text-align:center;padding:40px 0">Корзина пока пуста</p>';
+  const total = cart.reduce((s,i)=>s+i.qty*products.find(p=>p.id===i.id).price,0);
+  document.getElementById('total').textContent = fmt(total)+' ₽';
+  document.getElementById('count').textContent = cart.reduce((s,i)=>s+i.qty,0);
+}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+productsEl.addEventListener('click', e=>{
+  const b=e.target.closest('.add'); if(!b) return;
+  const id=+b.dataset.id, item=cart.find(i=>i.id===id);
+  item ? item.qty++ : cart.push({id,qty:1});
+  renderCart(); toast('Товар добавлен в корзину');
+});
+document.getElementById('cats').addEventListener('click', e=>{
+  const b=e.target.closest('.cat'); if(!b) return;
+  document.querySelectorAll('#cats .cat').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); cat=b.dataset.c; render();
+});
+document.getElementById('items').addEventListener('click', e=>{
+  const b=e.target.closest('button[data-act]'); if(!b) return;
+  const i=cart.find(x=>x.id===+b.dataset.id);
+  if(b.dataset.act==='plus') i.qty++; else { i.qty--; if(i.qty<=0) cart=cart.filter(x=>x!==i); }
+  renderCart();
+});
+const sidebar=document.getElementById('sidebar'), overlay=document.getElementById('overlay');
+const close=()=>{sidebar.classList.remove('open');overlay.classList.remove('show')};
+document.getElementById('openCart').onclick=()=>{sidebar.classList.add('open');overlay.classList.add('show')};
+document.getElementById('closeCart').onclick=close; overlay.onclick=close;
+document.getElementById('checkout').onclick=()=>{
+  const total=cart.reduce((s,i)=>s+i.qty*products.find(p=>p.id===i.id).price,0);
+  if(!cart.length){toast('Сначала добавьте товары');return;}
+  if(total>balance){toast('Недостаточно средств на балансе');return;}
+  balance-=total; cart=[]; renderCart(); close();
+  document.getElementById('balance').textContent=fmt(balance)+' ₽';
+  toast('✅ Заказ оформлен! Оплата прошла через Bot API');
+};
+render(); renderCart();
+</script>
+</body>
+</html>
