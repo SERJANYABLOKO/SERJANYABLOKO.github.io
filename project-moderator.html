@@ -78,7 +78,7 @@ footer{border-top:1px solid var(--border);padding:22px 0 46px;color:var(--muted)
   <section class="hero">
     <div class="tag"><span class="dot"></span> Кейс 03 · Telegram-боты / ИИ</div>
     <h1>AI-<em>Moderator</em> Bot</h1>
-    <p class="lead">Асинхронный Telegram-бот для автоматической модерации чатов: фильтрует спам, reclame и токсичные сообщения, ведёт статистику и уведомляет администраторов.</p>
+    <p class="lead">Асинхронный Telegram-бот для автоматической модерации чатов: фильтрует спам, рекламу и токсичные сообщения, ведёт статистику и уведомляет администраторов.</p>
   </section>
 
   <section class="stats">
@@ -95,8 +95,8 @@ footer{border-top:1px solid var(--border);padding:22px 0 46px;color:var(--muted)
 
       <div class="opt"><div><b>Фильтр спама</b><small>Ссылки, реклама, рассылки</small></div><button class="switch on" data-key="spam"></button></div>
       <div class="opt"><div><b>Защита от капса</b><small>Сообщения ЗАГЛАВНЫМИ буквами</small></div><button class="switch on" data-key="caps"></button></div>
-      <div class="opt"><div><b>Фильтр_mat</b><small>Грубые выражения и токсичность</small></div><button class="switch" data-key="toxic"></button></div>
-      <div class="opt"><div><b>AI-оценка тона</b><small>Эвристический анализ.context</small></div><button class="switch on" data-key="ai"></button></div>
+      <div class="opt"><div><b>Фильтр мата</b><small>Грубые выражения и токсичность</small></div><button class="switch" data-key="toxic"></button></div>
+      <div class="opt"><div><b>AI-оценка тона</b><small>Эвристический анализ тона сообщения</small></div><button class="switch on" data-key="ai"></button></div>
 
       <p class="hint" style="margin:18px 0 0">Чувствительность: <b id="sensVal">70%</b></p>
       <input class="range" type="range" min="0" max="100" value="70" id="sens" />
@@ -134,12 +134,12 @@ const log=document.getElementById('log');
 const samples = [
   {who:'@alex_dev', text:'Привет! Кто может помочь с версткой лендинга?'},
   {who:'@mega_profit', text:'ЗАРАБОТОК ОТ 100000 В ДЕНЬ! ПИШИ В ЛС'},
-  {who:'@maria', text:'Скину-reference по дизайн-системе вечером'},
+  {who:'@maria', text:'Скину референсы по дизайн-системе вечером'},
   {who:'@crypto_king', text:'Инвестируйте в crypto, гарантированная прибыль vk.cc/abc'},
   {who:'@ivan', text:'Кто пользовался aiogram 3? Есть пример middleware?'},
   {who:'@spam_bot', text:'ПРОМОКОД СКИДКА 50% ТОЛЬКО СЕГОДНЯ'},
   {who:'@oleg', text:'Опубликовал новый кейс в портфолио, посмотрите'},
-  {who:'@anna', text:'Всем привет, ищу дизайнера наMVPPitat?'}
+  {who:'@anna', text:'Всем привет, ищу дизайнера для MVP проекта'}
 ];
 const fmt=n=>n.toLocaleString('ru-RU');
 function push(cls, html){ log.insertAdjacentHTML('beforeend', `<div class="msg ${cls}">${html}</div>`); log.scrollTop=log.scrollHeight; }
