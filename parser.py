@@ -182,6 +182,66 @@ def parse_tg(channel: str):
     except Exception: pass
     return tasks
 
+FL_PAGES = [
+    ("https://www.fl.ru/projects/category/saity/", "Веб-сайт"),
+    ("https://www.fl.ru/projects/category/programmirovanie/", "Парсеры"),
+    ("https://www.fl.ru/projects/category/messengers/", "Telegram"),
+    ("https://www.fl.ru/projects/category/ai-iskusstvenniy-intellekt/", "Парсеры"),
+    ("https://www.fl.ru/projects/category/avtomatizaciya-biznesa/", "Парсеры"),
+    ("https://www.fl.ru/projects/", "Веб-сайт"),
+]
+FL_BAD = ["дизайн логотипа", "логотип", "баннер", "иллюстрац", "ретуш", "аватар", "брендинг", "презентац", "motion", "3d-модел", "колорист", "видеограф", "монтаж видео", "сборка пк", "апгрейд пк", "ищем ", "ваканси", "резюме", "курс", "обучение", "смм", "smm", "копирайтер", "переводчик", "озвучк", "агент по продажам", "продаж", "курьер", "поиск", "партнёр", "раскрутка", "группа вк", "без опыта", "директолог", "таргетолог", "менеджер", "поиск клиентов", "учеников", "репетитор", "1с-специалист", "1с:предприятие"]
+FL_DEV = ["бот", "aiogram", "telegram", "tma", "mini app", "сайт", "лендинг", "верстк", "wordpress", "php", "python", "javascript", "html", "css", "react", "vue", "django", "laravel", "bitrix", "битрикс", "tilda", "парсер", "скрипт", "автоматизац", "программирован", "разработк", "веб-прилож", "api", "интеграц", "webapp"]
+
+
+def parse_fl_projects():
+    """Реальные заказы с биржи FL.ru (публичные страницы проектов)."""
+    tasks = []
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    now = datetime.now(timezone.utc)
+
+    for url, fallback in FL_PAGES:
+        try:
+            res = requests.get(url, headers=headers, timeout=20)
+            if res.status_code != 200:
+                continue
+            soup = BeautifulSoup(res.text, "html.parser")
+            for card in soup.select("div.b-page__lenta_item[id^='project-item']"):
+                title_el = card.select_one("h2.b-post__title a")
+                if not title_el:
+                    continue
+                title = clean_text(title_el.get_text(" ", strip=True))
+                desc_el = card.select_one("div.b-post__txt.text-5")
+                desc = clean_text(desc_el.get_text(" ", strip=True)) if desc_el else ""
+                full = f"{title} {desc}".lower()
+                if any(w in full for w in FL_BAD) or not any(w in full for w in FL_DEV):
+                    continue
+                price_el = card.select_one("div.b-post__price span")
+                price = clean_text(price_el.get_text(" ", strip=True)) if price_el else "Договорная"
+                if "собеседовани" in price.lower():
+                    continue
+                href = title_el.get("href", "")
+                if not href.startswith("/projects/"):
+                    continue
+                date_el = card.select_one("span.text-gray-opacity-4")
+                date_txt = clean_text(date_el.get_text(" ", strip=True)).lower() if date_el else ""
+                published = date_txt[:24] or "недавно"
+                tasks.append({
+                    "title": title[:120],
+                    "price": price,
+                    "url": "https://www.fl.ru" + href,
+                    "category": fallback,
+                    "source": "FL.ru",
+                    "published_at": published,
+                    "responses": "Открытый отклик",
+                    "direct_contact": None,
+                    "discovered_at": now.isoformat()
+                })
+        except Exception:
+            pass
+    return tasks
+
+
 def load_existing_orders() -> list:
     if not os.path.exists("orders.json"): return []
     try:
@@ -195,6 +255,7 @@ if __name__ == "__main__":
     new_scraped = []
     
     print("[*] Сбор заказов за последнюю неделю (до 7 дней)...")
+    new_scraped.extend(parse_fl_projects())
     new_scraped.extend(parse_rss_feeds())
     for ch in TG_CHANNELS:
         new_scraped.extend(parse_tg(ch))
