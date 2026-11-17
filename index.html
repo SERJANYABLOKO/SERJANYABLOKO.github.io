@@ -860,6 +860,66 @@
                     </div>
                 </div>
             </div>
+
+            <div class="portfolio-card" data-pcat="design">
+                <div class="portfolio-banner">📡</div>
+                <div class="portfolio-body">
+                    <div>
+                        <h4>Order Radar — live-сканер заказов</h4>
+                        <p>Рабочий прототип панели мониторинга бирж фриланса: поиск, фильтры, статистика бюджетов и поток сканирования в реальном времени.</p>
+                        <div class="stack-list">
+                            <span class="stack-tag">JavaScript</span>
+                            <span class="stack-tag">UI/UX</span>
+                            <span class="stack-tag">Парсинг</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <a href="project-radar.html" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Открыть кейс ➔</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card" data-pcat="telegram">
+                <div class="portfolio-banner">🛍️</div>
+                <div class="portfolio-body">
+                    <div>
+                        <h4>CyberShop — живое демо Mini App</h4>
+                        <p>Интерактивный прототип магазина внутри Telegram: каталог, категории, корзина с количеством и оформление заказа с проверкой баланса.</p>
+                        <div class="stack-list">
+                            <span class="stack-tag">HTML5/CSS3</span>
+                            <span class="stack-tag">JavaScript</span>
+                            <span class="stack-tag">Telegram WebApp</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <a href="project-tma.html" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Открыть кейс ➔</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card" data-pcat="telegram">
+                <div class="portfolio-banner">🛡️</div>
+                <div class="portfolio-body">
+                    <div>
+                        <h4>AI-Moderator — панель управления</h4>
+                        <p>Демо-интерфейс бота-модератора: настраиваемые фильтры, триггерные слова, чувствительность и живой поток проверки сообщений.</p>
+                        <div class="stack-list">
+                            <span class="stack-tag">Python 3.11</span>
+                            <span class="stack-tag">aiogram 3</span>
+                            <span class="stack-tag">SQLite</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <a href="project-moderator.html" target="_blank" class="btn btn-sm btn-secondary" style="flex:1;">Открыть кейс ➔</a>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (location.hash === '#portfolio' && typeof navigateTo === 'function') navigateTo('portfolio');
+            });
+            </script>
         </div>
     </div>
 </div>
