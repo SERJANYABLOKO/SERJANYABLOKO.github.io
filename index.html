@@ -1410,7 +1410,7 @@
         document.getElementById('flCountBadge').textContent = `${flOrders.length} задач`;
 
         if (activeFilter === 'all' || activeFilter === 'FL.ru') {
-            flSection.style.display = 'block';
+            flSection.style.display = flOrders.length ? 'block' : 'none';
             const filteredFl = query ? flOrders.filter(o => o.title.toLowerCase().includes(query)) : flOrders;
             flContainer.innerHTML = filteredFl.length === 0 ? `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач.</div>` : applySort(filteredFl.slice()).map(o => createOrderCard(o)).join('');
         } else {
