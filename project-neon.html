@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neon Studio — Портфолио | SERJANT</title>
+<style>
+:root{
+  --primary:#ff3366; --secondary:#00e5ff; --violet:#8b5cff;
+  --bg:#05050b; --surface:rgba(18,16,32,.72); --border:rgba(255,255,255,.09);
+  --muted:#9b96ad; --text:#f5f3fa; --glow:rgba(255,51,102,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;
+  background-image:radial-gradient(950px 520px at 12% -8%,rgba(139,92,255,.16),transparent 62%),radial-gradient(900px 520px at 88% 4%,rgba(0,229,255,.1),transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1360px;margin:0 auto;padding:0 36px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--border)}
+.brand{font-weight:800;letter-spacing:.16em;font-size:1rem}.brand span{color:var(--primary)}
+.back{font-size:.82rem;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:9px 16px;transition:.25s}
+.back:hover{color:#fff;border-color:var(--primary);box-shadow:0 0 18px var(--glow)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:76px 0 66px}
+.tag{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--secondary);border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.06);padding:7px 14px;border-radius:999px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--secondary);box-shadow:0 0 10px var(--secondary)}
+h1{font-size:clamp(2.8rem,5.6vw,4.8rem);line-height:1.04;letter-spacing:-.04em;margin:20px 0 18px}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--primary),var(--violet) 55%,var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:1.05rem;max-width:640px}
+.hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn{border:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:.88rem;color:#fff;cursor:pointer;font-family:inherit;transition:.25s;background:linear-gradient(135deg,var(--primary),#b01d55);box-shadow:0 12px 30px var(--glow)}
+.btn:hover{transform:translateY(-3px)}
+.btn.ghost{background:transparent;border:1px solid var(--border);box-shadow:none}
+.hero-trust{display:flex;gap:26px;margin-top:36px;flex-wrap:wrap}
+.hero-trust div b{display:block;font-size:1.5rem}.hero-trust div small{color:var(--muted);font-size:.76rem}
+.showcase{position:relative;min-height:420px;border-radius:26px;border:1px solid var(--border);background:linear-gradient(145deg,rgba(139,92,255,.16),rgba(0,229,255,.05));box-shadow:0 30px 80px rgba(0,0,0,.55);padding:22px;overflow:hidden}
+.showcase::before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);top:-120px;right:-90px}
+.mock{position:relative;background:rgba(5,5,12,.82);border:1px solid var(--border);border-radius:16px;padding:18px;height:100%}
+.mock-top{display:flex;gap:6px;margin-bottom:18px}.mock-top i{width:9px;height:9px;border-radius:50%;background:#4b4457}.mock-top i:first-child{background:var(--primary)}.mock-top i:nth-child(2){background:var(--secondary)}
+.mock-hero{height:120px;border-radius:12px;background:linear-gradient(120deg,rgba(255,51,102,.3),rgba(139,92,255,.22),rgba(0,229,255,.2));display:grid;place-items:center;font-size:2.4rem}
+.mock-line{height:10px;border-radius:6px;background:rgba(255,255,255,.08);margin-top:14px}
+.mock-line.s{width:65%}.mock-line.m{width:85%}
+.mock-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.mock-cards div{height:82px;border-radius:12px;background:linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--border);display:grid;place-items:center;font-size:1.5rem}
+.section{padding:40px 0 70px}
+.section-head{text-align:center;max-width:640px;margin:0 auto 40px}
+.section-head small{color:var(--primary);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
+.section-head h2{font-size:clamp(1.9rem,3.4vw,2.8rem);margin:10px 0;letter-spacing:-.02em}
+.section-head p{color:var(--muted);font-size:.94rem}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;transition:.3s}
+.feature:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.feature .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:linear-gradient(135deg,rgba(255,51,102,.16),rgba(139,92,255,.14));border:1px solid var(--border)}
+.feature h3{margin:16px 0 8px;font-size:1.05rem}.feature p{color:var(--muted);font-size:.86rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 10px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center}
+.stat b{display:block;font-size:2.1rem;background:linear-gradient(100deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat small{color:var(--muted);font-size:.78rem}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.plan.pop{border-color:var(--primary);box-shadow:0 0 0 1px var(--glow),0 20px 50px rgba(0,0,0,.45);background:linear-gradient(180deg,rgba(255,51,102,.09),transparent 60%)}
+.plan small{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em}
+.plan .cost{font-size:2.2rem;font-weight:800}.plan ul{list-style:none;display:flex;flex-direction:column;gap:9px;color:var(--muted);font-size:.86rem;flex:1}
+.plan li::before{content:'✓';color:var(--primary);margin-right:9px;font-weight:800}
+.plan .btn{text-align:center;display:block}
+.cta{margin:30px 0 80px;border:1px solid var(--border);border-radius:24px;padding:48px;text-align:center;background:radial-gradient(700px 260px at 50% 0%,rgba(255,51,102,.14),transparent 70%),var(--surface)}
+.cta h2{font-size:2rem;margin-bottom:10px}.cta p{color:var(--muted);margin-bottom:24px}
+.cta form{display:flex;gap:10px;max-width:560px;margin:0 auto;flex-wrap:wrap}
+.cta input{flex:1;min-width:220px;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:999px;padding:14px 20px;color:#fff;outline:none;font-family:inherit;font-size:.88rem}
+.cta input:focus{border-color:var(--primary)}
+footer{border-top:1px solid var(--border);padding:22px 0 46px;color:var(--muted);font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.stack span{font-size:.74rem;border:1px solid var(--border);border-radius:999px;padding:6px 12px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:#16101b;border:1px solid var(--primary);color:#fff;padding:13px 22px;border-radius:999px;font-size:.84rem;opacity:0;pointer-events:none;transition:.3s;z-index:80}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1050px){.hero{grid-template-columns:1fr}.features,.pricing{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.container{padding:0 20px}.features,.pricing{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="topbar">
+    <div class="brand">NEON<span>//</span>STUDIO</div>
+    <a class="back" href="index.html#portfolio">← Назад в портфолио</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="tag"><i></i> Кейс 05 · Лендинг и UI/UX</div>
+      <h1>Неоновый лендинг<br>для <em>IT-продукта</em></h1>
+      <p class="lead">Адаптивный промо-сайт с выразительной типографикой, стеклянными карточками и плавными анимациями. Сделан для презентации цифрового продукта и сбора заявок.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn">Смотреть тарифы ➔</a>
+        <a href="#features" class="btn ghost">Что внутри</a>
+      </div>
+      <div class="hero-trust">
+        <div><b>98</b><small>Google PageSpeed</small></div>
+        <div><b>3 сек</b><small>Средний срок запуска</small></div>
+        <div><b>24/7</b><small>Работает без простоев</small></div>
+      </div>
+    </div>
+    <div class="showcase">
+      <div class="mock">
+        <div class="mock-top"><i></i><i></i><i></i></div>
+        <div class="mock-hero">✦</div>
+        <div class="mock-line m"></div><div class="mock-line s"></div>
+        <div class="mock-cards"><div>⚡</div><div>🎨</div><div>📈</div></div>
+        <div class="mock-line m"></div><div class="mock-line s"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="section-head"><small>Возможности</small><h2>Всё для первого впечатления</h2><p>Каждый блок работает на задачу — показать ценность продукта и подвести посетителя к заявке.</p></div>
+    <div class="features">
+      <div class="feature"><div class="ic">⚡</div><h3>Мгновенная загрузка</h3><p>Минимум зависимостей, оптимизированные стили и отсутствие тяжёлых библиотек.</p></div>
+      <div class="feature"><div class="ic">🎨</div><h3>Неоновая айдентика</h3><p>Градиенты, стеклянные поверхности и аккуратная типографика в единой системе.</p></div>
+      <div class="feature"><div class="ic">📱</div><h3>Адаптивная вёрстка</h3><p>Сетка корректно ведёт себя на широких мониторах, ноутбуках и мобильных устройствах.</p></div>
+      <div class="feature"><div class="ic">🧩</div><h3>Готовые компоненты</h3><p>Кнопки, карточки, тарифы и формы — можно собирать новые страницы за часы.</p></div>
+      <div class="feature"><div class="ic">🔍</div><h3>SEO-структура</h3><p>Правильные заголовки, семантическая разметка и читаемый контент с первого экрана.</p></div>
+      <div class="feature"><div class="ic">📨</div><h3>Сбор заявок</h3><p>Форма обратной связи с валидацией и уведомлением в Telegram.</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="98">0</b><small>PageSpeed</small></div>
+      <div class="stat"><b data-count="60">0</b><small>Компонентов UI</small></div>
+      <div class="stat"><b data-count="12">0</b><small>Блоков на странице</small></div>
+      <div class="stat"><b data-count="100">0</b><small>Адаптивности</small></div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="section-head"><small>Тарифы</small><h2>Выберите нужный формат</h2><p>Прозрачные условия без скрытых доплат.</p></div>
+    <div class="pricing">
+      <div class="plan"><small>Старт</small><div class="cost">15 000 ₽</div><ul><li>До 3 экранов</li><li>Адаптивная вёрстка</li><li>Форма заявки</li><li>1 правка</li></ul><button class="btn ghost plan-btn">Выбрать</button></div>
+      <div class="plan pop"><small>Популярный</small><div class="cost">35 000 ₽</div><ul><li>До 7 экранов</li><li>Неоновая айдентика</li><li>Анимации и фишки</li><li>SEO-структура</li><li>3 правки</li></ul><button class="btn plan-btn">Выбрать</button></div>
+      <div class="plan"><small>Под ключ</small><div class="cost">65 000 ₽</div><ul><li>Любое число экранов</li><li>Дизайн в Figma</li><li>Интеграции и API</li><li>Хостинг и запуск</li><li>Поддержка 30 дней</li></ul><button class="btn ghost plan-btn">Выбрать</button></div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <h2>Нужен такой же лендинг?</h2>
+    <p>Оставьте контакт — обсудим задачу и сроки.</p>
+    <form id="leadForm">
+      <input type="text" id="leadName" placeholder="Как к вам обращаться" required />
+      <input type="text" id="leadContact" placeholder="Telegram или email" required />
+      <button class="btn" type="submit">Отправить заявку</button>
+    </form>
+    <div class="stack" style="justify-content:center"><span>HTML5 / CSS3</span><span>JavaScript</span><span>Figma UI/UX</span><span>Glassmorphism</span></div>
+  </section>
+
+  <footer>
+    <span>© SERJANT · Портфолио проектов</span>
+    <span>Демо-лендинг · данные вымышлены</span>
+  </footer>
+</div>
+<div class="toast" id="toast">✔ Готово</div>
+<script>
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+document.querySelectorAll('.plan-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  toast(' Тариф выбран — заполните заявку ниже');
+}));
+document.getElementById('leadForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  toast('✅ Заявка отправлена! Свяжусь с вами в Telegram');
+  e.target.reset();
+});
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(!en.isIntersecting) return;
+    const el=en.target, target=+el.dataset.count;
+    let cur=0; const step=Math.max(1,Math.round(target/30));
+    const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t)}el.textContent=cur},28);
+    observer.unobserve(el);
+  });
+},{threshold:.4});
+document.querySelectorAll('[data-count]').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
