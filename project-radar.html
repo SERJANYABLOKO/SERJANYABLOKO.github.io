@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Radar — Портфолио | SERJANT</title>
+<style>
+:root{
+  --primary:#ff3366; --secondary:#ff9900;
+  --bg:#07070c; --surface:rgba(28,12,18,.72); --surface-2:rgba(41,17,26,.6);
+  --border:rgba(255,255,255,.09); --muted:#9b93a3; --text:#f4f1f5;
+  --glow:rgba(255,51,102,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); min-height:100vh; line-height:1.55;
+  background-image:
+    radial-gradient(900px 500px at 12% -10%,rgba(255,51,102,.13),transparent 65%),
+    radial-gradient(800px 500px at 90% 0%,rgba(255,153,0,.08),transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px 0;background:rgba(7,7,12,.86);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.brand{font-weight:800;letter-spacing:.16em;font-size:.95rem}
+.brand span{color:var(--primary)}
+.back{
+  display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:8px 14px;transition:.25s;
+}
+.back:hover{color:#fff;border-color:var(--primary);box-shadow:0 0 18px var(--glow)}
+.hero{padding:64px 0 26px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--primary);border:1px solid var(--glow);
+  background:rgba(255,51,102,.08);padding:7px 13px;border-radius:999px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 10px var(--primary);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+h1{font-size:clamp(2.2rem,5.2vw,4rem);line-height:1.05;margin:18px 0 14px;letter-spacing:-.03em}
+h1 em{font-style:normal;color:var(--primary)}
+.lead{max-width:660px;color:var(--muted);font-size:1rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:34px 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.stat small{display:block;color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.1em}
+.stat b{display:block;font-size:1.85rem;margin-top:8px;color:#fff}
+.stat b i{font-style:normal;font-size:.9rem;color:var(--primary)}
+.toolbar{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:20px;
+}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{
+  background:transparent;border:1px solid var(--border);color:var(--muted);
+  border-radius:999px;padding:8px 14px;font-size:.8rem;cursor:pointer;transition:.2s;font-family:inherit;
+}
+.tab:hover{color:#fff}
+.tab.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 0 18px var(--glow)}
+.search{
+  background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:999px;
+  padding:10px 16px;color:#fff;outline:none;min-width:220px;font-family:inherit;font-size:.85rem;
+}
+.search:focus{border-color:var(--primary)}
+.btn{
+  border:0;border-radius:999px;padding:10px 18px;font-weight:700;font-size:.82rem;cursor:pointer;
+  font-family:inherit;color:#fff;background:linear-gradient(135deg,var(--primary),#d81b5a);
+  box-shadow:0 8px 24px var(--glow);transition:.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:1px solid var(--border);box-shadow:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px;
+  display:flex;flex-direction:column;gap:14px;transition:.28s;animation:fade .35s ease both;
+}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-4px);border-color:var(--primary);box-shadow:0 16px 36px rgba(0,0,0,.45)}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pill{font-size:.68rem;padding:5px 10px;border-radius:999px;background:rgba(255,51,102,.12);color:var(--primary);border:1px solid var(--glow)}
+.src{font-size:.7rem;color:var(--muted)}
+.card h3{font-size:1.02rem;font-weight:650}
+.card p{font-size:.83rem;color:var(--muted);min-height:42px}
+.meta{display:flex;gap:14px;font-size:.74rem;color:var(--muted);flex-wrap:wrap}
+.price{font-size:1.1rem;font-weight:800;color:var(--secondary)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+.link{font-size:.78rem;color:var(--primary);border-bottom:1px dashed transparent}
+.link:hover{border-color:var(--primary)}
+.terminal{
+  margin:34px 0 70px;background:#0a060b;border:1px solid var(--border);border-radius:18px;overflow:hidden;
+}
+.terminal-head{display:flex;justify-content:space-between;padding:12px 18px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);font-size:.75rem;color:var(--muted)}
+.terminal-body{padding:18px;font-family:Consolas,monospace;font-size:.78rem;max-height:210px;overflow:auto;line-height:1.9}
+.ok{color:#48e5a0}.warn{color:var(--secondary)}.dim{color:#6f6875}.info{color:#7fd7ff}
+footer{padding:26px 0 50px;border-top:1px solid var(--border);color:var(--muted);font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.toolbar{align-items:stretch}.search{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="topbar">
+    <div class="brand">SERJANT<span>//</span>RADAR</div>
+    <a class="back" href="index.html#portfolio">← Назад в портфолио</a>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span> Кейс 01 · Парсинг и аналитика</div>
+    <h1>Order <em>Radar</em></h1>
+    <p class="lead">Сканер заказов с бирж фриланса в реальном времени: собирает объявления, определяет категорию, цену и источник, а затем помогает мгновенно откликнуться на подходящий проект.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>Найдено заказов</small><b id="s-total">0</b></div>
+    <div class="stat"><small>Новых сегодня</small><b id="s-new">0 <i>+18%</i></b></div>
+    <div class="stat"><small>Средний бюджет</small><b id="s-avg">0 <i>₽</i></b></div>
+    <div class="stat"><small>Источников</small><b>4 <i>онлайн</i></b></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-f="all">Все</button>
+      <button class="tab" data-f="Telegram">Telegram</button>
+      <button class="tab" data-f="Веб">Веб</button>
+      <button class="tab" data-f="Дизайн">Дизайн</button>
+      <button class="tab" data-f="Python">Python</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input class="search" id="search" placeholder="Поиск по названию…" />
+      <button class="btn" id="scan">⟳ Сканировать</button>
+    </div>
+  </div>
+
+  <section class="grid" id="grid"></section>
+
+  <section class="terminal">
+    <div class="terminal-head"><span>live_scan.log</span><span id="clock">--:--:--</span></div>
+    <div class="terminal-body" id="log"></div>
+  </section>
+
+  <footer>
+    <span>© SERJANT · Портфолио проектов</span>
+    <span>Демо-интерфейс · данные вымышлены</span>
+  </footer>
+</div>
+
+<script>
+const orders = [
+  {cat:'Telegram', src:'FL.ru', title:'Telegram Mini App для системы лояльности', desc:'Нужен WebApp с личным кабинетом, бонусами и интеграцией через Bot API.', price:85000, resp:3, date:'12 мин назад'},
+  {cat:'Веб', src:'Habr Freelance', title:'Лендинг для IT-продукта с анимацией', desc:'Адаптивная вёрстка по макету, GSAP-анимации, подключение аналитики.', price:62000, resp:7, date:'38 мин назад'},
+  {cat:'Дизайн', src:'FL.ru', title:'Дизайн дашборда аналитики для CRM', desc:'Разработать тёмную UI-панель: графики, таблицы, фильтры и мобильную версию.', price:48000, resp:2, date:'1 ч назад'},
+  {cat:'Python', src:'Telegram', title:'Бот-ассистент с ИИ-ответами на базе LLM', desc:'Асинхронный бот на aiogram 3, хранение контекста диалога в SQLite.', price:120000, resp:5, date:'2 ч назад'},
+  {cat:'Веб', src:'FL.ru', title:'Корзина и оплата для интернет-магазина', desc:'Интеграция с эквайрингом, личный кабинет, email-уведомления.', price:95000, resp:9, date:'3 ч назад'},
+  {cat:'Telegram', src:'Habr Freelance', title:'Парсер каналов и агрегатор постов', desc:'Сбор данных, фильтрация по ключевым словам, рассылка в Telegram.', price:55000, resp:4, date:'4 ч назад'},
+  {cat:'Дизайн', src:'Telegram', title:'Айдентика и баннеры для игрового проекта', desc:'Логотип, набор промо-баннеров и гайдлайн в киберпанк-стиле.', price:35000, resp:1, date:'5 ч назад'},
+  {cat:'Python', src:'FL.ru', title:'Автоматизация отчётности в Excel', desc:'Скрипт на Python: сбор данных из API, генерация XLSX и отправка по почте.', price:40000, resp:6, date:'6 ч назад'},
+  {cat:'Веб', src:'Telegram', title:'Доработка сайта сети кофеен', desc:'Меню, конструктор напитков и онлайн-заказ с самовывозом.', price:70000, resp:2, date:'8 ч назад'}
+];
+const pool = [
+  {cat:'Telegram', src:'FL.ru', title:'Mini App записи в салон красоты', desc:'Календарь, выбор мастера и уведомления через Telegram Bot API.', price:79000},
+  {cat:'Python', src:'Telegram', title:'Модератор чата с фильтрацией спама', desc:'Асинхронный бот: проверка сообщений, предупреждения и статистка.', price:65000},
+  {cat:'Веб', src:'Habr Freelance', title:'Корпоративный сайт с личным кабинетом', desc:'Адаптивная вёрстка, форма заявок и админ-панель на JavaScript.', price:110000},
+  {cat:'Дизайн', src:'FL.ru', title:'UI-кит мобильного приложения доставки', desc:'40+ экранов, компоненты и дизайн-система в Figma.', price:58000}
+];
+let filter = 'all';
+const grid = document.getElementById('grid');
+const log = document.getElementById('log');
+const fmt = n => n.toLocaleString('ru-RU');
+
+function render(){
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const list = orders.filter(o =>
+    (filter === 'all' || o.cat === filter) && (!q || o.title.toLowerCase().includes(q))
+  );
+  grid.innerHTML = list.length ? list.map(o => `
+    <article class="card">
+      <div class="card-top"><span class="pill">${o.cat}</span><span class="src">${o.src}</span></div>
+      <div><h3>${o.title}</h3><p>${o.desc}</p></div>
+      <div class="meta"><span>◷ ${o.date}</span><span>✉ ${o.resp} откликов</span></div>
+      <div class="card-foot"><span class="price">${fmt(o.price)} ₽</span><a class="link" href="https://t.me/serjantyabloko" target="_blank">Откликнуться →</a></div>
+    </article>`).join('') : '<p style="color:var(--muted)">По запросу ничего не найдено. Попробуйте другой фильтр.</p>';
+  document.getElementById('s-total').textContent = orders.length;
+  document.getElementById('s-new').innerHTML = orders.length + ' <i>+18%</i>';
+  const avg = Math.round(orders.reduce((a,o)=>a+o.price,0)/orders.length/1000)*1000;
+  document.getElementById('s-avg').innerHTML = fmt(avg) + ' <i>₽</i>';
+}
+function line(txt, cls='dim'){
+  const t = new Date().toLocaleTimeString('ru-RU');
+  log.insertAdjacentHTML('beforeend', `<div><span class="dim">[${t}]</span> <span class="${cls}">${txt}</span></div>`);
+  log.scrollTop = log.scrollHeight;
+}
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); filter = b.dataset.f; render();
+  line(`Фильтр: ${b.textContent}`, 'info');
+});
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('scan').addEventListener('click', () => {
+  const b = document.getElementById('scan'); b.disabled = true; b.textContent = 'Сканирую…';
+  line('> запуск сканирования 4 источников…', 'info');
+  setTimeout(()=>line('  FL.ru … 12 объявлений', 'dim'), 250);
+  setTimeout(()=>line('  Habr Freelance … 7 объявлений', 'dim'), 500);
+  setTimeout(()=>{
+    const item = pool[Math.floor(Math.random()*pool.length)];
+    orders.unshift({...item, resp:Math.floor(Math.random()*5)+1, date:'только что'});
+    line(`<span class="ok">[НОВОЕ]</span> ${item.title} — ${fmt(item.price)} ₽`, 'ok');
+    render(); b.disabled = false; b.textContent = '⟳ Сканировать';
+  }, 900);
+});
+setInterval(()=>{ document.getElementById('clock').textContent = new Date().toLocaleTimeString('ru-RU'); }, 1000);
+render();
+line('Order Radar инициализирован. Источники: FL.ru, Habr, Telegram, Kwork.', 'ok');
+line('Ожидание команды сканирования…');
+</script>
+</body>
+</html>
