@@ -8,7 +8,7 @@ import feedparser
 
 RSS_FEEDS = [
     {
-        "url": "https://freelance.habr.com/tasks.rss?categories=development_all_inclusive,development_backend,development_frontend,development_scripts,development_bots,design_websites,design_landings,design_app_interfaces",
+        "url": "https://freelance.habr.com/tasks.rss?categories=development_all_inclusive,development_backend,development_frontend,development_scripts,development_bots,development_other,admin",
         "source": "Хабр Фриланс"
     },
     {
@@ -32,12 +32,8 @@ TG_CHANNELS = [
     "zakazy_it", "web_zakazy", "it_podrabotka", "bots_orders", "bot_zakazy",
     "zakaz_na_bota", "tg_apps_jobs", "tma_developers", "It_Vakansii", "remote_it",
     "freelance_work", "profi_freelance", "zakaz_freelance", "veb_rabota",
-    "Design_Jobs", "ui_ux_jobs", "figma_jobs", "web_design_jobs", "ui_ux_chat_work",
-    "figma_design_chat", "design_gigs_ru", "ui_gigs", "ux_gigs", "motion_design_orders",
-    "video_montage_orders", "3d_max_orders", "zakazy_design", "design_orders_ru",
-    "graphic_design_jobs", "behance_jobs", "dribbble_jobs_ru", "creatives_jobs",
-    "banner_orders", "preview_youtube_jobs", "smm_design_orders", "tilda_design_jobs",
-    "logo_orders_chat", "brand_identity_jobs", "infographics_mp_orders",
+    "tma_jobs", "webapp_zakazy", "site_zakazy", "frontend_zakazy", "nextjs_jobs",
+    "python_bot_jobs", "aiogram_orders", "webdev_orders", "site_development",
     "python_rabota", "aiogram_jobs", "telethon_jobs", "py_jobs", "python_freelance",
     "python_job_board", "bot_creators_ru", "pydevjob", "it_bot_zakaz", "telegram_bots_order",
     "py_orders", "script_freelance", "bot_developers_ru", "python_vacancies", "py_development",
@@ -67,6 +63,18 @@ def is_matching(text: str) -> bool:
             return False
     return True
 
+# Радар показывает только задачи по разработке: боты, сайты и автоматизация.
+DESIGN_STEMS = [
+    "дизайн", "дизайнер", "figma", "фигма", "ui/ux", "ui ux", "макет",
+    "прототип", "баннер", "логотип", "иллюстрац", "ретуш", "аватар",
+    "брендинг", "презентац", "motion", "3d-макет", "колорист", "видеограф",
+    "монтаж видео", "сборка пк", "апгрейд пк"
+]
+
+def is_relevant(text: str) -> bool:
+    text_lower = text.lower()
+    return not any(stem in text_lower for stem in DESIGN_STEMS)
+
 def get_category(text: str, source: str) -> str:
     if "FL.ru" in source:
         return "FL.ru"
@@ -75,10 +83,12 @@ def get_category(text: str, source: str) -> str:
         return "Железо / ПК"
     elif any(k in text_lower for k in ["дизайн", "figma", "фигма", "ui/ux", "макет", "прототип", "баннер", "аватар"]):
         return "Дизайн"
-    elif any(k in text_lower for k in ["бот", "app", "tma", "aiogram", "mini app"]):
+    elif any(k in text_lower for k in ["бот", "tma", "mini app", "webapp", "aiogram", "telegram app", "telegram-бот"]):
         return "Telegram"
-    elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт"]):
+    elif any(k in text_lower for k in ["парсер", "спарсить", "скрипт", "автоматизац"]):
         return "Парсеры"
+    elif any(k in text_lower for k in ["сайт", "лендинг", "верстка", "frontend", "backend", "react", "vue", "django", "wordpress", "веб-приложен"]):
+        return "Веб-сайт"
     return "Веб-сайт"
 
 def parse_rss_feeds():
@@ -102,7 +112,7 @@ def parse_rss_feeds():
                     try: pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
                     except Exception: pass
 
-                if pub_date >= week_ago and (feed_info["source"] == "FL.ru" or is_matching(full_text)):
+                if pub_date >= week_ago and is_relevant(full_text) and (feed_info["source"] == "FL.ru" or is_matching(full_text)):
                     tasks.append({
                         "title": title[:95] + "..." if len(title) > 95 else title,
                         "price": "Договорная",
@@ -145,7 +155,7 @@ def parse_tg(channel: str):
             if msg_dt < week_ago: continue
             
             text = text_el.text.strip()
-            if not is_matching(text): continue
+            if not is_matching(text) or not is_relevant(text): continue
 
             published_str = msg_dt.strftime("%d.%m %H:%M")
             first_line = clean_text(text.split("\n")[0])
