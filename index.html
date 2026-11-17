@@ -635,24 +635,29 @@
     <div class="container" style="padding-bottom: 80px;">
         <div class="section-header">
             <h2 class="section-title">Радар IT-Заказов</h2>
-            <p class="section-subtitle">Парсинг 50+ открытых каналов и бирж в реальном времени</p>
+            <p class="section-subtitle">Только задачи по разработке ботов, сайтов и автоматизации — дизайн-заказы не показываются</p>
         </div>
+
+        <div id="radarSummary" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px;"></div>
 
         <div class="radar-bar">
             <div class="filter-tabs" id="radarFilterGroup">
                 <button class="filter-tab active" data-filter="all">Все потоки</button>
-                <button class="filter-tab" data-filter="FL.ru">📂 FL</button>
                 <button class="filter-tab" data-filter="Telegram">🤖 Боты / TMA</button>
                 <button class="filter-tab" data-filter="Веб-сайт">🌐 Сайты / Верстка</button>
-                <button class="filter-tab" data-filter="Железо / ПК">💻 Сборка ПК</button>
-                <button class="filter-tab" data-filter="Дизайн">🎨 Web-Дизайн / UI</button>
                 <button class="filter-tab" data-filter="Парсеры">⚡ Скрипты</button>
+                <button class="filter-tab" data-filter="FL.ru">📂 FL</button>
             </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <div class="search-bar">
                     <span class="search-icon">🔍</span>
                     <input type="text" class="search-input" id="radarSearchInput" placeholder="Поиск по задачам..." />
                 </div>
+                <select id="radarSort" class="search-input" style="width:auto; padding:10px 14px;">
+                    <option value="new">Сначала новые</option>
+                    <option value="old">Сначала старые</option>
+                    <option value="price">Сначала с ценой</option>
+                </select>
                 <button class="btn btn-sm" id="radarRefreshBtn">⚡ Обновить</button>
             </div>
         </div>
@@ -1343,15 +1348,37 @@
     });
 
     // ЗАГРУЗКА РАДАРА
+    const DESIGN_WORDS = ['дизайн','дизайнер','figma','фигма','ui/ux','ui ux','макет','прототип','баннер','логотип','иллюстрац','ретуш','аватар','брендинг','презентац','motion','3d-макет'];
+    function isRadarRelevant(o) {
+        const cat = (o.category || '').toLowerCase();
+        if (cat === 'дизайн' || cat.includes('железо')) return false;
+        const title = (o.title || '').toLowerCase();
+        return !DESIGN_WORDS.some(w => title.includes(w));
+    }
+    function hasPrice(p) {
+        if (!p) return false;
+        const v = p.toLowerCase().trim();
+        return v !== 'в описании' && v !== 'договорная' && v !== 'по запросу';
+    }
     async function fetchRadarOrders() {
         try {
             const res = await fetch(`orders.json?t=${Date.now()}`, { cache: "no-store" });
-            radarOrders = await res.json();
+            const raw = await res.json();
+            radarOrders = raw.filter(isRadarRelevant);
             radarOrders.sort((a, b) => new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0));
 
             renderRadar();
             document.getElementById('radarCount').textContent = radarOrders.length;
             document.getElementById('statOrdersCount').textContent = radarOrders.length;
+            const bots = radarOrders.filter(o => o.category === 'Telegram').length;
+            const sites = radarOrders.filter(o => o.category === 'Веб-сайт').length;
+            const scripts = radarOrders.filter(o => o.category === 'Парсеры').length;
+            document.getElementById('radarSummary').innerHTML = `
+                <span class="tag-pill">🤖 Боты и TMA: ${bots}</span>
+                <span class="tag-pill">🌐 Сайты: ${sites}</span>
+                <span class="tag-pill">⚡ Скрипты: ${scripts}</span>
+                <span class="tag-pill">🚫 Дизайн исключён</span>
+            `;
             showToast("⚡ Радар синхронизирован!");
         } catch (err) {
             document.getElementById('radarGridContainer').innerHTML = `
@@ -1372,13 +1399,20 @@
         const activeFilter = document.querySelector('#radarFilterGroup .filter-tab.active').dataset.filter;
         const query = document.getElementById('radarSearchInput').value.toLowerCase().trim();
 
+        const sortMode = document.getElementById('radarSort').value;
+        const applySort = arr => {
+            if (sortMode === 'old') return arr.reverse();
+            if (sortMode === 'price') return arr.sort((a, b) => (hasPrice(b.price) - hasPrice(a.price)) || (new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0)));
+            return arr;
+        };
+
         const flOrders = radarOrders.filter(o => o.source && o.source.includes('FL.ru'));
         document.getElementById('flCountBadge').textContent = `${flOrders.length} задач`;
 
         if (activeFilter === 'all' || activeFilter === 'FL.ru') {
             flSection.style.display = 'block';
             const filteredFl = query ? flOrders.filter(o => o.title.toLowerCase().includes(query)) : flOrders;
-            flContainer.innerHTML = filteredFl.length === 0 ? `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач.</div>` : filteredFl.map(o => createOrderCard(o)).join('');
+            flContainer.innerHTML = filteredFl.length === 0 ? `<div style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.85rem;">В папке FL пока нет задач.</div>` : applySort(filteredFl.slice()).map(o => createOrderCard(o)).join('');
         } else {
             flSection.style.display = 'none';
         }
@@ -1386,6 +1420,7 @@
         let list = radarOrders.filter(o => !(o.source && o.source.includes('FL.ru')));
         if (activeFilter !== 'all') list = list.filter(o => o.category === activeFilter);
         if (query) list = list.filter(o => o.title.toLowerCase().includes(query));
+        list = applySort(list);
 
         if (!list.length) {
             container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">Заказы в выбранной категории пока не найдены.</div>`;
@@ -1396,12 +1431,16 @@
     }
 
     function createOrderCard(o) {
+        const icons = { 'Telegram': '🤖', 'Веб-сайт': '🌐', 'Парсеры': '⚡', 'FL.ru': '📂' };
+        const icon = icons[o.category] || '💻';
+        const age = Date.now() - new Date(o.discovered_at || 0).getTime();
+        const fresh = age >= 0 && age < 24 * 60 * 60 * 1000;
         return `
             <div class="radar-card">
                 <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="tag-pill">${o.category || 'IT'}</span>
-                        <span class="source-tag">${o.source || 'Прямой контакт'}</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                        <span class="tag-pill">${icon} ${o.category || 'IT'}</span>
+                        <span class="source-tag">${fresh ? '🔥 новое · ' : ''}${o.source || 'Прямой контакт'}</span>
                     </div>
                     
                     <h3>${o.title}</h3>
@@ -1441,6 +1480,7 @@
     });
 
     document.getElementById('radarSearchInput').addEventListener('input', renderRadar);
+    document.getElementById('radarSort').addEventListener('change', renderRadar);
     document.getElementById('radarRefreshBtn').addEventListener('click', fetchRadarOrders);
 
     // ГЕНЕРАТОР ОТКЛИКА
