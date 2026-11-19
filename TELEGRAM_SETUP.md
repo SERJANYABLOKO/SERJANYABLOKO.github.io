@@ -1,26 +1,33 @@
-# Публикация в Telegram-канал — почти готово
+# Telegram-постинг — настроено
 
-## Что уже сделано
-- Канал: **Serjant Dev** (`@serjantdev`), ID `-1004319024415`.
-- Секреты в репозитории GitHub уже сохранены:
-  - `TELEGRAM_BOT_TOKEN`
-  - `TELEGRAM_CHANNEL_ID`
-- Скрипт `post_bot.py` загружен, тестовый пост **уже опубликован** в канал.
-- `posted_ids.json` хранит список опубликованных заказов (чтобы не было повторов).
+## Текущее состояние
+- Беседа: супергруппа **Serjant Dev**, ID `-1004419646640` (секрет `TELEGRAM_CHANNEL_ID` обновлён).
+- Бот: `@chaneltelebot`, токен в GitHub Secrets `TELEGRAM_BOT_TOKEN`.
+- Права бота: администратор с «Публикация сообщений» и «Управление темами».
+- Темы созданы (`topics.json`):
 
-## Остался один шаг — создать workflow через сайт GitHub
-GitHub запрещает создавать файлы `.github/workflows/*` через API, поэтому это нужно сделать один раз вручную в браузере.
+| Ключ | Тема | thread_id |
+|---|---|---|
+| order | 📌 Заказы | 2 |
+| tip | 🧠 Полезное | 3 |
+| tool | 🔧 Инструменты | 4 |
+| update | 🆕 Обновы | 5 |
 
-1. Откройте ссылку:
-   ```
-   https://github.com/SERJANYABLOKO/SERJANYABLOKO.github.io/new/main?filename=.github/workflows/telegram-poster.yml
-   ```
-2. Вставьте содержимое файла `telegram-poster.yml` (ниже).
-3. Нажмите **Commit changes**.
+## Что публикуется
+Бот чередует 4 типа постов:
+1. **Реальный заказ** из `orders.json` + полезный комментарий.
+2. **Полезное разработчику** — разбор по оценке заказов, ТЗ, чек-листы, фриланс.
+3. **Полезный сайт дня** — реальный инструмент с рабочей ссылкой.
+4. **Обновление проекта** — что изменилось на сайте и в радаре.
 
-После этого автоматика заработает: раз в 4 часа один новый реальный заказ будет публиковаться в канал с полезным советом для разработчиков и короткой подписью об услугах.
+Каждый пост уходит в свою тему и имеет хэштег (`#заказы`, `#полезное`, `#инструменты`, `#обновы`) плюс короткую рекламу услуг внизу.
 
-### Содержимое `telegram-poster.yml`
+## Осталось: включить автозапуск
+GitHub не разрешает создавать `.github/workflows/*` через API — один раз добавьте файл вручную:
+
+1. Откройте https://github.com/SERJANYABLOKO/SERJANYABLOKO.github.io/new/main?filename=.github/workflows/telegram-poster.yml
+2. Вставьте YAML из раздела ниже.
+3. **Commit changes**.
 
 ```yaml
 name: Telegram Poster
@@ -41,29 +48,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Publish one real order
+      - name: Publish one post
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
         run: python post_bot.py
-      - name: Save posted orders state
+      - name: Save state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add posted_ids.json
+          git add posted_ids.json topics.json
           if git diff --cached --quiet; then
-            echo "No new posted orders"
+            echo "No state changes"
           else
-            git commit -m "chore: save posted orders [skip ci]"
+            git commit -m "chore: save poster state [skip ci]"
             git push
           fi
 ```
 
-## Проверка
-**Actions → Telegram Poster → Run workflow** — появится ещё один пост с новым заказом.
-
-## Что публикуется
-Реальный заказ из `orders.json` (название, цена, источник, ссылка) + совет для разработчиков + лёгкая реклама: ссылка на `@serjantyabloko`. Один заказ за запуск, без повторов.
-
-## Важно
-В публичном `index.html` сайта остался старый Telegram-токен. Его нужно отозвать: `@BotFather` → `/revoke`. Новый бот для канала к сайту не относится и в коде не хранится — только в GitHub Secrets.
+## Безопасность
+Старый токен в публичном `index.html` нужно отозвать: `@BotFather` → `/revoke`. Новый токен для бота хранится только в GitHub Secrets.
