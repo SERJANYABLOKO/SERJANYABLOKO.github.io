@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Правило — Serjant Lab</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
+<link rel="stylesheet" href="assets/style.css?v=4" />
+</head>
+<body>
+<script src="assets/common.js?v=4"></script>
+<script>mountHeader('rules.html');</script>
+
+<main class="container">
+  <div class="lesson-head">
+    <a href="rules.html" class="back-link">← Все правила</a>
+    <div>
+      <span class="badge" id="ruleBadge">ПРАВИЛО</span>
+      <h1 id="ruleTitle">Правило</h1>
+      <p class="lead" id="ruleRu"></p>
+    </div>
+  </div>
+  <div class="stack" id="ruleBody"></div>
+</main>
+
+<script>
+mountFooter();
+const key = new URLSearchParams(location.search).get('r') || '';
+const body = document.getElementById('ruleBody');
+
+function renderRule(r, n){
+  document.title = r.title + ' — Serjant Lab';
+  document.getElementById('ruleBadge').textContent = 'Правило ' + String(n + 1).padStart(2, '0');
+  document.getElementById('ruleTitle').textContent = r.title;
+  document.getElementById('ruleRu').textContent = r.ru;
+
+  const rows = r.table.map(([k, v]) => '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>').join('');
+  body.innerHTML =
+    '<section class="panel"><h2><span class="n">1</span> Суть правила</h2>' +
+      '<p style="color:var(--muted);font-size:.88rem">' + esc(r.when) + '</p>' +
+      '<div class="formula">' + esc(r.formula) + '</div></section>' +
+
+    '<section class="panel"><h2><span class="n">2</span> Как это работает</h2>' +
+      '<table><tr><th>Форма</th><th>Пример</th></tr>' + rows + '</table>' +
+      '<div class="chips" style="margin-top:14px">' + r.signals.map(w => '<span class="chip">' + esc(w) + '</span>').join('') + '</div></section>' +
+
+    '<section class="panel"><h2><span class="n">3</span> Примеры</h2>' +
+      '<ul class="ex-list">' + r.examples.map(([en, ru]) =>
+        '<li><b>' + esc(en) + '</b><span>' + esc(ru) + '</span></li>').join('') + '</ul>' +
+      '<div class="tip">💡 ' + esc(r.tip) + '</div></section>' +
+
+    (r.hidden ? '<section class="panel"><h2><span class="n">4</span> Скрытая вкладка</h2>' +
+      '<p style="color:var(--muted);font-size:.86rem">Этот список доступен только здесь — со страницы самого правила.</p>' +
+      '<button class="secret-btn" id="secretBtn">Показать список неправильных глаголов ▾</button>' +
+      '<div class="secret-panel" id="secretPanel"><div class="verb-tools">' +
+      '<input class="input" id="verbSearch" placeholder="Поиск по V1 / V2 / V3 / переводу" />' +
+      '<span class="score-pill" id="verbCount"></span></div>' +
+      '<div class="verb-table" id="verbTable"></div></div></section>' : '') +
+
+    '<div class="actions"><a href="rules.html" class="btn ghost">← Все правила</a>' +
+    '<a href="courses.html" class="btn light">Посмотреть времена →</a></div>';
+
+  if (r.hidden) setupSecret();
+}
+
+function setupSecret(){
+  const btn = document.getElementById('secretBtn');
+  const panel = document.getElementById('secretPanel');
+  const search = document.getElementById('verbSearch');
+  const table = document.getElementById('verbTable');
+  const count = document.getElementById('verbCount');
+  let verbs = [];
+  btn.onclick = () => {
+    panel.classList.toggle('open');
+    btn.textContent = panel.classList.contains('open')
+      ? 'Скрыть список ▴' : 'Показать список неправильных глаголов ▾';
+  };
+  function draw(){
+    const q = search.value.trim().toLowerCase();
+    const list = verbs.filter(v =>
+      !q || [v.v1, v.v2, v.v3, v.ru].some(s => s.toLowerCase().includes(q)));
+    count.textContent = list.length + ' глаголов';
+    table.innerHTML = '<table><tr><th>V1</th><th>V2</th><th>V3</th><th>Перевод</th></tr>' +
+      list.map(v => '<tr><td>' + esc(v.v1) + '</td><td>' + esc(v.v2) + '</td><td>' + esc(v.v3) + '</td><td>' + esc(v.ru) + '</td></tr>').join('') +
+      '</table>';
+  }
+  search.oninput = draw;
+  apiGet('data/irregular.json?v=4').then(d => { verbs = d.verbs; draw(); })
+    .catch(err => { table.innerHTML = '<div class="empty">Ошибка: ' + esc(err.message) + '</div>'; });
+}
+
+apiGet('data/rules.json?v=4').then(data => {
+  const n = data.rules.findIndex(x => x.key === key);
+  renderRule(data.rules[n < 0 ? 0 : n], n < 0 ? 0 : n);
+}).catch(err => {
+  body.innerHTML = '<div class="panel"><div class="empty">Ошибка загрузки: ' + esc(err.message) + '</div></div>';
+});
+</script>
+</body>
+</html>

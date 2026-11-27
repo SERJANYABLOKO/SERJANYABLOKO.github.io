@@ -48,7 +48,8 @@ function headerHTML(active){
   const s = getSession();
   const links = [
     ['index.html','Главная'],
-    ['courses.html','Курсы'],
+    ['courses.html','Времена'],
+    ['rules.html','Правила'],
     ['tasks.html','Задания'],
     ['words.html','1000 слов'],
     ['login.html','Вход']

@@ -6,10 +6,10 @@
 <title>Serjant Lab — английский простыми словами</title>
 <meta name="description" content="Бесплатные уроки всех времён английского, словарь на 1000 слов и личный прогресс." />
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css?v=3" />
+<link rel="stylesheet" href="assets/style.css?v=4" />
 </head>
 <body>
-<script src="assets/common.js?v=3"></script>
+<script src="assets/common.js?v=4"></script>
 <script>mountHeader('index.html');</script>
 
 <main class="container">
@@ -29,6 +29,7 @@
       <div class="mini-row"><b>12</b><span>времён английского языка</span></div>
       <div class="mini-row"><b>1000</b><span>слов для свободной речи</span></div>
       <div class="mini-row"><b>48</b><span>заданий с объяснениями</span></div>
+      <div class="mini-row"><b>10</b><span>важных правил</span></div>
       <div class="mini-row"><b>0 ₽</b><span>стоимость обучения</span></div>
       <div class="hero-note">✓ Прогресс сохраняется в вашем аккаунте</div>
     </div>
@@ -38,9 +39,9 @@
     <h2 class="section-title">Как это работает</h2>
     <p class="section-sub">Три простых шага — и грамматика перестаёт быть страшной.</p>
     <div class="grid grid-3">
-      <div class="card"><div class="ic">1</div><div class="step-num">ШАГ 01</div><h3>Выберите время</h3><p>Откройте раздел «Курсы» и выберите время, которое хотите выучить: Present, Past или Future.</p></div>
+      <div class="card"><div class="ic">1</div><div class="step-num">ШАГ 01</div><h3>Выберите время</h3><p>Откройте раздел «Времена» и выберите время, которое хотите выучить: Present, Past или Future.</p></div>
       <div class="card"><div class="ic">2</div><div class="step-num">ШАГ 02</div><h3>Прочитайте урок</h3><p>Короткое объяснение, формула, таблица и примеры с переводом — всё на одной странице.</p></div>
-      <div class="card"><div class="ic">3</div><div class="step-num">ШАГ 03</div><h3>Закрепите</h3><p>Ответьте на 4 вопроса, получите объяснение к каждому и отметьте курс как пройденный.</p></div>
+      <div class="card"><div class="ic">3</div><div class="step-num">ШАГ 03</div><h3>Закрепите</h3><p>Ответьте на 4 вопроса, получите объяснение к каждому и отметьте время как пройденное.</p></div>
     </div>
   </section>
 
@@ -51,6 +52,14 @@
   </section>
 
   <div class="banner">
+    <div>
+      <h2>10 правил, которые решают всё</h2>
+      <p>Артикли, do/does, am/is/are, неправильные глаголы и скрытый список внутри.</p>
+    </div>
+    <a href="rules.html" class="btn">Открыть правила →</a>
+  </div>
+
+  <div class="banner" style="background:linear-gradient(135deg,#129c6e,#4f6ef7)">
     <div>
       <h2>Слова — это половина языка</h2>
       <p>1000 самых нужных слов с переводом, поиском и фильтром по темам.</p>
@@ -68,7 +77,7 @@ const p = getProgress();
 const done = Object.keys(p).length;
 if (s){
   sub.textContent = 'Вы вошли как ' + (s.name || s.login) + '. Ваши результаты сохраняются в этом браузере.';
-  card.innerHTML = '<div class="mini-row"><b>' + done + ' / 12</b><span>курсов пройдено</span></div>' +
+  card.innerHTML = '<div class="mini-row"><b>' + done + ' / 12</b><span>времён пройдено</span></div>' +
     '<div class="progress-line"><i style="width:' + Math.round(done / 12 * 100) + '%"></i></div>' +
     '<div class="actions"><a href="courses.html" class="btn small">Продолжить обучение</a></div>';
 } else {

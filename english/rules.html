@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Правила — Serjant Lab</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
+<link rel="stylesheet" href="assets/style.css?v=4" />
+</head>
+<body>
+<script src="assets/common.js?v=4"></script>
+<script>mountHeader('rules.html');</script>
+
+<main class="container">
+  <div class="page-head">
+    <h1>10 важных правил</h1>
+    <p class="lead">Коротко и по делу: артикли, вспомогательные глаголы, окончания и главные различия между временами.</p>
+  </div>
+  <div class="grid grid-3" id="rulesGrid"></div>
+</main>
+
+<script>
+mountFooter();
+const grid = document.getElementById('rulesGrid');
+apiGet('data/rules.json?v=4').then(data => {
+  grid.innerHTML = data.rules.map((r, n) =>
+    '<article class="card course-card">' +
+      '<div class="course-top"><span class="badge">Правило ' + String(n + 1).padStart(2, '0') + '</span>' +
+      (r.hidden ? '<span class="done-tag">Скрытый список внутри</span>' : '') + '</div>' +
+      '<h3>' + esc(r.title) + '</h3><div class="ru">' + esc(r.ru) + '</div>' +
+      '<p>' + esc(r.short) + '</p>' +
+      '<a href="rule.html?r=' + encodeURIComponent(r.key) + '" class="btn small block">Открыть правило →</a>' +
+    '</article>').join('');
+}).catch(err => {
+  grid.innerHTML = '<div class="empty">Ошибка загрузки: ' + esc(err.message) + '</div>';
+});
+</script>
+</body>
+</html>

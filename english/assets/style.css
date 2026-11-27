@@ -173,6 +173,17 @@ td:first-child{font-weight:700;color:var(--primary);width:34px}
 .more{display:block;margin:24px auto 0}
 .empty{text-align:center;color:var(--muted);padding:40px 0}
 
+/* hidden irregular verbs */
+.secret-btn{border:1px dashed var(--primary);background:var(--soft);color:var(--primary);border-radius:10px;padding:11px 16px;font-size:.84rem;font-weight:700}
+.secret-btn:hover{background:var(--soft-hover)}
+.secret-panel{display:none;margin-top:16px;border:1px dashed var(--border-strong);border-radius:14px;padding:18px;background:var(--formula-bg)}
+.secret-panel.open{display:block}
+.verb-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.verb-tools .input{min-width:180px}
+.verb-table{max-height:420px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+.verb-table table{font-size:.82rem}
+.verb-table th{position:sticky;top:0;background:var(--card);z-index:1}
+
 /* tasks */
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
 .level-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:left;transition:.2s}

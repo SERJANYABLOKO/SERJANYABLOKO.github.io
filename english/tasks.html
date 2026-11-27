@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Задания — Serjant Lab</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css?v=3" />
+<link rel="stylesheet" href="assets/style.css?v=4" />
 </head>
 <body>
-<script src="assets/common.js?v=3"></script>
+<script src="assets/common.js?v=4"></script>
 <script>mountHeader('tasks.html');</script>
 
 <main class="container">
@@ -154,8 +154,8 @@ document.getElementById('levels').onclick = e => {
 };
 
 Promise.all([
-  apiGet('data/tenses.json?v=3'),
-  apiGet('data/words.json?v=3')
+  apiGet('data/tenses.json?v=4'),
+  apiGet('data/words.json?v=4')
 ]).then(([t, w]) => { tenseData = t.tenses; wordData = w; intro(); })
   .catch(err => { panel.innerHTML = '<div class="empty">Ошибка загрузки: ' + esc(err.message) + '</div>'; });
 </script>

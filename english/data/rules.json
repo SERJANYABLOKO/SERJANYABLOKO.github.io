@@ -1,0 +1,529 @@
+{
+  "rules": [
+    {
+      "key": "irregular-verbs",
+      "title": "Неправильные глаголы",
+      "ru": "V1 — V2 — V3",
+      "short": "Когда они нужны и как их запомнить.",
+      "when": "Неправильные глаголы не получают -ed и -s по общему правилу. Their формы нужно запомнить: V1 — начальная, V2 — прошлое, V3 — причастие.",
+      "formula": "go — went — gone   ·   see — saw — seen   ·   have — had — had",
+      "table": [
+        [
+          "V1 (начальная)",
+          "I go to school."
+        ],
+        [
+          "V2 (прошлое)",
+          "I went to school yesterday."
+        ],
+        [
+          "V3 (причастие)",
+          "I have gone there twice."
+        ]
+      ],
+      "signals": [
+        "yesterday",
+        "last week",
+        "have / has",
+        "already",
+        "did"
+      ],
+      "examples": [
+        [
+          "I went to the cinema yesterday.",
+          "Я ходил в кино вчера."
+        ],
+        [
+          "She has seen this film before.",
+          "Она уже видела этот фильм."
+        ],
+        [
+          "Did you go there?",
+          "Ты ходил туда?"
+        ],
+        [
+          "They have written three letters.",
+          "Они написали три письма."
+        ]
+      ],
+      "tip": "После did / doesn't всегда V1: Did you go?, а не «Did you went?». Для списка глаголов откройте скрытую вкладку на этой странице.",
+      "hidden": true
+    },
+    {
+      "key": "articles",
+      "title": "Артикли a / an / the",
+      "ru": "Как выбрать артикль",
+      "short": "Три артикля и одно правило на каждый.",
+      "when": "a / an — для одного неопределённого предмета; the — когда предмет известен или единственный; ничего — для общего смысла,plural и имён.",
+      "formula": "a + согласный звук  ·  an + гласный звук  ·  the + известный предмет",
+      "table": [
+        [
+          "a",
+          "I have a pen."
+        ],
+        [
+          "an",
+          "She is an engineer."
+        ],
+        [
+          "the",
+          "The sun is bright."
+        ],
+        [
+          "zero article",
+          "I like music."
+        ]
+      ],
+      "signals": [
+        "a",
+        "an",
+        "the",
+        "the first",
+        "the best"
+      ],
+      "examples": [
+        [
+          "I bought a book and an apple.",
+          "Я купил книгу и яблоко."
+        ],
+        [
+          "The book is on the table.",
+          "Книга лежит на столе (та самая)."
+        ],
+        [
+          "Moscow is the capital of Russia.",
+          "Москва — столица России."
+        ],
+        [
+          "Children like games.",
+          "Дети любят игры (вообще)."
+        ]
+      ],
+      "tip": "Смотрите на звук, а не на букву: an hour (звук «ау»), a university (звук «й»).",
+      "hidden": false
+    },
+    {
+      "key": "to-be",
+      "title": "Глагол to be",
+      "ru": "am / is / are",
+      "short": "Основа для Continuous и описаний.",
+      "when": "Глагол «быть» меняется по лицам. Он нужен перед V-ing, перед прилагательным и перед существительным. С ним НЕ используют do/does.",
+      "formula": "I am · You are · He / She / It is · We / They are",
+      "table": [
+        [
+          "I",
+          "I am a student."
+        ],
+        [
+          "He / She / It",
+          "She is happy."
+        ],
+        [
+          "You / We / They",
+          "They are at home."
+        ],
+        [
+          "Past",
+          "I was tired. / They were late."
+        ]
+      ],
+      "signals": [
+        "I am",
+        "he is",
+        "they are",
+        "was / were"
+      ],
+      "examples": [
+        [
+          "I am reading now.",
+          "Я сейчас читаю."
+        ],
+        [
+          "He is a doctor.",
+          "Он врач."
+        ],
+        [
+          "Are you ready?",
+          "Ты готов?"
+        ],
+        [
+          "We were at the park yesterday.",
+          "Вчера мы были в парке."
+        ]
+      ],
+      "tip": "Не говорите «He is work». Нужно «He is working» или «He is a worker».",
+      "hidden": false
+    },
+    {
+      "key": "do-does",
+      "title": "Do / does / did",
+      "ru": "Вопросы и отрицания",
+      "short": "Без них нельзя задать вопрос в Simple.",
+      "when": "В Present Simple вопросы и отрицания строятся с do/does, в Past Simple — с did. После вспомогательного глагола основной стоит в начальной форме.",
+      "formula": "Do / Does + подлежащее + V?   ·   don't / doesn't + V",
+      "table": [
+        [
+          "I / You / We / They",
+          "Do you work?"
+        ],
+        [
+          "He / She / It",
+          "Does she work?"
+        ],
+        [
+          "Negative",
+          "I don't work. / He doesn't work."
+        ],
+        [
+          "Past",
+          "Did you go? / I didn't go."
+        ]
+      ],
+      "signals": [
+        "Do you…?",
+        "Does he…?",
+        "Did you…?",
+        "don't",
+        "didn't"
+      ],
+      "examples": [
+        [
+          "Do you speak English?",
+          "Вы говорите по-английски?"
+        ],
+        [
+          "Does he like coffee?",
+          "Он любит кофе?"
+        ],
+        [
+          "I don't watch TV.",
+          "Я не смотрю телевизор."
+        ],
+        [
+          "Did she call you?",
+          "Она тебе звонила?"
+        ]
+      ],
+      "tip": "Does и did «съедают» окончание -s и прошедшую форму: Does she work?, Did she work? — не «works / worked».",
+      "hidden": false
+    },
+    {
+      "key": "third-person-s",
+      "title": "Окончание -s",
+      "ru": "He / She / It",
+      "short": "Частая ошибка в Present Simple.",
+      "when": "В Present Simple глагол получает -s/-es, если подлежащее — он, она, оно или равнозначное словосочетание.",
+      "formula": "work → works  ·  go → goes  ·  study → studies  ·  play → plays",
+      "table": [
+        [
+          "обычно",
+          "work → works"
+        ],
+        [
+          "на -s, -sh, -ch, -o",
+          "go → goes, watch → watches"
+        ],
+        [
+          "согласная + y",
+          "study → studies"
+        ],
+        [
+          "гласная + y",
+          "play → plays"
+        ]
+      ],
+      "signals": [
+        "he",
+        "she",
+        "it",
+        "my mother",
+        "the dog"
+      ],
+      "examples": [
+        [
+          "She works in a bank.",
+          "Она работает в банке."
+        ],
+        [
+          "He goes to school.",
+          "Он ходит в школу."
+        ],
+        [
+          "My sister studies English.",
+          "Моя сестра изучает английский."
+        ],
+        [
+          "The cat sleeps a lot.",
+          "Кот много спит."
+        ]
+      ],
+      "tip": "Отрицание и вопрос уже имеют does, поэтому -s исчезает: She works, but she doesn't work.",
+      "hidden": false
+    },
+    {
+      "key": "ing-form",
+      "title": "Форма V-ing",
+      "ru": "Present Continuous",
+      "short": "Как образовать continued-форму.",
+      "when": "Present Continuous образуется с am/is/are + V-ing. При образовании -ing есть три маленьких правила.",
+      "formula": "am / is / are + V-ing",
+      "table": [
+        [
+          "обычно",
+          "play → playing"
+        ],
+        [
+          "убрать -e",
+          "make → making"
+        ],
+        [
+          "удвоить согласную",
+          "run → running"
+        ],
+        [
+          "ie → y",
+          "lie → lying"
+        ]
+      ],
+      "signals": [
+        "now",
+        "right now",
+        "at the moment",
+        "Look!",
+        "Listen!"
+      ],
+      "examples": [
+        [
+          "I am reading now.",
+          "Я читаю сейчас."
+        ],
+        [
+          "She is making dinner.",
+          "Она готовит ужин."
+        ],
+        [
+          "They are running in the park.",
+          "Они бегут в парке."
+        ],
+        [
+          "He is lying on the sofa.",
+          "Он лежит на диване."
+        ]
+      ],
+      "tip": "Глаголы состояния (know, love, like, believe) обычно не используют в Continuous: I know him.",
+      "hidden": false
+    },
+    {
+      "key": "signal-words",
+      "title": "Сигналные слова",
+      "ru": "Как выбрать время",
+      "short": "Подсказки прямо в предложении.",
+      "when": "Слова-сигналы сразу подсказывают, какое время использовать. Это самый быстрый способ не ошибиться.",
+      "formula": "every day → Simple   ·   now → Continuous   ·   yesterday → Past   ·   already → Perfect",
+      "table": [
+        [
+          "Present Simple",
+          "usually, every day, on Mondays"
+        ],
+        [
+          "Present Continuous",
+          "now, Look!, at the moment"
+        ],
+        [
+          "Past Simple",
+          "yesterday, last week, in 2020"
+        ],
+        [
+          "Present Perfect",
+          "already, yet, ever, since"
+        ]
+      ],
+      "signals": [
+        "usually",
+        "now",
+        "yesterday",
+        "already",
+        "for / since"
+      ],
+      "examples": [
+        [
+          "I usually get up at 7.",
+          "Я обычно встаю в 7."
+        ],
+        [
+          "Look! It is raining.",
+          "Смотри! Идёт дождь."
+        ],
+        [
+          "I saw him last week.",
+          "Я видел его на прошлой неделе."
+        ],
+        [
+          "I have already finished.",
+          "Я уже закончил."
+        ]
+      ],
+      "tip": "Если в предложении есть конкретное прошедшее время (yesterday, in 2010), Present Perfect использовать нельзя.",
+      "hidden": false
+    },
+    {
+      "key": "perfect-vs-past",
+      "title": "Perfect или Past?",
+      "ru": "Опыт или факт",
+      "short": "Два разных взгляда на прошлое.",
+      "when": "Present Perfect связывает прошлое с настоящим: опыт, результат, «уже». Past Simple — законченный факт с указанием времени.",
+      "formula": "have / has + V3   ≠   V2 + конкретное время",
+      "table": [
+        [
+          "Present Perfect",
+          "I have lost my keys. (ключей нет сейчас)"
+        ],
+        [
+          "Past Simple",
+          "I lost my keys yesterday."
+        ],
+        [
+          "Signal Perfect",
+          "already, yet, ever, never"
+        ],
+        [
+          "Signal Past",
+          "yesterday, last night, in 2020"
+        ]
+      ],
+      "signals": [
+        "already",
+        "yet",
+        "ever",
+        "yesterday",
+        "last week"
+      ],
+      "examples": [
+        [
+          "I have been to London.",
+          "Я ездил в Лондон (есть опыт)."
+        ],
+        [
+          "I went to London last year.",
+          "Я ездил в Лондон в прошлом году."
+        ],
+        [
+          "Have you finished yet?",
+          "Ты уже закончил?"
+        ],
+        [
+          "She finished it yesterday.",
+          "Она закончила это вчера."
+        ]
+      ],
+      "tip": "Не сочетайте Present Perfect с yesterday/last…/in 2020 — для них нужен Past Simple.",
+      "hidden": false
+    },
+    {
+      "key": "word-order",
+      "title": "Порядок слов в вопросе",
+      "ru": "Вопросительные предложения",
+      "short": "Как задать вопрос без ошибок.",
+      "when": "В вопросе вспомогательный глагол ставится перед подлежащим. В вопросительном предложении с what/where/when он идёт после вопросительного слова.",
+      "formula": "Do / Does / Did + подлежащее + V?   ·   What + do / does / did + подлежащее + V?",
+      "table": [
+        [
+          "Present",
+          "Do you work? / Where do you work?"
+        ],
+        [
+          "He / She",
+          "Does she work? / Where does she work?"
+        ],
+        [
+          "Past",
+          "Did you go? / What did you say?"
+        ],
+        [
+          "Continuous",
+          "What are you doing?"
+        ]
+      ],
+      "signals": [
+        "What…?",
+        "Where…?",
+        "When…?",
+        "Why…?",
+        "How…?"
+      ],
+      "examples": [
+        [
+          "Where do you live?",
+          "Где вы живёте?"
+        ],
+        [
+          "What does he do?",
+          "Чем он занимается?"
+        ],
+        [
+          "When did you arrive?",
+          "Когда вы приехали?"
+        ],
+        [
+          "Why are you laughing?",
+          "Почему ты смеёшься?"
+        ]
+      ],
+      "tip": "В вопросах с what/who в роли подлежащего вспомогательный глагол не нужен: Who lives here?",
+      "hidden": false
+    },
+    {
+      "key": "modals",
+      "title": "Модальные глаголы",
+      "ru": "can / must / should",
+      "short": "Возможность, обязанность, совет.",
+      "when": "Модальные глаголы идут перед начальной формой глагола. Они не получают -s и не требуют do в вопросах.",
+      "formula": "can / must / should / may + V (без to)",
+      "table": [
+        [
+          "can",
+          "I can swim. / Can you swim?"
+        ],
+        [
+          "must",
+          "You must go."
+        ],
+        [
+          "should",
+          "You should rest."
+        ],
+        [
+          "may",
+          "May I come in?"
+        ]
+      ],
+      "signals": [
+        "can",
+        "must",
+        "should",
+        "may",
+        "can't"
+      ],
+      "examples": [
+        [
+          "He can drive a car.",
+          "Он умеет водить машину."
+        ],
+        [
+          "You must finish today.",
+          "Ты должен закончить сегодня."
+        ],
+        [
+          "She should see a doctor.",
+          "Ей следует обратиться к врачу."
+        ],
+        [
+          "Can you help me?",
+          "Ты можешь мне помочь?"
+        ]
+      ],
+      "tip": "Не добавляйте -s и to: «He can drives» и «He can to drive» — ошибки, правильно «He can drive».",
+      "hidden": false
+    }
+  ]
+}

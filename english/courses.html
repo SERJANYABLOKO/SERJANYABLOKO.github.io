@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Курсы — Serjant Lab</title>
+<title>Времена — Serjant Lab</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css?v=3" />
+<link rel="stylesheet" href="assets/style.css?v=4" />
 </head>
 <body>
-<script src="assets/common.js?v=3"></script>
+<script src="assets/common.js?v=4"></script>
 <script>mountHeader('courses.html');</script>
 
 <main class="container">
@@ -64,7 +64,7 @@ apiGet('data/tenses.json').then(data => {
   tenses = data.tenses;
   render();
 }).catch(err => {
-  grid.innerHTML = '<div class="empty">Ошибка загрузки курсов: ' + esc(err.message) + '</div>';
+  grid.innerHTML = '<div class="empty">Ошибка загрузки времён: ' + esc(err.message) + '</div>';
 });
 </script>
 </body>
