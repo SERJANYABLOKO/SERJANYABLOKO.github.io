@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>English Lab — Бесплатный курс: Present Simple & Present Continuous</title>
+<meta name="description" content="Бесплатный интерактивный курс английского: Present Simple и Present Continuous. Теория, таблицы, сигналные слова и тренажёр с проверкой ответов." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#ff3366; --pink-glow:rgba(255,51,102,.28);
+  --orange:#ff9f1c; --cyan:#22d3ee;
+  --bg:#0a0710; --surface:rgba(24,19,36,.72); --surface-2:rgba(32,25,47,.6);
+  --border:rgba(255,255,255,.09); --text:#f6f4fb; --muted:#9d97b0;
+  --font-d:'Space Grotesk',sans-serif; --font-b:'Plus Jakarta Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.65;
+  overflow-x:hidden;min-height:100vh;
+  background-image:
+    radial-gradient(900px 500px at 8% -6%,rgba(255,51,102,.16),transparent 60%),
+    radial-gradient(800px 480px at 92% 10%,rgba(34,211,238,.12),transparent 60%),
+    radial-gradient(700px 400px at 50% 100%,rgba(255,159,28,.08),transparent 65%);
+}
+::selection{background:var(--pink);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--pink)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.container{width:min(1180px,calc(100% - 48px));margin:0 auto}
+
+/* scroll progress */
+#scrollProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1200;
+  background:linear-gradient(90deg,var(--pink),var(--orange),var(--cyan));box-shadow:0 0 14px var(--pink)}
+
+/* navbar */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;
+  background:rgba(10,7,16,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);transition:.3s}
+.nav.scrolled{padding:10px 0;background:rgba(10,7,16,.96);box-shadow:0 12px 34px rgba(0,0,0,.45)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{font-family:var(--font-d);font-weight:700;font-size:1.15rem;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.brand .mark{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:.85rem;
+  background:linear-gradient(135deg,var(--pink),#b01d55);box-shadow:0 6px 18px var(--pink-glow)}
+.brand span{color:var(--pink)}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{font-size:.84rem;color:var(--muted);transition:.25s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--pink);border-radius:2px}
+.nav-cta{border:1px solid rgba(255,51,102,.5);background:rgba(255,51,102,.1);color:#fff;
+  padding:9px 17px;border-radius:999px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.25s;white-space:nowrap}
+.nav-cta:hover{background:var(--pink);box-shadow:0 0 22px var(--pink-glow)}
+.burger{display:none;background:none;border:1px solid var(--border);color:#fff;border-radius:10px;padding:7px 11px;font-size:1.1rem;cursor:pointer}
+
+/* hero */
+.hero{padding:150px 0 54px;display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center}
+.tag{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--cyan);border:1px solid rgba(34,211,238,.32);background:rgba(34,211,238,.07);
+  padding:7px 14px;border-radius:999px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+h1{font-family:var(--font-d);font-size:clamp(2.6rem,5.3vw,4.5rem);line-height:1.03;letter-spacing:-.045em;margin:22px 0 20px}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--pink),var(--orange) 52%,var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:1.04rem;max-width:610px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{border:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:.88rem;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--pink),#c41f55);box-shadow:0 14px 32px var(--pink-glow);transition:.25s;display:inline-block}
+.btn:hover{transform:translateY(-3px)}
+.btn.ghost{background:transparent;border:1px solid var(--border);box-shadow:none}
+.btn.ghost:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,211,238,.16)}
+.hero-meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px}
+.hero-meta div b{display:block;font-family:var(--font-d);font-size:1.45rem}
+.hero-meta div small{color:var(--muted);font-size:.76rem}
+
+/* mock window */
+.mock{position:relative;border:1px solid var(--border);border-radius:22px;padding:20px;
+  background:linear-gradient(150deg,rgba(255,51,102,.12),rgba(34,211,238,.06));
+  box-shadow:0 34px 80px rgba(0,0,0,.55)}
+.mock::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;top:-100px;right:-70px;
+  background:radial-gradient(circle,var(--pink-glow),transparent 70%);pointer-events:none}
+.mock-in{position:relative;background:rgba(8,6,14,.86);border:1px solid var(--border);border-radius:14px;padding:18px}
+.dots{display:flex;gap:6px;margin-bottom:16px}
+.dots i{width:9px;height:9px;border-radius:50%;background:#413b4d}
+.dots i:first-child{background:var(--pink)}.dots i:nth-child(2){background:var(--orange)}.dots i:nth-child(3){background:var(--cyan)}
+.mock-title{font-family:var(--font-d);font-size:1.05rem;margin-bottom:14px}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vs-card{border-radius:13px;padding:15px;border:1px solid var(--border);background:rgba(255,255,255,.035)}
+.vs-card.a{border-color:rgba(255,159,28,.35);background:rgba(255,159,28,.06)}
+.vs-card.b{border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.06)}
+.vs-card small{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.vs-card b{display:block;font-family:var(--font-m);font-size:.92rem;margin:8px 0 6px}
+.vs-card.a b{color:var(--orange)}.vs-card.b b{color:var(--cyan)}
+.vs-card p{font-size:.72rem;color:var(--muted)}
+.mock-lines{margin-top:16px}
+.mock-lines i{display:block;height:8px;border-radius:5px;background:rgba(255,255,255,.07);margin-top:9px}
+.mock-lines i:nth-child(2){width:72%}.mock-lines i:nth-child(3){width:88%}
+.mock-badge{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:.72rem;color:var(--cyan);
+  border:1px solid rgba(34,211,238,.3);border-radius:999px;padding:6px 12px;background:rgba(34,211,238,.06)}
+
+/* stats strip */
+.strip{margin-top:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.strip div{border:1px solid var(--border);background:var(--surface);border-radius:16px;padding:20px;text-align:center}
+.strip b{display:block;font-family:var(--font-d);font-size:1.8rem;background:linear-gradient(100deg,var(--pink),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.strip small{color:var(--muted);font-size:.76rem}
+
+/* generic section */
+.section{padding:84px 0 0}
+.head{text-align:center;max-width:660px;margin:0 auto 42px}
+.head small{color:var(--pink);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.head h2{font-family:var(--font-d);font-size:clamp(1.9rem,3.4vw,2.7rem);letter-spacing:-.03em;margin:10px 0 12px}
+.head p{color:var(--muted);font-size:.94rem}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.feature{border:1px solid var(--border);background:var(--surface);border-radius:18px;padding:24px;transition:.3s;position:relative;overflow:hidden}
+.feature:hover{transform:translateY(-5px);border-color:rgba(255,51,102,.45)}
+.feature .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.3rem;
+  background:linear-gradient(135deg,rgba(255,51,102,.18),rgba(255,159,28,.12));border:1px solid var(--border)}
+.feature h3{font-family:var(--font-d);font-size:1rem;margin:16px 0 7px}
+.feature p{color:var(--muted);font-size:.84rem}
+
+/* lesson */
+.lesson{padding:96px 0 0}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.lesson-top{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.lesson-badge{font-family:var(--font-m);font-size:.75rem;padding:7px 13px;border-radius:9px;border:1px solid var(--border)}
+.lesson-top h2{font-family:var(--font-d);font-size:clamp(1.8rem,3.2vw,2.5rem);letter-spacing:-.03em}
+.lesson.orange .lesson-badge{color:var(--orange);border-color:rgba(255,159,28,.4);background:rgba(255,159,28,.08)}
+.lesson.cyan .lesson-badge{color:var(--cyan);border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.08)}
+.card{border:1px solid var(--border);background:var(--surface);border-radius:18px;padding:24px}
+.card h3{font-family:var(--font-d);font-size:1.02rem;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.card h3 .num{font-family:var(--font-m);font-size:.72rem;color:var(--muted)}
+.card p{color:var(--muted);font-size:.88rem;margin-bottom:10px}
+.formula{font-family:var(--font-m);font-size:.92rem;padding:12px 14px;border-radius:11px;margin:12px 0;
+  border:1px solid var(--border);background:rgba(0,0,0,.28)}
+.orange .formula{color:var(--orange);border-color:rgba(255,159,28,.25)}
+.cyan .formula{color:var(--cyan);border-color:rgba(34,211,238,.25)}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:6px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+td:first-child{font-family:var(--font-m);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font-family:var(--font-m);font-size:.74rem;padding:6px 11px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.03)}
+.orange .chip{color:var(--orange);border-color:rgba(255,159,28,.25)}
+.cyan .chip{color:var(--cyan);border-color:rgba(34,211,238,.25)}
+.examples{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:4px}
+.examples li{font-size:.88rem;padding-left:18px;position:relative;color:#dcd8e8}
+.examples li::before{content:'✦';position:absolute;left:0;color:var(--pink)}
+.examples b{color:#fff}
+.note{margin-top:16px;font-size:.82rem;color:var(--muted);border-left:2px solid var(--pink);padding-left:13px;background:rgba(255,51,102,.04);padding:11px 13px;border-radius:0 10px 10px 0}
+
+/* quiz */
+.quiz-wrap{margin-top:22px;border:1px solid var(--border);border-radius:20px;padding:26px;
+  background:linear-gradient(160deg,rgba(255,51,102,.07),rgba(34,211,238,.04)),var(--surface)}
+.quiz-wrap.compact{margin-top:16px;padding:22px}
+.quiz-headline{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.quiz-headline h3{font-family:var(--font-d);font-size:1.05rem}
+.quiz-headline span{font-size:.76rem;color:var(--muted)}
+.quiz-top{display:flex;justify-content:space-between;font-family:var(--font-m);font-size:.76rem;color:var(--muted);margin-bottom:9px}
+.quiz-top b{color:var(--orange)}
+.cyan .quiz-top b,.quiz-wrap .quiz-top b{color:var(--cyan)}
+.qbar{height:5px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:20px}
+.qbar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:width .35s}
+.q-sentence{font-family:var(--font-m);font-size:1.02rem;line-height:1.7;margin-bottom:18px;color:#fff}
+.q-opts{display:flex;flex-wrap:wrap;gap:10px}
+.q-opt{border:1px solid var(--border);background:rgba(255,255,255,.04);color:#e8e5f0;padding:11px 18px;border-radius:11px;
+  font-family:var(--font-m);font-size:.86rem;cursor:pointer;transition:.22s}
+.q-opt:hover:not([data-locked]){border-color:var(--cyan);background:rgba(34,211,238,.1);transform:translateY(-2px)}
+.q-opt.correct{border-color:#34d399;background:rgba(52,211,153,.16);color:#8ff0c4}
+.q-opt.wrong{border-color:#fb7185;background:rgba(251,113,133,.14);color:#fda4af}
+.q-feedback{min-height:0;margin-top:16px;font-size:.85rem}
+.q-feedback .ok{color:#6ee7b7}.q-feedback .bad{color:#fda4af}
+.q-feedback .tip{color:var(--muted);margin-top:7px;font-size:.82rem}
+.q-next{margin-top:16px;border:0;border-radius:999px;padding:10px 20px;background:var(--cyan);color:#04222a;font-weight:800;font-size:.82rem;cursor:pointer;transition:.2s}
+.q-next:hover{transform:translateY(-2px)}
+.q-reset{margin-top:18px;background:none;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:8px 16px;font-size:.78rem;cursor:pointer;transition:.2s}
+.q-reset:hover{color:#fff;border-color:var(--pink)}
+.result{text-align:center;padding:14px 0}
+.result .score{font-family:var(--font-d);font-size:2.8rem;background:linear-gradient(100deg,var(--pink),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.result p{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+
+/* compare */
+.compare-table{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:34px}
+.compare-table div{padding:16px 18px;border-bottom:1px solid var(--border);font-size:.86rem}
+.compare-table div:nth-child(3n+1){color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;background:rgba(255,255,255,.02)}
+.compare-table div:nth-child(3n+2){color:var(--orange);font-family:var(--font-m)}
+.compare-table div:nth-child(3n){color:var(--cyan);font-family:var(--font-m)}
+.compare-table div:last-child,.compare-table div:nth-last-child(2),.compare-table div:nth-last-child(3){border-bottom:0}
+.compare-head{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.compare-head div{border-radius:14px;padding:17px;border:1px solid var(--border);font-family:var(--font-d);font-size:.98rem}
+.compare-head div:first-child{color:var(--orange);border-color:rgba(255,159,28,.3);background:rgba(255,159,28,.06)}
+.compare-head div:last-child{color:var(--cyan);border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.06)}
+
+/* final cta */
+.final{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;margin-top:96px;
+  border:1px solid var(--border);border-radius:24px;padding:48px;
+  background:radial-gradient(700px 300px at 12% 0%,rgba(255,51,102,.14),transparent 70%),var(--surface)}
+.final h2{font-family:var(--font-d);font-size:clamp(1.8rem,3.3vw,2.6rem);letter-spacing:-.03em;margin-bottom:12px}
+.final p{color:var(--muted);font-size:.94rem;margin-bottom:24px}
+.final .actions{display:flex;gap:12px;flex-wrap:wrap}
+.cert{border:1px solid rgba(34,211,238,.28);background:rgba(34,211,238,.05);border-radius:18px;padding:28px;text-align:center}
+.cert .seal{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;font-size:1.8rem;
+  border:1px solid rgba(34,211,238,.4);background:radial-gradient(circle,rgba(34,211,238,.22),transparent 70%)}
+.cert h3{font-family:var(--font-d);margin-bottom:8px}
+.cert p{font-size:.84rem;color:var(--muted)}
+
+/* footer */
+footer{border-top:1px solid var(--border);margin-top:96px;padding:28px 0 46px;color:var(--muted);font-size:.8rem;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:#fff;border-bottom:1px solid rgba(255,255,255,.25)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:#1b1426;border:1px solid var(--cyan);
+  color:#fff;padding:13px 22px;border-radius:999px;font-size:.84rem;opacity:0;pointer-events:none;transition:.3s;z-index:1300}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+#toTop{position:fixed;right:24px;bottom:24px;z-index:900;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);
+  background:rgba(24,19,36,.9);color:#fff;cursor:pointer;font-size:1.1rem;opacity:0;pointer-events:none;transition:.3s}
+#toTop.show{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* responsive */
+@media(max-width:980px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:16px;padding:18px 24px;
+    background:rgba(10,7,16,.98);border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}.burger{display:block}
+  .hero{grid-template-columns:1fr;padding-top:130px}.mock{max-width:620px}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .lesson-grid,.final{grid-template-columns:1fr}
+  .strip{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:680px){
+  .container{width:min(100% - 32px,1180px)}
+  .features,.strip,.compare-table,.compare-head{grid-template-columns:1fr}
+  .compare-table div:nth-child(3n+1){text-transform:none}
+  .final{padding:28px}.quiz-wrap{padding:18px}
+  h1{font-size:2.4rem}.section,.lesson{padding-top:64px}
+}
+</style>
+</head>
+<body>
+<div id="scrollProgress"></div>
+
+<header class="nav" id="nav">
+  <div class="container">
+    <a href="index.html#portfolio" class="brand"><span class="mark">EN</span> English<span>Lab</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about" class="nav-link">О курсе</a>
+      <a href="#present-simple" class="nav-link">Present Simple</a>
+      <a href="#present-continuous" class="nav-link">Present Continuous</a>
+      <a href="#compare" class="nav-link">Сравнение</a>
+      <a href="#practice" class="nav-link">Практика</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="index.html#portfolio" class="nav-cta">В портфолио ↗</a>
+      <button class="burger" id="burger" aria-label="Меню">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="container hero" id="home">
+    <div>
+      <div class="tag"><i></i> Кейс 06 · Бесплатный образовательный продукт</div>
+      <h1>Английский без скуки:<br><em>Present Simple</em><br>и <em>Present Continuous</em></h1>
+      <p class="lead">Бесплатный интерактивный мини-курс: понятная теория, таблицы спряжений, сигналные слова и тренажёр с мгновенной проверкой. Освойте два главных настоящих времени за один вечер.</p>
+      <div class="hero-actions">
+        <a href="#present-simple" class="btn">Начать бесплатно →</a>
+        <a href="#compare" class="btn ghost">В чём разница?</a>
+      </div>
+      <div class="hero-meta">
+        <div><b>2</b><small>времени</small></div>
+        <div><b>20</b><small>упражнений</small></div>
+        <div><b>15 мин</b><small>на прохождение</small></div>
+        <div><b>0 ₽</b><small>стоимость</small></div>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-in">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="mock-title">Урок 01 · Два настоящих времени</div>
+        <div class="vs">
+          <div class="vs-card a">
+            <small>Present Simple</small>
+            <b>work / works</b>
+            <p>Привычки и факты<br>every day, usually</p>
+          </div>
+          <div class="vs-card b">
+            <small>Present Continuous</small>
+            <b>am / is / are working</b>
+            <p>Действие прямо сейчас<br>now, at the moment</p>
+          </div>
+        </div>
+        <div class="mock-lines"><i></i><i></i><i></i></div>
+        <div class="mock-badge">✦ 20 интерактивных заданий внутри</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container strip reveal">
+    <div><b>100%</b><small>бесплатно и без регистрации</small></div>
+    <div><b>2</b><small>пошаговых урока</small></div>
+    <div><b>20</b><small>заданий с объяснениями</small></div>
+    <div><b>∞</b><small>попыток перепрохождения</small></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section container" id="about">
+    <div class="head reveal">
+      <small>О курсе</small>
+      <h2>Всё, что нужно для старта</h2>
+      <p>Мы разложили грамматику по полочкам: от формулы образования до живых примеров и практики. Никакой воды — только то, что реально пригодится.</p>
+    </div>
+    <div class="features">
+      <div class="feature reveal"><div class="ic">📘</div><h3>Чёткая теория</h3><p>Формулы, таблицы спряжений и правила с примерами — запоминается без зубрёжки.</p></div>
+      <div class="feature reveal"><div class="ic">🔤</div><h3>Сигналные слова</h3><p>Научитесь мгновенно определять время по словам-подсказкам: usually, now, every day.</p></div>
+      <div class="feature reveal"><div class="ic">🎯</div><h3>Тренажёр</h3><p>20 заданий с обратной связью: сразу видно, где ошибка и почему выбранный вариант верный.</p></div>
+      <div class="feature reveal"><div class="ic">🔁</div><h3>Повторение</h3><p>Итоговый микс из двух времён закрепит материал. Проходите сколько угодно раз.</p></div>
+    </div>
+  </section>
+
+  <!-- LESSON 1 -->
+  <section class="lesson container orange" id="present-simple">
+    <div class="lesson-top reveal">
+      <span class="lesson-badge">УРОК 01</span>
+      <h2>Present Simple — привычки и факты</h2>
+    </div>
+    <div class="lesson-grid">
+      <div class="card reveal">
+        <h3><span class="num">01</span> Когда используется</h3>
+        <p>Повторяющиеся действия, привычки, общие истины и расписание. Отвечаем на вопрос: «Что происходит вообще / как правило?»</p>
+        <div class="formula">I / You / We / They + work</div>
+        <div class="formula">He / She / It + works</div>
+        <h3 style="margin-top:22px"><span class="num">02</span> Отрицание и вопрос</h3>
+        <table>
+          <tr><th>Форма</th><th>Пример</th></tr>
+          <tr><td>+</td><td>She works in a bank.</td></tr>
+          <tr><td>−</td><td>She doesn't work in a bank.</td></tr>
+          <tr><td>?</td><td>Does she work in a bank?</td></tr>
+        </table>
+        <div class="note">После <b>does / doesn't</b> глагол всегда в начальной форме: <i>Does she work?</i> — не «works».</div>
+      </div>
+      <div class="card reveal">
+        <h3><span class="num">03</span> Окончание -s: правила</h3>
+        <table>
+          <tr><th>Глагол</th><th>He / She / It</th></tr>
+          <tr><td>work</td><td>works</td></tr>
+          <tr><td>go, watch</td><td>goes, watches</td></tr>
+          <tr><td>study</td><td>studies</td></tr>
+          <tr><td>play</td><td>plays</td></tr>
+        </table>
+        <h3 style="margin-top:22px"><span class="num">04</span> Сигналные слова</h3>
+        <div class="chips"><span class="chip">always</span><span class="chip">usually</span><span class="chip">often</span><span class="chip">every day</span><span class="chip">on Mondays</span><span class="chip">twice a week</span><span class="chip">never</span></div>
+        <h3 style="margin-top:22px"><span class="num">05</span> Примеры</h3>
+        <ul class="examples">
+          <li>I <b>live</b> in Moscow.</li>
+          <li>He <b>likes</b> coffee very much.</li>
+          <li>They <b>don't watch</b> TV in the morning.</li>
+          <li><b>Do</b> you <b>speak</b> English?</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quiz-wrap compact reveal">
+      <div class="quiz-headline"><h3>Мини-тренажёр · Present Simple</h3><span>Выберите правильную форму глагола</span></div>
+      <div id="quiz-ps"></div>
+    </div>
+  </section>
+
+  <!-- LESSON 2 -->
+  <section class="lesson container cyan" id="present-continuous">
+    <div class="lesson-top reveal">
+      <span class="lesson-badge">УРОК 02</span>
+      <h2>Present Continuous — действие сейчас</h2>
+    </div>
+    <div class="lesson-grid">
+      <div class="card reveal">
+        <h3><span class="num">01</span> Когда используется</h3>
+        <p>Действие в момент речи, временная ситуация или план на ближайшее будущее. Отвечаем на вопрос: «Что происходит прямо сейчас?»</p>
+        <div class="formula">am / is / are + V-ing</div>
+        <table>
+          <tr><th>Лицо</th><th>Форма</th></tr>
+          <tr><td>I</td><td>am reading</td></tr>
+          <tr><td>He / She / It</td><td>is reading</td></tr>
+          <tr><td>You / We / They</td><td>are reading</td></tr>
+        </table>
+        <h3 style="margin-top:22px"><span class="num">02</span> Отрицание и вопрос</h3>
+        <div class="formula">She isn't sleeping. — Are you listening?</div>
+      </div>
+      <div class="card reveal">
+        <h3><span class="num">03</span> Правила V-ing</h3>
+        <table>
+          <tr><th>Глагол</th><th>Правило</th></tr>
+          <tr><td>make → making</td><td>убрать -e</td></tr>
+          <tr><td>run → running</td><td>удвоить согласную</td></tr>
+          <tr><td>lie → lying</td><td>ie → y</td></tr>
+          <tr><td>play → playing</td><td>просто +ing</td></tr>
+        </table>
+        <h3 style="margin-top:22px"><span class="num">04</span> Сигналные слова</h3>
+        <div class="chips"><span class="chip">now</span><span class="chip">right now</span><span class="chip">at the moment</span><span class="chip">Look!</span><span class="chip">Listen!</span><span class="chip">today</span><span class="chip">still</span></div>
+        <h3 style="margin-top:22px"><span class="num">05</span> Примеры</h3>
+        <ul class="examples">
+          <li>I <b>am reading</b> now.</li>
+          <li>She <b>is watching</b> TV at the moment.</li>
+          <li>They <b>aren't sleeping</b>.</li>
+          <li><b>Are</b> you <b>listening</b> to me?</li>
+        </ul>
+        <div class="note">Глаголы состояния (<i>know, love, like, believe, own</i>) обычно не используют в Continuous: говорим <b>I know him</b>, а не «I am knowing him».</div>
+      </div>
+    </div>
+    <div class="quiz-wrap compact reveal">
+      <div class="quiz-headline"><h3>Мини-тренажёр · Present Continuous</h3><span>Выберите правильную форму</span></div>
+      <div id="quiz-pc"></div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="section container" id="compare">
+    <div class="head reveal">
+      <small>Сравнение</small>
+      <h2>Одно предложение — два смысла</h2>
+      <p>Разница между «I work» и «I am working» — не в грамматике ради грамматики, а в том, о чём вы говорите: о факте или о процессе.</p>
+    </div>
+    <div class="compare-head reveal">
+      <div>I work every day. — Это моя привычка, так обычно.</div>
+      <div>I am working now. — Я занят прямо в эту минуту.</div>
+    </div>
+    <div class="compare-table reveal">
+      <div>Употребление</div><div>Привычки, факты, расписание</div><div>Процесс в момент речи</div>
+      <div>Формула</div><div>V / V-s</div><div>am / is / are + V-ing</div>
+      <div>Вопрос</div><div>Do / Does … ?</div><div>Am / Is / Are … ?</div>
+      <div>Отрицание</div><div>don't / doesn't + V</div><div>am not / isn't / aren't + V-ing</div>
+      <div>Маркеры</div><div>usually, every day, often</div><div>now, at the moment, Look!</div>
+      <div>Пример</div><div>She reads a lot.</div><div>She is reading now.</div>
+    </div>
+  </section>
+
+  <!-- FINAL PRACTICE -->
+  <section class="section container" id="practice">
+    <div class="head reveal">
+      <small>Итоговая практика</small>
+      <h2>Смешанный тренажёр</h2>
+      <p>8 заданий, где нужно самим решить: Present Simple или Present Continuous? Подсказка — сигналные слова и смысл фразы.</p>
+    </div>
+    <div class="quiz-wrap reveal">
+      <div class="quiz-headline"><h3>Финальный тест · 8 вопросов</h3><span>За правильный ответ — 1 балл</span></div>
+      <div id="quiz-mix"></div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="container final" id="start">
+    <div class="reveal">
+      <h2>Готовы закрепить?</h2>
+      <p>Пройдите курс ещё раз или вернитесь в портфолио, чтобы посмотреть другие кейсы. Курс полностью бесплатный — без регистрации и скрытых платежей.</p>
+      <div class="actions">
+        <button class="btn" id="restartAll">Пройти заново ↻</button>
+        <a href="index.html#portfolio" class="btn ghost">Другие кейсы ↗</a>
+      </div>
+    </div>
+    <div class="cert reveal">
+      <div class="seal">🎓</div>
+      <h3>Ваш прогресс</h3>
+      <p id="progressText">Пройдите тренажёры выше, чтобы увидеть результат.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="container">
+  <div>English Lab · Бесплатный курс по грамматике английского</div>
+  <div><a href="index.html#portfolio">← Назад в портфолио</a> · SERJANT DEV</div>
+</footer>
+
+<button id="toTop" title="Наверх">↑</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- quizzes ---------- */
+const quizzes = {
+  ps: {
+    questions: [
+      {q:'She ___ in a bank.', opts:['work','works','working'], a:1, tip:'He / She / It → глагол с -s: works.'},
+      {q:'They ___ coffee every morning.', opts:['drink','drinks','drinking'], a:0, tip:'They → начальная форма глагола: drink. Подсказка — every morning.'},
+      {q:'___ you speak English?', opts:['Do','Does','Are'], a:0, tip:'С подлежащим you используем Do: Do you speak English?'},
+      {q:'He ___ like pizza.', opts:["don't","doesn't","isn't"], a:1, tip:'Для He отрицание — doesn’t + начальная форма: doesn’t like.'},
+      {q:'My brother ___ to school at 8.', opts:['go','goes','going'], a:1, tip:'My brother = он → goes (глагол на -o получает -es).'},
+      {q:'We ___ TV every evening.', opts:['watch','watches','watching'], a:0, tip:'We → watch. Сигнал — every evening.'}
+    ]
+  },
+  pc: {
+    questions: [
+      {q:'Look! The dog ___ after the cat.', opts:['runs','is running','run'], a:1, tip:'Look! — сигнал действия в момент речи: is running.'},
+      {q:'I ___ TV right now.', opts:['watch','am watching','watches'], a:1, tip:'right now → am watching.'},
+      {q:'She ___ at the moment.', opts:['sleeps','is sleeping','sleep'], a:1, tip:'at the moment → is sleeping.'},
+      {q:'___ they playing football?', opts:['Do','Are','Is'], a:1, tip:'Вопрос с Present Continuous: Are + they + V-ing?'},
+      {q:'We ___ homework now.', opts:['do','are doing','does'], a:1, tip:'now → are doing.'},
+      {q:'Listen! Someone ___.', opts:['sings','is singing','sing'], a:1, tip:'Listen! → is singing.'}
+    ]
+  },
+  mix: {
+    questions: [
+      {q:'I usually ___ up at 7.', opts:['get','am getting'], a:0, tip:'usually → привычка → Present Simple: get.'},
+      {q:'Be quiet! The baby ___.', opts:['sleeps','is sleeping'], a:1, tip:'Be quiet! — действие прямо сейчас → is sleeping.'},
+      {q:'Water ___ at 100°C.', opts:['boils','is boiling'], a:0, tip:'Общий факт → Present Simple: boils.'},
+      {q:'She ___ a book now.', opts:['reads','is reading'], a:1, tip:'now → is reading.'},
+      {q:'He ___ football every Saturday.', opts:['plays','is playing'], a:0, tip:'every Saturday → повторение → plays.'},
+      {q:'Listen! Someone ___.', opts:['sings','is singing'], a:1, tip:'Listen! → is singing.'},
+      {q:'They ___ in London at the moment.', opts:['live','are living'], a:1, tip:'at the moment → временная ситуация → are living.'},
+      {q:'I ___ English twice a week.', opts:['study','am studying'], a:0, tip:'twice a week → расписание → study.'}
+    ]
+  }
+};
+
+const results = {};
+function initQuiz(key){
+  const cfg = quizzes[key];
+  const el = document.getElementById('quiz-' + key);
+  const s = {i:0, score:0};
+  results[key] = s;
+  function paint(){
+    if (s.i >= cfg.questions.length){
+      const pct = Math.round(s.score / cfg.questions.length * 100);
+      const msg = pct === 100 ? 'Идеально! Материал усвоен.' : pct >= 70 ? 'Отличный результат! Ещё немного практики — и будет идеал.' : 'Хорошее начало! Пройдите ещё раз — получится лучше.';
+      el.innerHTML = '<div class="result"><div class="score">' + s.score + ' / ' + cfg.questions.length + '</div><p>' + msg + '</p><button class="q-reset" id="reset-' + key + '">Пройти заново ↻</button></div>';
+      document.getElementById('reset-' + key).onclick = () => { s.i = 0; s.score = 0; paint(); updateProgress(); };
+      updateProgress();
+      return;
+    }
+    const q = cfg.questions[s.i];
+    el.innerHTML =
+      '<div class="quiz-top"><span>Вопрос ' + (s.i+1) + ' из ' + cfg.questions.length + '</span><span>★ <b>' + s.score + '</b> баллов</span></div>' +
+      '<div class="qbar"><i style="width:' + (s.i / cfg.questions.length * 100) + '%"></i></div>' +
+      '<p class="q-sentence">' + q.q + '</p>' +
+      '<div class="q-opts">' + q.opts.map((o,i) => '<button class="q-opt" data-i="' + i + '">' + o + '</button>').join('') + '</div>' +
+      '<div class="q-feedback"></div>';
+    const fb = el.querySelector('.q-feedback');
+    el.querySelectorAll('.q-opt').forEach(btn => {
+      btn.onclick = () => {
+        if (btn.dataset.locked) return;
+        el.querySelectorAll('.q-opt').forEach(b => { b.dataset.locked = '1'; });
+        const chosen = Number(btn.dataset.i);
+        if (chosen === q.a){
+          s.score++;
+          btn.classList.add('correct');
+          const scoreEl = el.querySelector('.quiz-top b');
+          if (scoreEl) scoreEl.textContent = s.score;
+          fb.innerHTML = '<div class="ok">✓ Верно!</div><div class="tip">' + q.tip + '</div>';
+        }
+        else { btn.classList.add('wrong'); el.querySelectorAll('.q-opt')[q.a].classList.add('correct'); fb.innerHTML = '<div class="bad">✗ Не совсем. Правильно: ' + q.opts[q.a] + '</div><div class="tip">' + q.tip + '</div>'; }
+        const next = document.createElement('button');
+        next.className = 'q-next';
+        next.textContent = s.i === cfg.questions.length - 1 ? 'Показать результат →' : 'Следующий →';
+        next.onclick = () => { s.i++; paint(); };
+        fb.appendChild(next);
+      };
+    });
+    updateProgress();
+  }
+  paint();
+}
+function updateProgress(){
+  const done = Object.values(results).reduce((a,r) => a + r.i, 0);
+  const total = Object.values(quizzes).reduce((a,q) => a + q.questions.length, 0);
+  const score = Object.values(results).reduce((a,r) => a + r.score, 0);
+  const el = document.getElementById('progressText');
+  if (el) el.textContent = done === 0 ? 'Пройдите тренажёры выше, чтобы увидеть результат.'
+    : done < total ? 'Пройдено ' + done + ' из ' + total + ' заданий. Продолжайте!'
+    : 'Все ' + total + ' заданий пройдены! Набрано ' + score + ' из ' + total + ' баллов.';
+}
+Object.keys(quizzes).forEach(initQuiz);
+document.getElementById('restartAll').onclick = () => {
+  Object.keys(quizzes).forEach(initQuiz);
+  document.getElementById('practice').scrollIntoView({behavior:'smooth'});
+  toast('Все тренажёры сброшены. Начинаем заново!');
+};
+
+/* ---------- ui ---------- */
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+const nav = document.getElementById('nav');
+const progress = document.getElementById('scrollProgress');
+const toTop = document.getElementById('toTop');
+function onScroll(){
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 20);
+  toTop.classList.toggle('show', y > 500);
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? y / h * 100 : 0) + '%';
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+toTop.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.onclick = () => navLinks.classList.toggle('open');
+navLinks.querySelectorAll('a').forEach(a => a.onclick = () => navLinks.classList.remove('open'));
+
+const links = [...document.querySelectorAll('.nav-link')];
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting){
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, {rootMargin:'-35% 0px -60% 0px'});
+['about','present-simple','present-continuous','compare','practice'].forEach(id => {
+  const el = document.getElementById(id); if (el) spy.observe(el);
+});
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+}, {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
