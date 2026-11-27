@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Вход — English Lab</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<script src="assets/common.js"></script>
+<script>mountHeader('login.html');</script>
+
+<main class="container">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div id="msg"></div>
+      <h1>Вход в аккаунт</h1>
+      <p class="sub">Введите логин и пароль — ваш прогресс будет сохраняться.</p>
+      <form id="loginForm">
+        <div class="field"><label for="login">Логин</label><input id="login" type="text" autocomplete="username" required placeholder="student" /></div>
+        <div class="field"><label for="password">Пароль</label><input id="password" type="password" autocomplete="current-password" required placeholder="••••••" /></div>
+        <button type="submit" class="btn block">Войти →</button>
+        <div class="error" id="error"></div>
+      </form>
+      <div class="demo">
+        <b>Демо-аккаунты</b><br>
+        <code>student / 123456</code> <button type="button" class="fill" data-login="student" data-pass="123456">подставить</button><br>
+        <code>demo / english</code> <button type="button" class="fill" data-login="demo" data-pass="english">подставить</button>
+      </div>
+      <p class="notice">Аккаунты хранятся в файле <code>data/users.json</code>. Это демонстрационный вход: проверка идёт в браузере, поэтому не используйте здесь реальные пароли.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+mountFooter();
+const session = getSession();
+if (session){
+  document.getElementById('msg').innerHTML = '<div class="msg">Вы уже вошли как ' + esc(session.name || session.login) + '. <a href="index.html" style="text-decoration:underline">На главную</a></div>';
+}
+document.querySelectorAll('.fill').forEach(b => b.onclick = () => {
+  document.getElementById('login').value = b.dataset.login;
+  document.getElementById('password').value = b.dataset.pass;
+});
+
+let users = [];
+apiGet('data/users.json').then(data => { users = data.users; }).catch(err => {
+  document.getElementById('error').textContent = 'Не удалось загрузить аккаунты: ' + err.message;
+});
+document.getElementById('loginForm').onsubmit = e => {
+  e.preventDefault();
+  const login = document.getElementById('login').value.trim().toLowerCase();
+  const pass = document.getElementById('password').value;
+  const u = users.find(x => x.login.toLowerCase() === login && x.password === pass);
+  const err = document.getElementById('error');
+  if (!u){ err.textContent = 'Неверный логин или пароль.'; return; }
+  saveSession({ login:u.login, name:u.name });
+  location.href = 'index.html';
+};
+</script>
+</body>
+</html>

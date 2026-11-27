@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>1000 слов — English Lab</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<script src="assets/common.js"></script>
+<script>mountHeader('words.html');</script>
+
+<main class="container">
+  <div class="page-head">
+    <h1>1000 слов для свободной речи</h1>
+    <p class="lead">Самая нужная лексика с переводом. Ищите слово, выбирайте тему или повторяйте случайные карточки.</p>
+  </div>
+
+  <div class="word-tools">
+    <input class="input" id="search" type="search" placeholder="Поиск: слово или перевод…" />
+    <select class="select" id="category"></select>
+    <button class="btn ghost" id="randomBtn">Случайное слово 🎲</button>
+  </div>
+
+  <div class="counter" id="counter"></div>
+  <div class="words-grid" id="wordsGrid"></div>
+  <button class="btn light more" id="moreBtn">Показать ещё</button>
+</main>
+
+<div class="modal" id="modal"><div class="modal-box">
+  <div class="cat" id="mCat"></div>
+  <div class="word" id="mWord"></div>
+  <div class="tr" id="mTr"></div>
+  <button class="btn" id="mClose">Понятно</button>
+</div></div>
+
+<script>
+mountFooter();
+let words = [], shown = 60, filtered = [];
+const grid = document.getElementById('wordsGrid');
+const counter = document.getElementById('counter');
+const search = document.getElementById('search');
+const category = document.getElementById('category');
+const moreBtn = document.getElementById('moreBtn');
+
+function render(){
+  filtered = words.filter(w => {
+    const catOk = category.value === 'all' || w.cat === category.value;
+    const q = search.value.trim().toLowerCase();
+    const textOk = !q || w.word.toLowerCase().includes(q) || w.ru.toLowerCase().includes(q);
+    return catOk && textOk;
+  });
+  shown = 60;
+  draw();
+}
+function draw(){
+  const slice = filtered.slice(0, shown);
+  grid.innerHTML = slice.map(w =>
+    '<div class="word-card"><div><b>' + esc(w.word) + '</b><div class="tr">' + esc(w.ru) + '</div>' +
+    '<span class="cat">' + esc(w.cat) + '</span></div></div>').join('') ||
+    '<div class="empty">Ничего не найдено. Попробуйте другой запрос.</div>';
+  counter.textContent = 'Показано ' + slice.length + ' из ' + filtered.length + ' слов';
+  moreBtn.style.display = shown < filtered.length ? 'block' : 'none';
+}
+search.oninput = render;
+category.onchange = render;
+moreBtn.onclick = () => { shown += 60; draw(); };
+
+const modal = document.getElementById('modal');
+document.getElementById('mClose').onclick = () => modal.classList.remove('open');
+modal.onclick = e => { if (e.target === modal) modal.classList.remove('open'); };
+document.getElementById('randomBtn').onclick = () => {
+  const w = words[Math.floor(Math.random() * words.length)];
+  if (!w) return;
+  document.getElementById('mWord').textContent = w.word;
+  document.getElementById('mTr').textContent = w.ru;
+  document.getElementById('mCat').textContent = w.cat;
+  modal.classList.add('open');
+};
+
+apiGet('data/words.json').then(data => {
+  words = data;
+  const cats = [...new Set(words.map(w => w.cat))].sort();
+  category.innerHTML = '<option value="all">Все темы</option>' + cats.map(c => '<option value="' + esc(c) + '">' + esc(c) + '</option>').join('');
+  render();
+}).catch(err => {
+  grid.innerHTML = '<div class="empty">Ошибка загрузки слов: ' + esc(err.message) + '</div>';
+});
+</script>
+</body>
+</html>

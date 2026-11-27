@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Урок — English Lab</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<script src="assets/common.js"></script>
+<script>mountHeader('courses.html');</script>
+
+<main class="container">
+  <div class="lesson-head">
+    <a href="courses.html" class="back-link">← Все курсы</a>
+    <div>
+      <span class="badge" id="lessonBadge"></span>
+      <h1 id="lessonTitle">Урок</h1>
+      <p class="lead" id="lessonRu"></p>
+    </div>
+  </div>
+
+  <div class="lesson-layout">
+    <div class="stack" id="lessonBody"></div>
+    <aside>
+      <div class="panel side-card" id="quizPanel">
+        <h2>Проверьте себя</h2>
+        <div id="quiz"></div>
+      </div>
+      <div class="panel" style="margin-top:16px">
+        <h2>Другие времена</h2>
+        <div class="stack" id="otherTenses" style="gap:6px"></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+mountFooter();
+const params = new URLSearchParams(location.search);
+const key = params.get('t') || '';
+let tense = null, all = [];
+
+const body = document.getElementById('lessonBody');
+const quiz = document.getElementById('quiz');
+
+function renderLesson(t){
+  document.title = t.name + ' — English Lab';
+  document.getElementById('lessonBadge').textContent = t.group;
+  document.getElementById('lessonTitle').textContent = t.name;
+  document.getElementById('lessonRu').textContent = t.ru;
+
+  const tableRows = t.table.map(([k,v]) => '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>').join('');
+  body.innerHTML =
+    '<section class="panel"><h2><span class="n">1</span> Когда используется</h2>' +
+      '<p style="color:var(--muted);font-size:.88rem">' + esc(t.when) + '</p>' +
+      '<div class="formula">' + esc(t.formula) + '</div></section>' +
+
+    '<section class="panel"><h2><span class="n">2</span> Образование</h2>' +
+      '<table><tr><th>Форма</th><th>Пример</th></tr>' + tableRows + '</table></section>' +
+
+    '<section class="panel"><h2><span class="n">3</span> Сигналные слова</h2>' +
+      '<div class="chips">' + t.signals.map(w => '<span class="chip">' + esc(w) + '</span>').join('') + '</div></section>' +
+
+    '<section class="panel"><h2><span class="n">4</span> Примеры</h2>' +
+      '<ul class="ex-list">' + t.examples.map(([en,ru]) =>
+        '<li><b>' + esc(en) + '</b><span>' + esc(ru) + '</span></li>').join('') + '</ul>' +
+      '<div class="tip">💡 ' + esc(t.tip) + '</div></section>';
+
+  document.getElementById('otherTenses').innerHTML = all
+    .filter(x => x.key !== t.key)
+    .map(x => '<a href="lesson.html?t=' + encodeURIComponent(x.key) + '" style="font-size:.82rem;color:var(--muted)">→ ' + esc(x.name) + '</a>')
+    .join('');
+}
+
+function runQuiz(t){
+  let i = 0, score = 0;
+  function paint(){
+    if (i >= t.quiz.length){
+      const next = all[(all.findIndex(x => x.key === t.key) + 1) % all.length];
+      quiz.innerHTML = '<div class="result"><div class="big">' + score + ' / ' + t.quiz.length + '</div>' +
+        '<p>' + (score === t.quiz.length ? 'Отлично! Всё верно.' : score >= t.quiz.length / 2 ? 'Хорошо! Можно повторить урок.' : 'Начните с объяснения выше и попробуйте ещё раз.') + '</p>' +
+        '<button class="btn small block" id="finishBtn">Отметить как пройденный ✓</button>' +
+        '<a href="lesson.html?t=' + encodeURIComponent(next.key) + '" class="btn light small block" style="margin-top:8px">Следующее время →</a></div>';
+      document.getElementById('finishBtn').onclick = () => {
+        markLessonDone(t.key, score, t.quiz.length);
+        const b = document.getElementById('finishBtn');
+        b.textContent = '✓ Курс сохранён'; b.disabled = true; b.style.opacity = '.65';
+      };
+      return;
+    }
+    const q = t.quiz[i];
+    quiz.innerHTML = '<div class="quiz-q">' + esc(q.q) + '</div>' +
+      '<div class="opts">' + q.opts.map((o,n) => '<button class="opt" data-n="' + n + '">' + esc(o) + '</button>').join('') + '</div>' +
+      '<div class="feedback" id="fb"></div>' +
+      '<div class="quiz-foot"><span class="score-pill">★ ' + score + '</span>' +
+      '<button class="btn small" id="nextQ">' + (i === t.quiz.length - 1 ? 'Результат →' : 'Далее →') + '</button></div>';
+    const fb = document.getElementById('fb');
+    quiz.querySelectorAll('.opt').forEach(btn => {
+      btn.onclick = () => {
+        if (btn.dataset.locked) return;
+        quiz.querySelectorAll('.opt').forEach(b => b.dataset.locked = '1');
+        const n = Number(btn.dataset.n);
+        if (n === q.a){
+          score++; btn.classList.add('correct');
+          quiz.querySelector('.score-pill').textContent = '★ ' + score;
+          fb.className = 'feedback ok';
+          fb.innerHTML = '✓ Верно!<span class="why">' + esc(q.why) + '</span>';
+        } else {
+          btn.classList.add('wrong');
+          quiz.querySelectorAll('.opt')[q.a].classList.add('correct');
+          fb.className = 'feedback bad';
+          fb.innerHTML = '✗ Правильно: ' + esc(q.opts[q.a]) + '<span class="why">' + esc(q.why) + '</span>';
+        }
+      };
+    });
+    document.getElementById('nextQ').onclick = () => { i++; paint(); };
+  }
+  paint();
+}
+
+apiGet('data/tenses.json').then(data => {
+  all = data.tenses;
+  tense = all.find(x => x.key === key) || all[0];
+  renderLesson(tense);
+  runQuiz(tense);
+}).catch(err => {
+  body.innerHTML = '<div class="panel"><div class="empty">Ошибка загрузки урока: ' + esc(err.message) + '</div></div>';
+});
+</script>
+</body>
+</html>
