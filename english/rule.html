@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Правило — Serjant Lab</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css?v=4" />
+<link rel="stylesheet" href="assets/style.css?v=5" />
 </head>
 <body>
-<script src="assets/common.js?v=4"></script>
+<script src="assets/common.js?v=5"></script>
 <script>mountHeader('rules.html');</script>
 
 <main class="container">
@@ -85,11 +85,11 @@ function setupSecret(){
       '</table>';
   }
   search.oninput = draw;
-  apiGet('data/irregular.json?v=4').then(d => { verbs = d.verbs; draw(); })
+  apiGet('data/irregular.json?v=5').then(d => { verbs = d.verbs; draw(); })
     .catch(err => { table.innerHTML = '<div class="empty">Ошибка: ' + esc(err.message) + '</div>'; });
 }
 
-apiGet('data/rules.json?v=4').then(data => {
+apiGet('data/rules.json?v=5').then(data => {
   const n = data.rules.findIndex(x => x.key === key);
   renderRule(data.rules[n < 0 ? 0 : n], n < 0 ? 0 : n);
 }).catch(err => {

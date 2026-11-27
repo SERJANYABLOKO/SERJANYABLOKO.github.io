@@ -1601,7 +1601,61 @@ for w, ru in parse(extra):
     words.append({'word': w, 'ru': ru, 'cat': 'Глаголы'})
 
 words = words[:1000]
+
+# Четыре вида слов для раздела «1000 слов»
+VERB_TEXT = """
+work live cook buy sell pay send receive put keep hold carry bring leave stay return wait
+help need want like know think believe decide choose try use create build break fix grow improve
+protect destroy clean tidy repair wash iron wear fit change walk run jump sit stand sleep wake
+eat drink open close start stop finish continue begin end move look see watch hear listen say
+tell ask answer reply explain describe discuss argue agree disagree suggest offer invite refuse
+accept apologize thank complain promise warn advise remind mention report announce joke lie
+translate explore discover travel visit arrive hike camp shop drive ride fly swim ski skate play
+study learn teach read write speak understand remember forget repeat calculate count increase
+decrease save delete click download upload install update share search produce supply deliver
+order manage earn afford apply hire fire quit organize prepare present compare consider develop
+design determine appear avoid become belong borrow breathe celebrate collect compete complete
+contain control convert depend die divide doubt dream dress encourage enjoy enter escape expect
+experiment fail fall fear feed feel fight fill flow follow force forgive form freeze frighten
+gather guess guide happen hide hit imagine include introduce invent join judge kill kiss knock
+laugh lead lend lose love marry matter mean measure meet mind miss mix murmur name notice obey
+observe occur persuade pick plan point polish pour pray prefer pretend prevent provide pull push
+question race raise reach realize recognize recommend record reduce regard regret reinforce relax
+release rely remain remove replace represent request require rescue resist resolve respect respond
+restore result retire reveal review revise rob rock roll rub ruin rule rush satisfy scold scratch
+scream seat secure seek seem separate serve set settle shake shape shave shine shock shoot shorten
+sigh sign sing sink slow smell smoke smooth snap sneeze soak solve sort sound speed spell spend
+spill spin split spoil sponsor spot spray spread squeeze stare state steal step stick store
+straighten strengthen struggle stuff stumble submit subtract succeed suck suffer swallow swear
+sweep swing switch type undertake undo unite unlock unpack vanish vote wander waste water wave
+weigh welcome wink wipe wish wonder worship wrap wreck yell yield try-on check-in check-out
+"""
+VERB_SET = set(w.strip().lower() for w in VERB_TEXT.split() if w.strip())
+
+IRREGULAR = {}
+try:
+    with open('data/irregular.json', encoding='utf-8') as f:
+        IRREGULAR = {v['v1'].lower(): v for v in json.load(f)['verbs']}
+except FileNotFoundError:
+    pass
+
+for w in words:
+    low = w['word'].lower()
+    irr = IRREGULAR.get(low)
+    if irr:
+        w['type'] = 'Неправильные глаголы'
+        w['v2'] = irr['v2']
+        w['v3'] = irr['v3']
+    elif low in VERB_SET:
+        w['type'] = 'Глаголы'
+    elif w['cat'] == 'Прилагательные':
+        w['type'] = 'Прилагательные'
+    else:
+        w['type'] = 'Существительные'
+
 os.makedirs('data', exist_ok=True)
 with open('data/words.json', 'w', encoding='utf-8') as f:
     json.dump(words, f, ensure_ascii=False, indent=2)
-print('words:', len(words), 'categories:', len(set(w['cat'] for w in words)))
+from collections import Counter
+print('words:', len(words), 'themes:', len(set(w['cat'] for w in words)),
+      'types:', dict(Counter(w['type'] for w in words)))

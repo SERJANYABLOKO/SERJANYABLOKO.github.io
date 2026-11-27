@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Правила — Serjant Lab</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css?v=4" />
+<link rel="stylesheet" href="assets/style.css?v=5" />
 </head>
 <body>
-<script src="assets/common.js?v=4"></script>
+<script src="assets/common.js?v=5"></script>
 <script>mountHeader('rules.html');</script>
 
 <main class="container">
@@ -22,7 +22,7 @@
 <script>
 mountFooter();
 const grid = document.getElementById('rulesGrid');
-apiGet('data/rules.json?v=4').then(data => {
+apiGet('data/rules.json?v=5').then(data => {
   grid.innerHTML = data.rules.map((r, n) =>
     '<article class="card course-card">' +
       '<div class="course-top"><span class="badge">Правило ' + String(n + 1).padStart(2, '0') + '</span>' +
