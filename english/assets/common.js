@@ -1,4 +1,4 @@
-/* Общие helpers для всех страниц English Lab */
+/* Общие helpers для всех страниц Serjant Lab */
 
 const SESSION_KEY = 'el_session';
 const PROGRESS_KEY = 'el_progress';
@@ -44,7 +44,7 @@ function headerHTML(active){
     ? '<div class="user-area"><span class="user-chip"><span class="avatar">' + (s.name || s.login).charAt(0).toUpperCase() + '</span>' + (s.name || s.login) + '</span><button class="logout" id="logoutBtn">Выйти</button></div>'
     : '<div class="user-area"><a href="login.html" class="btn small">Войти</a></div>';
   return '<header class="header"><div class="container">' +
-    '<a href="index.html" class="logo"><span class="icon">EN</span>English <span>Lab</span></a>' +
+    '<a href="index.html" class="logo"><span class="icon">SL</span>Serjant <span>Lab</span></a>' +
     '<nav class="nav" id="mainNav">' + nav + '</nav>' +
     '<div style="display:flex;align-items:center;gap:10px">' + user +
     '<button class="menu-btn" id="menuBtn" aria-label="Меню">☰</button></div>' +
@@ -59,7 +59,7 @@ function mountHeader(active){
   if (out) out.onclick = () => { clearSession(); location.href = 'index.html'; };
 }
 function footerHTML(){
-  return '<footer class="footer container"><div>English Lab — учим английский простыми словами</div>' +
+  return '<footer class="footer container"><div>Serjant Lab — учим английский простыми словами</div>' +
     '<div><a href="../index.html#portfolio">← В портфолио</a> · SERJANT DEV</div></footer>';
 }
 function mountFooter(){ document.body.insertAdjacentHTML('beforeend', footerHTML()); }
