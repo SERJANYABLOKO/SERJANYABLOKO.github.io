@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Задания — Serjant Lab</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<script src="assets/common.js"></script>
+<script>mountHeader('tasks.html');</script>
+
+<main class="container">
+  <div class="page-head">
+    <h1>Задания</h1>
+    <p class="lead">Тренируйте грамматику и слова. Выберите тип заданий и уровень сложности — получите набор из 8 вопросов.</p>
+  </div>
+
+  <div class="tabs" id="modeTabs">
+    <button class="tab active" data-mode="tenses">Времена</button>
+    <button class="tab" data-mode="words">Слова</button>
+    <button class="tab" data-mode="random">Рандом (и то, и то)</button>
+  </div>
+
+  <div class="levels" id="levels">
+    <button class="level-card active" data-level="1">
+      <span class="lv">Уровень 1</span><b>Лёгкий</b><span>Простые времена и короткие слова</span>
+    </button>
+    <button class="level-card" data-level="2">
+      <span class="lv">Уровень 2</span><b>Средний</b><span>Perfect-времена и слова подлиннее</span>
+    </button>
+    <button class="level-card" data-level="3">
+      <span class="lv">Уровень 3</span><b>Сложный</b><span>Сложные конструкции и длинные слова</span>
+    </button>
+  </div>
+
+  <div class="panel task-panel" id="taskPanel">
+    <div class="empty">Загружаем задания…</div>
+  </div>
+</main>
+
+<script>
+mountFooter();
+const panel = document.getElementById('taskPanel');
+let mode = 'tenses', level = 1;
+let tenseData = [], wordData = [];
+let questions = [], i = 0, score = 0;
+
+function shuffle(a){
+  const b = a.slice();
+  for (let i = b.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [b[i], b[j]] = [b[j], b[i]];
+  }
+  return b;
+}
+function wordLevel(w){
+  const n = w.word.length;
+  return n <= 5 ? 1 : n <= 8 ? 2 : 3;
+}
+function wordQuestions(lv, count){
+  const pool = shuffle(wordData.filter(w => wordLevel(w) === lv));
+  return pool.slice(0, count).map(w => {
+    const others = shuffle(wordData.filter(x => x.ru !== w.ru)).slice(0, 3).map(x => x.ru);
+    const opts = shuffle([w.ru].concat(others));
+    return { q:'Что значит «' + w.word + '»?', opts:opts, a:opts.indexOf(w.ru),
+             why:'«' + w.word + '» — ' + w.ru + '.', kind:'Слова' };
+  });
+}
+function tenseQuestions(lv, count){
+  const pool = [];
+  tenseData.forEach(t => t.quiz.forEach(q => { if (q.level === lv) pool.push({q:q.q, opts:q.opts, a:q.a, why:q.why, kind:t.name}); }));
+  return shuffle(pool).slice(0, count);
+}
+function buildSet(){
+  if (mode === 'tenses') return tenseQuestions(level, 8);
+  if (mode === 'words') return wordQuestions(level, 8);
+  const mix = tenseQuestions(level, 4).concat(wordQuestions(level, 4));
+  return shuffle(mix).slice(0, 8);
+}
+function bestText(){
+  const p = getProgress()['task:' + mode + ':' + level];
+  return p ? 'Лучший результат: ' + p.score + ' / ' + p.total : '';
+}
+function intro(){
+  panel.innerHTML = '<div class="task-top"><span>' + (mode === 'tenses' ? 'Грамматика' : mode === 'words' ? 'Лексика' : 'Грамматика + лексика') + ' · уровень ' + level + '</span><span class="score-pill">8 вопросов</span></div>' +
+    '<h2 class="section-title" style="font-size:1.3rem">Готовы начать?</h2>' +
+    '<p class="section-sub">По каждому ответу будет краткое объяснение.</p>' +
+    '<div class="task-best">' + bestText() + '</div>' +
+    '<button class="btn" id="startBtn">Начать задания →</button>';
+  document.getElementById('startBtn').onclick = () => {
+    questions = buildSet();
+    if (!questions.length){ panel.innerHTML = '<div class="empty">Для этого уровня пока нет вопросов.</div>'; return; }
+    i = 0; score = 0; paint();
+  };
+}
+function paint(){
+  if (i >= questions.length){
+    saveTaskResult(mode + ':' + level, score, questions.length);
+    panel.innerHTML = '<div class="result"><div class="big">' + score + ' / ' + questions.length + '</div>' +
+      '<p>' + (score === questions.length ? 'Идеально! Все ответы верны.' : score >= questions.length / 2 ? 'Хороший результат! Попробуйте другой уровень.' : 'Пока не очень — попробуйте ещё раз, получится лучше.') + '</p>' +
+      '<button class="btn" id="againBtn">Ещё раз ↻</button> ' +
+      '<button class="btn ghost" id="backBtn">К выбору</button></div>';
+    document.getElementById('againBtn').onclick = () => { i = 0; score = 0; questions = buildSet(); paint(); };
+    document.getElementById('backBtn').onclick = intro;
+    return;
+  }
+  const q = questions[i];
+  panel.innerHTML =
+    '<div class="task-top"><span>Вопрос ' + (i + 1) + ' из ' + questions.length + ' · ' + esc(q.kind) + '</span><span class="score-pill">★ ' + score + '</span></div>' +
+    '<div class="progress-line"><i style="width:' + (i / questions.length * 100) + '%"></i></div>' +
+    '<div class="task-q">' + esc(q.q) + '</div>' +
+    '<div class="opts">' + q.opts.map((o, n) => '<button class="opt" data-n="' + n + '">' + esc(o) + '</button>').join('') + '</div>' +
+    '<div class="feedback" id="fb"></div>' +
+    '<div class="quiz-foot"><span></span><button class="btn small" id="nextBtn">' + (i === questions.length - 1 ? 'Результат →' : 'Далее →') + '</button></div>';
+  const fb = document.getElementById('fb');
+  panel.querySelectorAll('.opt').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.dataset.locked) return;
+      panel.querySelectorAll('.opt').forEach(b => b.dataset.locked = '1');
+      const n = Number(btn.dataset.n);
+      if (n === q.a){
+        score++;
+        btn.classList.add('correct');
+        panel.querySelector('.score-pill').textContent = '★ ' + score;
+        fb.className = 'feedback ok';
+        fb.innerHTML = '✓ Верно!<span class="why">' + esc(q.why) + '</span>';
+      } else {
+        btn.classList.add('wrong');
+        panel.querySelectorAll('.opt')[q.a].classList.add('correct');
+        fb.className = 'feedback bad';
+        fb.innerHTML = '✗ Правильно: ' + esc(q.opts[q.a]) + '<span class="why">' + esc(q.why) + '</span>';
+      }
+    };
+  });
+  document.getElementById('nextBtn').onclick = () => { i++; paint(); };
+}
+
+document.getElementById('modeTabs').onclick = e => {
+  const b = e.target.closest('.tab');
+  if (!b) return;
+  mode = b.dataset.mode;
+  document.querySelectorAll('#modeTabs .tab').forEach(t => t.classList.toggle('active', t === b));
+  intro();
+};
+document.getElementById('levels').onclick = e => {
+  const b = e.target.closest('.level-card');
+  if (!b) return;
+  level = Number(b.dataset.level);
+  document.querySelectorAll('.level-card').forEach(t => t.classList.toggle('active', t === b));
+  intro();
+};
+
+Promise.all([apiGet('data/tenses.json'), apiGet('data/words.json')])
+  .then(([t, w]) => { tenseData = t.tenses; wordData = w; intro(); })
+  .catch(err => { panel.innerHTML = '<div class="empty">Ошибка загрузки: ' + esc(err.message) + '</div>'; });
+</script>
+</body>
+</html>

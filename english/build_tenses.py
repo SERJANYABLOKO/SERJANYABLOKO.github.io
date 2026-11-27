@@ -1,11 +1,23 @@
 # Генератор data/tenses.json — 12 времён английского языка с уроками и заданиями.
 import json, os
 
+BASE_LEVEL = {
+    'present-simple': 1, 'present-continuous': 1, 'present-perfect': 1,
+    'past-simple': 1, 'past-continuous': 1, 'future-simple': 1,
+    'present-perfect-continuous': 2, 'past-perfect': 2,
+    'future-continuous': 2, 'future-perfect': 2,
+    'past-perfect-continuous': 3, 'future-perfect-continuous': 3,
+}
+
 def T(key, group, name, ru, short, when, formula, table, signals, examples, tip, quiz):
+    base = BASE_LEVEL[key]
+    questions = []
+    for i, (q, o, a, why) in enumerate(quiz):
+        level = min(3, base + (1 if i >= 2 else 0))
+        questions.append(dict(q=q, opts=list(o), a=a, why=why, level=level))
     return dict(key=key, group=group, name=name, ru=ru, short=short, when=when,
                 formula=formula, table=[list(x) for x in table], signals=signals,
-                examples=[list(x) for x in examples], tip=tip,
-                quiz=[dict(q=q, opts=list(o), a=a, why=why) for q, o, a, why in quiz])
+                examples=[list(x) for x in examples], tip=tip, quiz=questions)
 
 tenses = [
 T("present-simple","present","Present Simple","Простое настоящее","Привычки, факты и расписание.",

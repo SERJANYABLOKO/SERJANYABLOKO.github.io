@@ -59,7 +59,8 @@
             "working"
           ],
           "a": 1,
-          "why": "He / She / It → глагол с -s: works."
+          "why": "He / She / It → глагол с -s: works.",
+          "level": 1
         },
         {
           "q": "They ___ coffee every morning.",
@@ -69,7 +70,8 @@
             "drinking"
           ],
           "a": 0,
-          "why": "They → начальная форма: drink. Подсказка — every morning."
+          "why": "They → начальная форма: drink. Подсказка — every morning.",
+          "level": 1
         },
         {
           "q": "___ you speak English?",
@@ -79,7 +81,8 @@
             "Are"
           ],
           "a": 0,
-          "why": "С you используем Do: Do you speak English?"
+          "why": "С you используем Do: Do you speak English?",
+          "level": 2
         },
         {
           "q": "He ___ like pizza.",
@@ -89,7 +92,8 @@
             "isn't"
           ],
           "a": 1,
-          "why": "Для He отрицание — doesn't + начальная форма: doesn't like."
+          "why": "Для He отрицание — doesn't + начальная форма: doesn't like.",
+          "level": 2
         }
       ]
     },
@@ -152,7 +156,8 @@
             "run"
           ],
           "a": 1,
-          "why": "Look! — сигнал действия в момент речи: is running."
+          "why": "Look! — сигнал действия в момент речи: is running.",
+          "level": 1
         },
         {
           "q": "I ___ TV right now.",
@@ -162,7 +167,8 @@
             "watches"
           ],
           "a": 1,
-          "why": "right now → am watching."
+          "why": "right now → am watching.",
+          "level": 1
         },
         {
           "q": "She ___ at the moment.",
@@ -172,7 +178,8 @@
             "sleep"
           ],
           "a": 1,
-          "why": "at the moment → is sleeping."
+          "why": "at the moment → is sleeping.",
+          "level": 2
         },
         {
           "q": "___ they playing football?",
@@ -182,7 +189,8 @@
             "Is"
           ],
           "a": 1,
-          "why": "Вопрос с Continuous: Are + they + V-ing?"
+          "why": "Вопрос с Continuous: Are + they + V-ing?",
+          "level": 2
         }
       ]
     },
@@ -246,7 +254,8 @@
             "am"
           ],
           "a": 0,
-          "why": "С I используем have: I have never been."
+          "why": "С I используем have: I have never been.",
+          "level": 1
         },
         {
           "q": "She has ___ her homework already.",
@@ -256,7 +265,8 @@
             "finishing"
           ],
           "a": 1,
-          "why": "Present Perfect: has + V3 → finished."
+          "why": "Present Perfect: has + V3 → finished.",
+          "level": 1
         },
         {
           "q": "Have you ___ this film?",
@@ -266,7 +276,8 @@
             "seen"
           ],
           "a": 2,
-          "why": "После Have нужен V3: seen."
+          "why": "После Have нужен V3: seen.",
+          "level": 2
         },
         {
           "q": "We ___ him since Monday.",
@@ -276,7 +287,8 @@
             "haven't seen"
           ],
           "a": 2,
-          "why": "since → Present Perfect: haven't seen."
+          "why": "since → Present Perfect: haven't seen.",
+          "level": 2
         }
       ]
     },
@@ -338,7 +350,8 @@
             "from"
           ],
           "a": 0,
-          "why": "Период времени — for: for two hours."
+          "why": "Период времени — for: for two hours.",
+          "level": 2
         },
         {
           "q": "She has been studying ___ January.",
@@ -348,7 +361,8 @@
             "during"
           ],
           "a": 1,
-          "why": "Точка начала — since: since January."
+          "why": "Точка начала — since: since January.",
+          "level": 2
         },
         {
           "q": "How long ___ you been living here?",
@@ -358,7 +372,8 @@
             "do"
           ],
           "a": 0,
-          "why": "С you → have been living."
+          "why": "С you → have been living.",
+          "level": 3
         },
         {
           "q": "It ___ been snowing all morning.",
@@ -368,7 +383,8 @@
             "have"
           ],
           "a": 1,
-          "why": "С It используем has been snowing."
+          "why": "С It используем has been snowing.",
+          "level": 3
         }
       ]
     },
@@ -430,7 +446,8 @@
             "have gone"
           ],
           "a": 1,
-          "why": "Есть конкретное время yesterday → Past Simple: went."
+          "why": "Есть конкретное время yesterday → Past Simple: went.",
+          "level": 1
         },
         {
           "q": "She didn't ___ me.",
@@ -440,7 +457,8 @@
             "calling"
           ],
           "a": 0,
-          "why": "После didn't — начальная форма: call."
+          "why": "После didn't — начальная форма: call.",
+          "level": 1
         },
         {
           "q": "___ you see him last night?",
@@ -450,7 +468,8 @@
             "Are"
           ],
           "a": 1,
-          "why": "Прошлое → Did you see?"
+          "why": "Прошлое → Did you see?",
+          "level": 2
         },
         {
           "q": "We ___ in Moscow in 2010.",
@@ -460,7 +479,8 @@
             "are living"
           ],
           "a": 1,
-          "why": "В 2010 → lived."
+          "why": "В 2010 → lived.",
+          "level": 2
         }
       ]
     },
@@ -521,7 +541,8 @@
             "have read"
           ],
           "a": 1,
-          "why": "was reading — процесс в момент звонка."
+          "why": "was reading — процесс в момент звонка.",
+          "level": 1
         },
         {
           "q": "They ___ football at 4 p.m.",
@@ -531,7 +552,8 @@
             "are playing"
           ],
           "a": 1,
-          "why": "Конкретный момент в прошлом → were playing."
+          "why": "Конкретный момент в прошлом → were playing.",
+          "level": 1
         },
         {
           "q": "She ___ listening, so she didn't hear me.",
@@ -541,7 +563,8 @@
             "isn't"
           ],
           "a": 0,
-          "why": "wasn't listening — отрицание в Past Continuous."
+          "why": "wasn't listening — отрицание в Past Continuous.",
+          "level": 2
         },
         {
           "q": "___ you waiting for me?",
@@ -551,7 +574,8 @@
             "Did"
           ],
           "a": 0,
-          "why": "С you → Were you waiting?"
+          "why": "С you → Were you waiting?",
+          "level": 2
         }
       ]
     },
@@ -613,7 +637,8 @@
             "was starting"
           ],
           "a": 1,
-          "why": "Событие раньше прибытия → had started."
+          "why": "Событие раньше прибытия → had started.",
+          "level": 2
         },
         {
           "q": "She had never ___ before.",
@@ -623,7 +648,8 @@
             "flown"
           ],
           "a": 2,
-          "why": "После had — V3: flown."
+          "why": "После had — V3: flown.",
+          "level": 2
         },
         {
           "q": "They ___ finished by 6.",
@@ -633,7 +659,8 @@
             "haven't"
           ],
           "a": 1,
-          "why": "До момента в прошлом → hadn't finished."
+          "why": "До момента в прошлом → hadn't finished.",
+          "level": 3
         },
         {
           "q": "___ you met him before?",
@@ -643,7 +670,8 @@
             "Did"
           ],
           "a": 0,
-          "why": "Перед другим событием в прошлом → Had you met?"
+          "why": "Перед другим событием в прошлом → Had you met?",
+          "level": 3
         }
       ]
     },
@@ -704,7 +732,8 @@
             "had come"
           ],
           "a": 1,
-          "why": "Короткое событие в прошлом — came."
+          "why": "Короткое событие в прошлом — came.",
+          "level": 3
         },
         {
           "q": "She had been ___ all night.",
@@ -714,7 +743,8 @@
             "studying"
           ],
           "a": 2,
-          "why": "had been + V-ing → studying."
+          "why": "had been + V-ing → studying.",
+          "level": 3
         },
         {
           "q": "It had been raining, so the street ___ wet.",
@@ -724,7 +754,8 @@
             "has been"
           ],
           "a": 1,
-          "why": "Результат в прошлом — was wet."
+          "why": "Результат в прошлом — was wet.",
+          "level": 3
         },
         {
           "q": "___ you been working there before?",
@@ -734,7 +765,8 @@
             "Did"
           ],
           "a": 0,
-          "why": "had been working — процесс до момента в прошлом."
+          "why": "had been working — процесс до момента в прошлом.",
+          "level": 3
         }
       ]
     },
@@ -796,7 +828,8 @@
             "was"
           ],
           "a": 0,
-          "why": "Решение/обещание → will call."
+          "why": "Решение/обещание → will call.",
+          "level": 1
         },
         {
           "q": "It ___ rain tonight, I think.",
@@ -806,7 +839,8 @@
             "was"
           ],
           "a": 0,
-          "why": "Прогноз → will rain."
+          "why": "Прогноз → will rain.",
+          "level": 1
         },
         {
           "q": "I don't think he ___ come.",
@@ -816,7 +850,8 @@
             "does"
           ],
           "a": 0,
-          "why": "После don't think → will come."
+          "why": "После don't think → will come.",
+          "level": 2
         },
         {
           "q": "___ you be there tomorrow?",
@@ -826,7 +861,8 @@
             "Are"
           ],
           "a": 0,
-          "why": "Вопрос о будущем → Will you be?"
+          "why": "Вопрос о будущем → Will you be?",
+          "level": 2
         }
       ]
     },
@@ -886,7 +922,8 @@
             "was"
           ],
           "a": 0,
-          "why": "Будущее продолженное → will be working."
+          "why": "Будущее продолженное → will be working.",
+          "level": 2
         },
         {
           "q": "They will ___ to London this time tomorrow.",
@@ -896,7 +933,8 @@
             "flew"
           ],
           "a": 1,
-          "why": "will be + V-ing → flying."
+          "why": "will be + V-ing → flying.",
+          "level": 2
         },
         {
           "q": "Don't call me — I'll ___ driving.",
@@ -906,7 +944,8 @@
             "was"
           ],
           "a": 0,
-          "why": "I'll be driving."
+          "why": "I'll be driving.",
+          "level": 3
         },
         {
           "q": "___ you be waiting for me?",
@@ -916,7 +955,8 @@
             "Are"
           ],
           "a": 0,
-          "why": "Will you be waiting?"
+          "why": "Will you be waiting?",
+          "level": 3
         }
       ]
     },
@@ -977,7 +1017,8 @@
             "finishing"
           ],
           "a": 1,
-          "why": "will have + V3 → finished."
+          "why": "will have + V3 → finished.",
+          "level": 2
         },
         {
           "q": "She will have ___ before you arrive.",
@@ -987,7 +1028,8 @@
             "leaving"
           ],
           "a": 1,
-          "why": "V3 от leave — left."
+          "why": "V3 от leave — left.",
+          "level": 2
         },
         {
           "q": "They ___ have finished in time.",
@@ -997,7 +1039,8 @@
             "don't"
           ],
           "a": 1,
-          "why": "Отрицание → won't have finished."
+          "why": "Отрицание → won't have finished.",
+          "level": 3
         },
         {
           "q": "___ you have read the book by Sunday?",
@@ -1007,7 +1050,8 @@
             "Are"
           ],
           "a": 0,
-          "why": "Will you have read?"
+          "why": "Will you have read?",
+          "level": 3
         }
       ]
     },
@@ -1068,7 +1112,8 @@
             "working"
           ],
           "a": 2,
-          "why": "will have been + V-ing → working."
+          "why": "will have been + V-ing → working.",
+          "level": 3
         },
         {
           "q": "By the time you arrive, I will have been ___ for an hour.",
@@ -1078,7 +1123,8 @@
             "waiting"
           ],
           "a": 2,
-          "why": "waiting — длительный процесс."
+          "why": "waiting — длительный процесс.",
+          "level": 3
         },
         {
           "q": "She will have been ___ all day.",
@@ -1088,7 +1134,8 @@
             "studied"
           ],
           "a": 1,
-          "why": "been + V-ing → studying."
+          "why": "been + V-ing → studying.",
+          "level": 3
         },
         {
           "q": "___ you have been living here long?",
@@ -1098,7 +1145,8 @@
             "Are"
           ],
           "a": 0,
-          "why": "Will you have been living?"
+          "why": "Will you have been living?",
+          "level": 3
         }
       ]
     }

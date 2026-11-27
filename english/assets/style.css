@@ -148,6 +148,20 @@ td:first-child{font-weight:700;color:var(--primary);width:34px}
 .more{display:block;margin:24px auto 0}
 .empty{text-align:center;color:var(--muted);padding:40px 0}
 
+/* tasks */
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.level-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;text-align:left;transition:.2s}
+.level-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.level-card.active{border-color:var(--primary);background:var(--soft);box-shadow:0 0 0 1px var(--primary)}
+.level-card .lv{font-size:.72rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em}
+.level-card b{display:block;font-size:.98rem;margin:6px 0 4px}
+.level-card span{color:var(--muted);font-size:.78rem}
+.task-panel{max-width:760px;margin:0 auto}
+.task-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.task-top span{font-size:.8rem;color:var(--muted)}
+.task-q{font-size:1.05rem;font-weight:700;line-height:1.5;margin:18px 0}
+.task-best{font-size:.78rem;color:var(--green);font-weight:700;margin-top:8px}
+
 /* login */
 .auth-wrap{max-width:460px;margin:0 auto;padding:56px 0}
 .auth-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:30px;box-shadow:var(--shadow)}

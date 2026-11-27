@@ -22,6 +22,13 @@ function markLessonDone(key, score, total){
   p[key] = { done:true, score:Math.max(score, old ? old.score : 0), total:total };
   saveProgress(p);
 }
+function saveTaskResult(key, score, total){
+  const p = getProgress();
+  const k = 'task:' + key;
+  const old = p[k];
+  if (!old || score > old.score) p[k] = { done:true, score:score, total:total };
+  saveProgress(p);
+}
 
 async function apiGet(path){
   const res = await fetch(path, {cache:'no-store'});
@@ -34,6 +41,7 @@ function headerHTML(active){
   const links = [
     ['index.html','Главная'],
     ['courses.html','Курсы'],
+    ['tasks.html','Задания'],
     ['words.html','1000 слов'],
     ['login.html','Вход']
   ];
