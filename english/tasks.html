@@ -4,10 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Задания — Serjant Lab</title>
-<link rel="stylesheet" href="assets/style.css" />
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('el_theme')||'light'}catch(e){}</script>
+<link rel="stylesheet" href="assets/style.css?v=3" />
 </head>
 <body>
-<script src="assets/common.js"></script>
+<script src="assets/common.js?v=3"></script>
 <script>mountHeader('tasks.html');</script>
 
 <main class="container">
@@ -48,9 +49,9 @@ let questions = [], i = 0, score = 0;
 
 function shuffle(a){
   const b = a.slice();
-  for (let i = b.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [b[i], b[j]] = [b[j], b[i]];
+  for (let n = b.length - 1; n > 0; n--){
+    const j = Math.floor(Math.random() * (n + 1));
+    [b[n], b[j]] = [b[j], b[n]];
   }
   return b;
 }
@@ -69,21 +70,23 @@ function wordQuestions(lv, count){
 }
 function tenseQuestions(lv, count){
   const pool = [];
-  tenseData.forEach(t => t.quiz.forEach(q => { if (q.level === lv) pool.push({q:q.q, opts:q.opts, a:q.a, why:q.why, kind:t.name}); }));
+  tenseData.forEach(t => t.quiz.forEach(q => {
+    if (q.level === lv) pool.push({q:q.q, opts:q.opts, a:q.a, why:q.why, kind:t.name});
+  }));
   return shuffle(pool).slice(0, count);
 }
 function buildSet(){
   if (mode === 'tenses') return tenseQuestions(level, 8);
   if (mode === 'words') return wordQuestions(level, 8);
-  const mix = tenseQuestions(level, 4).concat(wordQuestions(level, 4));
-  return shuffle(mix).slice(0, 8);
+  return shuffle(tenseQuestions(level, 4).concat(wordQuestions(level, 4))).slice(0, 8);
 }
 function bestText(){
   const p = getProgress()['task:' + mode + ':' + level];
   return p ? 'Лучший результат: ' + p.score + ' / ' + p.total : '';
 }
 function intro(){
-  panel.innerHTML = '<div class="task-top"><span>' + (mode === 'tenses' ? 'Грамматика' : mode === 'words' ? 'Лексика' : 'Грамматика + лексика') + ' · уровень ' + level + '</span><span class="score-pill">8 вопросов</span></div>' +
+  panel.innerHTML =
+    '<div class="task-top"><span>' + (mode === 'tenses' ? 'Грамматика' : mode === 'words' ? 'Лексика' : 'Грамматика + лексика') + ' · уровень ' + level + '</span><span class="score-pill">8 вопросов</span></div>' +
     '<h2 class="section-title" style="font-size:1.3rem">Готовы начать?</h2>' +
     '<p class="section-sub">По каждому ответу будет краткое объяснение.</p>' +
     '<div class="task-best">' + bestText() + '</div>' +
@@ -99,9 +102,8 @@ function paint(){
     saveTaskResult(mode + ':' + level, score, questions.length);
     panel.innerHTML = '<div class="result"><div class="big">' + score + ' / ' + questions.length + '</div>' +
       '<p>' + (score === questions.length ? 'Идеально! Все ответы верны.' : score >= questions.length / 2 ? 'Хороший результат! Попробуйте другой уровень.' : 'Пока не очень — попробуйте ещё раз, получится лучше.') + '</p>' +
-      '<button class="btn" id="againBtn">Ещё раз ↻</button> ' +
-      '<button class="btn ghost" id="backBtn">К выбору</button></div>';
-    document.getElementById('againBtn').onclick = () => { i = 0; score = 0; questions = buildSet(); paint(); };
+      '<button class="btn" id="againBtn">Ещё раз ↻</button> <button class="btn ghost" id="backBtn">К выбору</button></div>';
+    document.getElementById('againBtn').onclick = () => { questions = buildSet(); i = 0; score = 0; paint(); };
     document.getElementById('backBtn').onclick = intro;
     return;
   }
@@ -151,8 +153,10 @@ document.getElementById('levels').onclick = e => {
   intro();
 };
 
-Promise.all([apiGet('data/tenses.json'), apiGet('data/words.json')])
-  .then(([t, w]) => { tenseData = t.tenses; wordData = w; intro(); })
+Promise.all([
+  apiGet('data/tenses.json?v=3'),
+  apiGet('data/words.json?v=3')
+]).then(([t, w]) => { tenseData = t.tenses; wordData = w; intro(); })
   .catch(err => { panel.innerHTML = '<div class="empty">Ошибка загрузки: ' + esc(err.message) + '</div>'; });
 </script>
 </body>

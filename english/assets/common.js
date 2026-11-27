@@ -2,6 +2,14 @@
 
 const SESSION_KEY = 'el_session';
 const PROGRESS_KEY = 'el_progress';
+const THEME_KEY = 'el_theme';
+
+function currentTheme(){ return localStorage.getItem(THEME_KEY) || 'light'; }
+function applyTheme(theme){
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem(THEME_KEY, theme);
+}
+document.documentElement.dataset.theme = currentTheme();
 
 function getSession(){
   try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }
@@ -55,6 +63,9 @@ function headerHTML(active){
     '<a href="index.html" class="logo"><span class="icon">SL</span>Serjant <span>Lab</span></a>' +
     '<nav class="nav" id="mainNav">' + nav + '</nav>' +
     '<div style="display:flex;align-items:center;gap:10px">' + user +
+    '<div class="settings"><button class="settings-btn" id="settingsBtn" title="Настройки">⚙</button>' +
+    '<div class="settings-menu" id="settingsMenu"><div class="settings-title">Тема оформления</div>' +
+    '<button data-theme="light">☀ Светлая</button><button data-theme="dark">☾ Тёмная</button></div></div>' +
     '<button class="menu-btn" id="menuBtn" aria-label="Меню">☰</button></div>' +
     '</div></header>';
 }
@@ -65,6 +76,21 @@ function mountHeader(active){
   if (btn && nav) btn.onclick = () => nav.classList.toggle('open');
   const out = document.getElementById('logoutBtn');
   if (out) out.onclick = () => { clearSession(); location.href = 'index.html'; };
+
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsMenu = document.getElementById('settingsMenu');
+  if (settingsBtn && settingsMenu){
+    const sync = () => settingsMenu.querySelectorAll('[data-theme]').forEach(b =>
+      b.classList.toggle('active', b.dataset.theme === currentTheme()));
+    settingsBtn.onclick = e => { e.stopPropagation(); settingsMenu.classList.toggle('open'); };
+    document.addEventListener('click', e => {
+      if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) settingsMenu.classList.remove('open');
+    });
+    settingsMenu.querySelectorAll('[data-theme]').forEach(b => b.onclick = () => {
+      applyTheme(b.dataset.theme); sync(); settingsMenu.classList.remove('open');
+    });
+    sync();
+  }
 }
 function footerHTML(){
   return '<footer class="footer container"><div>Serjant Lab — учим английский простыми словами</div>' +
