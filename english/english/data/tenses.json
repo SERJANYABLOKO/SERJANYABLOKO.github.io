@@ -1,0 +1,1106 @@
+{
+  "tenses": [
+    {
+      "key": "present-simple",
+      "group": "present",
+      "name": "Present Simple",
+      "ru": "Простое настоящее",
+      "short": "Привычки, факты и расписание.",
+      "when": "Повторяющиеся действия, привычки, общие истины и расписание.",
+      "formula": "I / You / We / They + V   ·   He / She / It + V(-s)",
+      "table": [
+        [
+          "+",
+          "I work here."
+        ],
+        [
+          "−",
+          "I don't work here."
+        ],
+        [
+          "?",
+          "Do you work here?"
+        ]
+      ],
+      "signals": [
+        "always",
+        "usually",
+        "often",
+        "every day",
+        "on Mondays",
+        "twice a week",
+        "never"
+      ],
+      "examples": [
+        [
+          "I live in Moscow.",
+          "Я живу в Москве."
+        ],
+        [
+          "She likes tea.",
+          "Она любит чай."
+        ],
+        [
+          "They don't watch TV.",
+          "Они не смотрят телевизор."
+        ],
+        [
+          "Do you speak English?",
+          "Вы говорите по-английски?"
+        ]
+      ],
+      "tip": "После does / doesn't глагол всегда в начальной форме: Does she work? — не «Does she works?».",
+      "quiz": [
+        {
+          "q": "She ___ in a bank.",
+          "opts": [
+            "work",
+            "works",
+            "working"
+          ],
+          "a": 1,
+          "why": "He / She / It → глагол с -s: works."
+        },
+        {
+          "q": "They ___ coffee every morning.",
+          "opts": [
+            "drink",
+            "drinks",
+            "drinking"
+          ],
+          "a": 0,
+          "why": "They → начальная форма: drink. Подсказка — every morning."
+        },
+        {
+          "q": "___ you speak English?",
+          "opts": [
+            "Do",
+            "Does",
+            "Are"
+          ],
+          "a": 0,
+          "why": "С you используем Do: Do you speak English?"
+        },
+        {
+          "q": "He ___ like pizza.",
+          "opts": [
+            "don't",
+            "doesn't",
+            "isn't"
+          ],
+          "a": 1,
+          "why": "Для He отрицание — doesn't + начальная форма: doesn't like."
+        }
+      ]
+    },
+    {
+      "key": "present-continuous",
+      "group": "present",
+      "name": "Present Continuous",
+      "ru": "Настоящее продолженное",
+      "short": "Действие прямо сейчас.",
+      "when": "Действие в момент речи, временная ситуация и планы на ближайшее будущее.",
+      "formula": "am / is / are + V-ing",
+      "table": [
+        [
+          "+",
+          "I am reading."
+        ],
+        [
+          "−",
+          "She isn't sleeping."
+        ],
+        [
+          "?",
+          "Are you listening?"
+        ]
+      ],
+      "signals": [
+        "now",
+        "right now",
+        "at the moment",
+        "Look!",
+        "Listen!",
+        "today",
+        "still"
+      ],
+      "examples": [
+        [
+          "I am reading now.",
+          "Я сейчас читаю."
+        ],
+        [
+          "She is watching TV.",
+          "Она смотрит телевизор."
+        ],
+        [
+          "They aren't sleeping.",
+          "Они не спят."
+        ],
+        [
+          "Are you coming?",
+          "Ты идёшь?"
+        ]
+      ],
+      "tip": "Глаголы состояния (know, love, like, believe) обычно не используют в Continuous: I know him, а не «I am knowing him».",
+      "quiz": [
+        {
+          "q": "Look! The dog ___ after the cat.",
+          "opts": [
+            "runs",
+            "is running",
+            "run"
+          ],
+          "a": 1,
+          "why": "Look! — сигнал действия в момент речи: is running."
+        },
+        {
+          "q": "I ___ TV right now.",
+          "opts": [
+            "watch",
+            "am watching",
+            "watches"
+          ],
+          "a": 1,
+          "why": "right now → am watching."
+        },
+        {
+          "q": "She ___ at the moment.",
+          "opts": [
+            "sleeps",
+            "is sleeping",
+            "sleep"
+          ],
+          "a": 1,
+          "why": "at the moment → is sleeping."
+        },
+        {
+          "q": "___ they playing football?",
+          "opts": [
+            "Do",
+            "Are",
+            "Is"
+          ],
+          "a": 1,
+          "why": "Вопрос с Continuous: Are + they + V-ing?"
+        }
+      ]
+    },
+    {
+      "key": "present-perfect",
+      "group": "present",
+      "name": "Present Perfect",
+      "ru": "Настоящее совершенное",
+      "short": "Опыт и результат к настоящему моменту.",
+      "when": "Действие завершилось, но его результат или опыт важен сейчас. Точное время не указывается.",
+      "formula": "have / has + V3 (third form)",
+      "table": [
+        [
+          "+",
+          "I have finished."
+        ],
+        [
+          "−",
+          "She hasn't finished."
+        ],
+        [
+          "?",
+          "Have you finished?"
+        ]
+      ],
+      "signals": [
+        "already",
+        "yet",
+        "just",
+        "ever",
+        "never",
+        "since",
+        "for",
+        "recently"
+      ],
+      "examples": [
+        [
+          "I have lost my keys.",
+          "Я потерял ключи (и сейчас без них)."
+        ],
+        [
+          "She has been to London.",
+          "Она ездила в Лондон."
+        ],
+        [
+          "We haven't seen him yet.",
+          "Мы ещё его не видели."
+        ],
+        [
+          "Have you ever tried sushi?",
+          "Вы когда-нибудь пробовали суши?"
+        ]
+      ],
+      "tip": "V3 — третья форма глагола: go–went–gone, do–did–done. Если есть конкретное время (yesterday, in 2020), нужен Past Simple.",
+      "quiz": [
+        {
+          "q": "I ___ never been to Japan.",
+          "opts": [
+            "have",
+            "has",
+            "am"
+          ],
+          "a": 0,
+          "why": "С I используем have: I have never been."
+        },
+        {
+          "q": "She has ___ her homework already.",
+          "opts": [
+            "finish",
+            "finished",
+            "finishing"
+          ],
+          "a": 1,
+          "why": "Present Perfect: has + V3 → finished."
+        },
+        {
+          "q": "Have you ___ this film?",
+          "opts": [
+            "see",
+            "saw",
+            "seen"
+          ],
+          "a": 2,
+          "why": "После Have нужен V3: seen."
+        },
+        {
+          "q": "We ___ him since Monday.",
+          "opts": [
+            "don't see",
+            "didn't see",
+            "haven't seen"
+          ],
+          "a": 2,
+          "why": "since → Present Perfect: haven't seen."
+        }
+      ]
+    },
+    {
+      "key": "present-perfect-continuous",
+      "group": "present",
+      "name": "Present Perfect Continuous",
+      "ru": "Настоящее совершенное продолженное",
+      "short": "Процесс, который длится до сих пор.",
+      "when": "Действие началось в прошлом и всё ещё продолжается. Акцент на длительности.",
+      "formula": "have / has been + V-ing",
+      "table": [
+        [
+          "+",
+          "I have been waiting."
+        ],
+        [
+          "−",
+          "He hasn't been working."
+        ],
+        [
+          "?",
+          "Have you been studying?"
+        ]
+      ],
+      "signals": [
+        "for",
+        "since",
+        "all day",
+        "lately",
+        "recently",
+        "How long…?"
+      ],
+      "examples": [
+        [
+          "I have been waiting for an hour.",
+          "Я жду уже час."
+        ],
+        [
+          "She has been learning English since May.",
+          "Она учит английский с мая."
+        ],
+        [
+          "It has been raining all day.",
+          "Дождь идёт весь день."
+        ],
+        [
+          "Have you been working here long?",
+          "Вы здесь давно работаете?"
+        ]
+      ],
+      "tip": "for + период (for two hours), since + точка начала (since 2019).",
+      "quiz": [
+        {
+          "q": "I have been waiting ___ two hours.",
+          "opts": [
+            "for",
+            "since",
+            "from"
+          ],
+          "a": 0,
+          "why": "Период времени — for: for two hours."
+        },
+        {
+          "q": "She has been studying ___ January.",
+          "opts": [
+            "for",
+            "since",
+            "during"
+          ],
+          "a": 1,
+          "why": "Точка начала — since: since January."
+        },
+        {
+          "q": "How long ___ you been living here?",
+          "opts": [
+            "have",
+            "has",
+            "do"
+          ],
+          "a": 0,
+          "why": "С you → have been living."
+        },
+        {
+          "q": "It ___ been snowing all morning.",
+          "opts": [
+            "is",
+            "has",
+            "have"
+          ],
+          "a": 1,
+          "why": "С It используем has been snowing."
+        }
+      ]
+    },
+    {
+      "key": "past-simple",
+      "group": "past",
+      "name": "Past Simple",
+      "ru": "Простое прошлое",
+      "short": "Завершённые действия в прошлом.",
+      "when": "Действия, которые произошли и закончились в конкретное время в прошлом.",
+      "formula": "V2 (past form): worked / went / had",
+      "table": [
+        [
+          "+",
+          "I visited Paris."
+        ],
+        [
+          "−",
+          "I didn't visit Paris."
+        ],
+        [
+          "?",
+          "Did you visit Paris?"
+        ]
+      ],
+      "signals": [
+        "yesterday",
+        "last week",
+        "in 2010",
+        "two days ago",
+        "then",
+        "last night"
+      ],
+      "examples": [
+        [
+          "I went to the cinema yesterday.",
+          "Я ходил в кино вчера."
+        ],
+        [
+          "She didn't call me.",
+          "Она мне не позвонила."
+        ],
+        [
+          "Did you see him last night?",
+          "Ты видел его вчера вечером?"
+        ],
+        [
+          "He lived here in 2015.",
+          "Он жил здесь в 2015 году."
+        ]
+      ],
+      "tip": "После didn't всегда используйте начальную форму: Did you go?, а не «Did you went?».",
+      "quiz": [
+        {
+          "q": "I ___ to the cinema yesterday.",
+          "opts": [
+            "go",
+            "went",
+            "have gone"
+          ],
+          "a": 1,
+          "why": "Есть конкретное время yesterday → Past Simple: went."
+        },
+        {
+          "q": "She didn't ___ me.",
+          "opts": [
+            "call",
+            "called",
+            "calling"
+          ],
+          "a": 0,
+          "why": "После didn't — начальная форма: call."
+        },
+        {
+          "q": "___ you see him last night?",
+          "opts": [
+            "Do",
+            "Did",
+            "Are"
+          ],
+          "a": 1,
+          "why": "Прошлое → Did you see?"
+        },
+        {
+          "q": "We ___ in Moscow in 2010.",
+          "opts": [
+            "live",
+            "lived",
+            "are living"
+          ],
+          "a": 1,
+          "why": "В 2010 → lived."
+        }
+      ]
+    },
+    {
+      "key": "past-continuous",
+      "group": "past",
+      "name": "Past Continuous",
+      "ru": "Прошлое продолженное",
+      "short": "Процесс в прошлый момент.",
+      "when": "Действие, которое происходило в определённый момент в прошлом; часто прерывалось другим действием.",
+      "formula": "was / were + V-ing",
+      "table": [
+        [
+          "+",
+          "I was sleeping."
+        ],
+        [
+          "−",
+          "They weren't working."
+        ],
+        [
+          "?",
+          "Were you waiting?"
+        ]
+      ],
+      "signals": [
+        "while",
+        "when",
+        "at 5 o'clock",
+        "at this time yesterday",
+        "all day"
+      ],
+      "examples": [
+        [
+          "I was reading when he called.",
+          "Я читал, когда он позвонил."
+        ],
+        [
+          "They were playing football.",
+          "Они играли в футбол."
+        ],
+        [
+          "She wasn't listening.",
+          "Она не слушала."
+        ],
+        [
+          "Were you sleeping?",
+          "Ты спал?"
+        ]
+      ],
+      "tip": "Past Continuous + Past Simple: I was cooking when the phone rang. Долгое действие прерывается коротким.",
+      "quiz": [
+        {
+          "q": "I ___ when he called.",
+          "opts": [
+            "read",
+            "was reading",
+            "have read"
+          ],
+          "a": 1,
+          "why": "was reading — процесс в момент звонка."
+        },
+        {
+          "q": "They ___ football at 4 p.m.",
+          "opts": [
+            "played",
+            "were playing",
+            "are playing"
+          ],
+          "a": 1,
+          "why": "Конкретный момент в прошлом → were playing."
+        },
+        {
+          "q": "She ___ listening, so she didn't hear me.",
+          "opts": [
+            "wasn't",
+            "didn't",
+            "isn't"
+          ],
+          "a": 0,
+          "why": "wasn't listening — отрицание в Past Continuous."
+        },
+        {
+          "q": "___ you waiting for me?",
+          "opts": [
+            "Were",
+            "Was",
+            "Did"
+          ],
+          "a": 0,
+          "why": "С you → Were you waiting?"
+        }
+      ]
+    },
+    {
+      "key": "past-perfect",
+      "group": "past",
+      "name": "Past Perfect",
+      "ru": "Прошлое совершенное",
+      "short": "Действие раньше другого действия в прошлом.",
+      "when": "Событие, которое произошло раньше другого события в прошлом («прошлое в прошлом»).",
+      "formula": "had + V3",
+      "table": [
+        [
+          "+",
+          "I had left."
+        ],
+        [
+          "−",
+          "She hadn't left."
+        ],
+        [
+          "?",
+          "Had you left?"
+        ]
+      ],
+      "signals": [
+        "already",
+        "before",
+        "after",
+        "by the time",
+        "when",
+        "never"
+      ],
+      "examples": [
+        [
+          "When I arrived, the film had started.",
+          "Когда я пришёл, фильм уже начался."
+        ],
+        [
+          "She had never flown before.",
+          "Она раньше никогда не летала."
+        ],
+        [
+          "They hadn't finished by 6.",
+          "Они не закончили к шести."
+        ],
+        [
+          "Had you met him before?",
+          "Вы встречались с ним раньше?"
+        ]
+      ],
+      "tip": "Обратите внимание на порядок: the train had left before we arrived — поезд ушёл до того, как мы приехали.",
+      "quiz": [
+        {
+          "q": "When I arrived, the film ___.",
+          "opts": [
+            "started",
+            "had started",
+            "was starting"
+          ],
+          "a": 1,
+          "why": "Событие раньше прибытия → had started."
+        },
+        {
+          "q": "She had never ___ before.",
+          "opts": [
+            "fly",
+            "flew",
+            "flown"
+          ],
+          "a": 2,
+          "why": "После had — V3: flown."
+        },
+        {
+          "q": "They ___ finished by 6.",
+          "opts": [
+            "didn't",
+            "hadn't",
+            "haven't"
+          ],
+          "a": 1,
+          "why": "До момента в прошлом → hadn't finished."
+        },
+        {
+          "q": "___ you met him before?",
+          "opts": [
+            "Had",
+            "Have",
+            "Did"
+          ],
+          "a": 0,
+          "why": "Перед другим событием в прошлом → Had you met?"
+        }
+      ]
+    },
+    {
+      "key": "past-perfect-continuous",
+      "group": "past",
+      "name": "Past Perfect Continuous",
+      "ru": "Прошлое совершенное продолженное",
+      "short": "Длительный процесс до момента в прошлом.",
+      "when": "Действие длилось до определённого момента в прошлом, и его результат был виден тогда.",
+      "formula": "had been + V-ing",
+      "table": [
+        [
+          "+",
+          "I had been waiting."
+        ],
+        [
+          "−",
+          "He hadn't been sleeping."
+        ],
+        [
+          "?",
+          "Had you been working?"
+        ]
+      ],
+      "signals": [
+        "for",
+        "since",
+        "before",
+        "by the time",
+        "all morning"
+      ],
+      "examples": [
+        [
+          "I had been waiting for an hour when he came.",
+          "Я ждал час, когда он пришёл."
+        ],
+        [
+          "She had been studying all night.",
+          "Она занималась всю ночь."
+        ],
+        [
+          "It had been raining, so the street was wet.",
+          "Шёл дождь, поэтому улица была мокрой."
+        ],
+        [
+          "Had you been living there long?",
+          "Вы давно там жили?"
+        ]
+      ],
+      "tip": "Акцент на длительности перед другим событием в прошлом: had been waiting for an hour when…",
+      "quiz": [
+        {
+          "q": "I had been waiting for an hour when he ___.",
+          "opts": [
+            "come",
+            "came",
+            "had come"
+          ],
+          "a": 1,
+          "why": "Короткое событие в прошлом — came."
+        },
+        {
+          "q": "She had been ___ all night.",
+          "opts": [
+            "study",
+            "studied",
+            "studying"
+          ],
+          "a": 2,
+          "why": "had been + V-ing → studying."
+        },
+        {
+          "q": "It had been raining, so the street ___ wet.",
+          "opts": [
+            "is",
+            "was",
+            "has been"
+          ],
+          "a": 1,
+          "why": "Результат в прошлом — was wet."
+        },
+        {
+          "q": "___ you been working there before?",
+          "opts": [
+            "Had",
+            "Have",
+            "Did"
+          ],
+          "a": 0,
+          "why": "had been working — процесс до момента в прошлом."
+        }
+      ]
+    },
+    {
+      "key": "future-simple",
+      "group": "future",
+      "name": "Future Simple",
+      "ru": "Простое будущее",
+      "short": "Решения, прогнозы и обещания.",
+      "when": "Прогнозы, спонтанные решения, обещания и факты о будущем.",
+      "formula": "will + V (initial form)",
+      "table": [
+        [
+          "+",
+          "I will call you."
+        ],
+        [
+          "−",
+          "I won't call you."
+        ],
+        [
+          "?",
+          "Will you call me?"
+        ]
+      ],
+      "signals": [
+        "tomorrow",
+        "next week",
+        "soon",
+        "in the future",
+        "I think",
+        "probably"
+      ],
+      "examples": [
+        [
+          "I will call you tomorrow.",
+          "Я позвоню тебе завтра."
+        ],
+        [
+          "It will rain tonight.",
+          "Сегодня вечером пойдёт дождь."
+        ],
+        [
+          "I don't think he will come.",
+          "Думаю, он не придёт."
+        ],
+        [
+          "Will you be there?",
+          "Ты там будешь?"
+        ]
+      ],
+      "tip": "Для запланированных намерений обычно используют going to: I am going to visit my mother.",
+      "quiz": [
+        {
+          "q": "I ___ call you tomorrow.",
+          "opts": [
+            "will",
+            "am",
+            "was"
+          ],
+          "a": 0,
+          "why": "Решение/обещание → will call."
+        },
+        {
+          "q": "It ___ rain tonight, I think.",
+          "opts": [
+            "will",
+            "is",
+            "was"
+          ],
+          "a": 0,
+          "why": "Прогноз → will rain."
+        },
+        {
+          "q": "I don't think he ___ come.",
+          "opts": [
+            "will",
+            "is",
+            "does"
+          ],
+          "a": 0,
+          "why": "После don't think → will come."
+        },
+        {
+          "q": "___ you be there tomorrow?",
+          "opts": [
+            "Will",
+            "Do",
+            "Are"
+          ],
+          "a": 0,
+          "why": "Вопрос о будущем → Will you be?"
+        }
+      ]
+    },
+    {
+      "key": "future-continuous",
+      "group": "future",
+      "name": "Future Continuous",
+      "ru": "Будущее продолженное",
+      "short": "Процесс в момент в будущем.",
+      "when": "Действие, которое будет происходить в конкретный момент в будущем.",
+      "formula": "will be + V-ing",
+      "table": [
+        [
+          "+",
+          "I will be working."
+        ],
+        [
+          "−",
+          "I won't be sleeping."
+        ],
+        [
+          "?",
+          "Will you be waiting?"
+        ]
+      ],
+      "signals": [
+        "at 8 tomorrow",
+        "this time next week",
+        "all day",
+        "while"
+      ],
+      "examples": [
+        [
+          "I will be working at 8 p.m.",
+          "Я буду работать в 8 вечера."
+        ],
+        [
+          "They will be flying to London.",
+          "Они будут лететь в Лондон."
+        ],
+        [
+          "Don't call me then — I'll be driving.",
+          "Не звони мне тогда — я буду за рулём."
+        ],
+        [
+          "Will you be using the car?",
+          "Ты будешь пользоваться машиной?"
+        ]
+      ],
+      "tip": "Часто используется для вежливого вопроса о планах: Will you be coming to the party?",
+      "quiz": [
+        {
+          "q": "I ___ be working at 8 p.m.",
+          "opts": [
+            "will",
+            "am",
+            "was"
+          ],
+          "a": 0,
+          "why": "Будущее продолженное → will be working."
+        },
+        {
+          "q": "They will ___ to London this time tomorrow.",
+          "opts": [
+            "fly",
+            "flying",
+            "flew"
+          ],
+          "a": 1,
+          "why": "will be + V-ing → flying."
+        },
+        {
+          "q": "Don't call me — I'll ___ driving.",
+          "opts": [
+            "be",
+            "am",
+            "was"
+          ],
+          "a": 0,
+          "why": "I'll be driving."
+        },
+        {
+          "q": "___ you be waiting for me?",
+          "opts": [
+            "Will",
+            "Do",
+            "Are"
+          ],
+          "a": 0,
+          "why": "Will you be waiting?"
+        }
+      ]
+    },
+    {
+      "key": "future-perfect",
+      "group": "future",
+      "name": "Future Perfect",
+      "ru": "Будущее совершенное",
+      "short": "Результат до момента в будущем.",
+      "when": "Действие, которое завершится до определённого времени в будущем.",
+      "formula": "will have + V3",
+      "table": [
+        [
+          "+",
+          "I will have finished."
+        ],
+        [
+          "−",
+          "She won't have finished."
+        ],
+        [
+          "?",
+          "Will you have finished?"
+        ]
+      ],
+      "signals": [
+        "by 5 o'clock",
+        "by tomorrow",
+        "by next week",
+        "before",
+        "already"
+      ],
+      "examples": [
+        [
+          "I will have finished by 5.",
+          "Я закончу к пяти."
+        ],
+        [
+          "She will have left before you arrive.",
+          "Она уедет до твоего приезда."
+        ],
+        [
+          "They won't have finished in time.",
+          "Они не успеют вовремя."
+        ],
+        [
+          "Will you have read the book by Sunday?",
+          "Ты прочитаешь книгу к воскресенью?"
+        ]
+      ],
+      "tip": "По-русски «закончу к пяти», по-английски — will have finished by five.",
+      "quiz": [
+        {
+          "q": "I will have ___ by 5.",
+          "opts": [
+            "finish",
+            "finished",
+            "finishing"
+          ],
+          "a": 1,
+          "why": "will have + V3 → finished."
+        },
+        {
+          "q": "She will have ___ before you arrive.",
+          "opts": [
+            "leave",
+            "left",
+            "leaving"
+          ],
+          "a": 1,
+          "why": "V3 от leave — left."
+        },
+        {
+          "q": "They ___ have finished in time.",
+          "opts": [
+            "will",
+            "won't",
+            "don't"
+          ],
+          "a": 1,
+          "why": "Отрицание → won't have finished."
+        },
+        {
+          "q": "___ you have read the book by Sunday?",
+          "opts": [
+            "Will",
+            "Do",
+            "Are"
+          ],
+          "a": 0,
+          "why": "Will you have read?"
+        }
+      ]
+    },
+    {
+      "key": "future-perfect-continuous",
+      "group": "future",
+      "name": "Future Perfect Continuous",
+      "ru": "Будущее совершенное продолженное",
+      "short": "Длительность до момента в будущем.",
+      "when": "Действие, которое будет длиться до определённого момента в будущем. Акцент на длительности.",
+      "formula": "will have been + V-ing",
+      "table": [
+        [
+          "+",
+          "I will have been working."
+        ],
+        [
+          "−",
+          "I won't have been waiting."
+        ],
+        [
+          "?",
+          "Will you have been studying?"
+        ]
+      ],
+      "signals": [
+        "for",
+        "by the time",
+        "by next month",
+        "How long…?",
+        "already"
+      ],
+      "examples": [
+        [
+          "I will have been working here for 10 years by June.",
+          "К июню я буду работать здесь 10 лет."
+        ],
+        [
+          "By the time you arrive, I will have been waiting for an hour.",
+          "К твоему приезду я буду ждать уже час."
+        ],
+        [
+          "She will have been studying all day.",
+          "Она будет заниматься весь день."
+        ],
+        [
+          "Will you have been living here long?",
+          "Ты будешь жить здесь долго?"
+        ]
+      ],
+      "tip": "Используется редко, но полезно для фраз вида «к моменту X я уже буду делать это Y часов».",
+      "quiz": [
+        {
+          "q": "I will have been ___ here for 10 years by June.",
+          "opts": [
+            "work",
+            "worked",
+            "working"
+          ],
+          "a": 2,
+          "why": "will have been + V-ing → working."
+        },
+        {
+          "q": "By the time you arrive, I will have been ___ for an hour.",
+          "opts": [
+            "wait",
+            "waited",
+            "waiting"
+          ],
+          "a": 2,
+          "why": "waiting — длительный процесс."
+        },
+        {
+          "q": "She will have been ___ all day.",
+          "opts": [
+            "study",
+            "studying",
+            "studied"
+          ],
+          "a": 1,
+          "why": "been + V-ing → studying."
+        },
+        {
+          "q": "___ you have been living here long?",
+          "opts": [
+            "Will",
+            "Do",
+            "Are"
+          ],
+          "a": 0,
+          "why": "Will you have been living?"
+        }
+      ]
+    }
+  ]
+}

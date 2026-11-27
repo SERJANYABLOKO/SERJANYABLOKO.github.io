@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Курсы — Serjant Lab</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<script src="assets/common.js"></script>
+<script>mountHeader('courses.html');</script>
+
+<main class="container">
+  <div class="page-head">
+    <h1>Выберите время</h1>
+    <p class="lead">12 времён английского языка. Откройте нужное — и разберитесь за 10 минут.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-group="all">Все времена</button>
+    <button class="tab" data-group="present">Present — настоящее</button>
+    <button class="tab" data-group="past">Past — прошлое</button>
+    <button class="tab" data-group="future">Future — будущее</button>
+  </div>
+
+  <div class="grid grid-3" id="courseGrid"></div>
+</main>
+
+<script>
+mountFooter();
+const grid = document.getElementById('courseGrid');
+let tenses = [];
+let filter = 'all';
+
+function badgeClass(group){ return group === 'past' ? 'past' : group === 'future' ? 'future' : ''; }
+
+function render(){
+  const p = getProgress();
+  const items = tenses.filter(t => filter === 'all' || t.group === filter);
+  grid.innerHTML = items.map(t => {
+    const done = p[t.key];
+    const pct = done ? 100 : 0;
+    return '<article class="card course-card">' +
+      '<div class="course-top"><span class="badge ' + badgeClass(t.group) + '">' + t.group + '</span>' +
+      (done ? '<span class="done-tag">✓ Пройдено</span>' : '') + '</div>' +
+      '<h3>' + esc(t.name) + '</h3><div class="ru">' + esc(t.ru) + '</div>' +
+      '<p>' + esc(t.short) + '</p>' +
+      '<div class="progress-line"><i style="width:' + pct + '%"></i></div>' +
+      '<a href="lesson.html?t=' + encodeURIComponent(t.key) + '" class="btn small block">' + (done ? 'Повторить →' : 'Начать урок →') + '</a>' +
+      '</article>';
+  }).join('');
+}
+
+document.getElementById('tabs').onclick = e => {
+  const b = e.target.closest('.tab');
+  if (!b) return;
+  filter = b.dataset.group;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === b));
+  render();
+};
+
+apiGet('data/tenses.json').then(data => {
+  tenses = data.tenses;
+  render();
+}).catch(err => {
+  grid.innerHTML = '<div class="empty">Ошибка загрузки курсов: ' + esc(err.message) + '</div>';
+});
+</script>
+</body>
+</html>
